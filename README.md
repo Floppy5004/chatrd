@@ -45,7 +45,7 @@
 
 **EN:** 
 
-1. On **Streamer.bot**,  go to **Server/Clients → WebSocket Server** and make sure the Address is set to the Local Network IP from the PC, for example **192.168.0.10**
+1. On **Streamer.bot**,  go to **Server/Clients → WebSocket Server** and make sure the Address is set to the Local Network IP from the PC, for example **192.168.0.10** ... or, if you prefer, use 0.0.0.0.
 2. On the [Settings Page](https://vortisrd.github.io/chatrd), make sure you set that IP on **Streamer.bot WebSocket Server**.
 3. Turn the **"Run Locally"** switch on.
 4. Click **"Copy URL"**
