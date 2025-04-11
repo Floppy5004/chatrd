@@ -10,13 +10,14 @@ const currentLang                   = lang[getURLParam("language", 'ptbr')];
 const showPlatform                  = getURLParam("showPlatform", false);
 const showAvatar                    = getURLParam("showAvatar", false);
 const showTimestamps                = getURLParam("showTimestamps", false);
+const ampmTimeStamps                = getURLParam("ampmTimeStamps", false);
 const showBadges                    = getURLParam("showBadges", true);
 const showPlatformStatistics        = getURLParam("showPlatformStatistics", false);
 const hideAfter                     = getURLParam("hideAfter", 0);
 const ignoreChatters                = getURLParam("ignoreChatters", "");
 const excludeCommands               = getURLParam("excludeCommands", true);
-const avatars = new Map();
 
+const avatars = new Map();
 const userColors = new Map();
 
 const ignoreUserList = ignoreChatters.split(',').map(item => item.trim().toLowerCase()) || [];
@@ -146,7 +147,9 @@ const whatTimeIsIt = () => {
     const minutes = now.getMinutes().toString().padStart(2, '0');
     const ampm = hours24 >= 12 ? 'PM' : 'AM';
     const hours12 = (hours24 % 12) || 12;
-    return `${hours12}:${minutes} ${ampm}`;
+
+    if (ampmTimeStamps == true) { return `${hours12}:${minutes} ${ampm}`; }
+    else { return `${hours24}:${minutes}`; }
 };
 
 
