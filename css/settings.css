@@ -102,6 +102,16 @@ a { color: #ffcc00; }
     align-items: center;
 }
 
+.tab-content .setting i {
+    font-size: 14px;
+    color: #666;
+    margin: 0 10px;
+}
+
+.tab-content .setting i.fa-arrow-turn-up {
+    transform: rotate(90deg);
+}
+
 
 .tab-content .setting small { color: #777; }
 
