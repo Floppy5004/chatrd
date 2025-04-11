@@ -9,7 +9,7 @@
 ## 🚀 Features | Funcionalidades
 
 - 💬 **Multi-platform chat** | Chat unificado de várias plataformas 
-- 💬 **Multi-Language events** | Eventos em várias línguas
+- 💬 **Multi-language events** | Eventos em várias línguas
 - 📊 **Events and Live stats** | Eventos e Estatísticas ao vivo (viewers, likes, etc)  
 - 🎨 **Customizable** | Personalizável  
 - 💾 **Saves your settings using localStorage** | Salva suas configurações usando localStorage
@@ -135,5 +135,3 @@ Made with ❤️ by **VortisRD**
 
 Heavily inspired by [Nutty](https://nutty.gg)
 🔗 [GitHub](https://github.com/nuttylmao) • [Twitch](https://twitch.tv/nutty) • [YouTube](https://youtube.com/@nuttylmao) • [TikTok](https://tiktok.com/@nuttylmao) • [Twitter / X](https://x.com/nuttylmao)
-
-
