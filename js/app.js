@@ -7,6 +7,7 @@ const streamerBotServerPort         = getURLParam("streamerBotServerPort", "8080
 const chatThreshhold                = 50;
 const chatContainer                 = document.querySelector('#chat');
 const currentLang                   = lang[getURLParam("language", 'ptbr')]; 
+const chatHorizontal                = getURLParam("chatHorizontal", false); 
 const showPlatform                  = getURLParam("showPlatform", false);
 const showAvatar                    = getURLParam("showAvatar", false);
 const showTimestamps                = getURLParam("showTimestamps", false);
@@ -27,6 +28,7 @@ const ignoreUserList = ignoreChatters.split(',').map(item => item.trim().toLower
 /* ----------------------- */
 
 if (showPlatformStatistics == false) { document.querySelector('#statistics').style.display = 'none'; }
+if (chatHorizontal == true) { chatContainer.classList.add('horizontal'); }
 
 /* ----------------------- */
 /* STREAMER.BOT CONNECTION */
@@ -67,7 +69,7 @@ async function addMessageToChat(userID, messageID, platform, data) {
         
     const html = DOMPurify.sanitize(`
         <div id="${messageID}" data-user="${userID}" class="${platform} ${data.classes} message" style="">
-            <div class="animate__animated animate__fadeInUp animate__faster">
+            <div class="animate__animated ${chatHorizontal == true ? 'animate__fadeInRight' : 'animate__fadeInUp'} animate__faster">
 
                 ${!data.shared ? '' : data.shared}
 
@@ -110,7 +112,7 @@ async function addEventToChat(userID, messageID, platform, data) {
     
     const html = DOMPurify.sanitize(`
         <div id="${messageID}" data-user="${userID}" class="${platform} ${data.classes} message event" style="">
-            <div class="animate__animated animate__faster animate__fadeInUp">
+            <div class="animate__animated ${chatHorizontal == true ? 'animate__fadeInRight' : 'animate__fadeInUp'} animate__faster">
                 ${!data.reply ? '' : data.reply}
 
                 ${showPlatform == true ? '<i class="platform '+(platform == 'money' ? 'fa-solid' : 'fa-brands')+' fa-'+platform+'"></i>' : '&nbsp;&nbsp;' }
@@ -154,10 +156,8 @@ const whatTimeIsIt = () => {
 
 
 function removeExtraChatMessages() {
-
     const chatMessages = chatContainer.querySelectorAll('div.message').length;
-
-    if (chatMessages > chatThreshhold) {
+    if (chatMessages >= chatThreshhold) {
         for (let i = 0; i < Math.floor(chatThreshhold/2); i++) {
             chatContainer.removeChild(chatContainer.firstElementChild);
         }
@@ -212,7 +212,7 @@ function createRandomString(length) {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     let result = "";
     for (let i = 0; i < length; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return result;
 }
