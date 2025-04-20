@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatRD - Config</title>
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-notify@1.0.4/dist/simple-notify.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+	
+	<link rel="stylesheet" href="css/settings.css">
+</head>
+
+<body>
+
+	<div id="chat-divided">
+		<div id="chat-settings">
+			<h1>ChatRD - Setup</h1>
+
+			<div class="tab-content active" id="geral">
+				<h2><i class="fa-solid fa-gears"></i> General</h2>
+				<div class="setting select">
+					<label>Language<br><small>Change the chat's events language.</small></label>
+					<select name="language">
+						<option value="en" selected>English</option>
+						<option value="ptbr">Brazilian Portuguese</option>
+					</select>
+				</div>
+				<div class="setting"><label>Horizontal Direction<br><small>Chat/Events will be horizontal.</small></label></label><label class="switch"><input type="checkbox" name="chatHorizontal"><span class="slider"></span></label></div>
+				<div class="setting"><label>Platforms<br><small>Shows the platforms icons.</small></label></label><label class="switch"><input type="checkbox" name="showPlatform" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Avatars</label><label class="switch"><input type="checkbox" name="showAvatar" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Timestamps</label><label class="switch"><input type="checkbox" name="showTimestamps" checked><span class="slider"></span></label></div>
+				<div class="setting"><label><i class="fa-solid fa-arrow-turn-up"></i> AM/PM</label><label class="switch"><input type="checkbox" name="ampmTimeStamps"><span class="slider"></span></label></div>
+				<div class="setting"><label>Badges</label><label class="switch"><input type="checkbox" name="showBadges" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Platform Statistics<br><small>Shows all platform statistics.</small></label><label class="switch"><input type="checkbox" name="showPlatformStatistics" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Ignore Commands<br><small>Ignores texts starting with "!".</small></label><label class="switch"><input type="checkbox" name="excludeCommands" checked><span class="slider"></span></label></div>
+				<div class="setting field"><label>Ignore Chatters<br><small>Separate their names by commas. eg.: StreamLabs,StreamElements</small></label><input type="text" name="ignoreChatters" value="Streamlabs,Streamelements"></div>
+				<div class="setting field"><label>Hide Chat Msg after X seconds<br>(0 disables it)</label><input type="number" name="hideAfter" value="0"></div>
+			</div>
+
+			<div class="tab-content" id="twitch">
+				<h2><i class="fa-brands fa-twitch"></i> Twitch</h2>
+				<div class="setting"><label>Chat</label><label class="switch"><input type="checkbox" name="showTwitchMessages" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Followers</label><label class="switch"><input type="checkbox" name="showTwitchFollows" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Bits</label><label class="switch"><input type="checkbox" name="showTwitchBits" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Announcements</label><label class="switch"><input type="checkbox" name="showTwitchAnnouncements" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Subscriptions</label><label class="switch"><input type="checkbox" name="showTwitchSubs" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Gifted Subs<br><small>When a user gifts another user a sub.</small></label><label class="switch"><input type="checkbox" name="showTwitchGiftedSubs" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Gifted Bomb<br><small>When a user gifts subs massively.</small></label><label class="switch"><input type="checkbox" name="showTwitchMassGiftedSubs" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Gifted Bomb Users Train<br><small>Shows all users that were gifted a sub on a Gifted Bomb.</small></label><label class="switch"><input type="checkbox" name="showTwitchGiftedSubsUserTrain" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Channel Point Rewards</label><label class="switch"><input type="checkbox" name="showTwitchRewardRedemptions" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Raids</label><label class="switch"><input type="checkbox" name="showTwitchRaids" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Shared Chat</label><label class="switch"><input type="checkbox" name="showTwitchSharedChat" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Viewers</label><label class="switch"><input type="checkbox" name="showTwitchViewers" checked><span class="slider"></span></label></div>
+			</div>
+
+			<div class="tab-content" id="youtube">
+				<h2><i class="fa-brands fa-youtube"></i> YouTube</h2>
+				<div class="setting"><label>Chat</label><label class="switch"><input type="checkbox" name="showYouTubeMessages" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>SuperChat</label><label class="switch"><input type="checkbox" name="showYouTubeSuperChats" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Super Sticker</label><label class="switch"><input type="checkbox" name="showYouTubeSuperStickers" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Membership</label><label class="switch"><input type="checkbox" name="showYouTubeMemberships" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Gifted Membership<br><small>Shows the person gifting members.</small></label><label class="switch"><input type="checkbox" name="showYouTubeGiftMemberships" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Gifted Membership Train<br><small>Shows all users that were gifted a membership on a massive gifting membership.</small></label><label class="switch"><input type="checkbox" name="showYouTubeMembershipsTrain" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Statistics<br><small>Shows viewers and likes.</small></label><label class="switch"><input type="checkbox" name="showYouTubeStatistics" checked><span class="slider"></span></label></div>
+				<div class="setting column">
+					<label>Members Only Emotes<br><small>Because YouTube's API doesn't expose Partner Custom Emotes.<br><em>Really YouTube!?</em> 🤨</small></label>
+					<div class="emote-list">
+
+						<span class="emote-item">
+							<button class="add"><i class="fa-solid fa-plus"></i></button>
+						</span>
+					</div>
+					
+					<!-- For Debugging Purposes -->
+					<textarea name="youTubeCustomEmotes" style="display: none;">{}</textarea>
+				</div>
+			</div>
+
+			<div class="tab-content" id="tiktok">
+				<h2><i class="fa-brands fa-tiktok"></i> TikTok</h2>
+				<div class="setting"><label>Chat</label><label class="switch"><input type="checkbox" name="showTikTokMessages" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Followers</label><label class="switch"><input type="checkbox" name="showTikTokFollows" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Gifts</label><label class="switch"><input type="checkbox" name="showTikTokGifts" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Subscriptions</label><label class="switch"><input type="checkbox" name="showTikTokSubs" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Statistics<br><small>Shows viewers and likes.</small></label><label class="switch"><input type="checkbox" name="showTikTokStatistics" checked><span class="slider"></span></label></div>
+			</div>
+
+			<div class="tab-content" id="extras">
+				<h2><i class="fa-solid fa-dollar-sign"></i> Donations</h2>
+				<div class="setting"><label>Streamlabs Tips</label><label class="switch"><input type="checkbox" name="showStreamlabsDonations" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>StreamElements Tips</label><label class="switch"><input type="checkbox" name="showStreamElementsTips" checked><span class="slider"></span></label></div>
+			</div>
+
+			<div class="tab-content" id="config">
+				<h2><i class="fa-solid fa-screwdriver-wrench"></i> Config</h2>
+				<div class="setting field"><label>Streamer.bot WebSocket Server</label><input type="text" name="streamerBotServerAddress" value="127.0.0.1"></div>
+				<div class="setting field"><label>Streamer.bot WebSocket Port</label><input type="text" name="streamerBotServerPort" value="8080"></div>
+				<div class="setting"><label>Run Locally<br><small>In case you want to download ChatRD to run locally or over the network.<br><a target="_blank" href="https://github.com/vortisrd/chatrd?tab=readme-ov-file#%EF%B8%8F-how-to-use-in-a-local-network--como-usar-em-rede-local">Follow the tutorial.</a></small></label><label class="switch"><input type="checkbox" name="runThisLocally"><span class="slider"></span></label></div>
+			</div>
+
+			<footer>
+
+				<div class="url-bar">
+					<input type="text" id="outputUrl" placeholder="URL Here..." readonly />
+					<button onclick="copyUrl()">Copy URL</button>
+				</div>
+
+				<p>Made with ❤️ by <strong>VortisRD</strong></p>
+				<p>
+					<a target="_blank" href="https://twitch.com/vortisrd"><i class="fa-brands fa-twitch"></i></a>
+					<a target="_blank" href="https://youtube.com/@vortisrd"><i class="fa-brands fa-youtube"></i></a>
+					<a target="_blank" href="https://tiktok.com/@vortisrd"><i class="fa-brands fa-tiktok"></i></a>
+					<a target="_blank" href="https://x.com/vortisrd"><i class="fa-brands fa-x-twitter"></i></a>
+					<a target="_blank" href="https://github.com/vortisrd"><i class="fa-brands fa-github"></i></a>
+				</p>
+			</footer>
+		</div>
+
+		<div id="chat-preview">
+			<iframe src="./chat.html" frameborder="0"></iframe>
+		</div>
+	</div>
+
+	<div id="addEmoteModal" class="modal hidden">
+		<div class="modal-content">
+			<h3>Add YouTube Custom Emote</h3>
+			<label>
+				Emote Name
+				<input type="text" id="newEmoteName" placeholder="_YourEmoteNameHere" class="avoid">
+			</label>
+			<label>
+				Image URL
+				<input type="text" id="newEmoteURL" placeholder="https://example.com/emote.png" class="avoid">
+			</label>
+			<div class="modal-buttons">
+				<button id="confirmAddEmote">Add</button>
+				<button id="cancelAddEmote">Cancel</button>
+			</div>
+		</div>
+	</div>
+	
+
+	<script src="js/settings.js"></script>
+</body>
+</html>
