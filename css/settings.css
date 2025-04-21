@@ -113,6 +113,7 @@ a { color: #ffcc00; }
 .tab-content .setting.column .emote-list {
     width:100%;
     display: flex;
+	flex-wrap: wrap; /* allow items to wrap */
     gap: 10px;
     margin-top: 15px;
 }
