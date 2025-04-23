@@ -186,14 +186,17 @@ const mockData = {
 function generateMockEvent() {
     const eventTypes = [
         'twitch-chat', 'twitch-chat', 'twitch-chat', 'twitch-chat', 'twitch-chat', 
+        'twitch-chat', 'twitch-chat', 'twitch-chat', 'twitch-chat', 'twitch-chat', 
         
         'twitch-follow', 'twitch-bits', 'twitch-sub', 'twitch-resub', 
         'twitch-giftsub', 'twitch-giftbomb', 'twitch-raid',
         'twitch-announcement', 'twitch-reward', 'twitch-gigantifyemote',
 
         'youtube-chat', 'youtube-chat', 'youtube-chat', 'youtube-chat', 'youtube-chat', 
+        'youtube-chat', 'youtube-chat', 'youtube-chat', 'youtube-chat', 'youtube-chat', 
         'youtube-superchat', 'youtube-supersticker', 'youtube-newsponsor', 'youtube-membermilestone', 'youtube-membergift',
 
+        'tiktok-chat', 'tiktok-chat', 'tiktok-chat', 'tiktok-chat', 'tiktok-chat', 
         'tiktok-chat', 'tiktok-chat', 'tiktok-chat', 'tiktok-chat', 'tiktok-chat', 
         'tiktok-follow', 'tiktok-sub', 'tiktok-gift',
 
