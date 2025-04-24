@@ -363,8 +363,8 @@ async function getYouTubeEmotes(data) {
     }
 
     // Replace Custom Member Emotes Defined at Settings.
-    // Shows if user is a Member
-    if (data.user.isSponsor == true) {
+    // Shows if user is a Member or the Owner
+    if (data.user.isSponsor == true || data.user.isOwner == true) {
         message = message.replace(/:([a-zA-Z0-9_]+):/g, (match, emoteName) => {
             if (youTubeCustomEmotes[emoteName]) {
                 return `<img src="${youTubeCustomEmotes[emoteName]}" class="emote">`;
