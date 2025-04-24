@@ -21,7 +21,6 @@ html {
 
 body {
     background-color: #121212;
-    background: url('https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjlqMXpnbGUxY3o2NnQ5cnEwdDZseTMydXNpaXFrZWtnbmZsM3Y4OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/EMp5I4EfDhLNP8qbPv/giphy.gif') center center no-repeat;
     background-size: cover;
     overflow: hidden;
 }
