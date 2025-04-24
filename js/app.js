@@ -62,7 +62,6 @@ const streamerBotClient = new StreamerbotClient({
         streamerBotConnected = false;
         if (eventsMockup == true) {
             startMockupSystem();
-            chatContainer.innerHTML = '';
         }
         
     }
