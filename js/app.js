@@ -52,12 +52,18 @@ const streamerBotClient = new StreamerbotClient({
             title: currentLang.streamerbotconnected,
             text: ``
         });
-        if (eventsMockup == true) { stopMockupSystem(); }
+        if (eventsMockup == true) {
+            chatContainer.innerHTML = '';
+            stopMockupSystem();
+        }
     },
     onDisconnect: () => {
         console.error(currentLang.streamerbotdisconnected);
         streamerBotConnected = false;
-        if (eventsMockup == true) { startMockupSystem(); }
+        if (eventsMockup == true) {
+            startMockupSystem();
+            chatContainer.innerHTML = '';
+        }
         
     }
 });
