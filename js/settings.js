@@ -9,10 +9,15 @@ async function saveSettingsToLocalStorage() {
 	
 	const hiddenField = document.querySelector("textarea[name=youTubeCustomEmotes]:not(.avoid)");
 
+	const ranges = document.querySelectorAll("input[type=range]:not(.avoid)");
+
 	const settings = {};
 
 	checkboxes.forEach((checkbox) => {
 		settings[checkbox.name] = checkbox.checked;
+	});
+	ranges.forEach((range) => {
+		settings[range.name] = range.value;
 	});
 	textfields.forEach((textfield) => {
 		settings[textfield.name] = textfield.value;
@@ -45,17 +50,23 @@ async function loadSettingsFromLocalStorage() {
 	if (!saved) return;
 
 	const settings = JSON.parse(saved);
+	console.log(settings);
 
 	Object.keys(settings).forEach((key) => {
 		const input = document.querySelector(`[name="${key}"]`);
 		if (input) {
 			if (input.type === "checkbox") {
 				input.checked = settings[key];
-			} else {
+			}
+			else {
 				input.value = settings[key];
 			}
 		}
 	});
+
+
+	document.querySelector('#font-value').textContent = Math.floor(document.querySelector('#font-slider').value * 100) + '%';
+
 
 	var streamerBotServerAddress = document.querySelector('input[type=text][name=streamerBotServerAddress]').value;
 	var streamerBotServerPort = document.querySelector('input[type=text][name=streamerBotServerPort]').value;
@@ -101,6 +112,8 @@ async function pushChangeEvents() {
 	const numberfields = document.querySelectorAll("input[type=number]:not(.avoid)");
 	const selects = document.querySelectorAll("select:not(.avoid)");
 
+	const ranges = document.querySelectorAll("input[type=range]:not(.avoid)");
+
 	checkboxes.forEach((checkbox) => {
 		checkbox.addEventListener('change', () => {
 			generateUrl();
@@ -131,6 +144,17 @@ async function pushChangeEvents() {
 			saveSettingsToLocalStorage();
 		});
 	});
+
+	ranges.forEach((range) => {
+		range.addEventListener('change', () => {
+			generateUrl();
+			saveSettingsToLocalStorage();
+		});
+	});
+
+	document.querySelector('#font-slider').addEventListener('input', function () {
+		document.querySelector('#font-value').textContent = Math.floor(this.value * 100) + '%';
+	});
 }
 
 
@@ -149,10 +173,15 @@ async function generateUrl() {
 	const numberfields = document.querySelectorAll("input[type=number]:not(.avoid)");
 	const selects = document.querySelectorAll("select:not(.avoid)");
 
+	const ranges = document.querySelectorAll("input[type=range]:not(.avoid)");
+
 	const params = new URLSearchParams();
 	
 	selects.forEach((select) => {
 		params.set(select.name, select.value);
+	});
+	ranges.forEach((range) => {
+		params.set(range.name, range.value);
 	});
 	checkboxes.forEach((checkbox) => {
 		params.set(checkbox.name, checkbox.checked);

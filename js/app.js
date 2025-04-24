@@ -6,7 +6,10 @@ const streamerBotServerAddress      = getURLParam("streamerBotServerAddress", "1
 const streamerBotServerPort         = getURLParam("streamerBotServerPort", "8080");
 let streamerBotConnected            = false;
 const chatThreshhold                = 50;
+
 const chatContainer                 = document.querySelector('#chat');
+const chatFontSize                  = getURLParam("chatFontSize", 1);
+
 const currentLang                   = lang[getURLParam("language", 'ptbr')]; 
 const eventsMockup                  = getURLParam("eventsMockup", true); 
 const chatHorizontal                = getURLParam("chatHorizontal", false); 
@@ -24,6 +27,8 @@ const avatars = new Map();
 const userColors = new Map();
 
 const ignoreUserList = ignoreChatters.split(',').map(item => item.trim().toLowerCase()) || [];
+
+chatContainer.style.zoom = chatFontSize;
 
 /* ----------------------- */
 /*          START          */
@@ -103,7 +108,7 @@ async function addMessageToChat(userID, messageID, platform, data) {
             }, 1000); 
         }, Math.floor(hideAfter * 1000));
     }
-
+    
     removeExtraChatMessages();
 }
 
