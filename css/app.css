@@ -165,7 +165,7 @@ body {
     border-radius: 5px;
     background: rgba(0,0,0,0.15);
     display: inline-flex;
-    align-items: center;
+    align-items: flex-start;
 }
 
 
@@ -308,7 +308,7 @@ body {
 #chat .message.youtube .badges i.fa-solid.fa-check { background: #999; }
 
 
-#chat .message.youtube.event.supersticker > div .platform {  order: 1; }
+#chat .message.youtube.event.supersticker > div .platform { order: 1; }
 #chat .message.youtube.event.supersticker > div .sticker { 
     order: 2;
     width: 48px;
@@ -320,8 +320,23 @@ body {
     width: 100%;
     height: 100%;
 }
-#chat .message.youtube.event.supersticker  > div .info { order: 3; }
-
+#chat .message.youtube.event.supersticker > div .info { order: 3; }
+#chat .message.youtube.event.supersticker.giantsupersticker > div {
+    flex-wrap: wrap;
+}
+#chat .message.youtube.event.supersticker.giantsupersticker > div .platform { order: 2; }
+#chat .message.youtube.event.supersticker.giantsupersticker > div .sticker {
+    order: 1;
+    flex: 0 0 100%;
+    height: 148px;
+    text-align: center;
+    margin: 10px 0;
+}
+#chat .message.youtube.event.supersticker.giantsupersticker > div .sticker img {
+    width: 148px;
+    height: 148px;
+}
+#chat .message.youtube.event.supersticker.giantsupersticker > div .info { order: 3; }
 
 
 

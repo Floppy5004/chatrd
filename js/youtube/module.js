@@ -1,11 +1,12 @@
-const showYouTubeMessages           = getURLParam("showYouTubeMessages", true);
-const showYouTubeSuperChats         = getURLParam("showYouTubeSuperChats", true);
-const showYouTubeSuperStickers      = getURLParam("showYouTubeSuperStickers", true);
-const showYouTubeSuperStickerGif    = getURLParam("showYouTubeSuperStickerGif", true);
-const showYouTubeMemberships        = getURLParam("showYouTubeMemberships", true);
-const showYouTubeGiftMemberships    = getURLParam("showYouTubeGiftMemberships", true);
-const showYouTubeMembershipsTrain   = getURLParam("showYouTubeMembershipsTrain", true);
-const showYouTubeStatistics         = getURLParam("showYouTubeStatistics", true);
+const showYouTubeMessages               = getURLParam("showYouTubeMessages", true);
+const showYouTubeSuperChats             = getURLParam("showYouTubeSuperChats", true);
+const showYouTubeSuperStickers          = getURLParam("showYouTubeSuperStickers", true);
+const showYouTubeSuperStickerGif        = getURLParam("showYouTubeSuperStickerGif", true);
+const showYouTubeSuperStickerFullSize   = getURLParam("showYouTubeSuperStickerFullSize", false);
+const showYouTubeMemberships            = getURLParam("showYouTubeMemberships", true);
+const showYouTubeGiftMemberships        = getURLParam("showYouTubeGiftMemberships", true);
+const showYouTubeMembershipsTrain       = getURLParam("showYouTubeMembershipsTrain", true);
+const showYouTubeStatistics             = getURLParam("showYouTubeStatistics", true);
 
 let youTubeCustomEmotes = [];
 
@@ -190,9 +191,13 @@ async function youTubeSuperStickerMessage(data) {
         })
     ]);
     
-    const classes = 'supersticker';
+    const classes = ['supersticker'];
+    if (showYouTubeSuperStickerFullSize == true) {
+        classes.push('giantsupersticker');
+    }
+
     const messageData = {
-        classes: classes,
+        classes: classes.join(' '),
         avatar,
         badges: '',
         userName,
