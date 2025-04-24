@@ -65,10 +65,12 @@ const streamerBotClient = new StreamerbotClient({
 
 
 async function addMessageToChat(userID, messageID, platform, data) {
-        
+
     const html = DOMPurify.sanitize(`
         <div id="${messageID}" data-user="${userID}" class="${platform} ${data.classes} message" style="">
             <div class="animate__animated ${chatHorizontal == true ? 'animate__fadeInRight' : 'animate__fadeInUp'} animate__faster">
+
+                ${data.classes.includes("first-message") ? '<span class="first-chatter">👋</span>' : '' }
 
                 ${!data.shared ? '' : data.shared}
 

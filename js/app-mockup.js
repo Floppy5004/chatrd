@@ -443,6 +443,8 @@ function generateMockEvent() {
                 message : messagetext
             };
 
+            console.log('superchat', data.amount);
+
             youTubeSuperChatMessage(data);
 
         break;

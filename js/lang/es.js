@@ -3,6 +3,7 @@ const es = {
     streamerbotdisconnected: '¡Streamer.bot desconectado!',
 
     twitch : {
+        firstMessage : () => `Primeira mensaje`,
         follow : () => ` siguió el canal`,
         announcement : () => ` <div class="reply">📢 <strong>Anuncio</strong></div>`,
         channelpoints : ({ title }) => ` <div class="reply"><i class="fa-solid fa-wand-magic-sparkles"></i> <strong>Puntos del canal - ${title}</strong></div>`,

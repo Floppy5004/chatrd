@@ -21,6 +21,8 @@ html {
 
 body {
     background-color: #121212;
+    background: url('https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjlqMXpnbGUxY3o2NnQ5cnEwdDZseTMydXNpaXFrZWtnbmZsM3Y4OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/EMp5I4EfDhLNP8qbPv/giphy.gif') center center no-repeat;
+    background-size: cover;
     overflow: hidden;
 }
 
@@ -34,7 +36,7 @@ body {
     position: absolute;
     width: 100%;
     bottom: 0px;
-    padding: 20px;
+    padding: 10px;
 }
 
 #chat .message {
@@ -133,11 +135,12 @@ body {
     color: #999;
 }
 
-#chat .message .shared span {
+#chat .message.twitch .shared span {
     display: inline-block;
     border-radius: 5px;
     padding: 2px 10px 2px 5px;
-    background: #a970ff;
+    background: rgba(169,112,255,0.85);
+    background: linear-gradient(180deg, rgba(169,112,255,0.85) 0%, rgba(95,67,138,0.85) 100%);
     color: #fff;
 }
 
@@ -169,6 +172,33 @@ body {
 
 
 /*#chat .message.twitch .platform { background: #a970ff; }*/
+
+#chat .message.twitch.first-message > div {
+    background: rgba(18,18,18,0.5);
+    background: linear-gradient(180deg, rgba(18,18,18,0.5) 1%, rgba(0,0,0,0.5) 100%);
+    padding: 5px 10px; 
+    border-radius: 10px;
+    display: inline-block;
+}
+
+#chat .message.twitch.first-message > div .first-chatter {
+    animation-name: wave-animation; 
+    animation-duration: 2.5s;
+    animation-iteration-count: infinite;
+    transform-origin: 70% 70%; 
+    display: inline-block;
+}
+
+@keyframes wave-animation {
+    0% { transform: rotate( 0.0deg) }
+    10% { transform: rotate(14.0deg) }
+    20% { transform: rotate(-8.0deg) }
+    30% { transform: rotate(14.0deg) }
+    40% { transform: rotate(-4.0deg) }
+    50% { transform: rotate(10.0deg) }
+    60% { transform: rotate( 0.0deg) }
+    100% { transform: rotate( 0.0deg) }
+}
 
 #chat .message.twitch .platform { color: #a970ff; background: transparent !important; text-shadow: 0px 0px 0px #a970ff;}
 #chat .message.twitch .platform::after {

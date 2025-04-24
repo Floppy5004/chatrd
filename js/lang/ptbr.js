@@ -3,6 +3,7 @@ const ptbr = {
     streamerbotdisconnected: 'Streamer.bot Desconectado!',
 
     twitch : {
+        firstMessage : () => `Primeira mensagem`,
         follow : () => ` seguiu o canal`,
         announcement : () => ` <div class="reply">📢 <strong>Anúncio</strong></div>`,
         channelpoints : ({ title }) => ` <div class="reply"><i class="fa-solid fa-wand-magic-sparkles"></i> <strong>Pontos do Canal - ${title}</strong></div>`,
