@@ -3,8 +3,6 @@ const showStreamlabsDonations       = getURLParam("showStreamlabsDonations", tru
 const streamLabsHandlers = {
     'Streamlabs.Donation': (response) => {
         console.debug(response.data);
-        if (showStreamlabsDonations == false)
-            return;
         streamLabsEventMessage(response.data);
     },
 };
@@ -13,6 +11,9 @@ for (const [event, handler] of Object.entries(streamLabsHandlers)) {
 }
 
 async function streamLabsEventMessage(data) {
+    
+    if (showStreamlabsDonations == false) return;
+    
     const {
         from: userName,
         formattedAmount: moneyFromUser,

@@ -3,8 +3,6 @@ const showStreamElementsTips        = getURLParam("showStreamElementsTips", true
 const streamElementsHandlers = {
     'StreamElements.Tip': (response) => {
         console.debug(response.data);
-        if (showStreamElementsTips == false)
-            return;
         streamElementsEventMessage(response.data);
     },
 };
@@ -15,6 +13,9 @@ for (const [event, handler] of Object.entries(streamElementsHandlers)) {
 
 
 async function streamElementsEventMessage(data) {
+    
+    if (showStreamElementsTips == false) return;
+    
     const {
         username: userName,
         amount: moneyFromUser,

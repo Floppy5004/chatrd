@@ -123,7 +123,10 @@ async function twitchChatMessage(data) {
         if (showTwitchSharedChat == true) {
             if (!data.sharedChat.primarySource)
             {
-                var sharedChat = `<div class="shared"><span><i class="fa-solid fa-comments"></i> <strong>${data.sharedChat.sourceRoom.name}</strong></span> <i class="fa-solid fa-arrow-turn-down"></i></div>`;
+                var sharedChat = `<div class="shared">
+                    <span><i class="fa-solid fa-comment-dots"></i> <strong>${data.sharedChat.sourceRoom.name}</strong></span>
+                    <i class="fa-solid fa-arrow-turn-down"></i>
+                </div>`;
             }
         }
         else if (!data.sharedChat.primarySource && showTwitchSharedChat == false) {
