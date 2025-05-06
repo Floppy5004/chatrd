@@ -77,10 +77,9 @@ async function loadSettingsFromLocalStorage() {
 		onConnect: (data) => {
 			streamerBotConnected = true;
 
-			var sbstatus = document.getElementById('memberemotesbstatus');
-
-			sbstatus.style.color = '#00dd63';
-			sbstatus.textContent = 'Streamer.Bot is Online!';
+			document.querySelector('#memberemotesbstatus').classList.remove('offline');
+			document.querySelector('#memberemotesbstatus').classList.add('online');
+			document.querySelector('#memberemotesbstatus span').textContent = 'Streamer.Bot is Online!';
 
 			streamerBotClient.getGlobals().then( (getglobals) => {
 				const settings = JSON.parse(getglobals.variables.chatrdytcustomemotes.value);
@@ -96,10 +95,10 @@ async function loadSettingsFromLocalStorage() {
 			console.error('Streamer.bot Disconnected!');
 			
 			streamerBotConnected = false;
-
-			var sbstatus = document.getElementById('memberemotesbstatus');
-			sbstatus.style.color = '#ff0000';
-			sbstatus.textContent = 'Streamer.Bot Needs to be Online!';
+			
+			document.querySelector('#memberemotesbstatus').classList.remove('online');
+			document.querySelector('#memberemotesbstatus').classList.add('offline');
+			document.querySelector('#memberemotesbstatus span').textContent = 'Streamer.Bot is Offline!';
 		}
 	});
 

@@ -1,6 +1,7 @@
 const ptbr = {
     streamerbotconnected: 'Streamer.bot Conectado!',
     streamerbotdisconnected: 'Streamer.bot Desconectado!',
+    ttschat: 'disse',
 
     twitch : {
         firstMessage : () => `Primeira mensagem`,

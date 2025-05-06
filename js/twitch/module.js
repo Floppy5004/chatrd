@@ -515,7 +515,6 @@ async function twitchChatClearMessages() {
 
 
 async function twitchUpdateStatistics(data) {
-    
     if (showPlatformStatistics == false || showTwitchViewers == false) return;
 
     const viewers = DOMPurify.sanitize(data.viewerCount);

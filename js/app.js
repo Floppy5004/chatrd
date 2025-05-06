@@ -4,6 +4,10 @@
 
 const streamerBotServerAddress      = getURLParam("streamerBotServerAddress", "127.0.0.1");
 const streamerBotServerPort         = getURLParam("streamerBotServerPort", "8080");
+
+const ttsSpeakerBotChat             = getURLParam("ttsSpeakerBotChat", false);
+const ttsSpeakerBotEvents           = getURLParam("ttsSpeakerBotEvents", false);
+
 let streamerBotConnected            = false;
 const chatThreshhold                = 50;
 
@@ -75,6 +79,8 @@ const streamerBotClient = new StreamerbotClient({
 
 
 async function addMessageToChat(userID, messageID, platform, data) {
+    
+    if (ttsSpeakerBotChat == true) { ttsSpeakerBotSays(data.userName, currentLang.ttschat, data.message); }
 
     const html = DOMPurify.sanitize(`
         <div id="${messageID}" data-user="${userID}" class="${platform} ${data.classes} message" style="">
@@ -121,6 +127,8 @@ async function addMessageToChat(userID, messageID, platform, data) {
 
 async function addEventToChat(userID, messageID, platform, data) {
     
+    if (ttsSpeakerBotEvents == true) { ttsSpeakerBotSays(data.userName, '', data.message); }
+    
     const html = DOMPurify.sanitize(`
         <div id="${messageID}" data-user="${userID}" class="${platform} ${data.classes} message event" style="">
             <div class="animate__animated ${chatHorizontal == true ? 'animate__fadeInRight' : 'animate__fadeInUp'} animate__faster">
@@ -149,7 +157,7 @@ async function addEventToChat(userID, messageID, platform, data) {
             }, 1000); 
         }, Math.floor(hideAfter * 1000));
     }
-
+    
     removeExtraChatMessages();
 }
 
@@ -298,7 +306,42 @@ const notifySuccess = (success) => {
 }
 
 
-
 function escapeRegex(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+
+async function ttsSpeakerBotSays(user, action, message) {
+
+    if (streamerBotConnected == false) return;
+    
+    const ttstext = await cleanStringOfHTMLButEmotes(message);
+    const ttsmessage = user+' '+action+' '+ttstext;
+
+    streamerBotClient.doAction(
+        { name : "TTS Event" },
+        {
+            "ttsmessage": ttsmessage,
+        }
+    ).then( (ttsstuff) => {
+        console.debug('Sending TTS to Streamer.Bot', ttsstuff);
+    });
+}
+
+
+async function cleanStringOfHTMLButEmotes(string) {
+    // Cria um elemento DOM temporário
+    const container = document.createElement('div');
+    container.innerHTML = string;
+
+    // Substitui <img class="emote" alt="..."> por texto do alt
+    const emotes = container.querySelectorAll('img.emote[alt]');
+    emotes.forEach(img => {
+        const altText = img.getAttribute('alt');
+        const textNode = document.createTextNode(altText);
+        img.replaceWith(textNode);
+    });
+
+    // Remove todo o restante do HTML
+    return container.textContent || "";
 }

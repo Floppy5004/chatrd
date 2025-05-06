@@ -422,3 +422,13 @@ footer a {
 	justify-content: flex-end;
 	gap: 1em;
 }
+
+
+#memberemotesbstatus.online i {
+    color: #00dd63;
+    text-shadow: 0 0 5px #00dd63;
+}
+#memberemotesbstatus.offline i {
+    color: #ff0000;
+    text-shadow: 0 0 5px #ff0000;
+}
