@@ -71,6 +71,7 @@ const ptbr = {
 
     tiktok : {
         follow : () => ` seguiu o canal`,
+        likes : (likes) => `mandou <strong><i class="fa-solid fa-heart"></i> <em class="likecount" style="font-style: normal;">${likes}</em> likes</strong>`,
         sub : ({ months }) => ` se inscreveu por <i class="fa-solid fa-star"></i> <strong>${months || 1 } ${(months && months > 1) ? 'meses' : 'mês'}</strong>`,
         gift : ({ gift, count, coins }) => ` doou <strong>${gift} x${count}</strong> (🪙 <strong>${coins} ${(coins && coins > 1) ? 'moedas' : 'moeda'})</strong>`,
         

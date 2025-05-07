@@ -329,15 +329,15 @@ async function youTubeUpdateStatistics(data) {
 
 async function getYouTubeEmotes(data) {
     let message = data.message;
-
     const channelId = data.broadcast?.channelId;
     if (!channelId) return message;
 
-    // Load emotes if not already loaded
+    // Carrega os emotes do canal BTTV se ainda não estiverem carregados
     if (youTubeBTTVEmotes.length === 0) {
         try {
             const res = await fetch(`https://api.betterttv.net/3/cached/users/youtube/${channelId}`);
             const emoteData = await res.json();
+            console.debug('Getting YouTube BTTV Channel Emojis', `https://api.betterttv.net/3/cached/users/youtube/${channelId}`, emoteData);
             youTubeBTTVEmotes = [
                 ...(emoteData.sharedEmotes || []),
                 ...(emoteData.channelEmotes || [])
@@ -347,40 +347,80 @@ async function getYouTubeEmotes(data) {
         }
     }
 
-    // Replace BTTV emotes
+    // Cria o mapa de emotes
+    const emoteMap = new Map();
+
+    // BTTV emotes
     for (const emote of youTubeBTTVEmotes) {
-        const escapedCode = escapeRegex(emote.code);
-        const emoteRegex = new RegExp(`(?<!\\S)${escapedCode}(?!\\S)`, 'g');
-
         const imageUrl = `https://cdn.betterttv.net/emote/${emote.id}/1x`;
-        const emoteElement = `<img src="${imageUrl}" class="emote" alt="${escapedCode}">`;
-
-        message = message.replace(emoteRegex, emoteElement);
+        const emoteElement = `<img src="${imageUrl}" class="emote" alt="${emote.code}">`;
+        emoteMap.set(emote.code, { html: emoteElement, raw: emote.code });
     }
 
-    // Replace built-in YouTube emotes
+    // YouTube emotes (ex: :vortisLaugh:)
     if (data.emotes) {
         for (const emote of data.emotes) {
-            const emoteRegex = new RegExp(escapeRegex(emote.name), 'g');
             const emoteElement = `<img src="${emote.imageUrl}" class="emote" alt="${emote.name}">`;
-            message = message.replace(emoteRegex, emoteElement);
+            emoteMap.set(emote.name, { html: emoteElement, raw: emote.name });
         }
     }
 
-    // Replace Custom Member Emotes Defined at Settings.
-    // Shows if user is a Member or the Owner
-    if (data.user.isSponsor == true || data.user.isOwner == true) {
-        message = message.replace(/:([a-zA-Z0-9_]+):/g, (match, emoteName) => {
-            if (youTubeCustomEmotes[emoteName]) {
-                return `<img src="${youTubeCustomEmotes[emoteName]}" class="emote" alt="${emoteName}">`;
-            }
-            return match; 
-        });
+    // Custom Member Emotes (também com dois-pontos)
+    if (data.user.isSponsor === true || data.user.isOwner === true) {
+        for (const [name, url] of Object.entries(youTubeCustomEmotes)) {
+            const emoteElement = `<img src="${url}" class="emote" alt="${name}">`;
+            emoteMap.set(`:${name}:`, { html: emoteElement, raw: `:${name}:` });
+        }
     }
 
+    // Usa DOMParser para substituir apenas nós de texto
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(`<div>${message}</div>`, 'text/html');
+    const container = doc.body.firstChild;
 
-    return message;
+    function escapeRegex(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    function replaceEmotesInText(text) {
+        // Ordena por tamanho decrescente pra evitar conflitos entre nomes parecidos
+        const sorted = Array.from(emoteMap.values()).sort((a, b) => b.raw.length - a.raw.length);
+
+        for (const { raw, html } of sorted) {
+            const escaped = escapeRegex(raw);
+
+            // Emotes com dois-pontos: :emote: → permitem colados
+            const isDelimited = raw.startsWith(':') && raw.endsWith(':');
+            const regex = isDelimited
+                ? new RegExp(escaped, 'g')
+                : new RegExp(`(?<!\\S)${escaped}(?!\\S)`, 'g');
+
+            text = text.replace(regex, html);
+        }
+
+        return text;
+    }
+
+    function walk(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+            const replaced = replaceEmotesInText(node.nodeValue);
+            if (replaced !== node.nodeValue) {
+                const span = doc.createElement('span');
+                span.innerHTML = replaced;
+                node.replaceWith(...span.childNodes);
+            }
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+            for (const child of Array.from(node.childNodes)) {
+                walk(child);
+            }
+        }
+    }
+
+    walk(container);
+
+    return container.innerHTML;
 }
+
 
 // ChatGPT created this. :)
 async function getYouTubeStickerImage(data) {

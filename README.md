@@ -66,7 +66,7 @@ ChatRD is a chat overlay widget for OBS that unifies messages and events from **
 ## 📦 Dependencies
 
 - [Streamer.Bot](https://streamer.bot)  
-- [Speaker.Bot](https://speaker.bot/) 
+- [Speaker.Bot](http://speaker.bot/) 
 - [Streamer.Bot Client JS](https://streamerbot.github.io/client/)
 - [TikFinity Desktop App](https://tikfinity.zerody.one/)  
 - [Font Awesome](https://fontawesome.com/)  

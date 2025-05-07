@@ -65,6 +65,7 @@ const es = {
 
     tiktok : {
         follow : () => ` siguió el canal`,
+        likes : (likes) => `envió <strong><i class="fa-solid fa-heart"></i> <em class="likecount" style="font-style: normal;">${likes}</em> likes</strong>`,
         sub : ({ months }) => ` se suscribió por <i class="fa-solid fa-star"></i> <strong>${months || 1 } ${(months && months > 1) ? 'meses' : 'mes'}</strong>`,
         gift : ({ gift, count, coins }) => ` regaló <strong>${gift} x${count}</strong> (🪙 <strong>${coins} ${(coins && coins > 1) ? 'monedas' : 'moneda'})</strong>`,
     }

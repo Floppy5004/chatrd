@@ -9,6 +9,7 @@
 
 const showTikTokMessages            = getURLParam("showTikTokMessages", true);
 const showTikTokFollows             = getURLParam("showTikTokFollows", true);
+const showTikTokLikes               = getURLParam("showTikTokLikes", true);
 const showTikTokGifts               = getURLParam("showTikTokGifts", true);
 const showTikTokSubs                = getURLParam("showTikTokSubs", true);
 const showTikTokStatistics          = getURLParam("showTikTokStatistics", true);
@@ -31,6 +32,8 @@ streamerBotClient.on('General.Custom', (response) => {
             break;
             case 'like' :
                 tiktokUpdateStatistics(jsonData, 'likes');
+                /*console.log('TikTok Likes', jsonData);
+                tiktokLikesMessage(jsonData);*/
             break;
             case 'chat' :
                 console.log('TikTok Chat', jsonData);
@@ -137,6 +140,51 @@ async function tiktokFollowMessage(data) {
 
     addEventToChat(userID, messageID, 'tiktok', messageData);
 }
+
+
+
+
+async function tiktokLikesMessage(data) {
+
+    if (showTikTokLikes == false) return;
+
+    const {
+        userId: userID,
+        msgId: messageID,
+        profilePictureUrl: avatar,
+        nickname: userName,
+        likeCount: likesSent
+    } = data;
+
+    var likeCountTotal = parseInt(likesSent);
+
+    // Search for Previous Likes from the Same User
+    const previousLikeContainer = chatContainer.querySelector(`div.message[data-user="${userID}"]`);
+
+    // If found, fetches the previous likes, deletes the element
+    // and then creates a new count with a sum of the like count
+    if (previousLikeContainer) {
+        var likeCountPrev = parseInt(previousLikeContainer.querySelector('.likecount').textContent);
+        likeCountTotal = Math.floor(likeCountPrev + likeCountTotal);
+        previousLikeContainer.remove();
+    }
+
+    const message = currentLang.tiktok.likes(likeCountTotal)
+    const classes = 'likes'
+
+    const messageData = {
+        classes: classes,
+        avatar,
+        badges: '',
+        userName,
+        color: '#FFF',
+        message,
+        reply: '',
+    };
+
+    addEventToChat(userID, messageID, 'tiktok', messageData);
+}
+
 
 
 
