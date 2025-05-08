@@ -100,9 +100,9 @@ What Casterlabs Caffeinated, Social Stream Ninja and Onecomme do to scrape the e
 When YouTube decide to expose their Partner Emotes on their API, I'll come back to this.
 
 ### About Custom Styling
-The safest way to customize ChatRD is open either the Chat or the Config in your browser and use [it's Dev Tools](https://cdn.discordapp.com/attachments/1360070885620453496/1363850037276180591/image.png?ex=680a2ad3&is=6808d953&hm=aac3045c97602afcb7eacf207eb73bccf036348a2daf27ced49f1e422f380f7a&format=webp&quality=lossless&width=1872&height=541) to look for the tags, their classes, identifiers and then style in the way you want. **You need basic CSS knowledge for that**.
+The safest way to customize ChatRD is open either the Chat or the Config in your browser and use [it's Dev Tools](https://i.imgur.com/Nirwz5R.png) to look for the tags, their classes, identifiers and then style in the way you want. **You need basic CSS knowledge for that**.
 
-After you finish it, paste the CSS inside the [Custom CSS field within Browser Source Property Window](https://media.discordapp.net/attachments/1360070885620453496/1363577945117032578/image.png?ex=6809d62c&is=680884ac&hm=fe81c53d8b144ca48506ff5d143dbb3a43cabefbb55e4d4b19943a9607f2bf96&=&format=webp&quality=lossless&width=994&height=960).
+After you finish it, paste the CSS inside the [Custom CSS field within Browser Source Property Window](https://i.imgur.com/BjvrV28.png).
 
 ### About Support on Changing the Javascript or other Core Files
 If you break it, you fix it. 😊
