@@ -21,10 +21,11 @@ ChatRD is a chat overlay widget for OBS that unifies messages and events from **
 1. Make sure your **Twitch** and **YouTube** accounts are connected on **Streamer.Bot** and you have **TikFinity Desktop App** installed and set up to your account on **TikTok**. **BOTH APPS NEED TO RUN ON THE SAME PC**.
 2. In **Streamer.Bot**, go to **Server/Clients → WebSocket Server** and make sure it is running
 3. Import the string inside the file [streamerbot-import.vortisrd](https://github.com/vortisrd/chatrd/blob/main/streamerbot-import.vortisrd) to your **Streamer.Bot** using the **Import** button at the top.
-4. Open the [Settings Page](https://vortisrd.github.io/chatrd) in your browser  
-5. Choose your desired options  
-6. Click **"Copy URL"**
-7. Add a Browser Source in OBS and paste the link  
+4. Go to **Server/Clients → WebSocket Client** and make sure the *TikFinity* WebSocket is connected. If not, right-click on it and check *Auto-Connect* and *Reconnect* before clicking on *Connect*. Also, make sure the **TikFinity Desktop App** is opened and connected to your TikTok Account.
+5. Open the [Settings Page](https://vortisrd.github.io/chatrd) in your browser  
+6. Choose your desired options  
+7. Click **"Copy URL"**
+8. Add a Browser Source in OBS and paste the link  
 
 ---
 
