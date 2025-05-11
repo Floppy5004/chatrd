@@ -1,6 +1,6 @@
 # 💬 ChatRD
 
-ChatRD is a chat overlay widget for OBS that unifies messages and events from **Twitch**, **YouTube**, **TikTok** (and more to come). 
+ChatRD is a chat overlay widget for OBS that unifies messages and events from **Twitch**, **YouTube**, **TikTok**, **Kick** (and more to come). 
 
 ![ChatRD Config UI](https://i.imgur.com/Ga9qeHr.png)
 
@@ -18,14 +18,34 @@ ChatRD is a chat overlay widget for OBS that unifies messages and events from **
 
 ## 🛠️ Usage
 
-1. Make sure your **Twitch** and **YouTube** accounts are connected on **Streamer.Bot** and you have **TikFinity Desktop App** installed and set up to your account on **TikTok**. **BOTH APPS NEED TO RUN ON THE SAME PC**.
-2. In **Streamer.Bot**, go to **Server/Clients → WebSocket Server** and make sure it is running
-3. Import the string inside the file [streamerbot-import.vortisrd](https://github.com/vortisrd/chatrd/blob/main/streamerbot-import.vortisrd) to your **Streamer.Bot** using the **Import** button at the top.
-4. Go to **Server/Clients → WebSocket Client** and make sure the *TikFinity* WebSocket is connected. If not, right-click on it and check *Auto-Connect* and *Reconnect* before clicking on *Connect*. Also, make sure the **TikFinity Desktop App** is opened and connected to your TikTok Account.
-5. Open the [Settings Page](https://vortisrd.github.io/chatrd) in your browser  
-6. Choose your desired options  
-7. Click **"Copy URL"**
-8. Add a Browser Source in OBS and paste the link  
+Make sure your **Twitch** and **YouTube** accounts are connected on **Streamer.Bot** and you have **TikFinity Desktop App** installed and set up to your account on **TikTok**. **BOTH APPS NEED TO RUN ON THE SAME PC**. 
+
+**Before you Begin**: For **Kick**, you need to install [Kick.Bot](https://github.com/Sehelitar/Kick.bot/) to your *Streamer.Bot* first before installing ChatRD. [Click here for instructions on how to install Kick.Bot](https://github.com/Sehelitar/Kick.bot/wiki/Installation) ... or follow the instructions below.
+
+### Streamer.Bot & TikFinity
+1. On **Streamer.Bot**, go to **Server/Clients → WebSocket Server** and make sure it is running
+2. Import the string inside the file [streamerbot-import.vortisrd](https://github.com/vortisrd/chatrd/blob/main/streamerbot-import.vortisrd) to your **Streamer.Bot** using the **Import** button at the top.
+3. Go to **Server/Clients → WebSocket Client** and make sure the *TikFinity* WebSocket is connected. If not, right-click on it and check *Auto-Connect* and *Reconnect* before clicking on *Connect*. 
+4. Make sure **TikFinity Desktop App** is opened and connected to your TikTok Account.
+5. Open the [Settings Page](https://vortisrd.github.io/chatrd) in your browser.
+6. Choose your desired options.
+7. Click **"Copy URL"**.
+8. Add the copied URL as a Browser Source in OBS. Or use it in your browser to read chat. 😊
+
+
+### Kick.Bot installation on Streamer.Bot
+1. First, [download Kick.Bot from Sehelitar's repo](https://github.com/Sehelitar/Kick.bot/releases/).
+2. Unzip and copy the DLLs from **Kick.Bot** to the *dlls folder* inside **Streamer.Bot**. If it's not there, create one (name it "dlls", lowercase).
+3. Import the action from *action.txt* file (inside the ZIP folder you just unzipped) to **Streamer.Bot**.
+4. Close **Streamer.Bot** and open it again. After a few seconds, a window will appear asking for you to login on *Kick*. 
+5. Done! 😊
+
+#### ⚠️ KICK IS A BETA FEATURE!
+Kick doesn't offer an API like Twitch does. It's not feasible for Streamer.Bot do it in an easy manner like Twitch, YouTube, Trovo, etc.
+
+[Kick.Bot](https://github.com/Sehelitar/Kick.bot/releases/) does an excelent job but there is some information missing on the payload from Kick, like *avatars*, *badges (gift sub, community, etc), viewership, etc*. And there will be some errors or some misinformation being shown. I tried my best to emulate these but please, **be patient!**. 😊
+
+Also, I couldn't test every single outcome because it's not possible to simulate the events besides Chat. I followed [Kick.Bot's](https://github.com/Sehelitar/Kick.bot/releases/) documentation and hoped for the best. 🙏
 
 ---
 
@@ -98,6 +118,11 @@ I tried to add member emotes but **that is currently impossible due to YouTube's
 What Casterlabs Caffeinated, Social Stream Ninja and Onecomme do to scrape the emotes won't work with the current way Streamer.Bot and my code works, so I had to choose between **making the user add them manually** or build a **server-sided executable (using NodeJS, Python or whatever) to read the chat as it's going or scrape the HTML code**. I don't want to add another executable on top of the user's flow, so it would be easier to use what it's currently available. **And no, I won't do any research based on what other tools do.** Tried to do that and wasted 1 week of my life doing it.  
 
 When YouTube decide to expose their Partner Emotes on their API, I'll come back to this.
+
+### About Speaker.Bot TTS Customization
+If you want to customize what events the TTS reads, like "I want it to read sub notifications but I don't want it to read bits", it's possible. But doing that means adding an extra TTS switch for every single event for all platforms, making the setup page almost triplicate in size and bloat the code. **I won't do that**. I want to keep it simple and contained.
+
+If you want to have TTS for events separately, I suggest you **Disable TTS Events** on ChatRD and setup Speaker.Bot with the things you want. 😊
 
 ### About Custom Styling
 The safest way to customize ChatRD is open either the Chat or the Config in your browser and use [it's Dev Tools](https://i.imgur.com/Nirwz5R.png) to look for the tags, their classes, identifiers and then style in the way you want. **You need basic CSS knowledge for that**.
