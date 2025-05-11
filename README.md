@@ -103,7 +103,6 @@ Also, I couldn't test every single outcome because it's not possible to simulate
 ## 📝 To-Do List
 
 - Trovo
-- Kick
 - Patreon
 - Ko-Fi
 - TipeeeStream
