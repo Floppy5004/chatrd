@@ -68,5 +68,23 @@ const es = {
         likes : (likes) => `envió <strong><i class="fa-solid fa-heart"></i> <em class="likecount" style="font-style: normal;">${likes}</em> likes</strong>`,
         sub : ({ months }) => ` se suscribió por <i class="fa-solid fa-star"></i> <strong>${months || 1 } ${(months && months > 1) ? 'meses' : 'mes'}</strong>`,
         gift : ({ gift, count, coins }) => ` regaló <strong>${gift} x${count}</strong> (🪙 <strong>${coins} ${(coins && coins > 1) ? 'monedas' : 'moneda'})</strong>`,
-    }
+    },
+
+    kick : {
+        follow : () => ` siguió el canal`,
+
+        sub : ({ months, tier }) => ` se suscribió por
+            <strong>${months || 1 } ${months == 1 ? 'mes' : 'meses'}
+            (Tier ${tier})</strong>`,
+
+        gifted : ({ gifted, tier, total }) => ` regaló
+            <strong>${total || 1 } ${total == 1 ? 'suscripción' : 'suscripciones'}
+            (Tier ${tier})</strong>
+            a <i class="fa-solid fa-gift"></i> <strong>${gifted}</strong>`,
+        
+        giftedbomb : ({ count, tier }) => ` regaló <i class="fa-solid fa-gift"></i> <strong>${count} suscripciones (Tier ${tier})</strong> a la comunidad`,
+
+        raid : ({ viewers }) => ` hizo una raid al canal con <i class="fa-solid fa-users"></i> <strong>${viewers} espectadores</strong>`
+        
+    },
 }

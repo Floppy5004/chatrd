@@ -342,3 +342,32 @@ window.addEventListener('load', () => {
 	pushChangeEvents();
 	populateEmoteList();
 });
+
+
+
+document.querySelectorAll('.nav-bar a').forEach(anchor => {
+	anchor.addEventListener('click', function (e) {
+		e.preventDefault();
+
+		// Remove todas as classes dos links dentro da nav-bar
+		document.querySelectorAll('.nav-bar a').forEach(link => {
+			link.classList.remove('active');
+		});
+
+		this.classList.add('active');
+
+		const targetId = this.getAttribute('href');
+		const targetElement = document.querySelector(targetId);
+
+		if (targetElement) {
+
+			const offset = 20; // ajusta 20px acima
+			const y = targetElement.getBoundingClientRect().top + window.scrollY - offset;
+
+			window.scrollTo({
+				top: y,
+				behavior: 'smooth'
+			});
+		}
+	});
+});

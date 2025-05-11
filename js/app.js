@@ -27,7 +27,6 @@ const hideAfter                     = getURLParam("hideAfter", 0);
 const ignoreChatters                = getURLParam("ignoreChatters", "");
 const excludeCommands               = getURLParam("excludeCommands", true);
 
-const avatars = new Map();
 const userColors = new Map();
 
 const ignoreUserList = ignoreChatters.split(',').map(item => item.trim().toLowerCase()) || [];
@@ -91,10 +90,10 @@ async function addMessageToChat(userID, messageID, platform, data) {
                 ${!data.shared ? '' : data.shared}
 
                 ${showTimestamps == true ? '<span class="time">'+whatTimeIsIt()+'</span>' : ''}
+
+                ${showPlatform == true ? '<span class="platform"><img src="images/logo-'+platform+'.svg" ></span>' : '' }
                 
-                ${showPlatform == true ? '<i class="platform fa-brands fa-'+platform+'"></i>' : '' }
-                
-                ${showAvatar == true ? '<span class="avatar"><img src="'+data.avatar+'"></span>' : ''}
+                ${showAvatar == true ? (data.avatar ? '<span class="avatar"><img src="'+data.avatar+'"></span>' : '') : ''}
 
                 ${showBadges == true ? '<span class="badges">'+data.badges+'</span>' : ''}
                 
@@ -134,7 +133,7 @@ async function addEventToChat(userID, messageID, platform, data) {
             <div class="animate__animated ${chatHorizontal == true ? 'animate__fadeInRight' : 'animate__fadeInUp'} animate__faster">
                 ${!data.reply ? '' : data.reply}
 
-                ${showPlatform == true ? '<i class="platform '+(platform == 'money' ? 'fa-solid' : 'fa-brands')+' fa-'+platform+'"></i>' : '&nbsp;&nbsp;' }
+                ${showPlatform == true ? '<span class="platform"><img src="images/logo-'+platform+'.svg" ></span>' : '' }
 
                 <span class="info">
                     <!--<span class="avatar"><img src="${data.avatar}"></span>-->

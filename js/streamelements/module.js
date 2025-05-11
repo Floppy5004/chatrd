@@ -42,5 +42,5 @@ async function streamElementsEventMessage(data) {
         message,
         reply: '',
     };
-    addEventToChat(userID, messageID, 'dollar-sign', messageData);
+    addEventToChat(userID, messageID, 'streamelements', messageData);
 }

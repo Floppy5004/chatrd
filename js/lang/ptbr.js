@@ -75,5 +75,23 @@ const ptbr = {
         sub : ({ months }) => ` se inscreveu por <i class="fa-solid fa-star"></i> <strong>${months || 1 } ${(months && months > 1) ? 'meses' : 'mês'}</strong>`,
         gift : ({ gift, count, coins }) => ` doou <strong>${gift} x${count}</strong> (🪙 <strong>${coins} ${(coins && coins > 1) ? 'moedas' : 'moeda'})</strong>`,
         
-    }
+    },
+
+    kick : {
+        follow : () => ` seguiu o canal`,
+
+        sub : ({ months, tier }) => ` se inscreveu por
+            <strong>${months || 1 } ${months == 1 ? 'mês' : 'meses'}
+            (Tier ${tier})</strong>`,
+
+        gifted : ({ gifted, tier, total }) => ` doou
+            <strong>${total || 1 } ${total == 1 ? 'inscrição' : 'inscrições'}
+            (Tier ${tier})</strong>
+            para <i class="fa-solid fa-gift"></i> <strong>${gifted}</strong>`,
+        
+        giftedbomb : ({ count, tier }) => ` doou <i class="fa-solid fa-gift"></i> <strong>${count} inscrições (Tier ${tier})</strong> para a Comunidade`,
+
+        raid : ({ viewers }) => ` raidou o canal com <i class="fa-solid fa-users"></i> <strong>${viewers} pessoas</strong>`
+        
+    },
 }

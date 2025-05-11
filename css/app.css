@@ -70,25 +70,31 @@ body {
 
 #chat .message .avatar {
     display: inline-block;
+    position: relative;
     margin: 2px 0px;
+    width: 28px;
+    height: 28px;
+    overflow: hidden;
+    border-radius: 100px;
+    transform: translateY(11px);
 }
 
 #chat .message .avatar img {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
     height: 28px;
-    border-radius: 100px;
 }
 
 #chat .message .platform {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    background: #000;
     width: 24px;
     height: 24px;
-    font-size: 18px;
-    transform: translateY(2px);
-    border-radius: 5px;
-    text-shadow: 2px 2px 2px rgba(0,0,0,0.25);
+    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.25));
+    transform: translateY(6px);
 }
 
 #chat .message .badges i {
@@ -134,15 +140,6 @@ body {
     color: #999;
 }
 
-#chat .message.twitch .shared span {
-    display: inline-block;
-    border-radius: 5px;
-    padding: 2px 10px 2px 5px;
-    background: rgba(169,112,255,0.85);
-    background: linear-gradient(180deg, rgba(169,112,255,0.85) 0%, rgba(95,67,138,0.85) 100%);
-    color: #fff;
-}
-
 #chat .message .shared i {
     margin: 0 3px;
 }
@@ -153,10 +150,10 @@ body {
     font-size: 16px;
 }
 
+
 #chat .message.event .platform {
-    background: none;
-    margin: 2px 7px 0 6px;
     transform: translateY(0px);
+    margin: 0px 5px 0 0;
 }
 
 #chat .message.event > div {
@@ -170,7 +167,16 @@ body {
 
 
 
-/*#chat .message.twitch .platform { background: #a970ff; }*/
+
+#chat .message.twitch .shared span {
+    display: inline-block;
+    border-radius: 5px;
+    padding: 2px 10px 2px 5px;
+    background: rgba(169,112,255,0.85);
+    background: linear-gradient(180deg, rgba(169,112,255,0.85) 0%, rgba(95,67,138,0.85) 100%);
+    color: #fff;
+}
+
 
 #chat .message.twitch.first-message > div {
     background: rgba(18,18,18,0.5);
@@ -185,31 +191,11 @@ body {
 }
 
 
-#chat .message.twitch .platform { color: #a970ff; background: transparent !important; text-shadow: 0px 0px 0px #a970ff;}
-#chat .message.twitch .platform::after {
-    content: '';
-    background: #FFF;
-    width: 11px;
-    height: 10px;
-    position: absolute;
-    z-index: -1;
-    transform: translate(1px,-3px);
-}
-#chat .message.twitch.event .platform {
-    color: #FFF;
-}
-#chat .message.twitch.event .platform::after {
-    background: transparent;
-    text-shadow: none;
-}
-
-
 #chat .message.twitch .badges img { margin: 0 2px; }
 #chat .message.twitch.event > div {
     background: rgba(169,112,255,0.85);
     background: linear-gradient(180deg, rgba(169,112,255,0.85) 0%, rgba(95,67,138,0.85) 100%);
 }
-#chat .message.twitch.event .platform { background: transparent; }
 
 #chat .message.twitch.announcement > div {
     padding: 10px 15px 13px 10px;
@@ -229,6 +215,7 @@ body {
 }
 
 #chat .message.twitch.announcement .platform {
+    transform: translateY(6px);
     margin: 0;
 }
 
@@ -250,6 +237,7 @@ body {
 }
 
 #chat .message.twitch.rewards-redemption .platform {
+    transform: translateY(6px);
     margin: 0;
 }
 
@@ -259,19 +247,11 @@ body {
 
 
 
-
-/*#chat .message.youtube .platform { background: #ff0000; }*/
-#chat .message.youtube .platform { color: #FF0000; background: transparent !important; }
-#chat .message.youtube .platform::after { content: ''; background: #FFF; width: 5px; height: 5px; position: absolute; z-index: -1; }
-
 #chat .message.youtube.event .platform { color: #FFF; }
-#chat .message.youtube.event .platform::after { background: transparent; }
-
 #chat .message.youtube.event > div {
     background: rgba(255,0,0,0.85);
     background: linear-gradient(180deg, rgba(255,0,0,0.85) 1%, rgba(136,0,0,0.85) 100%);
 }
-#chat .message.youtube.event .platform { background: transparent; }
 
 
 #chat .message.youtube.owner .user {
@@ -326,40 +306,52 @@ body {
 
 
 
-
-#chat .message.streamlabs .platform { background: #80f5d2; }
 #chat .message.streamlabs.event > div {
     background: rgba(128,245,210,0.85);
     background: linear-gradient(180deg, rgba(128,245,210,0.85) 1%, rgba(8,108,78,0.85) 100%);
 }
-#chat .message.streamlabs.event .platform { background: transparent; }
 
 
 
-#chat .message.streamelements .platform { background: #2700ff; }
 #chat .message.streamelements.event > div {
     background: rgba(39,0,255,0.85);
     background: linear-gradient(180deg, rgba(39,0,255,0.85) 1%, rgba(13,0,88,0.85) 100%);
 }
-#chat .message.streamelements.event .platform { background: transparent; }
 
 
 
 
-
-
-
-/*#chat .message.tiktok .platform { background: #000; }*/
-#chat .message.tiktok .platform { color: #FFF; background: transparent !important; }
 
 #chat .message.tiktok.event > div {
     background: rgba(255,0,80,0.85);
     background: linear-gradient(180deg, rgba(255,0,80,0.85) 1%, rgba(120,0,38,0.85) 100%);
 }
-#chat .message.tiktok.event .platform { background: transparent; }
 
 #chat .message.tiktok.mod .badges i.fa-solid.fa-wrench {
     background: #121212;
+}
+
+
+
+
+
+
+
+
+
+#chat .message.kick .badges svg {
+    width: 20px;
+    transform: translateY(4px);
+}
+
+#chat .message.kick .badges i.sub {
+    margin: 0;
+    color: #48d415;
+}
+
+#chat .message.kick.event > div {
+    background: #48d415;
+    background: linear-gradient(180deg,rgba(72, 212, 21, 1) 0%, rgba(39, 145, 0, 1) 100%);
 }
 
 
@@ -393,6 +385,7 @@ body {
     font-weight: bold;
     -webkit-mask-image: linear-gradient(to top, transparent, black 40%);
     mask-image: linear-gradient(to top, transparent, black 40%);
+    text-shadow: 2px 2px 2px rgba(0,0,0,0.25);
 }
 
 
@@ -427,4 +420,36 @@ body {
 
 #statistics .platform#tiktok {
     background: #ff0050;
+}
+
+#statistics .platform#kick {
+    background: #48d415;
+}
+
+#statistics .platform#kick svg {
+    width: 24px;
+    fill: #FFF;
+    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.25));
+}
+
+@media (max-width: 768px) {
+    #statistics {
+        
+        justify-content: center;
+        padding: 20px 10px;
+        font-size: 12px;
+        gap: 5px;
+        text-shadow: 2px 2px 2px rgba(0,0,0,0.5);
+    }
+
+    #statistics .platform {
+        padding: 5px 10px;
+        text-align: center;
+    }
+
+    
+    #statistics .platform#kick svg {
+        width: 18px;
+        filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
+    }
 }

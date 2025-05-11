@@ -75,5 +75,23 @@ const en = {
         sub : ({ months }) => ` subscribed for <i class="fa-solid fa-star"></i> <strong>${months || 1 } ${(months && months > 1) ? 'months' : 'month'}</strong>`,
         gift : ({ gift, count, coins }) => ` gifted <strong>${gift} x${count}</strong> (🪙 <strong>${coins} ${(coins && coins > 1) ? 'coins' : 'coin'})</strong>`,
         
-    }
+    },
+
+    kick : {
+        follow : () => ` followed the channel`,
+
+        sub : ({ months, tier }) => ` subscribed for
+            <strong>${months || 1 } ${months == 1 ? 'month' : 'months'}
+            (Tier ${tier})</strong>`,
+
+        gifted : ({ gifted, tier, total }) => ` gifted
+            <strong>${total || 1 } ${total == 1 ? 'sub' : 'subs'}
+            (Tier ${tier})</strong>
+            to <i class="fa-solid fa-gift"></i> <strong>${gifted}</strong>`,
+        
+        giftedbomb : ({ count, tier }) => ` gifted <i class="fa-solid fa-gift"></i> <strong>${count} subs (Tier ${tier})</strong> to the Community`,
+
+        raid : ({ viewers }) => ` raided the channel with <i class="fa-solid fa-users"></i> <strong>${viewers} viewers</strong>`
+        
+    },
 }

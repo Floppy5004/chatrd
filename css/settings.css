@@ -93,6 +93,12 @@ a { color: #ffcc00; }
     margin-right: 5px;
 }
 
+.tab-content h2 svg {
+    width: 26px;
+    vertical-align: bottom;
+    fill: #FFF;
+}
+
 .tab-content .setting {
     display: flex;
     justify-content: space-between;
@@ -278,6 +284,10 @@ a { color: #ffcc00; }
     background-color: #ff0050;
 }
 
+.tab-content#kick .setting input[type=checkbox]:checked + .slider {
+    background-color: #48d415;
+}
+
 .tab-content#extras .setting input[type=checkbox]:checked + .slider {
     background-color: #00dd63;
 }
@@ -304,7 +314,7 @@ footer {
     padding: 20px;
     background: rgba(18,18,18,0.5);
     backdrop-filter: blur(10px);
-    margin-top: 20px;
+    margin-top: 80px;
     font-size: 14px;
 }
 
@@ -313,6 +323,58 @@ footer a {
     margin: 10px 5px;
     font-size: 20px;
     color: #ffcc00;
+}
+
+footer a svg {
+    width: 24px;
+    vertical-align: bottom;
+    fill: #ffcc00;
+}
+
+footer .nav-bar {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+
+    width: 100%;
+}
+
+footer .nav-bar a {
+    display: inline-block;
+    border-radius: 100px;
+    padding: 10px 15px;
+    margin: 0;
+    font-size: 16px;
+    text-decoration: none;
+    color: #FFF;
+    transition: all ease-in-out 300ms;
+}
+
+footer .nav-bar a:hover {
+    color: #ffcc00;
+    background: rgba(0,0,0,0.40);
+}
+
+footer .nav-bar a svg {
+    width: 20px;
+    fill: #FFF;
+    transition: all ease-in-out 300ms;
+}
+
+footer .nav-bar a:hover svg {
+    fill: #ffcc00;
+}
+
+
+footer .nav-bar a.active {
+    color: #ffcc00;
+    background: rgba(0,0,0,0.20);
+}
+
+footer .nav-bar a.active svg {
+    fill: #ffcc00;
 }
 
 @media only screen and (max-width: 768px) {

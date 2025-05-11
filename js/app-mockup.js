@@ -162,6 +162,17 @@ const mockData = {
         { "imageUrl": "https://static-cdn.jtvnw.net/badges/v1/4149750c-9582-4515-9e22-da7d5437643b/3" },
         { "imageUrl": "https://static-cdn.jtvnw.net/badges/v1/5864739a-5e58-4623-9450-a2c0555ef90b/3" }
     ],
+    badgeskick: [
+        { "type": "broadcaster" },
+        { "type": "sidekick" },
+        { "type": "moderator" },
+        { "type": "vip" },
+        { "type": "sub_gifter" },
+        { "type": "og" },
+        { "type": "founder" },
+        { "type": "verified" },
+        { "type": "subscriber" },
+    ],
     superstickers: [
         { "imageUrl": "https://lh3.googleusercontent.com/G2OgWJkuvSullUPp2i09zG_WR0IpQu-6Ti4pFXn_FJ1OkR6zU5GdiP9cBavimQopETyojInsRCe8uefjJBqn=s148-rwa" },
         { "imageUrl": "https://lh3.googleusercontent.com/-21C0x6zYcDxpJVYKl8CCKroyjW2Hdvh2FWBipCTFhonaPy2cSJZWTGvmjsoBJu-LedOHQrw1Qu7TYXxIlxv=s148-rwa" },
@@ -199,6 +210,13 @@ function generateMockEvent() {
         'tiktok-chat', 'tiktok-chat', 'tiktok-chat', 'tiktok-chat', 'tiktok-chat', 
         'tiktok-chat', 'tiktok-chat', 'tiktok-chat', 'tiktok-chat', 'tiktok-chat', 
         'tiktok-follow', 'tiktok-sub', 'tiktok-gift',
+        
+        'kick-chat', 'kick-chat', 'kick-chat', 'kick-chat', 'kick-chat', 
+        'kick-chat', 'kick-chat', 'kick-chat', 'kick-chat', 'kick-chat', 
+        
+        'kick-follow', 'kick-sub',
+        'kick-giftsub', 'kick-giftbomb', 'kick-raid',
+        
 
         'streamlabs-tip', 'streamelements-tip',
     ];
@@ -218,6 +236,10 @@ function generateMockEvent() {
     const shuffledBadges = [...mockData.badges].sort(() => Math.random() - 0.5);
     const badgeCount = Math.floor(Math.random() * 3) + 1; // 1 to 3
     const badgeschosen = shuffledBadges.slice(0, badgeCount);
+
+    const shuffledBadgesKick = [...mockData.badgeskick].sort(() => Math.random() - 0.5);
+    const badgeCountKick = Math.floor(Math.random() * 3) + 1; // 1 to 3
+    const badgesChosenKick = shuffledBadgesKick.slice(0, badgeCountKick);
 
     const randomIndex = Math.floor(Math.random() * mockData.superstickers.length);
     const randomStickerUrl = mockData.superstickers[randomIndex].imageUrl;
@@ -577,6 +599,130 @@ function generateMockEvent() {
 
         break;
 
+
+
+
+
+        
+
+
+
+        
+        case 'kick-chat' :
+            
+            var data = {
+                id: messageId,
+                type: "message",
+                content: messagetext,
+
+                sender: {
+                    id: user.name.toLowerCase(),
+                    slug: user.name.toLowerCase(),
+                    username: user.name,
+                    identity: {
+                        color: randomColor(),
+                        badges: badgesChosenKick
+                        
+                    }
+                }
+            };            
+
+            const ifHasReplyOnKick = Math.random() < 0.05;
+            if (ifHasReplyOnKick) {
+                
+                var replier = mockData.users[Math.floor(Math.random() * mockData.users.length)];
+
+                data.metadata = {
+                    original_message: {
+                        content: mockData.messages[Math.floor(Math.random() * mockData.messages.length)]
+                    },
+                    original_sender: {
+                        username: replier.name
+                    },
+                }
+
+            }
+
+
+            kickChatMessage(data);
+
+        break;
+        
+        case 'kick-follow' :
+
+            var data = {
+                userName: user.name.toLowerCase(),
+                user: user.name,
+            };  
+
+            kickFollowMessage(data);
+            
+        break;
+        
+        case 'kick-sub' :
+
+            var data = {
+                userName: user.name.toLowerCase(),
+                user: user.name,
+                cumulative: Math.floor(Math.random() * 50) + 1,
+                tier: 1
+            }
+
+            kickSubMessage(data);
+
+        break;
+        
+        case 'kick-giftsub' :
+
+            var gifted = mockData.users[Math.floor(Math.random() * mockData.users.length)];
+
+            var data = {
+                user: user.name,
+                userName: user.name.toLowerCase(),
+                recipientUser: gifted.name,
+                tier: 1,
+                totalSubsGifted: Math.floor(Math.random() * 200) + 1
+            }
+
+            kickGiftMessage(data);
+
+        break;
+
+        case 'kick-giftbomb' :
+
+            var data = {
+                user: user.name,
+                userName: user.name.toLowerCase(),
+                tier: 1,
+                gifts: Math.floor(Math.random() * 200) + 1
+            }
+
+            kickGiftSubsMessage(data);
+
+        break;
+
+
+        case 'kick-raid' :
+
+            var data = {
+                user: user.name,
+                viewers: Math.floor(Math.random() * 200) + 1
+            }
+
+            kickRaidMessage(data);
+
+        break;
+        
+
+
+
+
+
+
+
+
+
+
         case 'streamlabs-tip' :
 
             var data = {
@@ -663,6 +809,10 @@ function updateMockStatistics() {
         if (showTikTokStatistics) {
             document.querySelector('#statistics #tiktok .viewers span').textContent = formatNumber(Math.floor(Math.random() * 800) + 200);
             document.querySelector('#statistics #tiktok .likes span').textContent = formatNumber(Math.floor(Math.random() * 5000) + 500);
+        }
+        
+        if (showKickViewers) {
+            document.querySelector('#statistics #kick .viewers span').textContent = formatNumber(Math.floor(Math.random() * 800) + 200);
         }
     }
 }

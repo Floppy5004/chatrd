@@ -11,6 +11,8 @@ const showTwitchRaids               = getURLParam("showTwitchRaids", true);
 const showTwitchSharedChat          = getURLParam("showTwitchSharedChat", true);
 const showTwitchViewers             = getURLParam("showTwitchViewers", true);
 
+const avatars = new Map();
+
 if (showTwitchViewers == false) { document.querySelector('#statistics #twitch').style.display = 'none'; }
 
 const twitchMessageHandlers = {
@@ -510,7 +512,9 @@ async function twitchUserBanned(data) {
 
 
 async function twitchChatClearMessages() {
-    chatContainer.innerHTML = '';
+    chatContainer.querySelectorAll(`.twitch`).forEach(element => {
+        element.remove();
+    });
 }
 
 
@@ -567,11 +571,11 @@ async function getTwitchBadges(data) {
 async function getTwitchAvatar(user) {
     if (showAvatar == true) {
         if (avatars.has(user)) {
-            console.debug(`Avatar found for ${user}!`);
+            console.debug(`Twitch avatar found for ${user}!`);
             return avatars.get(user);
         }
         else {
-            console.debug(`Avatar not found for ${user}! Getting it from DECAPI!`);
+            console.debug(`Twitch avatar not found for ${user}! Getting it from DECAPI!`);
             var decapi = await fetch('https://decapi.me/twitch/avatar/' + user);
             var newavatar = await decapi.text()
             avatars.set(user, newavatar);

@@ -40,5 +40,5 @@ async function streamLabsEventMessage(data) {
         message,
         reply: '',
     };
-    addEventToChat(userID, messageID, 'dollar-sign', messageData);
+    addEventToChat(userID, messageID, 'streamlabs', messageData);
 }
