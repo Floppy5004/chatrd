@@ -20,8 +20,6 @@ ChatRD is a chat overlay widget for OBS that unifies messages and events from **
 
 Make sure your **Twitch** and **YouTube** accounts are connected on **Streamer.Bot** and you have **TikFinity Desktop App** installed and set up to your account on **TikTok**. **BOTH APPS NEED TO RUN ON THE SAME PC**. 
 
-**Before you Begin**: For **Kick**, you need to install [Kick.Bot](https://github.com/Sehelitar/Kick.bot/) to your *Streamer.Bot* first before installing ChatRD. [Click here for instructions on how to install Kick.Bot](https://github.com/Sehelitar/Kick.bot/wiki/Installation) ... or follow the instructions below.
-
 ### Streamer.Bot & TikFinity
 1. On **Streamer.Bot**, go to **Server/Clients → WebSocket Server** and make sure it is running
 2. Import the string inside the file [streamerbot-import.vortisrd](https://github.com/vortisrd/chatrd/blob/main/streamerbot-import.vortisrd) to your **Streamer.Bot** using the **Import** button at the top.
