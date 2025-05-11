@@ -791,6 +791,7 @@ function stopMockupSystem() {
         document.querySelector('#statistics #youtube .likes span').textContent = '0';
         document.querySelector('#statistics #tiktok .viewers span').textContent = '0';
         document.querySelector('#statistics #tiktok .likes span').textContent = '0';
+        document.querySelector('#statistics #kick .viewers span').textContent = '0';
     }
 }
 
