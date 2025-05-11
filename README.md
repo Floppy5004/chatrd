@@ -142,7 +142,7 @@ If you break it, you fix it. 😊
 
 Made with ❤️ by **VortisRD**  
 
-🔗 [GitHub](https://github.com/vortisrd) • [Twitch](https://twitch.tv/vortisrd) • [YouTube](https://youtube.com/@vortisrd) • [TikTok](https://tiktok.com/@vortisrd) • [Twitter / X](https://twitter.com/vortisrd)  
+🔗 [GitHub](https://github.com/vortisrd) • [Twitch](https://twitch.tv/vortisrd) • [YouTube](https://youtube.com/@vortisrd) • [TikTok](https://tiktok.com/@vortisrd) • [Kick](https://kick.com/vortisrd) • [Twitter / X](https://twitter.com/vortisrd)  
 
 Heavily inspired by [Nutty](https://nutty.gg)
 
