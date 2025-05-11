@@ -34,6 +34,9 @@ Make sure your **Twitch** and **YouTube** accounts are connected on **Streamer.B
 
 
 ### Kick.Bot installation on Streamer.Bot
+
+If you haven't updated your actions, update them using the new [streamerbot-import.vortisrd](https://github.com/vortisrd/chatrd/blob/main/streamerbot-import.vortisrd).
+
 1. First, [download Kick.Bot from Sehelitar's repo](https://github.com/Sehelitar/Kick.bot/releases/).
 2. Unzip and copy the DLLs from **Kick.Bot** to the *dlls folder* inside **Streamer.Bot**. If it's not there, create one (name it "dlls", lowercase).
 3. Import the action from *action.txt* file (inside the ZIP folder you just unzipped) to **Streamer.Bot**.
