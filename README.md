@@ -46,9 +46,11 @@ If you haven't updated your actions, update them using the new [streamerbot-impo
 #### ⚠️ KICK IS A BETA FEATURE!
 Kick doesn't offer an API like Twitch does. It's not feasible for Streamer.Bot do it in an easy manner like Twitch, YouTube, Trovo, etc.
 
-[Kick.Bot](https://github.com/Sehelitar/Kick.bot/releases/) does an excelent job but there is some information missing on the payload from Kick, like *avatars*, *badges (gift sub, community, etc), viewership, etc*. And there will be some errors or some misinformation being shown. I tried my best to emulate these but please, **be patient!**. 😊
+[Kick.Bot](https://github.com/Sehelitar/Kick.bot/releases/) does an excelent job but there is some information missing on the payload from Kick, like *avatars*, *badges (gift sub, community, etc), viewership, etc*. And there will be some errors or some misinformation being shown. I tried my best to emulate these.
 
-Also, I couldn't test every single outcome because it's not possible to simulate the events besides Chat. I followed [Kick.Bot's](https://github.com/Sehelitar/Kick.bot/releases/) documentation and hoped for the best. 🙏
+I couldn't test every single outcome because it's not possible to simulate the events besides Chat. I followed [Kick.Bot's](https://github.com/Sehelitar/Kick.bot/releases/) documentation and hoped for the best. 🙏
+
+Also, at any point either **Kick** or **Kick.Bot** might change their stuff, so please, **be patient!**. 😊
 
 ---
 
