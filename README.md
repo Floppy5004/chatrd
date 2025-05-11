@@ -50,7 +50,7 @@ Kick doesn't offer an API like Twitch does. It's not feasible for Streamer.Bot d
 
 I couldn't test every single outcome because it's not possible to simulate the events besides Chat. I followed [Kick.Bot's](https://github.com/Sehelitar/Kick.bot/releases/) documentation and hoped for the best. 🙏
 
-Also, at any point either **Kick** or **Kick.Bot** might change their stuff, so please, **be patient!**. 😊
+Also, at any point either **Kick** or **Kick.Bot** might change their stuff, so please, **be patient!** 😊
 
 ---
 
