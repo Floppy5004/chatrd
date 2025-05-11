@@ -393,7 +393,7 @@ async function kickChatMessageDeleted(data) {
 
 
 async function kickUserBanned(data) {
-    chatContainer.querySelectorAll(`[data-user="${data.user.slug}"]`).forEach(element => {
+    chatContainer.querySelectorAll(`[data-user="${data.user.slug}"]:not(.event)`).forEach(element => {
         element.remove();
     });
 }
@@ -401,7 +401,7 @@ async function kickUserBanned(data) {
 
 
 async function kickChatClearMessages() {
-    chatContainer.querySelectorAll(`.kick`).forEach(element => {
+    chatContainer.querySelectorAll(`.kick:not(.event)`).forEach(element => {
         element.remove();
     });
 }

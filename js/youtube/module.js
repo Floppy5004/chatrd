@@ -119,7 +119,7 @@ async function youTubeChatMessage(data) {
 
 
 async function youTubeUserBanned(data) {
-    chatContainer.querySelectorAll(`[data-user="${data.bannedUser.id}"]`).forEach(element => {
+    chatContainer.querySelectorAll(`[data-user="${data.bannedUser.id}"]:not(.event)`).forEach(element => {
         element.remove();
     });
 }

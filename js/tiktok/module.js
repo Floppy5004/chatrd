@@ -32,8 +32,8 @@ streamerBotClient.on('General.Custom', (response) => {
             break;
             case 'like' :
                 tiktokUpdateStatistics(jsonData, 'likes');
-                /*console.log('TikTok Likes', jsonData);
-                tiktokLikesMessage(jsonData);*/
+                //console.log('TikTok Likes', jsonData);
+                tiktokLikesMessage(jsonData);
             break;
             case 'chat' :
                 console.log('TikTok Chat', jsonData);
@@ -148,6 +148,7 @@ async function tiktokLikesMessage(data) {
 
     if (showTikTokLikes == false) return;
 
+
     const {
         userId: userID,
         msgId: messageID,
@@ -183,6 +184,28 @@ async function tiktokLikesMessage(data) {
     };
 
     addEventToChat(userID, messageID, 'tiktok', messageData);
+
+    
+
+    /*const likedivs = chatContainer.querySelectorAll('div.message.likes');
+
+    if (likedivs.length == 6) {
+        // Mapeia os likedivs com seus respectivos valores de like
+        const likedivsWithCounts = Array.from(likedivs)
+        .map(div => {
+            const likeCountEl = div.querySelector('em.likecount');
+            const count = likeCountEl ? parseInt(likeCountEl.textContent.trim(), 10) : 0;
+            return { div, count };
+        });
+
+        // Ordena do menor para o maior like
+        likedivsWithCounts.sort((a, b) => a.count - b.count);
+
+        // Remove os 3 com menor contagem
+        for (let i = 0; i < 3 && i < likedivsWithCounts.length; i++) {
+            likedivsWithCounts[i].div.remove();
+        }
+    }*/
 }
 
 

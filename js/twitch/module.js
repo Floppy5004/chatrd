@@ -512,7 +512,7 @@ async function twitchUserBanned(data) {
 
 
 async function twitchChatClearMessages() {
-    chatContainer.querySelectorAll(`.twitch`).forEach(element => {
+    chatContainer.querySelectorAll(`.twitch:not(.event)`).forEach(element => {
         element.remove();
     });
 }

@@ -392,7 +392,7 @@ body {
 #statistics .platform {
     background: #000;
     color: #FFF;
-    padding: 10px 15px;
+    padding: 5px 10px;
     border-radius: 100px;
 
     display: flex;
