@@ -2,7 +2,7 @@
 
 ChatRD is a chat overlay widget for OBS that unifies messages and events from **Twitch**, **YouTube**, **TikTok**, **Kick** (and more to come). 
 
-![ChatRD Config UI](https://i.imgur.com/Ga9qeHr.png)
+![ChatRD Config UI](https://i.imgur.com/kDYPY1g.png)
 
 ---
 
