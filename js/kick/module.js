@@ -13,105 +13,112 @@ const kick7TVEmojis = new Map();
 
 if (showKickViewers == false) { document.querySelector('#statistics #kick').style.display = 'none'; }
 
+if (kickUserName) {
 
-const kickWebSocket = new WebSocket(
-    `wss://ws-us2.pusher.com/app/32cbd69e4b950bf97679?protocol=7&client=js&version=8.4.0-rc2&flash=false`
-);
+    const kickWebSocket = new WebSocket(
+        `wss://ws-us2.pusher.com/app/32cbd69e4b950bf97679?protocol=7&client=js&version=8.4.0-rc2&flash=false`
+    );
 
-kickWebSocket.onerror = (error) => {
-    console.error("Kick WebSocket Error: " + error);
-};
+    kickWebSocket.onerror = (error) => {
+        console.error("Kick WebSocket Error: " + error);
+    };
 
-kickWebSocket.onopen = () => {
+    kickWebSocket.onopen = () => {
 
-    kickGetUserInfo(kickUserName)
-    .then((userInfo) => {
-        console.log('Got Kick User Info', userInfo);
+        kickGetUserInfo(kickUserName)
+        .then((userInfo) => {
+            console.log('Got Kick User Info', userInfo);
 
-        (async () => {
-            const kick7TVEmotes = await get7TVEmotes(userInfo.user_id);
-            if (kick7TVEmotes != null) {
-                console.debug("Getting all Kick's 7TV Emojis + Globals", kick7TVEmotes);
+            (async () => {
+                const kick7TVEmotes = await get7TVEmotes(userInfo.user_id);
+                if (kick7TVEmotes != null) {
+                    console.debug("Getting all Kick's 7TV Emojis + Globals", kick7TVEmotes);
 
-                kick7TVEmotes.forEach(emote => {
-                    kick7TVEmojis.set(emote.name, emote.url);
-                });
-            }
-            
-        })();
+                    kick7TVEmotes.forEach(emote => {
+                        kick7TVEmojis.set(emote.name, emote.url);
+                    });
+                }
+                
+            })();
 
-        kickWebSocket.send(
-            JSON.stringify({
-                event: "pusher:subscribe",
-                data: {
-                    auth: null,
-                    channel: `chatrooms.${userInfo.chatroom.id}.v2`
-                },
-            })
-        );
-
-        kickWebSocket.send(
-            JSON.stringify({
-                event: "pusher:subscribe",
-                data: {
-                    auth: null,
-                    channel: `channel.${userInfo.chatroom.channel_id}`
-                },
-            })
-        );
-
-        setInterval(() => {
             kickWebSocket.send(
                 JSON.stringify({
-                    event: "pusher:ping",
-                    data: {},
+                    event: "pusher:subscribe",
+                    data: {
+                        auth: null,
+                        channel: `chatrooms.${userInfo.chatroom.id}.v2`
+                    },
                 })
             );
-        }, 60000);
 
-        kickUpdateStatistics(userInfo);
-        setInterval(() => {
-            kickGetUserInfo(kickUserName)
-            .then((data) =>{
-                kickUpdateStatistics(data);
-            });
-        }, 15000);
+            kickWebSocket.send(
+                JSON.stringify({
+                    event: "pusher:subscribe",
+                    data: {
+                        auth: null,
+                        channel: `channel.${userInfo.chatroom.channel_id}`
+                    },
+                })
+            );
 
-        
-    });
+            setInterval(() => {
+                kickWebSocket.send(
+                    JSON.stringify({
+                        event: "pusher:ping",
+                        data: {},
+                    })
+                );
+            }, 60000);
 
-};
+            kickUpdateStatistics(userInfo);
+            setInterval(() => {
+                kickGetUserInfo(kickUserName)
+                .then((data) =>{
+                    kickUpdateStatistics(data);
+                });
+            }, 15000);
 
-kickWebSocket.onmessage = async ({ data }) => {
-    const parsed = JSON.parse(data);
-    const json = JSON.parse(parsed.data);
-
-    if (!parsed.event.includes("pusher")) { 
-
-        switch (parsed.event) {
-            case "App\\Events\\ChatMessageEvent":
-                console.debug('Kick Chat', json);
-                kickChatMessage(json);
-            break;
             
-            case "App\\Events\\MessageDeletedEvent":
-                kickChatMessageDeleted(json);
-            break;
+        });
 
-            case "App\\Events\\UserBannedEvent":
-                kickUserBanned(json);
-            break;
+    };
 
-            case "App\\Events\\ChatroomClearEvent":
-                kickChatClearMessages()
-            break;
+    kickWebSocket.onmessage = async ({ data }) => {
+        const parsed = JSON.parse(data);
+        const json = JSON.parse(parsed.data);
 
-            default:
-                console.debug('Kick Event From WebSocket', parsed.event, json);
+        if (!parsed.event.includes("pusher")) { 
+
+            switch (parsed.event) {
+                case "App\\Events\\ChatMessageEvent":
+                    console.debug('Kick Chat', json);
+                    kickChatMessage(json);
+                break;
+                
+                case "App\\Events\\MessageDeletedEvent":
+                    kickChatMessageDeleted(json);
+                break;
+
+                case "App\\Events\\UserBannedEvent":
+                    kickUserBanned(json);
+                break;
+
+                case "App\\Events\\ChatroomClearEvent":
+                    kickChatClearMessages()
+                break;
+
+                default:
+                    console.debug('Kick Event From WebSocket', parsed.event, json);
+            }
+
         }
+    };
+}
 
-    }
-};
+else {
+    console.debug('Kick User not set in ChatRD');
+}
+
 
 
 streamerBotClient.on('General.Custom', (response) => {
