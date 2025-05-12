@@ -53,18 +53,6 @@ Also, at any point either **Kick** or **Kick.Bot** might change their stuff, so 
 
 ---
 
-## 🛠️ How to Use it in a Local Network
-
-1. On **Streamer.Bot**,  go to **Server/Clients → WebSocket Server** and make sure the Address is set to the Local Network IP from the PC, for example **192.168.0.10** ... or, if you prefer, use 0.0.0.0.
-2. On the [Settings Page](https://vortisrd.github.io/chatrd), make sure you set that IP on **Streamer.Bot WebSocket Server**.
-3. Turn the **"Run Locally"** switch on.
-4. Click **"Copy URL"**
-5. [Download ChatRD](https://github.com/vortisrd/chatrd/archive/refs/heads/main.zip) on the machine you want to see the chat on or want to set up OBS in, unzipping the file.
-6. Open it on your browser or add it in OBS as Browser Source (don't tick **Local File**)following the file trail, for example: **file:///C:/PATH_TO_THE_FILE/chat.html**.
-7. After **chat.html**, paste the URL copied from the configurator. The full link should be like this: **file:///C:/PATH_TO_THE_FILE/chat.html?language=ptbr&showPlatform=true&showAvatar=true&showTimestamps=false&showBadges=true&showPlatformStatistics=false&excludeCommands=true&showTwitchMessages=true&showTwitchFollows=true&showTwitchBits=true&showTwitchAnnouncements=true&showTwitchSubs=true&showTwitchGiftedSubs=true&showTwitchMassGiftedSubs=true&showTwitchGiftedSubsUserTrain=true&showTwitchRewardRedemptions=true&showTwitchRaids=true&showTwitchSharedChat=true&showTwitchViewers=true&showYouTubeMessages=true&showYouTubeSuperChats=true&showYouTubeSuperStickers=false&showYouTubeMemberships=true&showYouTubeGiftMemberships=true&showYouTubeMembershipsTrain=true&showYouTubeStatistics=true&showTikTokMessages=true&showTikTokFollows=true&showTikTokGifts=true&showTikTokSubs=true&showTikTokStatistics=true&showStreamlabsDonations=true&showStreamElementsTips=true&ignoreChatters=&streamerBotServerAddress=127.0.0.1&streamerBotServerPort=8080&=&hideAfter=0**
-
----
-
 ## 🔊 How to set TTS with Speaker.Bot
 
 ### Speaker.Bot Setup

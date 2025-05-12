@@ -160,12 +160,8 @@ async function pushChangeEvents() {
 async function generateUrl() {
 	document.getElementById("outputUrl").value = '';
 
-	var runThisLocally = document.querySelector("input[type=checkbox][name=runThisLocally]").checked;
-	var baseUrl = '';
-
-	if (runThisLocally == false) {
-		baseUrl = 'https://vortisrd.github.io/chatrd/chat.html'
-	}
+	
+	var baseUrl = 'https://vortisrd.github.io/chatrd/chat.html';
 	
 	const checkboxes = document.querySelectorAll("input[type=checkbox]:not(.avoid)");
 	const textfields = document.querySelectorAll("input[type=text]:not(.avoid)");
