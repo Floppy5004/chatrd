@@ -219,6 +219,10 @@ function generateMockEvent() {
 
         'patreon-membership', 'tipeeestream-tip',
 
+        'kofi-donation', 'kofi-sub', 'kofi-resub', 'kofi-order',
+        
+        'fourthwall-donation', 'fourthwall-sub', 'fourthwall-order',
+
         'streamlabs-tip', 'streamelements-tip',
     ];
     
@@ -757,6 +761,127 @@ function generateMockEvent() {
             };
 
             tipeeeStreamDonation(data);
+
+        break;
+        
+
+
+
+
+
+
+
+
+
+
+        case 'kofi-donation' :
+
+            var data = {
+                from: user.name,
+                amount: Math.floor(Math.random() * 2000) + 1,
+                currency: 'USD',
+                message: messagetext
+            };
+
+            kofiDonationMessage(data);
+
+        break;
+
+
+        case 'kofi-sub' :
+
+            var data = {
+                from: user.name,
+                amount: Math.floor(Math.random() * 2000) + 1,
+                currency: 'USD',
+                message: messagetext
+            };
+
+            kofiSubMessage(data);
+
+        break;
+
+        case 'kofi-resub' :
+
+            var data = {
+                from: user.name,
+                amount: Math.floor(Math.random() * 2000) + 1,
+                currency: 'USD',
+                tier: parseInt(Math.floor(Math.random() * 3) + 1),
+                message: messagetext
+            };
+
+            kofiReSubMessage(data);
+
+        break;
+
+        case 'kofi-order' :
+
+            var data = {
+                from: user.name,
+                amount: Math.floor(Math.random() * 200) + 1,
+                items: badgeschosen,
+                currency: 'USD',
+                message: messagetext
+            };
+
+            kofiOrderMessage(data);
+
+        break;
+        
+
+
+
+
+
+
+
+
+
+
+        case 'fourthwall-donation' :
+
+            var data = {
+                username: user.name,
+                amount: Math.floor(Math.random() * 2000) + 1,
+                currency: 'USD',
+                message: messagetext
+            };
+
+            fourthwallDonationMessage(data);
+
+        break;
+
+
+        case 'fourthwall-sub' :
+
+            var data = {
+                nickname: user.name,
+                amount: Math.floor(Math.random() * 2000) + 1,
+                currency: 'USD'
+            };
+
+            fourthwallSubMessage(data);
+
+        break;
+
+
+        case 'fourthwall-order' :
+
+            var data = {
+                username: user.name,
+                total: Math.floor(Math.random() * 200) + 1,
+                variants: [
+                    {
+                        name: 'Fake Product',
+                        image: 'images/3k7a2BA.png'
+                    }
+                ],
+                currency: 'USD',
+                statmessageus: messagetext
+            };
+
+            fourthwallOrderMessage(data);
 
         break;
         

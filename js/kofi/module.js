@@ -110,6 +110,8 @@ async function kofiReSubMessage(data) {
 
     const {
         from : userName,
+        amount,
+        currency,
         tier,
         message: text
     } = data;
@@ -117,9 +119,12 @@ async function kofiReSubMessage(data) {
     const userID = createRandomString(40);
     const messageID = createRandomString(40);
 
+    var money = formatCurrency(amount,currency);
+
     const [avatar, message] = await Promise.all([
         '',
         currentLang.kofi.resub({
+            money: money,
             tier: tier,
             message: text
         }),
@@ -147,7 +152,6 @@ async function kofiOrderMessage(data) {
         from : userName,
         amount,
         currency,
-        message: text,
         items
     } = data;
 

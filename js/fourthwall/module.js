@@ -1,20 +1,53 @@
-const showShopifyOrders              = getURLParam("showShopifyOrders", true);
+const showFourthwallDonations           = getURLParam("showFourthwallDonations", true);
 
-const shopifyMessageHandlers = {
-    'Shopify.OrderPaid': (response) => {
-        console.debug('Shopify Order Paid', response.data);
-        //shopifyOrderPaidMessage(response.data);
+const showFourthwallOrders              = getURLParam("showFourthwallOrders", true);
+const showFourthwallShowImage           = getURLParam("showFourthwallShowImage", true);
+const showFourthwallBigImage            = getURLParam("showFourthwallBigImage", true);
+
+const showFourthwallSubscriptions       = getURLParam("showFourthwallSubscriptions", true);
+
+const showFourthwallGiftPurchase        = getURLParam("showFourthwallGiftPurchase", true);
+const showFourthwallShowGiftImage       = getURLParam("showFourthwallShowGiftImage", true);
+const showFourthwallBigGiftImage        = getURLParam("showFourthwallBigGiftImage", true);
+
+const showFourthwallGiftDraw            = getURLParam("showFourthwallGiftDraw", true);
+const fourthWallGiftDrawCommand         = getURLParam("fourthWallGiftDrawCommand", "!enter");
+
+const fourthwallMessageHandlers = {
+    'Fourthwall.Donation': (response) => {
+        console.debug('Fourthwall Donation', response.data);
+        fourthwallDonationMessage(response.data);
+    },
+    'Fourthwall.OrderPlaced': (response) => {
+        console.debug('Fourthwall Order', response.data);
+        fourthwallOrderMessage(response.data);
+    },
+    'Fourthwall.SubscriptionPurchased': (response) => {
+        console.debug('Fourthwall Sub', response.data);
+        fourthwallSubMessage(response.data);
+    },
+    'Fourthwall.GiftPurchase': (response) => {
+        console.debug('Fourthwall Gift', response.data);
+        fourthwallGiftMessage(response.data);
+    },
+    'Fourthwall.GiftDrawStarted': (response) => {
+        console.debug('Fourthwall Gift Draw Start', response.data);
+        fourthwallGiftDrawStartMessage(response.data);
+    },
+    'Fourthwall.GiftDrawEnded': (response) => {
+        console.debug('Fourthwall Gift Draw Start', response.data);
+        fourthwallGiftDrawEndMessage(response.data);
     },
 };
 
-for (const [event, handler] of Object.entries(shopifyMessageHandlers)) {
+for (const [event, handler] of Object.entries(fourthwallMessageHandlers)) {
     streamerBotClient.on(event, handler);
 }
 
 
-async function shopifyOrderPaidMessage(data) {
+async function fourthwallDonationMessage(data) {
     
-    if (showShopifyOrders == false) return;
+    if (showFourthwallDonations == false) return;
 
     const {
         username : userName,
@@ -181,7 +214,7 @@ async function fourthwallGiftMessage(data) {
         }),
     ]);
 
-    const classes = ['gift'];
+    const classes = ['order'];
     if (showFourthwallBigGiftImage == true) {
         classes.push('giantimage');
     }
@@ -210,6 +243,7 @@ async function fourthwallGiftDrawStartMessage(data) {
         durationSeconds
     } = data;
 
+    var userName = '';
     const userID = createRandomString(40);
     const messageID = createRandomString(40);
 
@@ -217,7 +251,8 @@ async function fourthwallGiftDrawStartMessage(data) {
         '',
         currentLang.fourthwall.drawstart({
             gift: itemName,
-            command: fourthWallGiftDrawCommand
+            command: fourthWallGiftDrawCommand,
+            time: durationSeconds
         }),
     ]);
 
@@ -240,18 +275,17 @@ async function fourthwallGiftDrawEndMessage(data) {
     if (showFourthwallGiftDraw == false) return;
 
     const {
-        data: {
-            gifts
-        }
+        gifts
     } = data;
 
+    var userName = '';
     const userID = createRandomString(40);
     const messageID = createRandomString(40);
 
     const [avatar, message] = await Promise.all([
         '',
         currentLang.fourthwall.drawend({
-            winners: getWinnersList(gifts)
+            winners: await getWinnersList(gifts)
         }),
     ]);
 

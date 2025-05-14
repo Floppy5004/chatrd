@@ -106,8 +106,8 @@ const en = {
 
     kofi : {
         donation : ({ money, message }) => ` donated 🪙 <strong>${money}</strong>${message ? '<br>'+message : ''}`,
-        sub : ({ money, tier, message }) => ` subscribed <strong>${money}</strong>${tier ? '(Tier '+tier+')' : ''}${message ? '<br>'+message : ''}`,
-        resub : ({ money, tier, message }) => ` subscribed <strong>${money}</strong>${tier ? '(Tier '+tier+')' : ''}${message ? '<br>'+message : ''}`,
+        sub : ({ money, tier, message }) => ` subscribed <strong>(${money}) ${tier ? '(Tier '+tier+')' : ''}</strong>${message ? '<br>'+message : ''}`,
+        resub : ({ money, tier, message }) => ` subscribed <strong>${money} ${tier ? '(Tier '+tier+')' : ''}</strong>${message ? '<br>'+message : ''}`,
         order : ({ money, items }) => ` ordered <strong>${items} ${items == 1 ? 'item' : 'items'} (${money == 0 ? 'Free' : money})`,
     },
 
@@ -149,13 +149,13 @@ const en = {
 
 
         
-        drawstart : ({ gift, command }) => ` 
-        <strong><i class="fa-solid fa-gift fa-beat"></i> Giveaway started!</strong> 
-        Type ${command} to have a chance to win <strong>${gift}</strong>`,
+        drawstart : ({ gift, command, time }) => ` 
+        <strong><i class="fa-solid fa-gift"></i> Giveaway started!</strong> 
+        <br>Type <strong>${command}</strong> to have a chance to win <strong>${gift}</strong>. You have <strong>${time} seconds!</strong>`,
 
         drawend : ({ winners }) => ` 
         <strong>🎉 Giveaway Ended!</strong> 
-        Congratulations <strong>${winners}</strong>`,
+        <br>Congratulations <strong>${winners}</strong>`,
 
 
 
