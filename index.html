@@ -151,7 +151,7 @@
 					Kick
 				</h2>
 				
-				<div class="setting"><small style="display: inline-block; padding: 10px 20px 10px 10px; background-color: #232323; color: #FFF; border-radius: 10px;"><i class="fa-solid fa-triangle-exclamation"></i> This is a <strong>BETA</strong> feature! <a href="https://github.com/vortisrd/chatrd/tree/main#%EF%B8%8F-kick-is-a-beta-feature" target="_blank">Read more</a>.</small></label></div>
+				<div class="setting"><small style="display: inline-block; padding: 10px 20px 10px 10px; background-color: #232323; color: #FFF; border-radius: 10px;"><i class="fa-solid fa-triangle-exclamation"></i> This is a <strong>BETA</strong> feature! <strong><a href="https://github.com/vortisrd/chatrd/tree/main#%EF%B8%8F-kick-is-a-beta-feature" target="_blank">Read more</a></strong>.</small></label></div>
 
 				<div class="setting"></div>
 
@@ -176,24 +176,94 @@
 
 			<div class="tab-content" id="extras">
 				<h2><i class="fa-solid fa-dollar-sign"></i> Donations</h2>
+
+				<div class="setting"><small style="display: inline-block; padding: 10px 20px 10px 10px; background-color: #232323; color: #FFF; border-radius: 10px;"><i class="fa-solid fa-circle-exclamation"></i> You need to connect Streamlabs to Streamer.Bot. <strong><a target="_blank" href="https://docs.streamer.bot/guide/integrations/streamlabs">Follow the tutorial</a>.</strong></small></label></div>
+
+				<div class="setting"></div>
+
+				<div class="setting"><small style="display: inline-block; padding: 10px 20px 10px 10px; background-color: #232323; color: #FFF; border-radius: 10px;"><i class="fa-solid fa-circle-exclamation"></i> You need to connect StreamElements to Streamer.Bot. <strong><a target="_blank" href="https://docs.streamer.bot/guide/integrations/streamelements">Follow the tutorial</a>.</strong></small></label></div>
+
+				<div class="setting"></div>
+
 				<div class="setting"><label>Streamlabs Tips</label><label class="switch"><input type="checkbox" name="showStreamlabsDonations" checked><span class="slider"></span></label></div>
 				<div class="setting"><label>StreamElements Tips</label><label class="switch"><input type="checkbox" name="showStreamElementsTips" checked><span class="slider"></span></label></div>
+			</div>
+
+			<div class="tab-content" id="patreon">
+				<h2><i class="fa-brands fa-patreon"></i> Patreon</h2>
+
+				<div class="setting"><small style="display: inline-block; padding: 10px 20px 10px 10px; background-color: #232323; color: #FFF; border-radius: 10px;"><i class="fa-solid fa-circle-exclamation"></i> You need to connect Patreon to Streamer.Bot. <strong><a target="_blank" href="https://docs.streamer.bot/guide/integrations/patreon">Follow the tutorial</a>.</strong></small></label></div>
+
+				<div class="setting"></div>
+
+				<div class="setting"><label>Memberships</label><label class="switch"><input type="checkbox" name="showPatreonMemberships" checked><span class="slider"></span></label></div>
+			</div>
+
+			<div class="tab-content" id="tipeee">
+				<h2><img src="images/logo-tipeeestream.svg" alt=""> TipeeeStream</h2>
+
+				<div class="setting"><small style="display: inline-block; padding: 10px 20px 10px 10px; background-color: #232323; color: #FFF; border-radius: 10px;"><i class="fa-solid fa-circle-exclamation"></i> You need to connect TipeeeStream to Streamer.Bot. <strong><a target="_blank" href="https://docs.streamer.bot/guide/integrations/tipeee-stream">Follow the tutorial</a>.</strong></small></label></div>
+
+				<div class="setting"></div>
+
+				<div class="setting"><label>Donations</label><label class="switch"><input type="checkbox" name="showTipeeeDonations" checked><span class="slider"></span></label></div>
+			</div>
+
+			<div class="tab-content" id="kofi">
+				<h2><img src="images/logo-kofi.svg" alt=""> Ko-Fi</h2>
+
+				<div class="setting"><small style="display: inline-block; padding: 10px 20px 10px 10px; background-color: #232323; color: #FFF; border-radius: 10px;"><i class="fa-solid fa-circle-exclamation"></i> You need to connect Ko-Fi to Streamer.Bot. <strong><a target="_blank" href="https://docs.streamer.bot/guide/integrations/ko-fi">Follow the tutorial</a>.</strong></small></label></div>
+
+				<div class="setting"></div>
+
+				<div class="setting"><label>Subscription</label><label class="switch"><input type="checkbox" name="showKofiSubscriptions" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Donations</label><label class="switch"><input type="checkbox" name="showKofiDonations" checked><span class="slider"></span></label></div>
+				<div class="setting"><label>Orders</label><label class="switch"><input type="checkbox" name="showKofiOrders" checked><span class="slider"></span></label></div>
+			</div>
+
+			<div class="tab-content" id="fourthwall">
+				<h2><img src="images/logo-fourthwall.svg" alt=""> Fourthwall</h2>
+
+				<div class="setting"><small style="display: inline-block; padding: 10px 20px 10px 10px; background-color: #232323; color: #FFF; border-radius: 10px;"><i class="fa-solid fa-circle-exclamation"></i> You need to connect Fourthwall to Streamer.Bot. <strong><a target="_blank" href="https://docs.streamer.bot/guide/integrations/fourthwall">Follow the tutorial</a>.</strong></small></label></div>
+
+				<div class="setting"></div>
+
+				<div class="setting"><label>Donations</label><label class="switch"><input type="checkbox" name="showFourthwallDonations" checked><span class="slider"></span></label></div>
+				
+				<div class="setting"><label>Orders</label><label class="switch"><input type="checkbox" name="showFourthwallOrders" checked><span class="slider"></span></label></div>
+
+				<div class="setting"><label>Subscriptions</label><label class="switch"><input type="checkbox" name="showFourthwallSubscriptions" checked><span class="slider"></span></label></div>
+
+				<div class="setting"><label><i class="fa-solid fa-arrow-turn-up"></i> Show Order Image</small></label><label class="switch"><input type="checkbox" name="showFourthwallShowImage" checked><span class="slider"></span></label></div>
+				<div class="setting"><label><i class="fa-solid fa-arrow-turn-up"></i> Full Size Order Image<br><small>Shows the image above the event in full.</small></label><label class="switch"><input type="checkbox" name="showFourthwallBigImage" checked><span class="slider"></span></label></div>
+
+				<div class="setting"><label>Gift Purchase</label><label class="switch"><input type="checkbox" name="showFourthwallGiftPurchase" checked><span class="slider"></span></label></div>
+				<div class="setting"><label><i class="fa-solid fa-arrow-turn-up"></i> Show Gift Image</label><label class="switch"><input type="checkbox" name="showFourthwallShowGiftImage" checked><span class="slider"></span></label></div>
+				<div class="setting"><label><i class="fa-solid fa-arrow-turn-up"></i> Full Size Gift Image<br><small>Shows the image above the event in full.</small></label><label class="switch"><input type="checkbox" name="showFourthwallBigGiftImage" checked><span class="slider"></span></label></div>
+
+				<div class="setting"><label>Gift Draw</label><label class="switch"><input type="checkbox" name="showFourthwallGiftDraw" checked><span class="slider"></span></label></div>
+
+				<div class="setting field"><label>Gift Command<br><small>Command used to join the Gift Draw. </small></label><input type="text" name="fourthWallGiftDrawCommand" value="!enter"></div>
 			</div>
 
 			<footer>
 
 				<div class="nav-bar">
-					<a href="#config" class="active"><i class="fa-solid fa-screwdriver-wrench"></i></a>
-					<a href="#geral"><i class="fa-solid fa-gears"></i></a>
-					<a href="#twitch"><i class="fa-brands fa-twitch"></i></a>
-					<a href="#youtube"><i class="fa-brands fa-youtube"></i></a>
-					<a href="#tiktok"><i class="fa-brands fa-tiktok"></i></a>
-					<a href="#kick">
+					<a title="Config" href="#config" class="active"><i class="fa-solid fa-screwdriver-wrench"></i></a>
+					<a title="General" href="#geral"><i class="fa-solid fa-gears"></i></a>
+					<a title="Twitch" href="#twitch"><i class="fa-brands fa-twitch"></i></a>
+					<a title="YouTube" href="#youtube"><i class="fa-brands fa-youtube"></i></a>
+					<a title="TikTok" href="#tiktok"><i class="fa-brands fa-tiktok"></i></a>
+					<a title="Kick" href="#kick">
 						<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 800 800">
 							<polygon class="st0" points="336 111 336 239 401 239 401 175 465 175 465 111 657 111 657 303 593 303 593 367 529 367 529 432 593 432 593 496 657 496 657 689 465 689 465 624 401 624 401 560 336 560 336 689 143 689 143 111 336 111"/>
 						</svg>
 					</a>
-					<a href="#extras"><i class="fa-solid fa-dollar-sign"></i></a>
+					<a title="Donations" href="#extras"><i class="fa-solid fa-dollar-sign"></i></a>
+					<a title="Patreon" href="#patreon"><i class="fa-brands fa-patreon"></i></a>
+					<a title="TipeeeStream" href="#tipeee"><img src="images/logo-tipeeestream.svg"></a>
+					<a title="Ko-Fi" href="#kofi"><img src="images/logo-kofi.svg"></a>
+					<a title="FourthWall" href="#fourthwall"><img src="images/logo-fourthwall.svg"></a>
 					
 				</div>
 

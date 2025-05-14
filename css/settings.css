@@ -37,12 +37,12 @@ a { color: #ffcc00; }
 }
 
 .url-bar {
-    margin: 20px 0;
+    margin: 0 0 20px 0;
     font-size: 16px;
 }
 
 .url-bar input[type=text] {
-    font-family: "Inter", sans-serif;
+    /*font-family: "Inter", sans-serif;
     border: none;
     background: #171717;
     color: #FFF;
@@ -51,7 +51,8 @@ a { color: #ffcc00; }
     width: 100%;
     text-align: center;
     outline: none;
-    font-size: 14px;
+    font-size: 14px;*/
+    display: none;
 }
 
 
@@ -97,6 +98,11 @@ a { color: #ffcc00; }
     width: 26px;
     vertical-align: bottom;
     fill: #FFF;
+}
+
+.tab-content h2 img {
+    width: 26px;
+    vertical-align: bottom;
 }
 
 .tab-content .setting {
@@ -292,9 +298,28 @@ a { color: #ffcc00; }
     background-color: #00dd63;
 }
 
+.tab-content#patreon .setting input[type=checkbox]:checked + .slider {
+    background-color: #ff5900;
+}
+
+.tab-content#tipeee .setting input[type=checkbox]:checked + .slider {
+    background-color: #e02f44;
+}
+
+.tab-content#kofi .setting input[type=checkbox]:checked + .slider {
+    background-color: #72a5f2;
+}
+
+.tab-content#fourthwall .setting input[type=checkbox]:checked + .slider {
+    background-color: #0042ff;
+}
+
 .tab-content .setting input[type=checkbox]:disabled + .slider {
     background-color: #000 !important;
 }
+
+
+
 
 #font-value {
     display: inline-block;
@@ -329,6 +354,11 @@ footer a svg {
     width: 24px;
     vertical-align: bottom;
     fill: #ffcc00;
+}
+
+footer a img {
+    width: 24px;
+    vertical-align: bottom;
 }
 
 footer .nav-bar {

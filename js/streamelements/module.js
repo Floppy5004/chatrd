@@ -2,7 +2,7 @@ const showStreamElementsTips        = getURLParam("showStreamElementsTips", true
 
 const streamElementsHandlers = {
     'StreamElements.Tip': (response) => {
-        console.debug(response.data);
+        console.debug('StreamElements Event', response.data);
         streamElementsEventMessage(response.data);
     },
 };
@@ -32,7 +32,7 @@ async function streamElementsEventMessage(data) {
             message : messageFromUser
         })
     ]);
-    const classes = 'streamelements';
+    const classes = '';
     const messageData = {
         classes: classes,
         avatar,

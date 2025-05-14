@@ -216,7 +216,8 @@ function generateMockEvent() {
         
         'kick-follow', 'kick-sub',
         'kick-giftsub', 'kick-giftbomb', 'kick-raid',
-        
+
+        'patreon-membership', 'tipeeestream-tip',
 
         'streamlabs-tip', 'streamelements-tip',
     ];
@@ -710,6 +711,52 @@ function generateMockEvent() {
             }
 
             kickRaidMessage(data);
+
+        break;
+        
+
+
+
+
+
+
+
+
+
+
+        case 'patreon-membership' :
+
+            var data = {
+                attributes: {
+                    full_name:  user.name,
+                    will_pay_amount_cents: Math.floor(Math.random() * (10000 - 1000)) + 1000
+                }
+            };
+
+            patreonMemberships(data);
+
+        break;
+        
+
+
+
+
+
+
+
+
+
+
+        case 'tipeeestream-tip' :
+
+            var data = {
+                user: user.name,
+                amount: Math.floor(Math.random() * 2000) + 1,
+                currency: 'USD',
+                message: messagetext
+            };
+
+            tipeeeStreamDonation(data);
 
         break;
         

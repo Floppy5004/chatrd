@@ -1,6 +1,6 @@
 # 💬 ChatRD
 
-ChatRD is a chat overlay widget for OBS that unifies messages and events from **Twitch**, **YouTube**, **TikTok**, **Kick** (and more to come). 
+ChatRD is a chat overlay widget for OBS that unifies messages and events from **Twitch**, **YouTube**, **TikTok**, **Kick**, **Streamlabs**, **StreamElements**, **Patreon**, **TipeeeStream**, **Ko-Fi**, **Fourthwall** (and more to come). 
 
 ![ChatRD Config UI](https://i.imgur.com/kDYPY1g.png)
 
@@ -29,6 +29,7 @@ Make sure your **Twitch** and **YouTube** accounts are connected on **Streamer.B
 6. Choose your desired options.
 7. Click **"Copy URL"**.
 8. Add the copied URL as a Browser Source in OBS. Or use it in your browser to read chat. 😊
+9. For **Streamlabs**, **StreamElements**, **Patreon**, **TipeeeStream**, **Ko-Fi** and **Fourthwall**, you need to connect them to your Streamer.Bot account to their website. Follow the tutorial links in each section presented in the [Settings Page](https://vortisrd.github.io/chatrd).
 
 
 ### Kick.Bot installation on Streamer.Bot
@@ -92,10 +93,6 @@ Also, at any point either **Kick** or **Kick.Bot** might change their stuff, so 
 ## 📝 To-Do List
 
 - Trovo
-- Patreon
-- Ko-Fi
-- TipeeeStream
-- Fourthwall
 - LivePix
 - Tipa.Ai
 

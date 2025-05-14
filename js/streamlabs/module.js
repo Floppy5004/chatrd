@@ -2,7 +2,7 @@ const showStreamlabsDonations       = getURLParam("showStreamlabsDonations", tru
 
 const streamLabsHandlers = {
     'Streamlabs.Donation': (response) => {
-        console.debug(response.data);
+        console.debug('StreamLabs Event', response.data);
         streamLabsEventMessage(response.data);
     },
 };
@@ -30,7 +30,7 @@ async function streamLabsEventMessage(data) {
             message : messageFromUser
         })
     ]);
-    const classes = 'streamlabs';
+    const classes = '';
     const messageData = {
         classes: classes,
         avatar,
