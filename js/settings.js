@@ -193,26 +193,29 @@ async function generateUrl() {
 }
 
 async function copyUrl() {
+
+	const output = document.getElementById("outputUrl")
+	const value = output.value;
 	
-	const output = document.getElementById("outputUrl");
-
-	output.select();
-	document.execCommand("copy");
-
 	const button = document.querySelector('.url-bar button');
 	const buttonDefaulText = 'Copy URL';
 
-	button.textContent = 'ChatRD URL Copied!';
-	button.style.backgroundColor = "#00dd63";
+	navigator.clipboard.writeText(value)
+	.then(() => {
 
-	setTimeout(() => {
-		button.textContent = buttonDefaulText;
-		button.removeAttribute('style');
-	}, 3000);
+		button.textContent = 'ChatRD URL Copied!';
+		button.style.backgroundColor = "#00dd63";
 
+		setTimeout(() => {
+			button.textContent = buttonDefaulText;
+			button.removeAttribute('style');
+		}, 3000);
+	})
+	.catch(err => {
+		console.error("Failed to copy: ", err);
+	});
 
 }
-
 
 
 async function setupAddEmoteModal() {
