@@ -105,7 +105,7 @@ const es = {
     },
 
     fourthwall : {
-        someone : () => `Alguém`,
+        someone : () => `Alguien`,
 
         donation : ({ money, message }) => ` donó 🪙 <strong>${money}</strong>${message ? '<br>'+message : ''}`,
         sub : ({ money }) => ` se suscribió <strong>(${money})</strong>`,
