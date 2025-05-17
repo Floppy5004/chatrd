@@ -87,4 +87,67 @@ const es = {
         raid : ({ viewers }) => ` hizo una raid al canal con <i class="fa-solid fa-users"></i> <strong>${viewers} espectadores</strong>`
         
     },
+
+    patreon: {
+        membership: ({ money }) => ` apoyó con una membresía ($${money})`
+        
+    },
+
+    tipeeestream : {
+        tip : ({ money, message }) => ` donó 🪙 <strong>${money}</strong>${message ? '<br>'+message : ''}`,
+    },
+
+    kofi : {
+        donation : ({ money, message }) => ` donó 🪙 <strong>${money}</strong>${message ? '<br>'+message : ''}`,
+        sub : ({ money, tier, message }) => ` se suscribió <strong>(${money}) ${tier ? '(Tier '+tier+')' : ''}</strong>${message ? '<br>'+message : ''}`,
+        resub : ({ money, tier, message }) => ` renovó la suscripción <strong>${money} ${tier ? '(Tier '+tier+')' : ''}</strong>${message ? '<br>'+message : ''}`,
+        order : ({ money, items }) => ` compró <strong>${items} ${items == 1 ? 'artículo' : 'artículos'} (${money == 0 ? 'Gratis' : money})`,
+    },
+
+    fourthwall : {
+        someone : () => `Alguém`,
+
+        donation : ({ money, message }) => ` donó 🪙 <strong>${money}</strong>${message ? '<br>'+message : ''}`,
+        sub : ({ money }) => ` se suscribió <strong>(${money})</strong>`,
+
+        order : ({
+            money,
+            firstItem,
+            items,
+            message,
+            image,
+            
+        }) => ` 
+        ${image ? '<br>': ''}
+        compró <strong>${firstItem}</strong> ${items > 1 ? 'y <strong>'+(items - 1)+' '+((items - 1) == 1 ? 'artículo' : 'artículos')+'</strong>' : ''} 
+        (${money == 0 ? 'Gratis' : money})
+        ${message.trim() ? '<br>'+message : ''}
+        ${image ? '</span></span><span class="image"><img src="'+image+'"></span>': ''}
+        `,
+
+        gift : ({
+            money,
+            firstItem,
+            items,
+            message,
+            image,
+            
+        }) => ` 
+        ${image ? '<br>': ''}
+        regaló <strong>${items}x ${firstItem}</strong>
+        (${money == 0 ? 'Gratis' : money})
+        ${message.trim() ? '<br>'+message : ''}
+        ${image ? '</span></span><span class="image"><img src="'+image+'"></span>': ''}
+        `,
+
+
+        
+        drawstart : ({ gift, command, time }) => ` 
+        <strong><i class="fa-solid fa-gift"></i> ¡Sorteo iniciado!</strong> 
+        <br>Escribe <strong>${command}</strong> para tener la oportunidad de ganar <strong>${gift}</strong>. ¡Tienes <strong>${time} segundos</strong>!`,
+
+        drawend : ({ winners }) => ` 
+        <strong>🎉 ¡Sorteo finalizado!</strong> 
+        <br>Felicitaciones <strong>${winners}</strong>`,
+    },
 }

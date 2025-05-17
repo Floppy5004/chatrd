@@ -5,6 +5,7 @@ async function saveSettingsToLocalStorage() {
 	const checkboxes = document.querySelectorAll("input[type=checkbox]:not(.avoid)");
 	const textfields = document.querySelectorAll("input[type=text]:not(.avoid)");
 	const numberfields = document.querySelectorAll("input[type=number]:not(.avoid)");
+	const colorfields = document.querySelectorAll("input[type=color]:not(.avoid)");
 	const selects = document.querySelectorAll("select:not(.avoid)");
 	
 	const hiddenField = document.querySelector("textarea[name=youTubeCustomEmotes]:not(.avoid)");
@@ -24,6 +25,9 @@ async function saveSettingsToLocalStorage() {
 	});
 	numberfields.forEach((numberfield) => {
 		settings[numberfield.name] = numberfield.value;
+	});
+	colorfields.forEach((colorfield) => {
+		settings[colorfield.name] = colorfield.value;
 	});
 	selects.forEach((select) => {
 		settings[select.name] = select.value;
@@ -109,6 +113,7 @@ async function pushChangeEvents() {
 	const checkboxes = document.querySelectorAll("input[type=checkbox]:not(.avoid)");
 	const textfields = document.querySelectorAll("input[type=text]:not(.avoid)");
 	const numberfields = document.querySelectorAll("input[type=number]:not(.avoid)");
+	const colorfields = document.querySelectorAll("input[type=color]:not(.avoid)");
 	const selects = document.querySelectorAll("select:not(.avoid)");
 
 	const ranges = document.querySelectorAll("input[type=range]:not(.avoid)");
@@ -127,6 +132,12 @@ async function pushChangeEvents() {
 	});
 	numberfields.forEach((numberfield) => {
 		numberfield.addEventListener('input', () => {
+			generateUrl();
+			saveSettingsToLocalStorage();
+		});
+	});
+	colorfields.forEach((colorfield) => {		
+		colorfield.addEventListener('change', () => {
 			generateUrl();
 			saveSettingsToLocalStorage();
 		});
@@ -154,6 +165,10 @@ async function pushChangeEvents() {
 	document.querySelector('#font-slider').addEventListener('input', function () {
 		document.querySelector('#font-value').textContent = Math.floor(this.value * 100) + '%';
 	});
+
+	document.querySelector('#bg-opacity-slider').addEventListener('input', function () {
+		document.querySelector('#bg-opacity-value').textContent = this.value;
+	});
 }
 
 
@@ -166,6 +181,7 @@ async function generateUrl() {
 	const checkboxes = document.querySelectorAll("input[type=checkbox]:not(.avoid)");
 	const textfields = document.querySelectorAll("input[type=text]:not(.avoid)");
 	const numberfields = document.querySelectorAll("input[type=number]:not(.avoid)");
+	const colorfields = document.querySelectorAll("input[type=color]:not(.avoid)");
 	const selects = document.querySelectorAll("select:not(.avoid)");
 
 	const ranges = document.querySelectorAll("input[type=range]:not(.avoid)");
@@ -180,6 +196,9 @@ async function generateUrl() {
 	});
 	checkboxes.forEach((checkbox) => {
 		params.set(checkbox.name, checkbox.checked);
+	});
+	colorfields.forEach((colorfield) => {
+		params.set(colorfield.name, colorfield.value);
 	});
 	textfields.forEach((textfield) => {
 		params.set(textfield.name, textfield.value);

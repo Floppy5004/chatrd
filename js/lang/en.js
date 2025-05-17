@@ -107,7 +107,7 @@ const en = {
     kofi : {
         donation : ({ money, message }) => ` donated 🪙 <strong>${money}</strong>${message ? '<br>'+message : ''}`,
         sub : ({ money, tier, message }) => ` subscribed <strong>(${money}) ${tier ? '(Tier '+tier+')' : ''}</strong>${message ? '<br>'+message : ''}`,
-        resub : ({ money, tier, message }) => ` subscribed <strong>${money} ${tier ? '(Tier '+tier+')' : ''}</strong>${message ? '<br>'+message : ''}`,
+        resub : ({ money, tier, message }) => ` resubscribed <strong>${money} ${tier ? '(Tier '+tier+')' : ''}</strong>${message ? '<br>'+message : ''}`,
         order : ({ money, items }) => ` ordered <strong>${items} ${items == 1 ? 'item' : 'items'} (${money == 0 ? 'Free' : money})`,
     },
 

@@ -272,6 +272,13 @@ a { color: #ffcc00; }
     transition: .4s;
 }
 
+
+
+.tab-content .setting input[type=color] {
+    background: #111;
+    padding: 0 2px;
+}
+
 .tab-content .setting input[type=checkbox]:checked + .slider {
     background-color: #03c4de;
 }
@@ -321,7 +328,7 @@ a { color: #ffcc00; }
 
 
 
-#font-value {
+.slider-value {
     display: inline-block;
     font-style: normal;
     font-size: 14px;

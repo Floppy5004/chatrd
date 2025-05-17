@@ -59,7 +59,22 @@
 					<label>Chat Font Size<br><small>Changes ChatRD's font size</small></label>
 					<label>
 						<input type="range" id="font-slider" name="chatFontSize" min="0.1" max="2" step="0.1" value="1">
-						<br><em id="font-value">100%</em>
+						<br><em id="font-value" class="slider-value">100%</em>
+					</label>
+				</div>
+
+				<div class="setting">
+					<label>Background Color<br><small>Changes ChatRD's background color</small></label>
+					<label>
+						<input type="color" name="chatBackground" value="#121212">
+					</label>
+				</div>
+				
+				<div class="setting slider">
+					<label><i class="fa-solid fa-arrow-turn-up"></i> Background Opacity<br><small>Changes ChatRD's background color opacity</small></label>
+					<label>
+						<input type="range" id="bg-opacity-slider" name="chatBackgroundOpacity" min="0.0" max="1" step="0.1" value="1">
+						<br><em id="bg-opacity-value" class="slider-value">1</em>
 					</label>
 				</div>
 

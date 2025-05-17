@@ -578,6 +578,9 @@ async function getTwitchAvatar(user) {
             console.debug(`Twitch avatar not found for ${user}! Getting it from DECAPI!`);
             var decapi = await fetch('https://decapi.me/twitch/avatar/' + user);
             var newavatar = await decapi.text()
+
+            if (!newavatar) { newavatar = 'https://static-cdn.jtvnw.net/user-default-pictures-uv/cdd517fe-def4-11e9-948e-784f43822e80-profile_image-300x300.png'; }
+            
             avatars.set(user, newavatar);
             return newavatar;
         }

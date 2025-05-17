@@ -13,6 +13,8 @@ const chatThreshhold                = 50;
 
 const chatContainer                 = document.querySelector('#chat');
 const chatFontSize                  = getURLParam("chatFontSize", 1);
+const chatBackground                = getURLParam("chatBackground", "#121212"); 
+const chatBackgroundOpacity         = getURLParam("chatBackgroundOpacity", 1); 
 
 const currentLang                   = lang[getURLParam("language", 'ptbr')]; 
 const eventsMockup                  = getURLParam("eventsMockup", true); 
@@ -36,6 +38,8 @@ chatContainer.style.zoom = chatFontSize;
 /* ----------------------- */
 /*          START          */
 /* ----------------------- */
+
+document.body.style.backgroundColor = hexToRGBA(chatBackground,chatBackgroundOpacity);
 
 if (showPlatformStatistics == false) { document.querySelector('#statistics').style.display = 'none'; }
 if (chatHorizontal == true) { chatContainer.classList.add('horizontal'); }
@@ -349,4 +353,17 @@ async function cleanStringOfHTMLButEmotes(string) {
 function stripStringFromHtml(html) {
     let doc = new DOMParser().parseFromString(html, 'text/html');
     return doc.body.textContent || "";
+}
+
+
+function hexToRGBA(hexadecimal,opacity) {
+    const hex = hexadecimal;
+    const alpha = parseFloat(opacity);
+    
+    // Converter hex para RGB
+    const r = parseInt(hex.substr(1, 2), 16);
+    const g = parseInt(hex.substr(3, 2), 16);
+    const b = parseInt(hex.substr(5, 2), 16);
+
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
