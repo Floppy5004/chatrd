@@ -151,3 +151,4 @@ const es = {
         <br>Felicitaciones <strong>${winners}</strong>`,
     },
 }
+
