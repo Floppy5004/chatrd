@@ -24,7 +24,7 @@ Make sure your **Twitch** and **YouTube** accounts are connected on **Streamer.B
 1. On **Streamer.Bot**, go to **Server/Clients → WebSocket Server** and make sure it is running
 2. Import the string inside the file [streamerbot-import.vortisrd](https://github.com/vortisrd/chatrd/blob/main/streamerbot-import.vortisrd) to your **Streamer.Bot** using the **Import** button at the top.
 3. Go to **Server/Clients → WebSocket Client** and make sure the *TikFinity* WebSocket is connected. If not, right-click on it and check *Auto-Connect* and *Reconnect* before clicking on *Connect*. 
-4. Make sure **TikFinity Desktop App** is opened and connected to your TikTok Account.
+4. Download [**TikFinity Desktop App**](https://tikfinity.zerody.one/) and make sure it's is opened and connected to your TikTok Account.
 5. Open the [Settings Page](https://vortisrd.github.io/chatrd) in your browser.
 6. Choose your desired options.
 7. Click **"Copy URL"**.
@@ -65,28 +65,6 @@ Also, at any point either **Kick** or **Kick.Bot** might change their stuff, so 
 ### Streamer.Bot Setup
 1. Import the [streamerbot-import.vortisrd](https://github.com/vortisrd/chatrd/blob/main/streamerbot-import.vortisrd) file to your **Streamer.Bot**. There's a new action that will handle the **Speaker.Bot** integration.
 2. Go to **Integrations → Speaker.Bot**, click on *Connect*. Make sure to also tick the *Auto-Start* and *Auto-Connect* checkboxes.
-
----
-
-## 🧩 Integrations
-
-- 🟣 **Twitch** (via Streamer.Bot)  
-- 🔴 **YouTube** (via Streamer.Bot)  
-- ⚫ **TikTok** (via TikFinity Desktop App)  
-- 💸 **Streamlabs / StreamElements**  
-
----
-
-## 📦 Dependencies
-
-- [Streamer.Bot](https://streamer.bot)  
-- [Speaker.Bot](http://speaker.bot/) 
-- [Streamer.Bot Client JS](https://streamerbot.github.io/client/)
-- [TikFinity Desktop App](https://tikfinity.zerody.one/)  
-- [Font Awesome](https://fontawesome.com/)  
-- [Animate.css](https://animate.style/)  
-- [Simple Notify](https://simple-notify.github.io/simple-notify/)  
-- [DOMPurify](https://github.com/cure53/DOMPurify)  
 
 ---
 
