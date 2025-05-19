@@ -77,21 +77,29 @@ Also, at any point either **Kick** or **Kick.Bot** might change their stuff, so 
 ---
 
 ## ❓ Frequently Asked Questions
-**- Can I use it to read my chat?** R: Yes you can. You can open it on your browser, use it as a chat overlay and use it as a dock in OBS.
+**- Can I use it to read my chat?**
+R: Yes you can. You can open it on your browser, use it as a chat overlay and use it as a dock in OBS.
 
-**- What about YouTube Members Emotes?** R: YouTube doesn't expose their Partner Emojis to Streamer.Bot. All you can do is add the emojis manually in ChatRD. Please [read this](https://github.com/vortisrd/chatrd#about-youtube-membership-emojis).
+**- What about YouTube Members Emotes?**
+R: YouTube doesn't expose their Partner Emojis to Streamer.Bot. All you can do is add the emojis manually in ChatRD. Please [read this](https://github.com/vortisrd/chatrd#about-youtube-membership-emojis).
 
-**- Can I set TTS to read only the events I want to read?** R: ChatRD only reads either chats, events or both. If you want to filter the events, [I suggest you setup Speaker.Bot separately](https://github.com/vortisrd/chatrd?tab=readme-ov-file#about-speakerbot-tts-customization). 
+**- Can I set TTS to read only the events I want to read?**
+R: ChatRD only reads either chats, events or both. If you want to filter the events, [I suggest you setup Speaker.Bot separately](https://github.com/vortisrd/chatrd?tab=readme-ov-file#about-speakerbot-tts-customization). 
 
-**- TikTok events are not working anymore, what should I do?** R: Make sure your TikFinity is connected to your account and you are live. Also go to **Server/Clients → WebSocket Client** and make sure the TikFinity WebSocket is connected. [Instructions here](https://github.com/vortisrd/chatrd#streamerbot--tikfinity).
+**- TikTok events are not working anymore, what should I do?**
+R: Make sure your TikFinity is connected to your account and you are live. Also go to **Server/Clients → WebSocket Client** and make sure the TikFinity WebSocket is connected. [Instructions here](https://github.com/vortisrd/chatrd#streamerbot--tikfinity).
 
-**- Kick events are not working anymore, what should I do?** R: Try reinstalling Kick.Bot [using the following methods](https://github.com/vortisrd/chatrd?tab=readme-ov-file#kickbot-installation-on-streamerbot).
+**- Kick events are not working anymore, what should I do?**
+R: Try reinstalling Kick.Bot [using the following methods](https://github.com/vortisrd/chatrd?tab=readme-ov-file#kickbot-installation-on-streamerbot).
 
-**- Where are my Kick sub badges? And the X or Y badges?** R: At the moment of this post, the WebSocket I connect to show Kick's chat doesn't expose the Badges like Twitch does. Twitch mentions the badges and sends the URL, showing it [like this](https://i.imgur.com/xwg39hO.png). **Kick doesn't, showing on code [like this](https://i.imgur.com/OtMcDzI.png)**. You can see the person is subscribed and it's a sub gifter, but it doesn't show the specified badges. I did the best I could with the other badges. When Kick improves their API, I will revisit this later. 
+**- Where are my Kick sub badges? And the X or Y badges?**
+R: At the moment of this post, the WebSocket I connect to show Kick's chat doesn't expose the Badges like Twitch does. Twitch mentions the badges and sends the URL, showing it [like this](https://i.imgur.com/xwg39hO.png). **Kick doesn't, showing on code [like this](https://i.imgur.com/OtMcDzI.png)**. You can see the person is subscribed and it's a sub gifter, but it doesn't show the specified badges. I did the best I could with the other badges. When Kick improves their API, I will revisit this later. 
 
-**- Can you add other streaming/payment platforms?** R: ChatRD uses Streamer.Bot to 95% of all platform iterations. *TikFinity* is perfectly integrated via WebSockets and *Kick.Bot* adds a decent integration. So if the platform has a decent WebSocket API (not WebHooks, those need a server to be usable) and/or has any integration with Streamer.Bot, please feel free to suggest it. Other than that, there are no plans to add more platforms.
+**- Can you add other streaming/payment platforms?**
+R: ChatRD uses Streamer.Bot to 95% of all platform iterations. *TikFinity* is perfectly integrated via WebSockets and *Kick.Bot* adds a decent integration. So if the platform has a decent WebSocket API (not WebHooks, those need a server to be usable) and/or has any integration with Streamer.Bot, please feel free to suggest it. Other than that, there are no plans to add more platforms.
 
-**- Can I customize it?** R: If you mean visual styles, yes. [Read here](https://github.com/vortisrd/chatrd?tab=readme-ov-file#about-custom-styling).
+**- Can I customize it?**
+R: If you mean visual styles, yes. [Read here](https://github.com/vortisrd/chatrd?tab=readme-ov-file#about-custom-styling).
 
 ---
 
