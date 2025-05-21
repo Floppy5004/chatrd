@@ -15,6 +15,7 @@ const chatContainer                 = document.querySelector('#chat');
 const chatFontSize                  = getURLParam("chatFontSize", 1);
 const chatBackground                = getURLParam("chatBackground", "#121212"); 
 const chatBackgroundOpacity         = getURLParam("chatBackgroundOpacity", 1); 
+const chatScrollBar                 = getURLParam("chatScrollBar", false); 
 
 const currentLang                   = lang[getURLParam("language", 'ptbr')]; 
 const eventsMockup                  = getURLParam("eventsMockup", true); 
@@ -34,6 +35,7 @@ const userColors = new Map();
 const ignoreUserList = ignoreChatters.split(',').map(item => item.trim().toLowerCase()) || [];
 
 chatContainer.style.zoom = chatFontSize;
+if (chatScrollBar == false) { chatContainer.classList.add('noscrollbar'); }
 
 /* ----------------------- */
 /*          START          */
@@ -110,7 +112,7 @@ async function addMessageToChat(userID, messageID, platform, data) {
         </div>
     `);
 
-    chatContainer.insertAdjacentHTML('beforeend', html);
+    chatContainer.insertAdjacentHTML('afterbegin', html);
 
     const messageElement = document.getElementById(messageID);
 
@@ -148,7 +150,7 @@ async function addEventToChat(userID, messageID, platform, data) {
         </div>
     `);
 
-    chatContainer.insertAdjacentHTML('beforeend', html);
+    chatContainer.insertAdjacentHTML('afterbegin', html);
     
     const messageElement = document.getElementById(messageID);
 
@@ -178,13 +180,18 @@ const whatTimeIsIt = () => {
 
 
 function removeExtraChatMessages() {
-    const chatMessages = chatContainer.querySelectorAll('div.message').length;
-    if (chatMessages >= chatThreshhold) {
-        for (let i = 0; i < Math.floor(chatThreshhold/2); i++) {
-            chatContainer.removeChild(chatContainer.firstElementChild);
+    const chatMessages = chatContainer.querySelectorAll('div.message');
+    const total = chatMessages.length;
+
+    if (total >= chatThreshhold) {
+        const toRemove = Math.floor(total * 0.25); // 25% do total
+        for (let i = 0; i < toRemove; i++) {
+            const last = chatContainer.lastElementChild;
+            if (last) chatContainer.removeChild(last);
         }
     }
 }
+
 
 
 // Function to format large numbers (e.g., 1000 => '1K')

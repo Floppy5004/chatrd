@@ -200,6 +200,7 @@ function generateMockEvent() {
         'twitch-chat', 'twitch-chat', 'twitch-chat', 'twitch-chat', 'twitch-chat', 
         
         'twitch-follow', 'twitch-bits', 'twitch-sub', 'twitch-resub', 
+
         'twitch-giftsub', 'twitch-giftbomb', 'twitch-raid',
         'twitch-announcement', 'twitch-reward', 'twitch-gigantifyemote',
 

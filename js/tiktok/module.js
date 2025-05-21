@@ -148,7 +148,6 @@ async function tiktokLikesMessage(data) {
 
     if (showTikTokLikes == false) return;
 
-
     const {
         userId: userID,
         msgId: messageID,

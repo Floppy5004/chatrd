@@ -140,12 +140,13 @@ async function youTubeSuperChatMessage(data) {
     } = data;
 
     var money = amount;
+    var messagewithemotes = await getYouTubeEmotes(textmessage);
 
     const [avatar, message] = await Promise.all([
         ``,
         currentLang.youtube.superchat({
             money : money,
-            message : textmessage
+            message : messagewithemotes
         })
     ]);
 
@@ -223,12 +224,14 @@ async function youTubeNewSponsorMessage(data) {
         message: messagetext,
     } = data;
 
+    var messagewithemotes = await getYouTubeEmotes(messagetext);
+
     const [avatar, message] = await Promise.all([
         ``,
         currentLang.youtube.member({
             months : months,
             tier : levelName,
-            message: messagetext
+            message: messagewithemotes
         })
     ]);
     
@@ -357,7 +360,7 @@ async function getYouTubeEmotes(data) {
         emoteMap.set(emote.code, { html: emoteElement, raw: emote.code });
     }
 
-    // YouTube emotes (ex: :vortisLaugh:)
+    // YouTube emotes (ex: :hand-pink-waving:)
     if (data.emotes) {
         for (const emote of data.emotes) {
             const emoteElement = `<img src="${emote.imageUrl}" class="emote" alt="${emote.name}">`;

@@ -263,7 +263,7 @@ async function twitchAnnouncementMessage(data) {
 
 
     data.message = {
-        message: await getTwitchAnnouncementEmotes(data)
+        message: await getTwitchEmotesOnParts(data)
     };
 
 
@@ -366,6 +366,7 @@ async function twitchReSubMessage(data) {
     } = data;
 
     const messageID = createRandomString(40);
+    const messagetext = await getTwitchEmotesOnParts(data);
 
     const [avatar, message] = await Promise.all([
         '',
@@ -373,7 +374,7 @@ async function twitchReSubMessage(data) {
             months : data.cumulativeMonths,
             isPrime : data.isPrime,
             tier : data.subTier,
-            message : text
+            message : messagetext
         })
     ]);
 
@@ -452,7 +453,11 @@ async function twitchGiftSubsMessage(data) {
 
     const [avatar, message] = await Promise.all([
         '',
-        currentLang.twitch.giftedbomb({ count : data.total, tier : data.sub_tier, total : data.cumulative_total })
+        currentLang.twitch.giftedbomb({
+            count : data.total,
+            tier : data.sub_tier,
+            total : data.cumulative_total
+        })
     ]);
 
     const classes = 'sub';
@@ -542,7 +547,7 @@ async function getTwitchEmotes(data) {
 }
 
 
-async function getTwitchAnnouncementEmotes(data) {
+/*async function getTwitchAnnouncementEmotes(data) {
     const message = data.text;
     const emotes = data.parts;
     const words = message.split(" ");
@@ -555,8 +560,23 @@ async function getTwitchAnnouncementEmotes(data) {
         });
     }
     return words.join(" ");
-}
+}*/
 
+async function getTwitchEmotesOnParts(data) {
+    const parts = data?.parts;
+
+    if (!Array.isArray(parts)) {
+        return data.text;
+    }
+
+    return parts.map(part => {
+        if (part.type === 'text') {
+            return part.text;
+        } else if (part.type === 'emote') {
+            return `<img src="${part.imageUrl}" alt="${part.text}" class="emote">`;
+        }
+    }).join('');
+}
 
 async function getTwitchBadges(data) {
     const badges = data.message.badges;
