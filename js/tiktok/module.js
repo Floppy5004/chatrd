@@ -160,18 +160,19 @@ async function tiktokLikesMessage(data) {
     var likeCountTotal = parseInt(likesSent);
 
     // Search for Previous Likes from the Same User
-    const previousLikeContainer = chatContainer.querySelector(`div.message[data-user="${userID}"]`);
+    const previousLikeContainer = chatContainer.querySelector(`div.message.likes[data-user="${userID}"]`);
 
     // If found, fetches the previous likes, deletes the element
     // and then creates a new count with a sum of the like count
     if (previousLikeContainer) {
         const likeCountElem = previousLikeContainer.querySelector('.likecount');
-        if (likeCountElem && likeCountElem.textContent) {
+        if (likeCountElem) {
             var likeCountPrev = parseInt(likeCountElem.textContent);
             likeCountTotal = Math.floor(likeCountPrev + likeCountTotal);
             previousLikeContainer.remove();
         }
     }
+
 
     const message = currentLang.tiktok.likes(likeCountTotal)
     const classes = 'likes'
