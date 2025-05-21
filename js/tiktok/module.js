@@ -165,9 +165,12 @@ async function tiktokLikesMessage(data) {
     // If found, fetches the previous likes, deletes the element
     // and then creates a new count with a sum of the like count
     if (previousLikeContainer) {
-        var likeCountPrev = parseInt(previousLikeContainer.querySelector('.likecount').textContent);
-        likeCountTotal = Math.floor(likeCountPrev + likeCountTotal);
-        previousLikeContainer.remove();
+        const likeCountElem = previousLikeContainer.querySelector('.likecount');
+        if (likeCountElem && likeCountElem.textContent) {
+            var likeCountPrev = parseInt(likeCountElem.textContent);
+            likeCountTotal = Math.floor(likeCountPrev + likeCountTotal);
+            previousLikeContainer.remove();
+        }
     }
 
     const message = currentLang.tiktok.likes(likeCountTotal)
@@ -184,28 +187,6 @@ async function tiktokLikesMessage(data) {
     };
 
     addEventToChat(userID, messageID, 'tiktok', messageData);
-
-    
-
-    /*const likedivs = chatContainer.querySelectorAll('div.message.likes');
-
-    if (likedivs.length == 6) {
-        // Mapeia os likedivs com seus respectivos valores de like
-        const likedivsWithCounts = Array.from(likedivs)
-        .map(div => {
-            const likeCountEl = div.querySelector('em.likecount');
-            const count = likeCountEl ? parseInt(likeCountEl.textContent.trim(), 10) : 0;
-            return { div, count };
-        });
-
-        // Ordena do menor para o maior like
-        likedivsWithCounts.sort((a, b) => a.count - b.count);
-
-        // Remove os 3 com menor contagem
-        for (let i = 0; i < 3 && i < likedivsWithCounts.length; i++) {
-            likedivsWithCounts[i].div.remove();
-        }
-    }*/
 }
 
 
