@@ -66,7 +66,7 @@ const mockData = {
         "This game brings back memories",
         "Why is this so intense omg",
     
-        "Chat, what’s your favorite snack?",
+        "Chat, what's your favorite snack?",
         "That edit was slick",
         "Mobile gang where you at?",
         "Sheeesh 🥶",
@@ -207,6 +207,10 @@ function generateMockEvent() {
         'youtube-chat', 'youtube-chat', 'youtube-chat', 'youtube-chat', 'youtube-chat', 
         'youtube-chat', 'youtube-chat', 'youtube-chat', 'youtube-chat', 'youtube-chat', 
         'youtube-superchat', 'youtube-supersticker', 'youtube-newsponsor', 'youtube-membermilestone', 'youtube-membergift',
+
+        'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 'youtube-membermilestone', 
+
+
 
         'tiktok-chat', 'tiktok-chat', 'tiktok-chat', 'tiktok-chat', 'tiktok-chat', 
         'tiktok-chat', 'tiktok-chat', 'tiktok-chat', 'tiktok-chat', 'tiktok-chat', 
@@ -470,8 +474,6 @@ function generateMockEvent() {
                 amount: '$' + Math.floor(Math.random() * 2000) + 1,
                 message : messagetext
             };
-
-            console.log('superchat', data.amount);
 
             youTubeSuperChatMessage(data);
 

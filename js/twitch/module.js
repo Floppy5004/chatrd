@@ -263,7 +263,7 @@ async function twitchAnnouncementMessage(data) {
 
 
     data.message = {
-        message: await getTwitchEmotesOnParts(data)
+        message: await getTwitchAnnouncementEmotes(data)
     };
 
 
@@ -547,7 +547,7 @@ async function getTwitchEmotes(data) {
 }
 
 
-/*async function getTwitchAnnouncementEmotes(data) {
+async function getTwitchAnnouncementEmotes(data) {
     const message = data.text;
     const emotes = data.parts;
     const words = message.split(" ");
@@ -560,18 +560,19 @@ async function getTwitchEmotes(data) {
         });
     }
     return words.join(" ");
-}*/
+}
 
 async function getTwitchEmotesOnParts(data) {
     const parts = data?.parts;
+    const message = data.text;
 
     if (!Array.isArray(parts)) {
-        return data.text;
+        return message;
     }
 
     return parts.map(part => {
         if (part.type === 'text') {
-            return part.text;
+            return message;
         } else if (part.type === 'emote') {
             return `<img src="${part.imageUrl}" alt="${part.text}" class="emote">`;
         }

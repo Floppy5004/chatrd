@@ -224,7 +224,11 @@ async function youTubeNewSponsorMessage(data) {
         message: messagetext,
     } = data;
 
-    var messagewithemotes = await getYouTubeEmotes(messagetext);
+    var messagewithemotes = '';
+
+    if (messagetext) {
+        messagewithemotes = await getYouTubeEmotes(messagetext);
+    }
 
     const [avatar, message] = await Promise.all([
         ``,

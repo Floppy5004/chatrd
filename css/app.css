@@ -462,11 +462,14 @@ body {
 
 
 #chat.horizontal {
-    display: flex;
-    align-items: flex-end;
-    width: max-content;
+    position: absolute;
     right: 0;
-    gap: 15px;
+    bottom: 0;
+    
+    flex-direction: row-reverse;
+    align-items: flex-end;
+    gap: 10px;
+    width: max-content;
 }
 
 
