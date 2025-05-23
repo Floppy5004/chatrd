@@ -2,7 +2,7 @@
 
 ChatRD is a chat tool and/or overlay widget that unifies messages and events from **Twitch**, **YouTube**, **TikTok**, **Kick**, **Streamlabs**, **StreamElements**, **Patreon**, **TipeeeStream**, **Ko-Fi**, **Fourthwall** (and more to come). 
 
-![ChatRD Config UI](https://i.imgur.com/jQl1nWj.png)
+![ChatRD Config UI](https://i.imgur.com/h4pvl0n.png)
 
 ---
 
