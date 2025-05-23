@@ -83,7 +83,7 @@ Also, at any point either **Kick** or **Kick.Bot** might change their stuff, so 
 - /timeout (user) (duration) (reason)
 - /untimeout (user)
 - /ban (user) (reason)
-- /uban (user)
+- /unban (user)
 - /mod (user)
 - /unmod (user)
 - /vip (user)
