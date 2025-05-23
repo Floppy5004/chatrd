@@ -198,6 +198,8 @@ function generateMockEvent() {
     const eventTypes = [
         'twitch-chat', 'twitch-chat', 'twitch-chat', 'twitch-chat', 'twitch-chat', 
         'twitch-chat', 'twitch-chat', 'twitch-chat', 'twitch-chat', 'twitch-chat', 
+        'twitch-chat', 'twitch-chat', 'twitch-chat', 'twitch-chat', 'twitch-chat', 
+        'twitch-chat', 'twitch-chat', 'twitch-chat', 'twitch-chat', 'twitch-chat', 
         
         'twitch-follow', 'twitch-bits', 'twitch-sub', 'twitch-resub', 
 
@@ -266,6 +268,9 @@ function generateMockEvent() {
                     message: messagetext + ' ' + emotesInsideMessages,
                     firstMessage: firstMessage,
                     badges: badgeschosen,
+                },
+                user: {
+                    role: 1
                 },
                 messageId: messageId,
             };            
