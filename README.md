@@ -100,6 +100,11 @@ Also, at any point either **Kick** or **Kick.Bot** might change their stuff, so 
 - /yt/timeout (userID) (duration in seconds)
 - /yt/ban (userID)
 
+
+- **⚠️ Kick commands are not supported yet ⚠️**
+- **⚠️ TikFinity's WebSocket doesn't allow to send messages without authentication, so it's disabled for the moment. ⚠️**
+
+
 ---
 
 ## 📝 To-Do List
