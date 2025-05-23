@@ -116,6 +116,10 @@ async function twitchChatMessage(data) {
 
     const classes = firstMessage ? ['first-message'] : [];
 
+    if (data.user.role == 4) {
+        classes.push('streamer');
+    }
+
     const replyHTML = isReply ?
         `<div class="reply"><i class="fa-solid fa-arrow-turn-up"></i> <strong>${replyData.userName}:</strong> ${replyData.msgBody}</div>` :
         '';

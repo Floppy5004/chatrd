@@ -16,6 +16,8 @@ const chatFontSize                  = getURLParam("chatFontSize", 1);
 const chatBackground                = getURLParam("chatBackground", "#121212"); 
 const chatBackgroundOpacity         = getURLParam("chatBackgroundOpacity", 1); 
 const chatScrollBar                 = getURLParam("chatScrollBar", false); 
+const chatField                     = getURLParam("chatField", false);
+const chatModeration                = getURLParam("chatModeration", false);
 
 const currentLang                   = lang[getURLParam("language", 'ptbr')]; 
 const eventsMockup                  = getURLParam("eventsMockup", true); 
@@ -36,6 +38,7 @@ const ignoreUserList = ignoreChatters.split(',').map(item => item.trim().toLower
 
 chatContainer.style.zoom = chatFontSize;
 if (chatScrollBar == false) { chatContainer.classList.add('noscrollbar'); }
+if (chatField == true) { document.getElementById("chat-input").classList.add('enabled'); }
 
 /* ----------------------- */
 /*          START          */
@@ -44,7 +47,7 @@ if (chatScrollBar == false) { chatContainer.classList.add('noscrollbar'); }
 document.body.style.backgroundColor = hexToRGBA(chatBackground,chatBackgroundOpacity);
 
 if (showPlatformStatistics == false) { document.querySelector('#statistics').style.display = 'none'; }
-if (chatHorizontal == true) { chatContainer.classList.add('horizontal'); }
+if (chatHorizontal == true) { chatContainer.parentElement.classList.add('horizontal'); }
 
 /* ----------------------- */
 /* STREAMER.BOT CONNECTION */
@@ -77,6 +80,8 @@ const streamerBotClient = new StreamerbotClient({
 });
 
 
+
+
 /* ----------------------- */
 /*        UTILITIES        */
 /* ----------------------- */
@@ -87,7 +92,7 @@ async function addMessageToChat(userID, messageID, platform, data) {
     
     if (ttsSpeakerBotChat == true) { ttsSpeakerBotSays(data.userName, currentLang.ttschat, data.message); }
 
-    const html = DOMPurify.sanitize(`
+    let html = DOMPurify.sanitize(`
         <div id="${messageID}" data-user="${userID}" class="${platform} ${data.classes} message" style="">
             <div class="animate__animated ${chatHorizontal == true ? 'animate__fadeInRight' : 'animate__fadeInUp'} animate__faster">
 
@@ -109,8 +114,27 @@ async function addMessageToChat(userID, messageID, platform, data) {
                 
                 <span class="text">${data.message}</span>
             </div>
+
+            ${chatModeration == true && platform == 'twitch' ? `[CHATMODERATIONSNIPPETTWITCH]` : ''}
+            ${chatModeration == true && platform == 'youtube' ? `[CHATMODERATIONSNIPPETYOUTUBE]` : ''}
+
         </div>
     `);
+
+
+    let chatmodtwitch = `<span class="chatmoderation twitch">
+                <button onclick="executeModCommand(event, '/deletemessage ${messageID}')" title="Remove Message"><i class="fa-solid fa-trash-can"></i></button>
+                <button onclick="executeModCommand(event, '/timeout ${userID}')" title="Timeout User"><i class="fa-solid fa-stopwatch"></i></button>
+                <button onclick="executeModCommand(event, '/ban ${userID}')" title="Ban User"><i class="fa-solid fa-gavel"></i></button>
+            </span>`;
+
+    let chatmodyoutube = `<span class="chatmoderation youtube">
+                <button onclick="executeModCommand(event, '/yt/timeout ${userID}')" title="Timeout User"><i class="fa-solid fa-stopwatch"></i></button>
+                <button onclick="executeModCommand(event, '/yt/ban ${userID}')" title="Ban User"><i class="fa-solid fa-gavel"></i></button>
+            </span>`;
+    
+    html = html.replace('[CHATMODERATIONSNIPPETTWITCH]', chatmodtwitch);
+    html = html.replace('[CHATMODERATIONSNIPPETYOUTUBE]', chatmodyoutube);
 
     chatContainer.insertAdjacentHTML('afterbegin', html);
 
@@ -142,7 +166,6 @@ async function addEventToChat(userID, messageID, platform, data) {
                 ${showPlatform == true ? '<span class="platform"><img src="images/logo-'+platform+'.svg" ></span>' : '' }
 
                 <span class="info">
-                    <!--<span class="avatar"><img src="${data.avatar}"></span>-->
                     <span style="color: ${data.color}"  class="user">${data.userName}</span>
                     <span class="text">${data.message}</span>
                 </span>
@@ -165,6 +188,7 @@ async function addEventToChat(userID, messageID, platform, data) {
     
     removeExtraChatMessages();
 }
+
 
 
 const whatTimeIsIt = () => {
@@ -374,3 +398,142 @@ function hexToRGBA(hexadecimal,opacity) {
 
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
+
+
+
+const chatInputConfig = document.getElementById("chat-input-config");
+const chatInputSend = document.getElementById("chat-input-send");
+const chatInputForm = document.querySelector("#chat-input form");
+const settings = document.getElementById("chat-input-settings");
+
+chatInputForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    var chatSendPlatforms = [];
+
+    const settingsContainer = document.getElementById("chat-input-settings");
+    const checkboxes = settingsContainer.querySelectorAll('input[type="checkbox"]');
+
+    checkboxes.forEach(checkbox => {
+        const checked = checkbox.checked;
+        const platform = checkbox.getAttribute('data-platform');        
+        if (checked == true) { chatSendPlatforms.push(platform); }
+    });
+
+    chatSendPlatforms = chatSendPlatforms.join(',')
+
+    const chatInput = chatInputForm.querySelector("input[type=text]")
+    const chatInputText = chatInput.value;
+
+    // Sends Message to Twitch and YouTube 
+
+    streamerBotClient.doAction(
+    { name : "ChatRD Messages and Commands" },
+    {
+        "type": "chat",
+        "platforms": chatSendPlatforms,
+        "message": chatInputText,
+    }
+    ).then( (sendchatstuff) => {
+        console.debug('Sending Chat to Streamer.Bot', sendchatstuff);
+    });
+    
+    // Sends Message to Kick that are not commands
+    if (chatSendPlatforms.includes('kick')) {
+        if (!chatInputText.startsWith('/')) {
+            streamerBotClient.doAction(
+            { name : "ChatRD Kick Messages" },
+            {
+                "message": chatInputText,
+            }
+            ).then( (sendchatstuff) => {
+                console.debug('Sending Kick Chat to Streamer.Bot', sendchatstuff);
+            });
+        }
+    }
+
+    chatInput.value = '';
+});
+
+chatInputSend.addEventListener("click", function () {
+    chatInputForm.requestSubmit();
+});
+
+chatInputConfig.addEventListener("click", function () {
+    const isHidden = settings.style.display === "none" || settings.classList.contains("animate__fadeOutDown");
+
+    if (isHidden) {
+      // Remover animação de saída (caso ainda esteja presente)
+        settings.classList.remove("animate__fadeOutDown");
+
+        // Mostrar com animação de entrada
+        settings.style.display = "block";
+        settings.classList.add("animate__animated", "animate__fadeInUp");
+
+        // Limpa as classes após a animação
+        settings.addEventListener("animationend", function handler() {
+            settings.classList.remove("animate__animated", "animate__fadeInUp");
+            settings.removeEventListener("animationend", handler);
+        });
+
+        chatInputConfig.classList.add("active");
+    }
+
+    else {
+        // Começar animação de saída
+        settings.classList.remove("animate__fadeInUp");
+        settings.classList.add("animate__animated", "animate__fadeOutDown");
+
+        // Após animação, esconder elemento
+        settings.addEventListener("animationend", function handler() {
+            settings.style.display = "none";
+            settings.classList.remove("animate__animated", "animate__fadeOutDown");
+            settings.removeEventListener("animationend", handler);
+        });
+
+        chatInputConfig.classList.remove("active");
+    }
+});
+
+
+async function executeModCommand(event, command) {
+    event.preventDefault();
+
+    if (streamerBotConnected == true) {
+        const chatInput = chatInputForm.querySelector("input[type=text]")
+        chatInput.value = command;
+
+        chatInputForm.requestSubmit();
+    }
+    else {
+        
+        notifyError({
+            title: currentLang.streamerbotdisconnected,
+            text: ``
+        });
+    }
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const settingsContainer = document.getElementById("chat-input-settings");
+
+    // Seleciona apenas checkboxes DENTRO do container
+    const checkboxes = settingsContainer.querySelectorAll('input[type="checkbox"]');
+
+    checkboxes.forEach(checkbox => {
+        const name = checkbox.name;
+        if (!name) return; // Ignora se o checkbox não tem 'name'
+
+        // Restaurar estado salvo
+        const saved = localStorage.getItem(name);
+        if (saved !== null) {
+            checkbox.checked = saved === "true";
+        }
+
+        // Salvar alterações
+        checkbox.addEventListener("change", () => {
+            localStorage.setItem(name, checkbox.checked);
+        });
+    });
+});

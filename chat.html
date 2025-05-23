@@ -50,9 +50,48 @@
             <div id="chat">
         
             </div>
+            <div id="chat-input">
+                <form>
+                    <input type="text" placeholder="Send a Message">
+                </form>
+                
+                <button id="chat-input-config"><i class="fa-solid fa-gear"></i></button>
+                <button id="chat-input-send"><i class="fa-solid fa-paper-plane"></i></button>
+
+                <div id="chat-input-settings" class="settings animate__faster" style="display: none;">
+                    <span class="chat-enabler" id="twitch">
+                        <img src="images/logo-twitch.svg">
+                        <label class="switch">
+                            <input type="checkbox" data-platform="twitch" name="twitchChatSend" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </span>
+
+                    <span class="chat-enabler" id="youtube">
+                        <img src="images/logo-youtube.svg">
+                        <label class="switch">
+                            <input type="checkbox" data-platform="youtube" name="youtubeChatSend" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </span>
+
+                    <span class="chat-enabler" id="kick" title="Only Chat, No commands.">
+                        <img src="images/logo-kick.svg">
+                        <label class="switch">
+                            <input type="checkbox" data-platform="kick" name="kickChatSend" checked>
+                            <span class="slider"></span>
+                        </label>
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </span>
+
+                    <span class="chat-enabler" id="tiktok">
+                        <img src="images/logo-tiktok.svg">
+                        <i class="fa-solid fa-ban"></i>
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
-
 
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.5/dist/purify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-notify@1.0.4/dist/simple-notify.min.js"></script>

@@ -59,12 +59,19 @@ body {
 
 
 #chat .message {
+    position: relative;
     color: #FFF;
     font-size: 18px;
     line-height: 150%;
     text-shadow: 2px 2px 2px rgba(0,0,0,0.75);
     transition: all ease-in-out 300ms;
     margin: 5px 0;
+    padding-bottom: 4px;
+    border-radius: 5px;
+}
+
+#chat .message:not(.event):hover {
+    background: #1a1a1a;
 }
 
 #chat .message img {
@@ -458,20 +465,222 @@ body {
 
 
 
+.wrapper.horizontal {
+    align-items: flex-end;
+}
 
 
-
-#chat.horizontal {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    
+.wrapper.horizontal #chat {
     flex-direction: row-reverse;
     align-items: flex-end;
     gap: 10px;
     width: max-content;
 }
 
+
+
+
+
+#chat .message.twitch:hover .chatmoderation.twitch {
+    display: block;
+}
+
+#chat .message .chatmoderation {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 2px 3px;
+    background: #262626;
+    border-radius: 5px;
+    transition: all ease-in-out 300ms;
+}
+
+#chat .message .chatmoderation button {
+    background: none;
+    border: none;
+    color: #FFF;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 5px;
+    transition: all ease-in-out 300ms;
+    margin: 0 3px;
+}
+
+#chat .message .chatmoderation {
+    color: #ffcc00;
+}
+
+#chat .message.twitch:hover .chatmoderation.twitch {
+    display: block;
+}
+
+#chat .message.youtube:hover .chatmoderation.youtube {
+    display: block;
+}
+
+
+#chat .message.streamer .chatmoderation button:nth-child(2),
+#chat .message.streamer .chatmoderation button:nth-child(3),
+#chat .message.owner .chatmoderation {
+    display: none;
+}
+
+
+
+#chat-input {
+    padding: 15px 10px;
+    position: relative;
+    display: none;
+}
+
+#chat-input.enabled {
+    display: block;
+    width: 100%;
+}
+
+#chat-input input[type=text] {
+    font-family: "Inter", sans-serif;
+    border: none;
+    background: #222;
+    color: #FFF;
+    padding: 10px 90px 10px 15px;
+    border-radius: 10px;
+    outline: none;
+    font-size: 16px;
+    width: 100%;
+    transition: all ease-in-out 300ms;
+}
+
+#chat-input button {
+    background: none;
+    border: none;
+    color: #FFF;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 5px;
+
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all ease-in-out 300ms;
+}
+
+#chat-input button.active,
+#chat-input button:hover {
+    color: #ffcc00;
+}
+
+
+#chat-input #chat-input-config {
+    right: 20px;
+}
+
+#chat-input #chat-input-send {
+    right: 60px;
+}
+
+#chat-input .settings {
+    display: inline-block;
+    background: #0c0c0c;
+    padding: 10px;
+    border-radius: 10px;
+    
+    position: absolute;
+    top: -55px;
+    right: 0px;
+    z-index: 11;
+}
+
+#chat-input .settings::after {
+    content: "";
+    position: absolute;
+    bottom: -10px; /* posiciona fora do balão */
+    right: 25px;    /* onde a pontinha aparece horizontalmente */
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #0c0c0c; /* mesma cor do balão */
+}
+
+#chat-input .settings img {
+    width: 28px;
+}
+
+
+#chat-input .chat-enabler {
+    display: inline-flex;
+    padding: 5px;
+    gap: 5px;
+    color: #FFF;
+    font-size: 14px;
+    align-items: center;
+    color: #333;
+}
+
+#chat-input .settings .switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 27px;
+}
+
+/* Hide default HTML checkbox */
+#chat-input .settings .switch input[type=checkbox] {
+    opacity: 1;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+#chat-input .settings .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #CCC;
+    transition: .4s;
+    border-radius: 30px;
+}
+
+#chat-input .settings .slider:before {
+    position: absolute;
+    content: "";
+    height: 1.4em;
+    width: 1.3em;
+    border-radius: 16px;
+    left: 5px;
+    top: 3px;
+    bottom: 0;
+    background-color: white;
+    transition: .4s;
+}
+
+#chat-input .settings input[type=checkbox]:checked + .slider:before {
+    transform: translateX(1.5em);
+}
+
+#chat-input #twitch input[type=checkbox]:checked + .slider {
+    background-color: #a970ff;
+}
+#chat-input #youtube input[type=checkbox]:checked + .slider {
+    background-color: #FF0000;
+}
+
+#chat-input #kick input[type=checkbox]:checked + .slider {
+    background-color: #48d415;
+}
+
+
+#chat-input .settings input[type=checkbox]:checked + .slider {
+    background-color: #03c4de;
+}
+#chat-input .setting input[type=checkbox]:disabled + .slider {
+    background-color: #000 !important;
+}
 
 
 #statistics {

@@ -38,7 +38,6 @@ if (kickUserName) {
                         kick7TVEmojis.set(emote.name, emote.url);
                     });
                 }
-                
             })();
 
             kickWebSocket.send(
