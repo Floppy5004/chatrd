@@ -72,7 +72,6 @@ Also, at any point either **Kick** or **Kick.Bot** might change their stuff, so 
 ## 💻 Commands supported by the Chat Field
 
 **Commands for Twitch**
-
 - /me (message)
 - /announce (message)
 - /clear
@@ -94,15 +93,16 @@ Also, at any point either **Kick** or **Kick.Bot** might change their stuff, so 
 - /unraid
 
 **Commands for YouTube**
-
 - /yt/title (title)
 - /yt/description (description)
 - /yt/timeout (userID) (duration in seconds)
 - /yt/ban (userID)
 
+**TikTok**
+- TikFinity's WebSocket doesn't allow to send messages without authentication, so it's disabled for the moment.
 
-- **⚠️ Kick commands are not supported yet ⚠️**
-- **⚠️ TikFinity's WebSocket doesn't allow to send messages without authentication, so it's disabled for the moment. ⚠️**
+**Kick**
+- Kick commands are not supported yet.
 
 
 ---
