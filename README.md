@@ -1,6 +1,6 @@
 # 💬 ChatRD
 
-ChatRD is a chat overlay widget for OBS that unifies messages and events from **Twitch**, **YouTube**, **TikTok**, **Kick**, **Streamlabs**, **StreamElements**, **Patreon**, **TipeeeStream**, **Ko-Fi**, **Fourthwall** (and more to come). 
+ChatRD is a chat tool and/or overlay widget that unifies messages and events from **Twitch**, **YouTube**, **TikTok**, **Kick**, **Streamlabs**, **StreamElements**, **Patreon**, **TipeeeStream**, **Ko-Fi**, **Fourthwall** (and more to come). 
 
 ![ChatRD Config UI](https://i.imgur.com/jQl1nWj.png)
 
@@ -68,6 +68,40 @@ Also, at any point either **Kick** or **Kick.Bot** might change their stuff, so 
 
 ---
 
+
+## 💻 Commands supported by the Chat Field
+
+**Commands for Twitch**
+
+/me (message)
+/announce (message)
+/clear
+/slow (duration in seconds)
+/slowoff
+/subscribers
+/subscribersoff
+/commercial (duration in seconds)
+/timeout (user) (duration) (reason)
+/untimeout (user)
+/ban (user) (reason)
+/uban (user)
+/mod (user)
+/unmod (user)
+/vip (user)
+/unvip (user)
+/shoutout (user)
+/raid (user)
+/unraid
+
+**Commands for YouTube**
+
+/yt/title (title)
+/yt/description (description)
+/yt/timeout (userID) (duration in seconds)
+/yt/ban (userID)
+
+---
+
 ## 📝 To-Do List
 
 - Trovo
@@ -100,6 +134,8 @@ R: ChatRD uses Streamer.Bot to 95% of all platform iterations. *TikFinity* is pe
 
 **- Can I customize it?**
 R: If you mean visual styles, yes. [Read here](https://github.com/vortisrd/chatrd?tab=readme-ov-file#about-custom-styling).
+
+
 
 ---
 
