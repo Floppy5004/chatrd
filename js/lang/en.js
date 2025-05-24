@@ -1,7 +1,10 @@
 const en = {
     streamerbotconnected: 'Streamer.bot Online!',
     streamerbotdisconnected: 'Streamer.bot Disconnected!',
+
     ttschat: 'said',
+
+    chatsendmessage: 'Send Message',
 
     twitch : {
         firstMessage : () => `First chatter`,

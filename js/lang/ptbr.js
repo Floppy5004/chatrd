@@ -3,6 +3,8 @@ const ptbr = {
     streamerbotdisconnected: 'Streamer.bot Desconectado!',
     ttschat: 'disse',
 
+    chatsendmessage: 'Enviar mensagem',
+
     twitch : {
         firstMessage : () => `Primeira mensagem`,
         follow : () => ` seguiu o canal`,

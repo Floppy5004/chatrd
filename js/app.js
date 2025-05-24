@@ -38,7 +38,11 @@ const ignoreUserList = ignoreChatters.split(',').map(item => item.trim().toLower
 
 chatContainer.style.zoom = chatFontSize;
 if (chatScrollBar == false) { chatContainer.classList.add('noscrollbar'); }
-if (chatField == true) { document.getElementById("chat-input").classList.add('enabled'); }
+if (chatField == true) {
+    const chatfieldelement = document.getElementById("chat-input");
+    chatfieldelement.classList.add('enabled');
+    chatfieldelement.querySelector('form input[type=text]').setAttribute('placeholder', currentLang.chatsendmessage);
+}
 
 /* ----------------------- */
 /*          START          */
@@ -405,7 +409,7 @@ const chatInputConfig = document.getElementById("chat-input-config");
 const chatInputSend = document.getElementById("chat-input-send");
 const chatInputForm = document.querySelector("#chat-input form");
 const chatInput = chatInputForm.querySelector("input[type=text]")
-const settings = document.getElementById("chat-input-settings");
+const chatSettings = document.getElementById("chat-input-settings");
 
 chatInputForm.addEventListener("submit", function(event) {
     event.preventDefault();
@@ -461,20 +465,20 @@ chatInputSend.addEventListener("click", function () {
 });
 
 chatInputConfig.addEventListener("click", function () {
-    const isHidden = settings.style.display === "none" || settings.classList.contains("animate__fadeOutDown");
+    const isHidden = chatSettings.style.display === "none" || chatSettings.classList.contains("animate__fadeOutDown");
 
     if (isHidden) {
       // Remover animação de saída (caso ainda esteja presente)
-        settings.classList.remove("animate__fadeOutDown");
+        chatSettings.classList.remove("animate__fadeOutDown");
 
         // Mostrar com animação de entrada
-        settings.style.display = "block";
-        settings.classList.add("animate__animated", "animate__fadeInUp");
+        chatSettings.style.display = "block";
+        chatSettings.classList.add("animate__animated", "animate__fadeInUp");
 
         // Limpa as classes após a animação
-        settings.addEventListener("animationend", function handler() {
-            settings.classList.remove("animate__animated", "animate__fadeInUp");
-            settings.removeEventListener("animationend", handler);
+        chatSettings.addEventListener("animationend", function handler() {
+            chatSettings.classList.remove("animate__animated", "animate__fadeInUp");
+            chatSettings.removeEventListener("animationend", handler);
         });
 
         chatInputConfig.classList.add("active");
@@ -482,14 +486,14 @@ chatInputConfig.addEventListener("click", function () {
 
     else {
         // Começar animação de saída
-        settings.classList.remove("animate__fadeInUp");
-        settings.classList.add("animate__animated", "animate__fadeOutDown");
+        chatSettings.classList.remove("animate__fadeInUp");
+        chatSettings.classList.add("animate__animated", "animate__fadeOutDown");
 
         // Após animação, esconder elemento
-        settings.addEventListener("animationend", function handler() {
-            settings.style.display = "none";
-            settings.classList.remove("animate__animated", "animate__fadeOutDown");
-            settings.removeEventListener("animationend", handler);
+        chatSettings.addEventListener("animationend", function handler() {
+            chatSettings.style.display = "none";
+            chatSettings.classList.remove("animate__animated", "animate__fadeOutDown");
+            chatSettings.removeEventListener("animationend", handler);
         });
 
         chatInputConfig.classList.remove("active");

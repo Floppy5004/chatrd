@@ -3,6 +3,8 @@ const es = {
     streamerbotdisconnected: '¡Streamer.bot desconectado!',
     ttschat: 'dijo',
 
+    chatsendmessage: 'Enviar mensaje',
+
     twitch : {
         firstMessage : () => `Primeira mensaje`,
         follow : () => ` siguió el canal`,
