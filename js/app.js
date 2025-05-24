@@ -404,6 +404,7 @@ function hexToRGBA(hexadecimal,opacity) {
 const chatInputConfig = document.getElementById("chat-input-config");
 const chatInputSend = document.getElementById("chat-input-send");
 const chatInputForm = document.querySelector("#chat-input form");
+const chatInput = chatInputForm.querySelector("input[type=text]")
 const settings = document.getElementById("chat-input-settings");
 
 chatInputForm.addEventListener("submit", function(event) {
@@ -500,7 +501,6 @@ async function executeModCommand(event, command) {
     event.preventDefault();
 
     if (streamerBotConnected == true) {
-        const chatInput = chatInputForm.querySelector("input[type=text]")
         chatInput.value = command;
 
         chatInputForm.requestSubmit();
@@ -536,4 +536,90 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.setItem(name, checkbox.checked);
         });
     });
+});
+
+
+
+
+
+
+let chatcommands = {};
+let chatcurrentFocus = -1;
+
+fetch('js/commands.json')
+.then(response => response.json())
+.then(data => {
+    chatcommands = data;
+});
+
+const chatcommandslist = document.getElementById('chat-autocomplete-list');
+
+chatInput.addEventListener('input', function () {
+    const value = this.value.trim();
+    chatcommandslist.innerHTML = '';
+    chatcurrentFocus = -1;
+    if (!value.startsWith('/')) return;
+        Object.entries(chatcommands).forEach(([groupName, commands]) => {
+        
+        const filtered = commands.filter(cmd => cmd.name.startsWith(value));
+
+        if (filtered.length === 0) return;
+
+        const groupTitle = document.createElement('div');
+        groupTitle.textContent = groupName;
+        chatcommandslist.appendChild(groupTitle);
+        filtered.forEach(cmd => {
+            const item = document.createElement('div');
+            item.classList.add('autocomplete-item');
+            item.innerHTML = `<strong>${cmd.name}</strong><small> ${cmd.usage}</small>`;
+            item.addEventListener('click', () => {
+                chatInput.value = cmd.name + ' ';
+                chatcommandslist.innerHTML = '';
+            });
+            chatcommandslist.appendChild(item);
+        });
+    });
+});
+
+
+chatInput.addEventListener('keydown', function (e) {
+    const items = chatcommandslist.querySelectorAll('.autocomplete-item');
+    
+    if (items.length === 0) return;
+    
+    if (e.key === 'ArrowDown') {
+        chatcurrentFocus++;
+        highlightItem(items);
+    }
+    else if (e.key === 'ArrowUp') {
+        chatcurrentFocus--;
+        highlightItem(items);
+    }
+    
+    else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (chatcurrentFocus > -1 && items[chatcurrentFocus]) {
+            items[chatcurrentFocus].click();
+        }
+    }
+});
+
+
+function highlightItem(items) {
+    if (!items) return;
+
+    items.forEach(item => item.classList.remove('active'));
+
+    if (chatcurrentFocus >= items.length) chatcurrentFocus = 0;
+    if (chatcurrentFocus < 0) chatcurrentFocus = items.length - 1;
+
+    items[chatcurrentFocus].classList.add('active');
+    items[chatcurrentFocus].scrollIntoView({ block: "nearest" });
+}
+
+
+document.addEventListener('click', function (e) {
+    if (e.target !== chatcommandslist) {
+        chatcommandslist.innerHTML = '';
+    }
 });
