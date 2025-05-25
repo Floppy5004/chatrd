@@ -79,8 +79,12 @@ body {
     vertical-align: middle;
 }
 
+#chat .message.bigger-emojis img.emote {
+    height: 32px;
+}
+
 #chat .message .text img.gigantify {
-    height: 84px;
+    height: 84px !important;
     display: block;
     margin: 10px 0 5px 0;
 }

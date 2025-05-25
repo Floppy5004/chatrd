@@ -16,6 +16,7 @@ const chatFontSize                  = getURLParam("chatFontSize", 1);
 const chatBackground                = getURLParam("chatBackground", "#121212"); 
 const chatBackgroundOpacity         = getURLParam("chatBackgroundOpacity", 1); 
 const chatScrollBar                 = getURLParam("chatScrollBar", false); 
+const chatBiggerEmotes              = getURLParam("chatBiggerEmotes", false); 
 const chatField                     = getURLParam("chatField", false);
 const chatModeration                = getURLParam("chatModeration", false);
 
@@ -97,7 +98,7 @@ async function addMessageToChat(userID, messageID, platform, data) {
     if (ttsSpeakerBotChat == true) { ttsSpeakerBotSays(data.userName, currentLang.ttschat, data.message); }
 
     let html = DOMPurify.sanitize(`
-        <div id="${messageID}" data-user="${userID}" class="${platform} ${data.classes} message" style="">
+        <div id="${messageID}" data-user="${userID}" class="${platform} ${data.classes} ${chatBiggerEmotes == true ? 'bigger-emojis' : ''} message" style="">
             <div class="animate__animated ${chatHorizontal == true ? 'animate__fadeInRight' : 'animate__fadeInUp'} animate__faster">
 
                 ${data.classes.includes("first-message") ? '<span class="first-chatter">✨</span>' : '' }
