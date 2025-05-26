@@ -406,7 +406,6 @@ function hexToRGBA(hexadecimal,opacity) {
 
 
 
-const chatInputConfig = document.getElementById("chat-input-config");
 const chatInputSend = document.getElementById("chat-input-send");
 const chatInputForm = document.querySelector("#chat-input form");
 const chatInput = chatInputForm.querySelector("input[type=text]")
@@ -417,14 +416,13 @@ chatInputForm.addEventListener("submit", function(event) {
 
     var chatSendPlatforms = [];
 
-    const settingsContainer = document.getElementById("chat-input-settings");
-    const checkboxes = settingsContainer.querySelectorAll('input[type="checkbox"]');
+    if (showTwitchMessages == true) {
+        chatSendPlatforms.push('twitch');
+    }
 
-    checkboxes.forEach(checkbox => {
-        const checked = checkbox.checked;
-        const platform = checkbox.getAttribute('data-platform');        
-        if (checked == true) { chatSendPlatforms.push(platform); }
-    });
+    if (showYouTubeMessages == true) {
+        chatSendPlatforms.push('youtube');
+    }
 
     chatSendPlatforms = chatSendPlatforms.join(',')
 
@@ -432,7 +430,6 @@ chatInputForm.addEventListener("submit", function(event) {
     const chatInputText = chatInput.value;
 
     // Sends Message to Twitch and YouTube 
-
     streamerBotClient.doAction(
     { name : "ChatRD Messages and Commands" },
     {
@@ -444,17 +441,19 @@ chatInputForm.addEventListener("submit", function(event) {
         console.debug('Sending Chat to Streamer.Bot', sendchatstuff);
     });
     
-    // Sends Message to Kick that are not commands
-    if (chatSendPlatforms.includes('kick')) {
-        if (!chatInputText.startsWith('/')) {
-            streamerBotClient.doAction(
-            { name : "ChatRD Kick Messages" },
-            {
-                "message": chatInputText,
+    if (showKickMessages == true) {
+        // Sends Message to Kick that are not commands
+        if (chatSendPlatforms.includes('kick')) {
+            if (!chatInputText.startsWith('/')) {
+                streamerBotClient.doAction(
+                { name : "ChatRD Kick Messages" },
+                {
+                    "message": chatInputText,
+                }
+                ).then( (sendchatstuff) => {
+                    console.debug('Sending Kick Chat to Streamer.Bot', sendchatstuff);
+                });
             }
-            ).then( (sendchatstuff) => {
-                console.debug('Sending Kick Chat to Streamer.Bot', sendchatstuff);
-            });
         }
     }
 
@@ -465,41 +464,7 @@ chatInputSend.addEventListener("click", function () {
     chatInputForm.requestSubmit();
 });
 
-chatInputConfig.addEventListener("click", function () {
-    const isHidden = chatSettings.style.display === "none" || chatSettings.classList.contains("animate__fadeOutDown");
 
-    if (isHidden) {
-      // Remover animação de saída (caso ainda esteja presente)
-        chatSettings.classList.remove("animate__fadeOutDown");
-
-        // Mostrar com animação de entrada
-        chatSettings.style.display = "block";
-        chatSettings.classList.add("animate__animated", "animate__fadeInUp");
-
-        // Limpa as classes após a animação
-        chatSettings.addEventListener("animationend", function handler() {
-            chatSettings.classList.remove("animate__animated", "animate__fadeInUp");
-            chatSettings.removeEventListener("animationend", handler);
-        });
-
-        chatInputConfig.classList.add("active");
-    }
-
-    else {
-        // Começar animação de saída
-        chatSettings.classList.remove("animate__fadeInUp");
-        chatSettings.classList.add("animate__animated", "animate__fadeOutDown");
-
-        // Após animação, esconder elemento
-        chatSettings.addEventListener("animationend", function handler() {
-            chatSettings.style.display = "none";
-            chatSettings.classList.remove("animate__animated", "animate__fadeOutDown");
-            chatSettings.removeEventListener("animationend", handler);
-        });
-
-        chatInputConfig.classList.remove("active");
-    }
-});
 
 
 async function executeModCommand(event, command) {
@@ -518,31 +483,6 @@ async function executeModCommand(event, command) {
         });
     }
 }
-
-
-document.addEventListener("DOMContentLoaded", () => {
-    const settingsContainer = document.getElementById("chat-input-settings");
-
-    // Seleciona apenas checkboxes DENTRO do container
-    const checkboxes = settingsContainer.querySelectorAll('input[type="checkbox"]');
-
-    checkboxes.forEach(checkbox => {
-        const name = checkbox.name;
-        if (!name) return; // Ignora se o checkbox não tem 'name'
-
-        // Restaurar estado salvo
-        const saved = localStorage.getItem(name);
-        if (saved !== null) {
-            checkbox.checked = saved === "true";
-        }
-
-        // Salvar alterações
-        checkbox.addEventListener("change", () => {
-            localStorage.setItem(name, checkbox.checked);
-        });
-    });
-});
-
 
 
 let chatcommands = {

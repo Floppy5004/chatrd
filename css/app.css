@@ -575,13 +575,8 @@ body {
     color: #ffcc00;
 }
 
-
-#chat-input #chat-input-config {
-    right: 20px;
-}
-
 #chat-input #chat-input-send {
-    right: 60px;
+    right: 20px;
 }
 
 #chat-input .settings {
