@@ -33,6 +33,15 @@ hr {
 #chat-settings { width: 640px; }
 #chat-preview { width: calc(100% - 640px); }
 
+#chat-settings h1 { 
+    width: 200px;
+    height: 80px;
+    background: url('../images/logo-chatrd.png') center center no-repeat;
+    background-size: cover;
+    margin: auto;
+    text-indent: -9999px;
+}
+
 #chat-preview iframe {
     position: sticky;
     top: 30px; 
