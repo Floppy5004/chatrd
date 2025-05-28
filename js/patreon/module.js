@@ -1,7 +1,7 @@
 const showPatreonMemberships        = getURLParam("showPatreonMemberships", true);
 
 const patreonHandlers = {
-    'Patreon.PledgeCreate': (response) => {
+    'Patreon.PledgeCreated': (response) => {
         console.debug('Patreon Membersihp', response.data);
         patreonMemberships(response.data);
     },
