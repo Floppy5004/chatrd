@@ -52,6 +52,7 @@ I couldn't test every single outcome because it's not possible to simulate the e
 
 Also, at any point either **Kick** or **Kick.Bot** might change their stuff, so please, **be patient!** 😊
 
+
 ---
 
 ## 🔊 How to set TTS with Speaker.Bot
@@ -67,7 +68,6 @@ Also, at any point either **Kick** or **Kick.Bot** might change their stuff, so 
 2. Go to **Integrations → Speaker.Bot**, click on *Connect*. Make sure to also tick the *Auto-Start* and *Auto-Connect* checkboxes.
 
 ---
-
 
 ## 💻 Commands supported by the Chat Field
 
@@ -99,10 +99,22 @@ Also, at any point either **Kick** or **Kick.Bot** might change their stuff, so 
 - /yt/ban (userID)
 
 **TikTok**
-- TikFinity's WebSocket doesn't allow to send messages without authentication, so it's disabled for the moment.
+- TikTok commands are not supported yet.
 
 **Kick**
 - Kick commands are not supported yet.
+
+
+## TikTok Chat Setup
+To send messages to **TikTok** using the *Chat Field*, you need to the following on **TikFinity**:
+
+1. Go to **Setup → Streamer.Bot Connection** and type the IP and the PORT you're using on your **Streamer.Bot**
+
+![TikFinity Setup → Streamer.Bot Connection](https://i.imgur.com/h0QDnNX.png)
+
+2. Go to **Chatbot → Streamer.Bot Messages** and enable *Allow Streamer.Bot to push messages to TikFinity*. 
+
+![Chatbot → Streamer.Bot Messages](https://i.imgur.com/IGQ5xQq.png)
 
 
 ---
