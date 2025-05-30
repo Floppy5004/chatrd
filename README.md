@@ -31,6 +31,17 @@ Make sure your **Twitch** and **YouTube** accounts are connected on **Streamer.B
 8. Add the copied URL as a Browser Source in OBS. Or use it in your browser to read chat. 😊
 9. For **Streamlabs**, **StreamElements**, **Patreon**, **TipeeeStream**, **Ko-Fi** and **Fourthwall**, you need to connect them to your Streamer.Bot account to their website. Follow the tutorial links in each section presented in the [Settings Page](https://vortisrd.github.io/chatrd).
 
+### TikTok Chat Setup
+To send messages to **TikTok** using the *Chat Field*, you need to the following on **TikFinity**:
+
+1. Go to **Setup → Streamer.Bot Connection** and type the IP and the PORT you're using on your **Streamer.Bot**
+
+![TikFinity Setup → Streamer.Bot Connection](https://i.imgur.com/h0QDnNX.png)
+
+2. Go to **Chatbot → Streamer.Bot Messages** and enable *Allow Streamer.Bot to push messages to TikFinity*. 
+
+![Chatbot → Streamer.Bot Messages](https://i.imgur.com/IGQ5xQq.png)
+
 
 ### Kick.Bot installation on Streamer.Bot
 
@@ -103,19 +114,6 @@ Also, at any point either **Kick** or **Kick.Bot** might change their stuff, so 
 
 **Kick**
 - Kick commands are not supported yet.
-
-
-## TikTok Chat Setup
-To send messages to **TikTok** using the *Chat Field*, you need to the following on **TikFinity**:
-
-1. Go to **Setup → Streamer.Bot Connection** and type the IP and the PORT you're using on your **Streamer.Bot**
-
-![TikFinity Setup → Streamer.Bot Connection](https://i.imgur.com/h0QDnNX.png)
-
-2. Go to **Chatbot → Streamer.Bot Messages** and enable *Allow Streamer.Bot to push messages to TikFinity*. 
-
-![Chatbot → Streamer.Bot Messages](https://i.imgur.com/IGQ5xQq.png)
-
 
 ---
 
