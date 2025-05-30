@@ -11,7 +11,6 @@ body {
     background-color: #121212;
     color: #FFF;
     text-align: center;
-    padding: 30px;
     font-size: 16px;
 }
 
@@ -22,12 +21,69 @@ hr {
     margin: 20px 0;
 }
 
+h2 {
+    font-size: 20px;
+    padding: 15px 30px;
+    border-bottom: 1px solid #222;
+    margin: 15px 0 0 0;
+    text-align: left;
+    position: relative;
+}
+
+h2 i {
+    margin-right: 5px;
+}
+
+h2 svg {
+    width: 26px;
+    vertical-align: bottom;
+    fill: #FFF;
+}
+
+h2 img {
+    width: 26px;
+    vertical-align: bottom;
+}
+
+h2 button {
+    display: none;
+    
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+
+    border: none;
+    background: black;
+    text-align: center;
+    color: #FFF;
+    cursor: pointer;
+
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 100px;
+}
+
+h2 button i {
+    margin: 0;
+    transition: transform 0.3s ease;
+}
+
+
+.accordion-container {
+    /*max-height: 0;
+    overflow: hidden;*/
+    transition: max-height 0.4s ease;
+}
+
+
 
 #chat-divided {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 30px;
+    padding: 30px;
 }
 
 #chat-settings { width: 640px; }
@@ -56,16 +112,6 @@ hr {
 }
 
 .url-bar input[type=text] {
-    /*font-family: "Inter", sans-serif;
-    border: none;
-    background: #171717;
-    color: #FFF;
-    padding: 15px 30px;
-    border-radius: 10px;
-    width: 100%;
-    text-align: center;
-    outline: none;
-    font-size: 14px;*/
     display: none;
 }
 
@@ -90,33 +136,20 @@ hr {
 }
 
 .tab-content {
-    padding: 20px 30px;
-    border-radius: 20px;
+    border-radius: 0 0 20px 20px;
     background: #171717;
-    margin: 20px auto;
+    margin: 0 auto;
     text-align: left;
+    margin: 0 0 30px 0;
 }
 
-.tab-content h2 {
-    margin-bottom: 15px;
-    font-size: 20px;
-    padding: 15px 0px;
-    border-bottom: 1px solid #222;
+.tab-content .wrapper {
+    padding: 20px 30px;
 }
 
-.tab-content h2 i {
-    margin-right: 5px;
-}
-
-.tab-content h2 svg {
-    width: 26px;
-    vertical-align: bottom;
-    fill: #FFF;
-}
-
-.tab-content h2 img {
-    width: 26px;
-    vertical-align: bottom;
+/* When visible */
+.tab-content.open {
+    display: block;
 }
 
 .tab-content .setting {

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,11 +54,33 @@
             <div id="chat-input">
                 <div id="chat-autocomplete-list"></div>
 
+                <div class="settings">
+                    <div class="chat-enabler" id="twitch">
+                        <img src="images/logo-twitch.svg" alt="">
+                        <label class="switch"><input type="checkbox" name="chatOnTwitch" checked><span class="slider"></span></label>
+                    </div>
+                    <div class="chat-enabler" id="youtube">
+                        <img src="images/logo-youtube.svg" alt="">
+                        <label class="switch"><input type="checkbox" name="chatOnYoutube" checked><span class="slider"></span></label>
+                    </div>
+                    <div class="chat-enabler" id="tiktok">
+                        <img src="images/logo-tiktok.svg" alt="">
+                        <label class="switch"><input type="checkbox" name="chatOnTiktok"><span class="slider"></span></label>
+                        <span class="hint">Chat only.<br>Needs setup!<br><a href="https://github.com/vortisrd/chatrd/tree/main?tab=readme-ov-file#tiktok-chat-setup" target="_blank">Read More</a></span>
+                    </div>
+                    <div class="chat-enabler" id="kick">
+                        <img src="images/logo-kick.svg" alt="">
+                        <label class="switch"><input type="checkbox" name="chatOnKick"><span class="slider"></span></label>
+                        <span class="hint">Chat only.<br>Needs setup!<br><a href="https://github.com/vortisrd/chatrd/tree/main?tab=readme-ov-file#kickbot-installation-on-streamerbot" target="_blank">Read More</a></span>
+                    </div>
+                </div>
+
                 <form>
                     <input type="text">
                 </form>
 
                 <button id="chat-input-send"><i class="fa-solid fa-paper-plane"></i></button>
+                <button id="chat-input-settings"><i class="fa-solid fa-gear"></i></button>
             </div>
         </div>
     </div>

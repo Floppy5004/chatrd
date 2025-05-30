@@ -576,19 +576,29 @@ body {
 }
 
 #chat-input #chat-input-send {
+    right: 60px;
+}
+
+#chat-input #chat-input-settings {
     right: 20px;
 }
 
 #chat-input .settings {
-    display: inline-block;
+    display: none;
     background: #0c0c0c;
-    padding: 10px;
+    padding: 10px 20px;
     border-radius: 10px;
     
     position: absolute;
-    top: -55px;
+    top: -75px;
     right: 0px;
     z-index: 11;
+
+    box-shadow: 0 0 10px rgba(255,255,255,0.05)
+}
+
+#chat-input .settings.active {
+    display: inline-block;
 }
 
 #chat-input .settings::after {
@@ -623,6 +633,16 @@ body {
     display: inline-block;
     width: 50px;
     height: 27px;
+}
+
+#chat-input .settings .hint {
+    color: #FFF;
+    font-size: 12px;
+} 
+
+#chat-input .settings .hint a {
+    color: #ffcc00;
+    font-weight: bold;
 }
 
 /* Hide default HTML checkbox */
@@ -668,7 +688,9 @@ body {
 #chat-input #youtube input[type=checkbox]:checked + .slider {
     background-color: #FF0000;
 }
-
+#chat-input #tiktok input[type=checkbox]:checked + .slider {
+    background-color: #ff0050;
+}
 #chat-input #kick input[type=checkbox]:checked + .slider {
     background-color: #48d415;
 }
@@ -716,7 +738,6 @@ body {
 
 #chat-autocomplete-list div.autocomplete-item {
     cursor: pointer;
-    transition: all ease-in-out 300ms;
 }
 
 #chat-autocomplete-list div:not(.autocomplete-item) {

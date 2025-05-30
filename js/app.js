@@ -416,12 +416,27 @@ chatInputForm.addEventListener("submit", function(event) {
 
     var chatSendPlatforms = [];
 
-    if (showTwitchMessages == true) {
+    const chatOnTwitch = document.querySelector('#chat-input #twitch input[type=checkbox]').checked;
+    const chatOnYoutube = document.querySelector('#chat-input #youtube input[type=checkbox]').checked;
+    const chatOnTiktok = document.querySelector('#chat-input #tiktok input[type=checkbox]').checked;
+    const chatOnKick = document.querySelector('#chat-input #kick input[type=checkbox]').checked;
+
+    console.log(chatOnTwitch,chatOnYoutube,chatOnTiktok,chatOnKick);
+
+    if (chatOnTwitch == true) {
         chatSendPlatforms.push('twitch');
     }
 
-    if (showYouTubeMessages == true) {
+    if (chatOnYoutube == true) {
         chatSendPlatforms.push('youtube');
+    }
+
+    if (chatOnTiktok == true) {
+        chatSendPlatforms.push('tiktok');
+    }
+
+    if (chatOnKick == true) {
+        chatSendPlatforms.push('kick');
     }
 
     chatSendPlatforms = chatSendPlatforms.join(',')
@@ -441,19 +456,31 @@ chatInputForm.addEventListener("submit", function(event) {
         console.debug('Sending Chat to Streamer.Bot', sendchatstuff);
     });
     
-    if (showKickMessages == true) {
-        // Sends Message to Kick that are not commands
-        if (chatSendPlatforms.includes('kick')) {
-            if (!chatInputText.startsWith('/')) {
-                streamerBotClient.doAction(
-                { name : "ChatRD Kick Messages" },
-                {
-                    "message": chatInputText,
-                }
-                ).then( (sendchatstuff) => {
-                    console.debug('Sending Kick Chat to Streamer.Bot', sendchatstuff);
-                });
+    // Sends Message to Kick that are not commands
+    if (chatSendPlatforms.includes('kick')) {
+        if (!chatInputText.startsWith('/')) {
+            streamerBotClient.doAction(
+            { name : "ChatRD Kick Messages" },
+            {
+                "message": chatInputText,
             }
+            ).then( (sendchatstuff) => {
+                console.debug('Sending Kick Chat to Streamer.Bot', sendchatstuff);
+            });
+        }
+    }
+    
+    // Sends Message to TikTok that are not commands
+    if (chatSendPlatforms.includes('tiktok')) {
+        if (!chatInputText.startsWith('/')) {
+            streamerBotClient.doAction(
+            { name : "ChatRD TikTok Messages" },
+            {
+                "ttkmessage": chatInputText,
+            }
+            ).then( (sendchatstuff) => {
+                console.debug('Sending TikTok Chat to Streamer.Bot', sendchatstuff);
+            });
         }
     }
 
@@ -587,4 +614,37 @@ document.addEventListener('click', function (e) {
     if (e.target !== chatcommandslist) {
         chatcommandslist.innerHTML = '';
     }
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+	const settingsPanel = document.querySelector('#chat-input .settings');
+
+	chatSettings.addEventListener('click', function () {
+		settingsPanel.classList.toggle('active');
+		chatSettings.classList.toggle('active');
+	});
+
+    
+    const checkboxNames = ["chatOnTwitch", "chatOnYouTube", "chatOnTiktok", "chatOnKick"];
+
+    // Restore checkbox states from localStorage
+    checkboxNames.forEach(name => {
+        const checkbox = document.querySelector(`input[name="${name}"]`);
+        const savedValue = localStorage.getItem(name);
+        if (checkbox && savedValue !== null) {
+            checkbox.checked = savedValue === "true";
+        }
+    });
+
+    // Save state to localStorage on change
+    checkboxNames.forEach(name => {
+        const checkbox = document.querySelector(`input[name="${name}"]`);
+        if (checkbox) {
+            checkbox.addEventListener("change", function () {
+                localStorage.setItem(name, checkbox.checked);
+            });
+        }
+    });
 });
