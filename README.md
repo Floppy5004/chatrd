@@ -34,11 +34,12 @@ Make sure your **Twitch** and **YouTube** accounts are connected on **Streamer.B
 ### TikTok Chat Setup
 To send messages to **TikTok** using the *Chat Field*, you need to the following on **TikFinity**:
 
-1. Go to **Setup → Streamer.Bot Connection** and type the IP and the PORT you're using on your **Streamer.Bot** and then click on *Test Connection*.
+1. Make sure you're connected to your TikTok Account on **TikFinity**. If you're not, go to **Setup → TikTok Login** and click on *Login to TikTok*.
+2. Go to **Setup → Streamer.Bot Connection** and type the IP and the PORT you're using on your **Streamer.Bot** and then click on *Test Connection*.
 
 ![TikFinity Setup → Streamer.Bot Connection](https://i.imgur.com/h0QDnNX.png)
 
-2. Go to **Chatbot → Streamer.Bot Messages** and enable *Allow Streamer.Bot to push messages to TikFinity*. 
+3. Go to **Chatbot → Streamer.Bot Messages** and enable *Allow Streamer.Bot to push messages to TikFinity*. 
 
 ![Chatbot → Streamer.Bot Messages](https://i.imgur.com/IGQ5xQq.png)
 
