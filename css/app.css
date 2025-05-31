@@ -586,11 +586,11 @@ body {
 #chat-input .settings {
     display: none;
     background: #0c0c0c;
-    padding: 10px 20px;
-    border-radius: 10px;
+    padding: 5px 10px;
+    border-radius: 100px;
     
     position: absolute;
-    top: -75px;
+    top: -40px;
     right: 0px;
     z-index: 11;
 
@@ -614,7 +614,7 @@ body {
 }
 
 #chat-input .settings img {
-    width: 28px;
+    width: 20px;
 }
 
 
@@ -631,13 +631,13 @@ body {
 #chat-input .settings .switch {
     position: relative;
     display: inline-block;
-    width: 50px;
-    height: 27px;
+    width: 40px;
+    height: 20px;
 }
 
 #chat-input .settings .hint {
     color: #FFF;
-    font-size: 12px;
+    font-size: 18px;
 } 
 
 #chat-input .settings .hint a {
@@ -668,18 +668,18 @@ body {
 #chat-input .settings .slider:before {
     position: absolute;
     content: "";
-    height: 1.4em;
-    width: 1.3em;
+    height: 16px;
+    width: 16px;
     border-radius: 16px;
-    left: 5px;
-    top: 3px;
+    left: 3px;
+    top: 2px;
     bottom: 0;
     background-color: white;
     transition: .4s;
 }
 
 #chat-input .settings input[type=checkbox]:checked + .slider:before {
-    transform: translateX(1.5em);
+    transform: translateX(19px);
 }
 
 #chat-input #twitch input[type=checkbox]:checked + .slider {
