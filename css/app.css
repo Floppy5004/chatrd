@@ -567,12 +567,15 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    transition: all ease-in-out 300ms;
 }
 
 #chat-input button.active,
 #chat-input button:hover {
     color: #ffcc00;
+}
+
+#chat-input #chat-input-settings i {
+    transition: all ease-in-out 300ms;
 }
 
 #chat-input #chat-input-send {
@@ -581,6 +584,10 @@ body {
 
 #chat-input #chat-input-settings {
     right: 20px;
+}
+
+#chat-input #chat-input-settings.active i {
+    transform: rotate(60deg);
 }
 
 #chat-input .settings {
