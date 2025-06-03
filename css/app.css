@@ -467,20 +467,25 @@ body {
 
 
 
-
-
 .wrapper.horizontal {
     align-items: flex-end;
 }
 
-
 .wrapper.horizontal #chat {
     flex-direction: row-reverse;
     align-items: flex-end;
-    gap: 10px;
+    gap: 15px;
     width: max-content;
 }
 
+.wrapper.horizontal #chat .message {
+    width: 0;
+    white-space: nowrap
+}
+
+.wrapper.horizontal #chat .message > div {
+    width: fit-content;
+}
 
 
 

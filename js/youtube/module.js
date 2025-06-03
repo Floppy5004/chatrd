@@ -302,6 +302,7 @@ async function YouTubeGiftReceivedMessage(data) {
         eventId: messageID,
         tier
     } = data;
+
     const [avatar, message] = await Promise.all([
         ``,
         currentLang.youtube.giftedmembers({
@@ -309,6 +310,7 @@ async function YouTubeGiftReceivedMessage(data) {
             tier : tier
         })
     ]);
+    
     const classes = 'giftedtrainmembers';
     const messageData = {
         classes: classes,

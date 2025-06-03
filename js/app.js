@@ -98,8 +98,8 @@ async function addMessageToChat(userID, messageID, platform, data) {
     if (ttsSpeakerBotChat == true) { ttsSpeakerBotSays(data.userName, currentLang.ttschat, data.message); }
 
     let html = DOMPurify.sanitize(`
-        <div id="${messageID}" data-user="${userID}" class="${platform} ${data.classes} ${chatBiggerEmotes == true ? 'bigger-emojis' : ''} message" style="">
-            <div class="animate__animated ${chatHorizontal == true ? 'animate__fadeInRight' : 'animate__fadeInUp'} animate__faster">
+        <div id="${messageID}" data-user="${userID}" class="${platform} ${data.classes} ${chatBiggerEmotes == true ? 'bigger-emojis' : ''} message" style="" >
+            <div class="animate__animated ${chatHorizontal == true ? 'animate__fadeIn' : 'animate__fadeInUp'} animate__faster">
 
                 ${data.classes.includes("first-message") ? '<span class="first-chatter">✨</span>' : '' }
 
@@ -142,8 +142,12 @@ async function addMessageToChat(userID, messageID, platform, data) {
     html = html.replace('[CHATMODERATIONSNIPPETYOUTUBE]', chatmodyoutube);
 
     chatContainer.insertAdjacentHTML('afterbegin', html);
-
+    
     const messageElement = document.getElementById(messageID);
+
+    if (chatHorizontal == true) {
+        await adjustMessagesHorizontal(messageElement);
+    }
 
     if (hideAfter > 0) {   
         setTimeout(function () {
@@ -159,13 +163,14 @@ async function addMessageToChat(userID, messageID, platform, data) {
 
 
 
+
 async function addEventToChat(userID, messageID, platform, data) {
     
     if (ttsSpeakerBotEvents == true) { ttsSpeakerBotSays(data.userName, '', data.message); }
     
     const html = DOMPurify.sanitize(`
         <div id="${messageID}" data-user="${userID}" class="${platform} ${data.classes} message event" style="">
-            <div class="animate__animated ${chatHorizontal == true ? 'animate__fadeInRight' : 'animate__fadeInUp'} animate__faster">
+            <div class="animate__animated ${chatHorizontal == true ? 'animate__fadeIn' : 'animate__fadeInUp'} animate__faster">
                 ${!data.reply ? '' : data.reply}
 
                 ${showPlatform == true ? '<span class="platform"><img src="images/logo-'+platform+'.svg" ></span>' : '' }
@@ -182,6 +187,10 @@ async function addEventToChat(userID, messageID, platform, data) {
     
     const messageElement = document.getElementById(messageID);
 
+    if (chatHorizontal == true) {
+        await adjustMessagesHorizontal(messageElement);
+    }
+
     if (hideAfter > 0) {   
         setTimeout(function () {
             messageElement.style.opacity = 0;
@@ -193,6 +202,67 @@ async function addEventToChat(userID, messageID, platform, data) {
     
     removeExtraChatMessages();
 }
+
+
+
+
+
+
+
+
+
+
+
+async function adjustMessagesHorizontal(messageElement) {    
+    const container = messageElement.querySelector('.animate__animated');
+    if (!container) return; 
+
+    const images = container.querySelectorAll("img.emote"); 
+
+    function waitImageLoad(img) {
+        return new Promise((resolve) => {
+            if (img.complete) {
+                adjustEmotesWidthInMessage(img);
+                resolve();
+            }
+            else {
+                img.addEventListener("load", () => {
+                    adjustEmotesWidthInMessage(img);
+                    resolve();
+                });
+                img.addEventListener("error", () => resolve());
+            }
+        });
+    }
+
+    await Promise.all(Array.from(images).map(img => waitImageLoad(img)));   
+
+    const messageElementWidth = Math.floor(container.offsetWidth + 10) + 'px';  
+
+    Object.assign(messageElement.style, {
+        width: messageElementWidth,
+        overflow: "visible"
+    });
+}
+
+function adjustEmotesWidthInMessage(img) {
+    const width = img.offsetWidth;
+    img.style.width = width + "px";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
