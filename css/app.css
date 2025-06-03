@@ -474,7 +474,7 @@ body {
 .wrapper.horizontal #chat {
     flex-direction: row-reverse;
     align-items: flex-end;
-    gap: 15px;
+    gap: 10px;
     width: max-content;
 }
 
