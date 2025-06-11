@@ -287,7 +287,7 @@ function generateMockEvent() {
 
             const ifHasShared = Math.random() < 0.05;
             if (ifHasShared) {
-                data.message.isSharedChat = true;
+                data.isSharedChat = true;
                 var sharedParentUser = mockData.users[Math.floor(Math.random() * mockData.users.length)];
 
                 data.sharedChat = {

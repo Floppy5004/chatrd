@@ -91,6 +91,20 @@ body {
 
 #chat .message .user { font-weight: bold; }
 
+#chat .message .user .pronouns {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    color: #FFF;
+    background: rgba(0,0,0,0.5);
+
+    
+    margin: 0 5px;
+    padding: 5px 7px;
+
+    border-radius: 5px;
+}
+
 #chat .message .time {
     display: inline-block;
     background: rgba(0,0,0,0.5);
@@ -474,7 +488,7 @@ body {
 .wrapper.horizontal #chat {
     flex-direction: row-reverse;
     align-items: flex-end;
-    gap: 10px;
+    gap: 15px;
     width: max-content;
 }
 

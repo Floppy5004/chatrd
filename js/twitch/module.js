@@ -9,9 +9,11 @@ const showTwitchMassGiftedSubs      = getURLParam("showTwitchMassGiftedSubs", tr
 const showTwitchRewardRedemptions   = getURLParam("showTwitchRewardRedemptions", true);
 const showTwitchRaids               = getURLParam("showTwitchRaids", true);
 const showTwitchSharedChat          = getURLParam("showTwitchSharedChat", true);
+const showTwitchPronouns            = getURLParam("showTwitchPronouns", false);
 const showTwitchViewers             = getURLParam("showTwitchViewers", true);
 
 const avatars = new Map();
+const pronouns = new Map();
 
 if (showTwitchViewers == false) { document.querySelector('#statistics #twitch').style.display = 'none'; }
 
@@ -102,9 +104,9 @@ async function twitchChatMessage(data) {
             message : text,
             firstMessage,
             isReply,
-            isSharedChat,
             reply: replyData,
         },
+        isSharedChat,
         messageId,
     } = data;
 
@@ -140,11 +142,18 @@ async function twitchChatMessage(data) {
         }
     }
 
+    let fullUserName = userName;
+    let userPronouns = await getUserPronouns('twitch', data.message.username);
+
+    if (showTwitchPronouns == true) {
+        fullUserName = userName + userPronouns;
+    }
+
     const messageData = {
         classes: classes.join(' '),
         avatar,
         badges,
-        userName,
+        fullUserName,
         color,
         message,
         shared: sharedChat,
@@ -609,5 +618,23 @@ async function getTwitchAvatar(user) {
             avatars.set(user, newavatar);
             return newavatar;
         }
+    }
+}
+
+
+async function getUserPronouns(platform, username) {
+    if (pronouns.has(username)) {
+		console.debug(`Pronouns found for ${username}. Getting it from Map...`)
+		return pronouns.get(username);
+	}
+    else {
+        console.debug(`Pronouns not found for ${username}. Retrieving...`)
+        
+        const response = await streamerBotClient.getUserPronouns(platform, username);
+		const pronoun  = response.pronoun.userFound ? `<em class="pronouns">${response.pronoun.pronounSubject}/${response.pronoun.pronounObject}</em>` : '';
+
+		pronouns.set(username, pronoun);
+
+		return pronoun;
     }
 }

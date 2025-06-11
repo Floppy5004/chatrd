@@ -95,7 +95,7 @@ const streamerBotClient = new StreamerbotClient({
 
 async function addMessageToChat(userID, messageID, platform, data) {
     
-    if (ttsSpeakerBotChat == true) { ttsSpeakerBotSays(data.userName, currentLang.ttschat, data.message); }
+    if (ttsSpeakerBotChat == true) { ttsSpeakerBotSays(data.fullUserName, currentLang.ttschat, data.message); }
 
     let html = DOMPurify.sanitize(`
         <div id="${messageID}" data-user="${userID}" class="${platform} ${data.classes} ${chatBiggerEmotes == true ? 'bigger-emojis' : ''} message" style="" >
@@ -113,7 +113,7 @@ async function addMessageToChat(userID, messageID, platform, data) {
 
                 ${showBadges == true ? '<span class="badges">'+data.badges+'</span>' : ''}
                 
-                <span style="color: ${data.color}"  class="user">${data.userName}:</span>
+                <span style="color: ${data.color}"  class="user">${data.fullUserName}:</span>
                 
                 ${!data.reply ? '' : data.reply}
                 
@@ -490,8 +490,6 @@ chatInputForm.addEventListener("submit", function(event) {
     const chatOnYoutube = document.querySelector('#chat-input #youtube input[type=checkbox]').checked;
     const chatOnTiktok = document.querySelector('#chat-input #tiktok input[type=checkbox]').checked;
     const chatOnKick = document.querySelector('#chat-input #kick input[type=checkbox]').checked;
-
-    console.log(chatOnTwitch,chatOnYoutube,chatOnTiktok,chatOnKick);
 
     if (chatOnTwitch == true) {
         chatSendPlatforms.push('twitch');
