@@ -94,6 +94,8 @@ const streamerBotClient = new StreamerbotClient({
 
 
 async function addMessageToChat(userID, messageID, platform, data) {
+
+    let userNameForThis = data.userName || data.fullUserName;
     
     if (ttsSpeakerBotChat == true) { ttsSpeakerBotSays(data.fullUserName, currentLang.ttschat, data.message); }
 
@@ -113,7 +115,7 @@ async function addMessageToChat(userID, messageID, platform, data) {
 
                 ${showBadges == true ? '<span class="badges">'+data.badges+'</span>' : ''}
                 
-                <span style="color: ${data.color}"  class="user">${data.fullUserName}:</span>
+                <span style="color: ${data.color}"  class="user">${userNameForThis}:</span>
                 
                 ${!data.reply ? '' : data.reply}
                 
