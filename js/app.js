@@ -94,10 +94,8 @@ const streamerBotClient = new StreamerbotClient({
 
 
 async function addMessageToChat(userID, messageID, platform, data) {
-
-    let userNameForThis = data.userName || data.fullUserName;
     
-    if (ttsSpeakerBotChat == true) { ttsSpeakerBotSays(data.fullUserName, currentLang.ttschat, data.message); }
+    if (ttsSpeakerBotChat == true) { ttsSpeakerBotSays(data.userName, currentLang.ttschat, data.message); }
 
     let html = DOMPurify.sanitize(`
         <div id="${messageID}" data-user="${userID}" class="${platform} ${data.classes} ${chatBiggerEmotes == true ? 'bigger-emojis' : ''} message" style="" >
@@ -115,7 +113,7 @@ async function addMessageToChat(userID, messageID, platform, data) {
 
                 ${showBadges == true ? '<span class="badges">'+data.badges+'</span>' : ''}
                 
-                <span style="color: ${data.color}"  class="user">${userNameForThis}:</span>
+                <span style="color: ${data.color}"  class="user">${data.userName}:</span>
                 
                 ${!data.reply ? '' : data.reply}
                 
