@@ -100,7 +100,7 @@ async function twitchChatMessage(data) {
         message: {
             username: userID,
             color,
-            displayName: userName,
+            displayName: fullUserName,
             message : text,
             firstMessage,
             isReply,
@@ -142,18 +142,18 @@ async function twitchChatMessage(data) {
         }
     }
 
-    let fullUserName = userName;
-    let userPronouns = await getUserPronouns('twitch', data.message.username);
+    let userName = fullUserName;
 
     if (showTwitchPronouns == true) {
-        fullUserName = userName + userPronouns;
+        let userPronouns = await getUserPronouns('twitch', data.message.username);
+        userName = userPronouns + fullUserName;
     }
 
     const messageData = {
         classes: classes.join(' '),
         avatar,
         badges,
-        fullUserName,
+        userName,
         color,
         message,
         shared: sharedChat,
