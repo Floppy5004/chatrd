@@ -54,7 +54,7 @@ async function loadSettingsFromLocalStorage() {
 	if (!saved) return;
 
 	const settings = JSON.parse(saved);
-	console.log(settings);
+	console.debug(`[ChatRD] Settings`, settings);
 
 	Object.keys(settings).forEach((key) => {
 		const input = document.querySelector(`[name="${key}"]`);
