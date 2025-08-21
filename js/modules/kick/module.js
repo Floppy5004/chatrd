@@ -252,6 +252,7 @@ async function kickChatMessage(data) {
 	const clone = template.content.cloneNode(true);
     const messageId = data.id;
     const userId = data.sender.id;
+    const userSlug = data.sender.slug;
 
     const {
         'first-message': firstMessage,
@@ -273,6 +274,8 @@ async function kickChatMessage(data) {
     );
 
     const classes = ['kick', 'chat'];
+
+    if (userSlug == kickUserName) classes.push('streamer');
 
     const [avatarImage, messageHTML, badgesHTML] = await Promise.all([
         getKickAvatar(data.sender.slug),
@@ -304,7 +307,7 @@ async function kickChatMessage(data) {
     sharedChat.remove();
     pronoun.remove();
 
-    addMessageItem('kick', clone, classes, userId, messageId);
+    addMessageItem('kick', clone, classes, userSlug, messageId);
 }
 
 

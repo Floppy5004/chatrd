@@ -18,6 +18,7 @@ const chatBackground                = getURLParam("chatBackground", "#121212");
 const chatBackgroundOpacity         = getURLParam("chatBackgroundOpacity", 1); 
 const chatScrollBar                 = getURLParam("chatScrollBar", false);
 const chatField                     = getURLParam("chatField", false);
+const chatModeration                = getURLParam("chatModeration", false);
 
 const excludeCommands               = getURLParam("excludeCommands", true);
 const ignoreChatters                = getURLParam("ignoreChatters", "");
@@ -54,6 +55,22 @@ if (chatField) {
 function addMessageItem(platform, clone, classes, userid, messageid) {
     removeExtraChatMessages();
 
+    let chatmodtwitch = `<div class="chatmoderation">
+                <button onclick="executeModCommand(event, '/deletemessage ${messageid}')" title="Remove Message"><i class="fa-solid fa-trash-can"></i></button>
+                <button onclick="executeModCommand(event, '/timeout ${userid}')" title="Timeout User"><i class="fa-solid fa-stopwatch"></i></button>
+                <button onclick="executeModCommand(event, '/ban ${userid}')" title="Ban User"><i class="fa-solid fa-gavel"></i></button>
+            </div>`;
+
+    let chatmodyoutube = `<div class="chatmoderation">
+                <button onclick="executeModCommand(event, '/yt/timeout ${userid}')" title="Timeout User"><i class="fa-solid fa-stopwatch"></i></button>
+                <button onclick="executeModCommand(event, '/yt/ban ${userid}')" title="Ban User"><i class="fa-solid fa-gavel"></i></button>
+            </div>`;
+
+    let chatmodkick = `<div class="chatmoderation">
+                <button onclick="executeModCommand(event, '/kick/timeout ${userid}')" title="Timeout User"><i class="fa-solid fa-stopwatch"></i></button>
+                <button onclick="executeModCommand(event, '/kick/ban ${userid}')" title="Ban User"><i class="fa-solid fa-gavel"></i></button>
+            </div>`;
+
     if (showSpeakerbot == true && speakerBotChatRead == true) { speakerBotTTSRead(clone, 'chat'); }
 
     const root = clone.firstElementChild;
@@ -89,6 +106,25 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
 
     // Starts it collapsed
     root.style[dimensionProp.toLowerCase()] = '0px';
+
+    if (chatModeration == true) {
+        switch (platform) {
+            case "twitch":
+                root.insertAdjacentHTML("beforeend", chatmodtwitch);
+                break;
+
+            case "youtube":
+                root.insertAdjacentHTML("beforeend", chatmodyoutube);
+                break;
+
+            case "kick":
+                root.insertAdjacentHTML("beforeend", chatmodkick);
+                break;
+
+            default:
+                console.warn(`Plataforma desconhecida: ${platform}`);
+        }
+    }
 
     chatContainer.prepend(clone);
 
@@ -631,6 +667,13 @@ async function cleanStringOfHTMLButEmotes(string) {
 
     // Remove todo o restante do HTML
     return container.textContent || "";
+}
+
+
+async function executeModCommand(event, command) {
+    event.preventDefault();
+    chatInput.value = command;
+    chatInputForm.requestSubmit();
 }
 
 document.addEventListener("DOMContentLoaded", function () {

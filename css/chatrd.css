@@ -78,6 +78,7 @@ body {
 #chat .item .message {
     border-radius: 5px;
     padding: 10px;
+    transition: all ease-in-out 300ms;
 }
 
 #chat .item .info {
@@ -683,4 +684,48 @@ body {
 
 #chat-autocomplete-list .autocomplete-item small {
     color: #666;
+}
+
+
+
+.item.chat .chatmoderation {
+    opacity: 0;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transition: all ease-in-out 300ms;
+}
+
+.item.chat:hover .message {
+    background: rgba(255,255,255,0.03);
+}
+
+.item.chat:hover .chatmoderation {
+    opacity: 1;
+}
+
+.item.chat .chatmoderation button {
+    background: none;
+    border: none;
+    color: #FFF;
+    background: rgba(255,255,255,0.1);
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 5px;
+    transition: all ease-in-out 300ms;
+    margin: 0 2px;    
+    cursor: pointer;
+}
+
+.item.chat .chatmoderation button:hover {
+    color: #ffcc00;
+}
+
+
+.item.chat.twitch.streamer .chatmoderation button:nth-child(2),
+.item.chat.twitch.streamer .chatmoderation button:nth-child(3),
+.item.chat.kick.streamer .chatmoderation button:nth-child(1),
+.item.chat.kick.streamer .chatmoderation button:nth-child(2),
+.item.chat.youtube.owner .chatmoderation {
+    display: none;
 }
