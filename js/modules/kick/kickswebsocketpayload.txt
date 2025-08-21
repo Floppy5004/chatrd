@@ -1,0 +1,98 @@
+export type KickUserBase = {
+  id: string;
+  login: string;
+  name: string;
+  type: 'kick';
+};
+
+export type KickUserExtended = {
+  id: string;
+  name: string;
+  profilePicture: string;
+  role: string;
+  isAnonymous: boolean;
+  isBroadcaster: boolean;
+  isModerator: boolean;
+  isVerified: boolean;
+  isSubscribed: boolean;
+  monthsSubscribed: number;
+  color?: string;
+  badges?: KickBadge[];
+};
+
+export type KickUser = KickUserBase & Partial<KickUserExtended>;
+
+export type KickBadge = {
+  id: string;
+  name: string;
+  info: string;
+  imageUrl?: string;
+};
+
+export type KickChatEmote = {
+  source: string;
+  type: string;
+  imageUrl: string; 
+  text: string;
+  zeroWidth: boolean;
+};
+
+export type KickChatMessagePart = {
+  text: string;
+  type: string;
+};
+
+export type KickChatMessage = {
+  anonymous: boolean;
+  badges: KickBadge[];
+  isInternal: boolean;
+  isTest: boolean;
+  messageId: string;
+  text: string;
+  user: KickUser;
+  parts: KickChatMessagePart[];
+} & MaybeFirstWord;
+
+export type KickSubscription = {
+  user: KickUser;
+  duration: number;
+  subscribedAt: Date;
+  expiresAt: Date;
+  timestamp: Date;
+  broadcaster: KickUser;
+  isTest: boolean;
+}
+
+export type KickGiftSubscription = KickSubscription & {
+  recipients: KickUser[];
+}
+
+export type KickUserModerationAction = {
+  broadcaster: KickUser;
+  moderator: KickUser;
+  user: KickUser;
+  timestamp: Date;
+  createdAt: Date;
+  isTest: boolean;
+  reason: string;
+  duration?: number;
+}
+
+export type KickUserTimedOut = KickUserModerationAction;
+export type KickUserBanned = KickUserModerationAction;
+
+export type KickChannelUpdate = {
+  broadcaster: KickUser;
+  title?: string;
+  // @deprecated - use title instead
+  status?: string;
+  categoryId: string;
+  categoryName: string;
+  categoryThumbnail: string;
+  oldTitle?: string;
+  // @deprecated - use oldTitle instead
+  oldStatus?: string;
+  oldCategoryId?: string;
+  oldCategoryName?: string;
+  oldCategoryThumbnail?: string;
+};

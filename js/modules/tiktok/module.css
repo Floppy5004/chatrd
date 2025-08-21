@@ -1,0 +1,30 @@
+#chat .event.tiktok .message {
+    background: rgba(255,0,80,0.75);
+}
+
+#chat .item.tiktok .platform .hidden-platform {
+    background: rgba(255,0,80,1);
+}
+
+#chat .item.tiktok span.badge {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: top;
+    color: #FFF;
+    background: #121212;
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+    border-radius: 3px;
+    margin: 0 1px;
+}
+
+
+#chat .event.tiktok.gift .value img { vertical-align: sub; }
+
+#chat.horizontal .item.tiktok .info .badges {
+    transform: translateY(2px);
+}
+
+#statistics .platform#tiktok { background: #ff0050; }
