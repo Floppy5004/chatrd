@@ -22,7 +22,7 @@ function saveSettingsToLocalStorage() {
     colorfields.forEach(cf => settings[cf.name] = cf.value);
     selects.forEach(s => settings[s.name] = s.value);
 
-    localStorage.setItem("chatWidgetSettings", JSON.stringify(settings));
+    localStorage.setItem("chatrdWidgetSettings", JSON.stringify(settings));
 
     // Salva emotes no Streamer.bot
     try {	
@@ -40,7 +40,7 @@ function saveSettingsToLocalStorage() {
    Carregar configurações do localStorage
 -------------------------- */
 async function loadSettingsFromLocalStorage() {
-    const saved = localStorage.getItem("chatWidgetSettings");
+    const saved = localStorage.getItem("chatrdWidgetSettings");
     if (!saved) return;
 
     const settings = JSON.parse(saved);

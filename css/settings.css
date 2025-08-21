@@ -263,6 +263,11 @@ hr {
     background-color: #232323;
     color: #FFF;
     border-radius: 10px;
+    line-height: 150%;
+}
+
+#settings small.warning i {
+    color: #ffcc00;
 }
 
 
