@@ -25,8 +25,9 @@ If you have both of these ready, follow these steps:
 1. Go to **Settings → WebSocket Server**, click on *Start Server*. Make sure to also tick the *Auto-Start* checkbox.
 2. Copy the IP and Port to ChatRD Speaker.bot fields.
 3. Go  to **Settings → Speech Engine** and add the TTS Service of your preference. (Sapi5 is the Windows default).
-4. Go to **Settings → Voice Aliases**, name the voice *SpeakerBot* and click **Add** right next to it.
+4. Go to **Settings → Voice Aliases**, give it a name and click **Add** right next to it.
 5. In the Left Column, click on the **SpeakerBot** you just added and on the **Speak!** section, select the voice you want to use and click **Add**. (If you're using Sapi5, I recommend using *Microsoft Zira Desktop* as a voice).
+6. Add the Alias name under the *Voice Alias* field on ChatRD.
 
 ---
 
