@@ -4,7 +4,7 @@ ChatRD is a chat tool and/or overlay widget that unifies messages and events fro
 
 ![ChatRD Config UI](https://i.imgur.com/ezrWaI2.png)
 
-## 🛠️ SETUP
+## 🛠️ Setting it up
 
 Make sure your **Twitch**, **YouTube** and **Kick** accounts are connected on **Streamer.bot**. Also have **TikFinity Desktop App** installed and your account on **TikTok** setup. **BOTH APPS NEED TO RUN ON THE SAME PC**.
 
@@ -22,7 +22,6 @@ If you have both of these ready, follow these steps:
 
 ## 🔊 Setting TTS with Speaker.Bot
 
-### Speaker.Bot
 1. Go to **Settings → WebSocket Server**, click on *Start Server*. Make sure to also tick the *Auto-Start* checkbox.
 2. Copy the IP and Port to ChatRD Speaker.bot fields.
 3. Go  to **Settings → Speech Engine** and add the TTS Service of your preference. (Sapi5 is the Windows default).
@@ -31,7 +30,7 @@ If you have both of these ready, follow these steps:
 
 ---
 
-## Sending Messages to TikTok
+## 💬 Sending Messages to TikTok
 To send messages to **TikTok** using the *Chat Field*, you need to the following on **TikFinity**:
 
 1. Make sure you're connected to your TikTok Account on **TikFinity**. If you're not, go to **Setup → TikTok Login** and click on *Login to TikTok*.
