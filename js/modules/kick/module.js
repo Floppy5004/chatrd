@@ -549,7 +549,7 @@ async function kickRaidMessage(data) {
     user.innerHTML = `<strong>${data.host_username}</strong>`;
 
     var viewers = data.number_viewers > 1 ? 'viewers' : 'viewer';
-    action.innerHTML = ` raided the channel with `;
+    action.innerHTML = ` hosted the channel with `;
     value.innerHTML = `<strong>${data.number_viewers} ${viewers}</strong>`;
 
     addEventItem('kick', clone, classes, userId, messageId);
