@@ -126,8 +126,8 @@ R: If you mean visual styles, you can add your own using the *Custom CSS* field 
 
 Made with ❤️ by **VortisRD**  
 
-🔗 [GitHub](https://github.com/vortisrd) • [Twitch](https://twitch.tv/vortisrd) • [YouTube](https://youtube.com/@vortisrd) • [TikTok](https://tiktok.com/@vortisrd) • [Kick](https://kick.com/vortisrd) • [Twitter / X](https://twitter.com/vortisrd)  
+🔗 [GitHub](https://github.com/vortisrd) • [Twitch](https://twitch.tv/vortisrd) • [YouTube](https://youtube.com/@vortisrd) • [Kick](https://kick.com/vortisrd) • [TikTok](https://tiktok.com/@vortisrd) • [Kick](https://kick.com/vortisrd) • [Twitter / X](https://twitter.com/vortisrd)  
 
 Heavily inspired by [Nutty](https://nutty.gg). *Seriously, go give him some money!*
 
-🔗 [GitHub](https://github.com/nuttylmao) • [Twitch](https://twitch.tv/nutty) • [YouTube](https://youtube.com/@nuttylmao) • [TikTok](https://tiktok.com/@nuttylmao) • [Twitter / X](https://x.com/nuttylmao)
+🔗 [GitHub](https://github.com/nuttylmao) • [Twitch](https://twitch.tv/nutty) • [YouTube](https://youtube.com/@nuttylmao) • [Kick](https://kick.com/nutty) • [TikTok](https://tiktok.com/@nuttylmao) • [Twitter / X](https://x.com/nuttylmao)
