@@ -353,7 +353,7 @@ function populateEmoteList() {
 
     let emotes;
     try {
-        emotes = JSON.parse(textarea.value);
+        emotes = JSON.parse(JSON.parse(textarea.value));
     } catch (e) {
         console.error("[ChatRD][Settings] Invalid JSON in YouTube Emotes textarea", e);
         return;
