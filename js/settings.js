@@ -440,6 +440,7 @@ function streamerBotConnect() {
             setupFooterNavBar();
             setupAddEmoteModal();
             setupPlatformToggles();    
+            speakerBotConnection();
 
         },
         onDisconnect: () => {
@@ -501,8 +502,7 @@ async function speakerBotConnection() {
    Inicialização
 -------------------------- */
 document.addEventListener('DOMContentLoaded', () => {
-    streamerBotConnect();        
-    speakerBotConnection();
+    streamerBotConnect();
 
     const speakerBotSwitcher = document.querySelector('input[type=checkbox][name=showSpeakerbot]');
     speakerBotSwitcher.addEventListener('change', () => {

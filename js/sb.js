@@ -13,24 +13,25 @@ const speakerBotEventRead           = getURLParam("speakerBotEventRead", false);
 const speakerBotVoiceAlias          = getURLParam("speakerBotVoiceAlias", "Maria");
 const speakerBotChatTemplate        = getURLParam("speakerBotChatTemplate", "{user} said {message}");
 
-window.speakerBotClient = null;
+let speakerBotClient = null;
 
-if (showSpeakerbot == true ) {
-
-    window.speakerBotClient = new SpeakerBotClient({
-        host: speakerBotServerAddress,
-        port: speakerBotServerPort,
-        voiceAlias: speakerBotVoiceAlias,
-        onConnect: (data) => {
-            
-            notifySuccess({
-                title: 'Connected to Speaker.bot',
-                text: ``
-            });
-        },
-    });
-
+function getSpeakerBotInstance() {
+    if (!speakerBotClient && showSpeakerbot) {
+        speakerBotClient = new SpeakerBotClient({
+            host: speakerBotServerAddress,
+            port: speakerBotServerPort,
+            voiceAlias: speakerBotVoiceAlias,
+            onConnect: () => {
+                notifySuccess({
+                    title: 'Connected to Speaker.bot',
+                    text: ''
+                });
+            },
+        });
+    }
+    return speakerBotClient;
 }
+
 
 const streamerBotClient = new StreamerbotClient({
 	host: streamerBotServerAddress,

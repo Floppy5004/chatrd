@@ -631,7 +631,9 @@ async function speakerBotTTSRead(clone,type) {
         TTSMessage = user.textContent + strippedaction + strippedvalue + ". " + strippedmessage;
     }
 
-    speakerBotClient.speak(TTSMessage);
+
+    var speakerbotThisStuff = getSpeakerBotInstance();
+    speakerbotThisStuff.speak(TTSMessage);
 
     /*streamerBotClient.doAction({ name : "[Speakerbot] TTS" },
     {
