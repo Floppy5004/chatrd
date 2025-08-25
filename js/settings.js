@@ -317,7 +317,7 @@ function setupAddEmoteModal() {
 
         let emotes;
         try {
-            emotes = JSON.parse(textarea.value);
+            emotes = JSON.parse(JSON.parse(textarea.value));
         } catch (err) {
             console.error("Invalid JSON", err);
             alert("Emote data is invalid.");
@@ -330,7 +330,7 @@ function setupAddEmoteModal() {
         }
 
         emotes[name] = url;
-        textarea.value = JSON.stringify(emotes);
+        textarea.value = JSON.stringify(JSON.stringify(emotes));
         modal.classList.add("hidden");
         populateEmoteList();
     };
@@ -373,7 +373,7 @@ function populateEmoteList() {
         span.querySelector(".delete").addEventListener("click", () => {
             if (confirm(`Are you sure you want to delete '${emoteName}'?`)) {
                 delete emotes[emoteName];
-                textarea.value = JSON.stringify(emotes);
+                textarea.value = JSON.stringify(JSON.stringify(emotes));
                 populateEmoteList();
             }
         });
