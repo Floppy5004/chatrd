@@ -102,7 +102,18 @@ function generateUrl() {
     outputField.value = '';
 
     const baseUrlObj = new URL(window.location.href);
-    baseUrlObj.pathname = baseUrlObj.pathname.replace(/index\.html$/, "chat.html");
+
+    // Garante que o pathname termine com "chat.html"
+    if (!baseUrlObj.pathname.endsWith("chat.html")) {
+        if (baseUrlObj.pathname.endsWith("/") || baseUrlObj.pathname === "") {
+            baseUrlObj.pathname += "chat.html";
+        } else if (baseUrlObj.pathname.endsWith("index.html")) {
+            baseUrlObj.pathname = baseUrlObj.pathname.replace(/index\.html$/, "chat.html");
+        } else {
+            baseUrlObj.pathname += "/chat.html";
+        }
+    }
+
     const baseUrl = baseUrlObj.toString();
 
     const checkboxes = document.querySelectorAll("input[type=checkbox]:not(.avoid)");
@@ -124,6 +135,7 @@ function generateUrl() {
     outputField.value = baseUrl + '?' + params.toString();
     document.querySelector('#preview iframe').src = 'chat.html?' + params.toString();
 }
+
 
 /* -------------------------
    Copiar URL para clipboard
