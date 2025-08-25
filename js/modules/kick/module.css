@@ -1,0 +1,24 @@
+#chat .event.kick .message {
+    background: rgba(72,212,21,0.75);
+}
+
+#chat .item.kick .platform .hidden-platform {
+    background: rgba(72,212,21,1);
+}
+
+#chat .item.kick .badges img {
+    margin: 0 -1px;
+}
+
+#chat .item .info .avatar {
+    position: relative;
+}
+
+#chat .item .info .avatar img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#statistics .platform#kick { background: #48d415; }

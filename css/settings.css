@@ -1,109 +1,316 @@
+/* Basic reset and styling */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: "Inter", sans-serif;
+/* Full-page container styling */
+html {
+    width: 100vw;
     scroll-behavior: smooth;
     overflow-wrap: break-word;
-    background-color: #121212;
-    color: #FFF;
-    text-align: center;
-    font-size: 16px;
 }
 
-a { color: #ffcc00; }
+body {
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    background-color: #121212;
+    overflow-x: hidden;
+}
+
+a { color: #DBB048; }
 
 hr {
     border: 1px solid #222;
     margin: 20px 0;
 }
 
-h2 {
-    font-size: 20px;
-    padding: 15px 30px;
-    border-bottom: 1px solid #222;
-    margin: 15px 0 0 0;
-    text-align: left;
-    position: relative;
+#container {
+    width: 100vw;
 }
 
-h2 i {
-    margin-right: 5px;
+#container .wrapper {
+    display: flex;
+    flex-direction: row;
+    overflow-x: hidden;
+    width: 100vw;
+    /*height: 100vh;*/
 }
 
-h2 svg {
-    width: 26px;
-    vertical-align: bottom;
-    fill: #FFF;
-}
-
-h2 img {
-    width: 26px;
-    vertical-align: bottom;
-}
-
-h2 button {
-    display: none;
-    
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-
-    border: none;
-    background: black;
-    text-align: center;
+#settings {
+    width: 640px;
     color: #FFF;
-    cursor: pointer;
+}
 
-    font-size: 16px;
-    padding: 10px;
+#settings form {
+    display: block;
+    padding: 20px;
+}
+
+#settings .title {
+    text-align: center;
+    margin: 20px 0 0 0;
+}
+
+#settings .title h1 {
+    background-image: url('../images/logo-chatrd.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    text-indent: -9999px;
+    width: 200px;
+    height: 78px;
+    display: inline-block;
+}
+
+#settings .platform {
+    background: #191919;
+    padding: 20px;
+    border-radius: 10px;
+    outline: 1px solid rgba(255,255,255,0.05);
+    outline-offset: -1px;
+    margin-bottom: 20px;
+}
+
+
+#settings .platform h2 {
+    display: inline-flex;
+    gap: 10px;
+}
+
+#settings .platform h2 img {
+    height: 36px;
+}
+
+#settings .platform .platform-enable {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#settings .config {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+#settings .config strong {
+    font-weight: 900;
+}
+
+#settings .config small {
+    color: #717171;
+}
+
+#settings .config i.fa-solid.fa-arrow-turn-up {
+    transform: rotate(90deg);
+}
+
+#settings .config input[type=color] {
+    background: #111;
+    padding: 0 2px;
+}
+
+
+#settings .config i {
+    font-size: 14px;
+    color: #666;
+}
+
+#settings .config h2 i {
+    font-size: 24px;
+}
+
+
+#settings .switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 27px;
+    text-align: center;
+}
+
+#settings .switch input[type=checkbox] {
+    opacity: 1;
+    width: 0;
+    height: 0;
+}
+
+#settings .config input[type=text],
+#settings .config input[type=number],
+#settings .config textarea {
+    font-family: "Inter", sans-serif;
+    border: none;
+    background:#222;
+    color: #FFF;
+    padding: 10px 15px;
+    border-radius: 10px;
+    outline: none;
+}
+
+#settings .switch .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #CCC;
+    transition: .4s;
+    border-radius: 30px;
+}
+
+#settings .switch .slider:before {
+    position: absolute;
+    content: "";
+    height: 1.3em;
+    width: 1.2em;
+    border-radius: 16px;
+    left: 5px;
+    top: 3px;
+    bottom: 0;
+    background-color: white;
+    transition: .4s;
+}
+
+#settings .switch input[type=checkbox]:checked + .slider:before {
+    transform: translateX(1.4em);
+}
+
+#settings .switch input[type=checkbox]:checked + .slider {
+    background-color: #DBB048;
+}
+
+
+
+
+#settings .config .emote-list {
+    width:100%;
+    display: flex;
+	flex-wrap: wrap; /* allow items to wrap */
+    gap: 10px;
+    margin-top: 15px;
+}
+
+#settings .config .emote-list .emote-item {
+    width: 96px;
+    height: 96px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: #222;
+    border-radius: 10px;
+}
+
+#settings .config .emote-list .emote-item button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    
+    border-radius: 10px;
+
+    transition: .4s;
+
+    text-align: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+#settings .config .emote-list .emote-item button.add {
+    top: 50%;
+    left: 50%;
+    right: unset;
+
+    transform: translate(-50%,-50%);
+
+    width: 100%;
+    height: 100%;
+    font-size: 36px;
+}
+
+#settings .config .emote-list .emote-item button.add:hover {
+    background-color: #333;
+}
+
+#settings .config .emote-list .emote-item button.add i {
+    vertical-align: middle;
+    font-size: 24px;
+}
+
+
+#settings .config .emote-list .emote-item em {
+    display: block;
+    margin-top: 5px;
+    font-size: 9px;
+}
+
+#settings .config .emote-list .emote-item img {
+    height: 32px;
+}
+
+
+#settings small.warning {
+    display: inline-block;
+    padding: 10px 20px 10px 10px;
+    background-color: #232323;
+    color: #FFF;
+    border-radius: 10px;
+    line-height: 150%;
+}
+
+#settings small.warning i {
+    color: #ffcc00;
+}
+
+
+#speakerbot .switch input[type=checkbox]:checked + .slider { background-color: #00dbff; }
+#twitch .switch input[type=checkbox]:checked + .slider { background-color: #a970ff; }
+#youtube .switch input[type=checkbox]:checked + .slider { background-color: #FF0000; }
+#tiktok .switch input[type=checkbox]:checked + .slider { background-color: #ff0050; }
+#kick .switch input[type=checkbox]:checked + .slider { background-color: #48d415; }
+#streamelements .switch input[type=checkbox]:checked + .slider { background-color: #2700ff; }
+#streamlabs .switch input[type=checkbox]:checked + .slider { background-color: #80f5d2; }
+#patreon .switch input[type=checkbox]:checked + .slider { background-color: #ff5900; }
+#tipeee .switch input[type=checkbox]:checked + .slider { background-color: #e02f44; }
+#kofi .switch input[type=checkbox]:checked + .slider { background-color: #72a5f2; }
+#fourthwall .switch input[type=checkbox]:checked + .slider { background-color: #0042ff; }
+
+.switch input[type=checkbox]:disabled + .slider { background-color: #111 !important; }
+
+
+
+#font-value,
+#bg-opacity-value {
+    display: inline-block;
+    font-style: normal;
+    font-size: 14px;
+    width: 100%;
+    padding: 5px;
+    background: #121212;
+    text-align: center;
     border-radius: 100px;
 }
 
-h2 button i {
-    margin: 0;
-    transition: transform 0.3s ease;
+#preview {
+    width: calc(100% - 640px);
+    height: 100vh;
+    padding: 20px;
 }
 
-
-.accordion-container {
-    /*max-height: 0;
-    overflow: hidden;*/
-    transition: max-height 0.4s ease;
-}
-
-
-
-#chat-divided {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 30px;
-    padding: 30px;
-}
-
-#chat-settings { width: 640px; }
-#chat-preview { width: calc(100% - 640px); }
-
-#chat-settings h1 { 
-    width: 200px;
-    height: 80px;
-    background: url('../images/logo-chatrd.png') center center no-repeat;
-    background-size: cover;
-    margin: auto;
-    text-indent: -9999px;
-}
-
-#chat-preview iframe {
-    position: sticky;
-    top: 30px; 
-    left: 0;
-    width: 100%;
-    height: calc(100vh - 60px);
+#preview iframe {
+    position: fixed;
+    top: 20px;
+    right: 0;
+    width: calc(100% - 640px);
+    height: calc(100vh - 40px);
 }
 
 .url-bar {
@@ -135,284 +342,37 @@ h2 button i {
     background: #292929;
 }
 
-.tab-content {
-    border-radius: 0 0 20px 20px;
-    background: #171717;
-    margin: 0 auto;
-    text-align: left;
-    margin: 0 0 30px 0;
-}
-
-.tab-content .wrapper {
-    padding: 20px 30px;
-}
-
-/* When visible */
-.tab-content.open {
-    display: block;
-}
-
-.tab-content .setting {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 0px;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-}
-
-.tab-content .setting.column {
-    flex-direction: column;
-}
-
-.tab-content .setting.column label {
-    width: 100%;
-}
-
-.tab-content .setting.column .emote-list {
-    width:100%;
-    display: flex;
-	flex-wrap: wrap; /* allow items to wrap */
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.tab-content .setting.column .emote-list .emote-item {
-    width: 96px;
-    height: 96px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background: #222;
-    border-radius: 10px;
-}
-
-.tab-content .setting.column .emote-list .emote-item button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 36px;
-    height: 36px;
-    
-    border-radius: 10px;
-
-    transition: .4s;
-
-    text-align: center;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.tab-content .setting.column .emote-list .emote-item button.add {
-    top: 50%;
-    left: 50%;
-    right: unset;
-
-    transform: translate(-50%,-50%);
-
-    width: 100%;
-    height: 100%;
-    font-size: 36px;
-}
-
-.tab-content .setting.column .emote-list .emote-item button.add:hover {
-    background-color: #333;
-}
-
-.tab-content .setting.column .emote-list .emote-item button.add i {
-    vertical-align: middle;
-}
-
-
-.tab-content .setting.column .emote-list .emote-item em {
-    display: block;
-    margin-top: 5px;
-    font-size: 9px;
-}
-
-.tab-content .setting.column .emote-list .emote-item img {
-    height: 24px;
-}
-
-
-.tab-content .setting i {
-    font-size: 14px;
-    color: #666;
-    margin: 0 10px;
-}
-
-.tab-content .setting i.fa-arrow-turn-up {
-    transform: rotate(90deg);
-}
-
-
-.tab-content .setting small { color: #777; }
-
-.tab-content .setting input[type=text],
-.tab-content .setting input[type=number],
-.tab-content .setting textarea {
-    font-family: "Inter", sans-serif;
-    border: none;
-    background:#222;
-    color: #FFF;
-    padding: 10px 20px;
-    border-radius: 10px;
-    outline: none;
-}
-
-.tab-content .setting textarea {
-    width: 100%;
-    height: 200px;
-    margin-top: 15px;
-}
-
-.tab-content .setting.select select {
-    font-family: "Inter", sans-serif;
-    border: none;
-    background:#222;
-    color: #FFF;
-    padding: 10px 20px 10px 10px;
-    border-radius: 10px;
-    outline: none;
-}
-
-.tab-content .setting .switch {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 27px;
-}
-
-/* Hide default HTML checkbox */
-.tab-content .setting .switch input[type=checkbox] {
-    opacity: 1;
-    width: 0;
-    height: 0;
-}
-
-/* The slider */
-.tab-content .setting .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #CCC;
-    transition: .4s;
-    border-radius: 30px;
-}
-
-.tab-content .setting .slider:before {
-    position: absolute;
-    content: "";
-    height: 1.3em;
-    width: 1.2em;
-    border-radius: 16px;
-    left: 5px;
-    top: 3px;
-    bottom: 0;
-    background-color: white;
-    transition: .4s;
-}
-
-
-
-.tab-content .setting input[type=color] {
-    background: #111;
-    padding: 0 2px;
-}
-
-.tab-content .setting input[type=checkbox]:checked + .slider {
-    background-color: #03c4de;
-}
-
-.tab-content .setting input[type=checkbox]:checked + .slider:before {
-    transform: translateX(1.4em);
-}
-
-.tab-content#twitch .setting input[type=checkbox]:checked + .slider {
-    background-color: #a970ff;
-}
-.tab-content#youtube .setting input[type=checkbox]:checked + .slider {
-    background-color: #FF0000;
-}
-.tab-content#tiktok .setting input[type=checkbox]:checked + .slider {
-    background-color: #ff0050;
-}
-
-.tab-content#kick .setting input[type=checkbox]:checked + .slider {
-    background-color: #48d415;
-}
-
-.tab-content#extras .setting input[type=checkbox]:checked + .slider {
-    background-color: #00dd63;
-}
-
-.tab-content#patreon .setting input[type=checkbox]:checked + .slider {
-    background-color: #ff5900;
-}
-
-.tab-content#tipeee .setting input[type=checkbox]:checked + .slider {
-    background-color: #e02f44;
-}
-
-.tab-content#kofi .setting input[type=checkbox]:checked + .slider {
-    background-color: #72a5f2;
-}
-
-.tab-content#fourthwall .setting input[type=checkbox]:checked + .slider {
-    background-color: #0042ff;
-}
-
-.tab-content .setting input[type=checkbox]:disabled + .slider {
-    background-color: #000 !important;
-}
-
-
-
-
-.slider-value {
-    display: inline-block;
-    font-style: normal;
-    font-size: 14px;
-    width: 100%;
-    padding: 5px;
-    background: #121212;
-    text-align: center;
-    border-radius: 100px;
-}
-
 
 footer {
+    width: 640px;
     position: sticky;
     bottom: 0;
+    left: 0;
     padding: 20px;
     background: rgba(18,18,18,0.5);
     backdrop-filter: blur(10px);
-    margin-top: 80px;
     font-size: 14px;
+    text-align: center;
+    color: #FFF;
 }
 
 footer a {
     display: inline-block;
     margin: 10px 5px;
     font-size: 20px;
-    color: #ffcc00;
-}
-
-footer a svg {
-    width: 24px;
-    vertical-align: bottom;
-    fill: #ffcc00;
+    color: #DBB048;
 }
 
 footer a img {
-    width: 24px;
+    height: 22px;
     vertical-align: bottom;
+}
+
+
+footer a[href="https://kick.com/vortisrd"] svg {
+    height: 26px;
+    vertical-align: bottom;
+    fill: #DBB048;
 }
 
 footer .nav-bar {
@@ -421,14 +381,13 @@ footer .nav-bar {
     align-items: center;
     justify-content: center;
     font-size: 12px;
-
     width: 100%;
 }
 
 footer .nav-bar a {
     display: inline-block;
     border-radius: 100px;
-    padding: 10px 15px;
+    padding: 10px;
     margin: 0;
     font-size: 16px;
     text-decoration: none;
@@ -437,57 +396,13 @@ footer .nav-bar a {
 }
 
 footer .nav-bar a:hover {
-    color: #ffcc00;
+    color: #DBB048;
     background: rgba(0,0,0,0.40);
 }
 
-footer .nav-bar a svg {
-    width: 20px;
-    fill: #FFF;
-    transition: all ease-in-out 300ms;
+footer .nav-bar a img {
+    height: 24px;
 }
-
-footer .nav-bar a:hover svg {
-    fill: #ffcc00;
-}
-
-
-footer .nav-bar a.active {
-    color: #ffcc00;
-    background: rgba(0,0,0,0.20);
-}
-
-footer .nav-bar a.active svg {
-    fill: #ffcc00;
-}
-
-@media only screen and (max-width: 768px) {
-
-    #chat-divided {
-        flex-direction: column;
-    }
-
-    #chat-settings {
-        width: 100%;
-    }
-
-    #chat-settings .field {
-        width: 100%;
-        display: block;
-    }
-
-    #chat-settings .field input {
-        width: 100%;
-        margin: 10px 0;
-    }
-
-    #chat-preview {
-        display: none;
-    }
-
-    footer { font-size: 12px; }
-}
-
 
 .modal {
 	position: fixed;
@@ -498,6 +413,11 @@ footer .nav-bar a.active svg {
 	align-items: center;
 	justify-content: center;
 	z-index: 999;
+    color: #FFF;
+}
+
+.modal small {
+    color: #717171;
 }
 
 .modal.hidden {
@@ -570,11 +490,18 @@ footer .nav-bar a.active svg {
 }
 
 
-#memberemotesbstatus.online i {
-    color: #00dd63;
-    text-shadow: 0 0 5px #00dd63;
+#settings .config #streamerBotStatus label i,
+#settings .config #speakerBotStatus label i,
+#settings .config #tikfinityStatus label i,
+#settings .config #kickStatus label i {
+    color: #ce2c2c;
+    text-shadow: 0 0 5px #ce2c2c;
 }
-#memberemotesbstatus.offline i {
-    color: #ff0000;
-    text-shadow: 0 0 5px #ff0000;
+
+#settings .config #streamerBotStatus.connected label i,
+#settings .config #speakerBotStatus.connected label i,
+#settings .config #tikfinityStatus.connected label i,
+#settings .config #kickStatus.connected label i {
+    color: #14c22b;
+    text-shadow: 0 0 5px #14c22b;
 }
