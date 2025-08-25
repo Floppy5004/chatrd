@@ -432,7 +432,7 @@ function streamerBotConnect() {
         },
         onDisconnect: () => {
             streamerBotStatus.classList.remove('connected');
-            streamerBotStatus.querySelector('small').textContent = `Disconnected`;
+            streamerBotStatus.querySelector('small').textContent = `Awaiting for connection`;
             streamerBotConnected = false;
             console.debug(`[ChatRD][Settings] Streamer.bot Disconnected!`);
         }
@@ -477,7 +477,7 @@ async function speakerBotConnection() {
 
         onDisconnect: () => {
             speakerBotStatus.classList.remove('connected');
-            speakerBotStatus.querySelector('small').textContent = `Disconnected`;
+            speakerBotStatus.querySelector('small').textContent = `Awaiting for connection`;
         }
     });
 }
