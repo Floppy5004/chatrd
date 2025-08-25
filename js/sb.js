@@ -13,9 +13,11 @@ const speakerBotEventRead           = getURLParam("speakerBotEventRead", false);
 const speakerBotVoiceAlias          = getURLParam("speakerBotVoiceAlias", "Maria");
 const speakerBotChatTemplate        = getURLParam("speakerBotChatTemplate", "{user} said {message}");
 
+window.speakerBotClient = null;
+
 if (showSpeakerbot == true ) {
 
-    const speakerBotClient = new SpeakerBotClient({
+    window.speakerBotClient = new SpeakerBotClient({
         host: speakerBotServerAddress,
         port: speakerBotServerPort,
         voiceAlias: speakerBotVoiceAlias,
