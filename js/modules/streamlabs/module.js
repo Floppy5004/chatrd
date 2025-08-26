@@ -2,7 +2,7 @@
 /* STREAMLABS MODULE VARIABLES */
 /* ---------------------------- */
 
-const showStreamlabs                = getURLParam("showStreamlabs", true);
+const showStreamlabs                = getURLParam("showStreamlabs", false);
 
 const showStreamlabsDonations       = getURLParam("showStreamlabsDonations", true);
 

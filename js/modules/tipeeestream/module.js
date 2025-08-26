@@ -2,7 +2,7 @@
 /* TIPEEESTREAM MODULE VARIABLES */
 /* ----------------------------- */
 
-const showTipeee                 = getURLParam("showTipeee", true);
+const showTipeee                 = getURLParam("showTipeee", false);
 
 const showTipeeeDonations        = getURLParam("showTipeeeDonations", true);
 

@@ -2,7 +2,7 @@
 /* FOURTHWALL MODULE VARIABLES */
 /* --------------------------- */
 
-const showFourthwall                    = getURLParam("showFourthwall", true);
+const showFourthwall                    = getURLParam("showFourthwall", false);
 
 const showFourthwallDonations           = getURLParam("showFourthwallDonations", true);
 const showFourthwallSubscriptions       = getURLParam("showFourthwallSubscriptions", true);

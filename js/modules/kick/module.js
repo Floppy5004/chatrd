@@ -2,7 +2,7 @@
 /* KICK MODULE VARIABLES */
 /* ---------------------- */
 
-const showKick                      = getURLParam("showKick", true);
+const showKick                      = getURLParam("showKick", false);
 
 const kickUserName                  = getURLParam("kickUserName", "vortisrd");
 

@@ -2,7 +2,7 @@
 /* YOUTUBE MODULE VARIABLES */
 /* ------------------------ */
 
-const showYoutube                       = getURLParam("showYoutube", true);
+const showYoutube                       = getURLParam("showYoutube", false);
 
 const showYouTubeMessages               = getURLParam("showYouTubeMessages", true);
 const showYouTubeSuperChats             = getURLParam("showYouTubeSuperChats", true);

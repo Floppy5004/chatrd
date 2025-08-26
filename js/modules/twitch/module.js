@@ -2,7 +2,7 @@
 /* TWITCH MODULE VARIABLES */
 /* ----------------------- */
 
-const showTwitch                    = getURLParam("showTwitch", true);
+const showTwitch                    = getURLParam("showTwitch", false);
 
 const showTwitchMessages            = getURLParam("showTwitchMessages", true);
 const showTwitchFollows             = getURLParam("showTwitchFollows", true);

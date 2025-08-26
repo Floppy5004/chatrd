@@ -2,7 +2,7 @@
 /* KOFI MODULE VARIABLES */
 /* --------------------- */
 
-const showKofi                          = getURLParam("showKofi", true);
+const showKofi                          = getURLParam("showKofi", false);
 
 const showKofiSubscriptions             = getURLParam("showKofiSubscriptions", true);
 const showKofiDonations                 = getURLParam("showKofiDonations", true);

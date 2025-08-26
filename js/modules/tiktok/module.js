@@ -2,7 +2,7 @@
 /* TIKTOK MODULE VARIABLES */
 /* ----------------------- */
 
-const showTiktok                    = getURLParam("showTiktok", true);
+const showTiktok                    = getURLParam("showTiktok", false);
 
 const showTikTokMessages            = getURLParam("showTikTokMessages", true);
 const showTikTokFollows             = getURLParam("showTikTokFollows", true);

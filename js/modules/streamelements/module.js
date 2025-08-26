@@ -2,7 +2,7 @@
 /* STREAMELEMENTS MODULE VARIABLES */
 /* ------------------------------ */
 
-const showStreamelements            = getURLParam("showStreamelements", true);
+const showStreamelements            = getURLParam("showStreamelements", false);
 
 const showStreamElementsTips        = getURLParam("showStreamElementsTips", true);
 

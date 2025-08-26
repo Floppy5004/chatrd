@@ -2,7 +2,7 @@
 /* PATREON MODULE VARIABLES */
 /* ------------------------- */
 
-const showPatreon                   = getURLParam("showPatreon", true);
+const showPatreon                   = getURLParam("showPatreon", false);
 
 const showPatreonMemberships        = getURLParam("showPatreonMemberships", true);
 
