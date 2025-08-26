@@ -140,8 +140,10 @@ async function tiktokConnection() {
 
 async function tiktokChatMessage(data) {
     
+    if (!data?.comment) { data.comment = " "; }
     if (showTikTokMessages == false) return;
-    if (ignoreUserList.includes(data.nickname.toLowerCase())) return;
+    //if (ignoreUserList.includes(data.nickname.toLowerCase())) return;
+    if (ignoreUserList.includes(data.uniqueId.toLowerCase())) return;
     if (data.comment.startsWith("!") && excludeCommands == true) return;
 
 	const template = chatTemplate;
