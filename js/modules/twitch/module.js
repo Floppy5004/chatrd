@@ -128,6 +128,8 @@ async function twitchChatMessage(data) {
             .map(el => [el.className, el])
     );
 
+    data.message.firstMessage = true;
+
     const classes = ['twitch', 'chat'];
 
     const [avatarImage, fullmessage, badgeList] = await Promise.all([
@@ -155,7 +157,6 @@ async function twitchChatMessage(data) {
 
     if (data.message.firstMessage) {
         classes.push('first-chatter');
-        firstMessage.innerHTML('beforeend', ` First-time Chatter`);
     }
     else { firstMessage.remove(); }
     
