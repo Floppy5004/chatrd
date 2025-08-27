@@ -128,8 +128,6 @@ async function twitchChatMessage(data) {
             .map(el => [el.className, el])
     );
 
-    data.message.firstMessage = true;
-
     const classes = ['twitch', 'chat'];
 
     const [avatarImage, fullmessage, badgeList] = await Promise.all([
