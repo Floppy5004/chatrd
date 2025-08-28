@@ -170,14 +170,17 @@ function addEventItem(platform, clone, classes, userid, messageid) {
     if (showPlatform == true) {
         platformElement.innerHTML = `<img src="js/modules/${platform}/images/logo-${platform}.svg">`; 
     }
+    else {
+        platformElement.remove();
+    }
 
-    if (showPlatformDot == true) {
+    /*if (showPlatformDot == true) {
         platformElement.innerHTML = `<span class="hidden-platform ${platform}"></span>`;
     }
 
     if (showPlatform == false && showPlatformDot == false) {
         platformElement.remove();
-    }
+    }*/
 
     const timestamp = clone.querySelector('.timestamp');    
     if (timestamp) {
