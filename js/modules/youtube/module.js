@@ -375,17 +375,34 @@ async function getYouTubeEmotes(data) {
     const channelId = data.broadcast?.channelId;
     if (!channelId) return message;
 
+    if (youTubeCustomEmotes.length == 0) {
+        streamerBotClient.getGlobals().then( (getglobals) => {
+            youTubeCustomEmotes = JSON.parse(JSON.parse(getglobals.variables.chatrdytcustomemotes.value));
+            console.debug('[YouTube] Getting YouTube Emotes from Streamer.Bot', youTubeCustomEmotes);
+        });
+    }
+
     // Load BTTV Emotes if not already loaded
     if (youTubeBTTVEmotes.length === 0) {
         try {
             const res = await fetch(`https://api.betterttv.net/3/cached/users/youtube/${channelId}`);
             const emoteData = await res.json();
-            console.debug('Getting YouTube BTTV Channel Emotes', `https://api.betterttv.net/3/cached/users/youtube/${channelId}`, emoteData);
+            console.debug('[YouTube] Getting BTTV Channel Emotes', `https://api.betterttv.net/3/cached/users/youtube/${channelId}`, emoteData);
             youTubeBTTVEmotes = [
                 ...(emoteData.sharedEmotes || []),
                 ...(emoteData.channelEmotes || [])
             ];
-        } catch (err) {
+            if (youTubeBTTVEmotes.length === 0) {
+                console.debug('[YouTube] No BTTV Emotes found. Setting fake data so we avoid fetching the emotes again.');
+                youTubeBTTVEmotes = [
+                    {
+                        code: 'fakeemote',
+                        id: 'fakeemote'
+                    }
+                ];   
+            }
+        }
+        catch (err) {
             console.warn("[YouTube] Failed to load BTTV emotes:", err);
         }
     }

@@ -318,7 +318,8 @@ function setupAddEmoteModal() {
         let emotes;
         try {
             emotes = JSON.parse(JSON.parse(textarea.value));
-        } catch (err) {
+        }
+        catch (err) {
             console.error("Invalid JSON", err);
             alert("Emote data is invalid.");
             return;

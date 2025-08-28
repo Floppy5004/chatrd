@@ -153,7 +153,9 @@ async function twitchChatMessage(data) {
     if (data.user.role == 4) { classes.push('streamer'); }
 
 
-    if (data.message.firstMessage) { classes.push('first-chatter'); }
+    if (data.message.firstMessage) {
+        classes.push('first-chatter');
+    }
     else { firstMessage.remove(); }
     
 
