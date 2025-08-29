@@ -33,7 +33,11 @@ const eventTemplate                 = document.querySelector('#event-message');
 const userColors = new Map();
 
 
-if (showPlatformStatistics == true) { document.querySelector('#statistics').style.display = ''; }
+if (showPlatformStatistics == true) {
+    var statistics = document.querySelector('#statistics');
+    statistics.style.display = '';
+    statistics.style.zoom = chatFontSize;
+}
 if (chatScrollBar == false) { chatContainer.classList.add('noscrollbar'); }
 if (chatOneLine == true && !chatHorizontal) { chatContainer.classList.add('oneline'); }
 if (chatHorizontal == true) {
