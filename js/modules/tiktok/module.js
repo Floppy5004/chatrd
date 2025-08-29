@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="platform" id="tiktok" style="display: none;">
                 <img src="js/modules/tiktok/images/logo-tiktok.svg" alt="">
                 <span class="viewers"><i class="fa-solid fa-user"></i> <span>0</span></span>
-                <span class="likes"><i class="fa-solid fa-thumbs-up"></i> <span>0</span></span>
+                <span class="likes"><i class="fa-solid fa-heart"></i> <span>0</span></span>
             </div>
         `;
 

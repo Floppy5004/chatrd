@@ -59,7 +59,7 @@ if (showYoutube) {
         <div class="platform" id="youtube" style="display: none;">
             <img src="js/modules/youtube/images/logo-youtube.svg" alt="">
             <span class="viewers"><i class="fa-solid fa-user"></i> <span>0</span></span>
-            <span class="likes"><i class="fa-solid fa-heart"></i> <span>0</span></span>
+            <span class="likes"><i class="fa-solid fa-thumbs-up"></i> <span>0</span></span>
         </div>
     `;
 
