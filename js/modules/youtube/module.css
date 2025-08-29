@@ -54,4 +54,8 @@
     border-radius: 5px;
 }
 
+#chat .item.youtube .platform .hidden-platform {
+    background: #FF0000;
+}
+
 #statistics .platform#youtube { background: #FF0000; }
