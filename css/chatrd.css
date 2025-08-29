@@ -383,6 +383,12 @@ body {
 
 
 
+#chat.horizontal .event.no-platform .info .user,
+#chat.horizontal .event.no-platform .info .action,
+#chat.horizontal .event.no-platform .info .value {
+    transform: translateY(0);
+}
+
 
 
 
@@ -452,6 +458,12 @@ body {
 #chat.oneline .event .info .value {
     display: inline-block;
     transform: translateY(-5px);
+}
+
+#chat.oneline .event.no-platform .info .user,
+#chat.oneline .event.no-platform .info .action,
+#chat.oneline .event.no-platform .info .value {
+    transform: translateY(0);
 }
 
 

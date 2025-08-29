@@ -172,9 +172,11 @@ function addEventItem(platform, clone, classes, userid, messageid) {
     }
 
     if (showPlatform == true && showPlatformDot == true) {
-        platformElement.innerHTML = `<span class="hidden-platform ${platform}"></span>`;
+        root.classList.add('no-platform');
+        platformElement.remove();
     }
     else {
+        root.classList.add('no-platform');
         platformElement.remove();
     }
 
