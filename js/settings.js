@@ -1,7 +1,11 @@
+let streamerBotClient = null
 let streamerBotConnected = false;
 let kickWebSocket = null;
 let tikfinityWebSocket = null;
 let speakerBotClient = null;
+
+
+
 
 /* -------------------------
    Salvar configurações no localStorage
@@ -69,6 +73,30 @@ async function loadSettingsFromLocalStorage() {
     });
 }
 
+async function saveStreamerBotSettings() {
+    const streamerBotServerAddress = document.querySelector('input[type=text][name=streamerBotServerAddress]').value;
+    const streamerBotServerPort = document.querySelector('input[type=text][name=streamerBotServerPort]').value;
+
+    const settings = {
+        streamerBotServerAddress : streamerBotServerAddress,
+        streamerBotServerPort : streamerBotServerPort
+    }
+
+    localStorage.setItem("chatrdStreamerBotSettings", JSON.stringify(settings));
+}
+
+async function loadStreamerBotSettings() {
+    const saved = localStorage.getItem("chatrdStreamerBotSettings");
+    if (!saved) return;
+
+    const settings = JSON.parse(saved);
+
+    Object.keys(settings).forEach(key => {
+        const input = document.querySelector(`[type=text][name="${key}"]`);
+        input.value = settings[key];
+    });
+}
+
 /* -------------------------
    Configurar eventos para salvar mudanças
 -------------------------- */
@@ -98,6 +126,9 @@ function pushChangeEvents() {
    Gerar URL de preview
 -------------------------- */
 function generateUrl() {
+    const streamerBotServerAddress = document.querySelector('input[type=text][name=streamerBotServerAddress]').value;
+    const streamerBotServerPort = document.querySelector('input[type=text][name=streamerBotServerPort]').value;
+
     const outputField = document.getElementById("outputUrl");
     outputField.value = '';
 
@@ -132,8 +163,10 @@ function generateUrl() {
     textfields.forEach(tf => params.set(tf.name, tf.value));
     numberfields.forEach(nf => params.set(nf.name, nf.value));
 
-    outputField.value = baseUrl + '?' + params.toString();
-    document.querySelector('#preview iframe').src = 'chat.html?' + params.toString();
+    var finalChatRDURL = baseUrl + '?' + params.toString() + `streamerBotServerAddress=${streamerBotServerAddress}&streamerBotServerPort=${streamerBotServerPort}`; 
+    outputField.value = finalChatRDURL
+    const iframe = document.querySelector('#preview iframe');
+    if (iframe) { iframe.src = finalChatRDURL; }
 }
 
 
@@ -425,6 +458,17 @@ function streamerBotConnect() {
     const streamerBotServerAddress = document.querySelector('input[type=text][name=streamerBotServerAddress]').value;
     const streamerBotServerPort = document.querySelector('input[type=text][name=streamerBotServerPort]').value;
 
+    // 🔎 Se já existe um cliente, encerra a tentativa anterior
+    if (streamerBotClient) {
+        try {
+            console.debug("[ChatRD][Settings] Closing previous Streamer.bot connection...");
+            streamerBotClient.disconnect?.(); // usa se existir
+            streamerBotClient = null;
+        } catch (err) {
+            console.error("[ChatRD][Settings] Error closing previous client:", err);
+        }
+    }
+
     streamerBotClient = new StreamerbotClient({
         host: streamerBotServerAddress,
         port: streamerBotServerPort,
@@ -434,15 +478,14 @@ function streamerBotConnect() {
 
             streamerBotStatus.classList.add('connected');
             streamerBotStatus.querySelector('small').textContent = `Connected`;
-                        
+
             loadSettingsFromLocalStorage();
-            generateUrl();
             pushChangeEvents();
+            generateUrl();
             setupFooterNavBar();
             setupAddEmoteModal();
-            setupPlatformToggles();    
+            setupPlatformToggles();
             speakerBotConnection();
-
         },
         onDisconnect: () => {
             streamerBotStatus.classList.remove('connected');
@@ -497,13 +540,24 @@ async function speakerBotConnection() {
 }
 
 
-
-
 /* -------------------------
    Inicialização
 -------------------------- */
 document.addEventListener('DOMContentLoaded', () => {
-    streamerBotConnect();
+    loadStreamerBotSettings();
+    setTimeout(() => { streamerBotConnect(); }, 1000);
+
+    const streamerBotServerAddressSwitch = document.querySelector('input[type=text][name=streamerBotServerAddress]');
+    const streamerBotServerPortSwitch = document.querySelector('input[type=text][name=streamerBotServerPort]');
+
+    streamerBotServerAddressSwitch.addEventListener('input', () => {
+        saveStreamerBotSettings();
+        streamerBotConnect();
+    });
+    streamerBotServerPortSwitch.addEventListener('input', () => {
+        saveStreamerBotSettings();
+        streamerBotConnect();
+    });
 
     const speakerBotSwitcher = document.querySelector('input[type=checkbox][name=showSpeakerbot]');
     speakerBotSwitcher.addEventListener('change', () => {

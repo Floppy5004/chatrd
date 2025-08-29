@@ -2,6 +2,8 @@
 /* STREAMER.BOT CONNECTION */
 /* ----------------------- */
 
+let speakerBotClient = null;
+
 const streamerBotServerAddress      = getURLParam("streamerBotServerAddress", "127.0.0.1");
 const streamerBotServerPort         = getURLParam("streamerBotServerPort", "8080");
 
@@ -12,8 +14,6 @@ const speakerBotChatRead            = getURLParam("speakerBotChatRead", false);
 const speakerBotEventRead           = getURLParam("speakerBotEventRead", false);
 const speakerBotVoiceAlias          = getURLParam("speakerBotVoiceAlias", "Maria");
 const speakerBotChatTemplate        = getURLParam("speakerBotChatTemplate", "{user} said {message}");
-
-let speakerBotClient = null;
 
 function getSpeakerBotInstance() {
     if (!speakerBotClient && showSpeakerbot) {
@@ -33,19 +33,43 @@ function getSpeakerBotInstance() {
 }
 
 
-const streamerBotClient = new StreamerbotClient({
-	host: streamerBotServerAddress,
-	port: streamerBotServerPort,
+let streamerBotClientActive = null;
 
-	onConnect: (data) => {
-		console.debug(`[ChatRD][Overlay] Connected to Streamer.bot successfully!`);
-		
-        notifySuccess({
-            title: 'Connected to Streamer.bot',
-            text: ``
-        });
-	},
-});
+function streamerBotConnect() {
+    // 🔎 Se já existe um cliente, encerra a tentativa anterior
+    if (streamerBotClientActive) {
+        try {
+            console.debug("[ChatRD][Settings] Closing previous Streamer.bot connection...");
+            streamerBotClientActive.disconnect?.(); // usa se existir na lib
+            streamerBotClientActive = null;
+        } catch (err) {
+            console.error("[ChatRD][Settings] Error closing previous client:", err);
+        }
+    }
+
+    streamerBotClientActive = new StreamerbotClient({
+        host: streamerBotServerAddress,
+        port: streamerBotServerPort,
+        autoReconnect: false, // evita reconectar sozinho
+        onConnect: () => {
+            notifySuccess({
+                title: 'Connected to Streamer.bot',
+                text: ``
+            });
+        },
+        onDisconnect: () => {
+            console.debug("[ChatRD][Settings] Streamer.bot disconnected.");
+        }
+    });
+
+    return streamerBotClientActive;
+}
+
+// mantém o const fixo apontando para a primeira conexão
+const streamerBotClient = streamerBotConnect();
+
+
+
 
 function getURLParam(param, defaultValue) {
     const urlParams = new URLSearchParams(window.location.search);
