@@ -553,10 +553,12 @@ document.addEventListener('DOMContentLoaded', () => {
     streamerBotServerAddressSwitch.addEventListener('input', () => {
         saveStreamerBotSettings();
         streamerBotConnect();
+        generateUrl();
     });
     streamerBotServerPortSwitch.addEventListener('input', () => {
         saveStreamerBotSettings();
         streamerBotConnect();
+        generateUrl();
     });
 
     const speakerBotSwitcher = document.querySelector('input[type=checkbox][name=showSpeakerbot]');
