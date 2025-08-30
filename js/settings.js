@@ -169,7 +169,7 @@ function generateUrl() {
     textfields.forEach(tf => params.set(tf.name, tf.value));
     numberfields.forEach(nf => params.set(nf.name, nf.value));
 
-    var finalChatRDURL = baseUrl + '?' + params.toString() + `streamerBotServerAddress=${streamerBotServerAddress}&streamerBotServerPort=${streamerBotServerPort}`; 
+    var finalChatRDURL = baseUrl + '?' + params.toString() + `&streamerBotServerAddress=${streamerBotServerAddress}&streamerBotServerPort=${streamerBotServerPort}`; 
     outputField.value = finalChatRDURL
     const iframe = document.querySelector('#preview iframe');
     if (iframe) { iframe.src = finalChatRDURL; }
