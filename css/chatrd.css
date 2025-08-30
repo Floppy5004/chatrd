@@ -402,7 +402,7 @@ body {
 }
 
 #chat.oneline .item {
-    margin: 0;
+    margin: 2px 0;
 }
 
 #chat.oneline .item .message {
@@ -465,10 +465,6 @@ body {
 #chat.oneline .event.no-platform .info .value {
     transform: translateY(0);
 }
-
-
-
-
 
 
 /* --------------------------- */
