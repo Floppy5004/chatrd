@@ -415,7 +415,8 @@ function populateEmoteList() {
             if (confirm(`Are you sure you want to delete '${emoteName}'?`)) {
                 delete emotes[emoteName];
                 textarea.value = JSON.stringify(JSON.stringify(emotes));
-                populateEmoteList();
+                saveYouTubeCustomEmotes();
+                setTimeout(() => populateEmoteList(), 1000);
             }
         });
 
