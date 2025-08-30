@@ -28,7 +28,11 @@ function saveSettingsToLocalStorage() {
 
     localStorage.setItem("chatrdWidgetSettings", JSON.stringify(settings));
 
-    // Salva emotes no Streamer.bot
+    generateUrl();
+}
+
+
+async function saveYouTubeCustomEmotes() {
     try {	
     	const youtubeMemberEmotes = document.querySelector("textarea[name=youTubeCustomEmotes]:not(.avoid)");
         youtubeSaveMemberEmotes(JSON.parse(youtubeMemberEmotes.value));
@@ -36,8 +40,19 @@ function saveSettingsToLocalStorage() {
 	catch (err) {
         console.error("[ChatRD] Emotes JSON inválido", err);
     }
+}
 
-    generateUrl();
+async function loadYouTubeCustomEmotes() {
+
+    youtubeLoadMemberEmotes().then(settings => {
+        if (settings) {
+    		const youtubeMemberEmotes = document.querySelector("textarea[name=youTubeCustomEmotes]:not(.avoid)");
+            console.log('[ChatRD][Settings] YouTube Member Emotes Loaded', settings);
+            youtubeMemberEmotes.value = JSON.stringify(settings);
+            populateEmoteList();
+        }
+    });
+    
 }
 
 /* -------------------------
@@ -62,15 +77,6 @@ async function loadSettingsFromLocalStorage() {
 
     document.querySelector('#font-value').textContent = Math.floor(document.querySelector('#font-slider').value * 100) + '%';
     document.querySelector('#bg-opacity-value').textContent = Math.floor(document.querySelector('#bg-opacity-slider').value * 100) + '%';
-
-    youtubeLoadMemberEmotes().then(settings => {
-        if (settings) {
-    		const youtubeMemberEmotes = document.querySelector("textarea[name=youTubeCustomEmotes]:not(.avoid)");
-            console.log('[ChatRD][Settings] YouTube Member Emotes Loaded', settings);
-            youtubeMemberEmotes.value = JSON.stringify(settings);
-            populateEmoteList();
-        }
-    });
 }
 
 async function saveStreamerBotSettings() {
@@ -365,8 +371,9 @@ function setupAddEmoteModal() {
 
         emotes[name] = url;
         textarea.value = JSON.stringify(JSON.stringify(emotes));
+        saveYouTubeCustomEmotes();
         modal.classList.add("hidden");
-        populateEmoteList();
+        setTimeout(() => populateEmoteList(), 1000);
     };
 }
 
@@ -414,8 +421,6 @@ function populateEmoteList() {
 
         emoteList.insertBefore(span, addButtonSpan || null);
     }
-
-    saveSettingsToLocalStorage();
 }
 
 /* -------------------------
@@ -486,6 +491,7 @@ function streamerBotConnect() {
             setupAddEmoteModal();
             setupPlatformToggles();
             speakerBotConnection();
+            loadYouTubeCustomEmotes();
         },
         onDisconnect: () => {
             streamerBotStatus.classList.remove('connected');
