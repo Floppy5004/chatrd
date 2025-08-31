@@ -376,7 +376,7 @@ async function getYouTubeEmotes(data) {
     if (!channelId) return message;
 
     if (youTubeCustomEmotes.length == 0) {
-        streamerBotClient.getGlobals().then( (getglobals) => {
+        streamerBotClient.getGlobals().then((getglobals) => {
             youTubeCustomEmotes = JSON.parse(JSON.parse(getglobals.variables.chatrdytcustomemotes.value));
             console.debug('[YouTube] Getting YouTube Emotes from Streamer.Bot', youTubeCustomEmotes);
         });
@@ -407,6 +407,14 @@ async function getYouTubeEmotes(data) {
         }
     }
 
+    // Helper: gera URL Twemoji
+    function getTwemojiUrl(emoji) {
+        const codePoints = Array.from(emoji).map(c => c.codePointAt(0).toString(16));
+        let fileName = codePoints.join('-');
+        fileName = fileName.replace(/-fe0f/g, ''); // remove FE0F
+        return `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/${fileName}.png`;
+    }
+
     // Create an Emote Map
     const emoteMap = new Map();
 
@@ -417,10 +425,20 @@ async function getYouTubeEmotes(data) {
         emoteMap.set(emote.code, { html: emoteElement, raw: emote.code });
     }
 
-    // YouTube emotes (ex: :hand-pink-waving:)
+    // YouTube emotes (Twemoji + normais)
     if (data.emotes) {
         for (const emote of data.emotes) {
-            const emoteElement = `<img src="${emote.imageUrl}" class="emote" alt="${emote.name}">`;
+            let emoteUrl = emote.imageUrl;
+
+            if (String(emote.type || "").toLowerCase() === "twemoji") {
+                emoteUrl = getTwemojiUrl(emote.name);
+            }
+
+            if (!emoteUrl || emoteUrl.trim() === '') {
+                continue;
+            }
+
+            const emoteElement = `<img src="${emoteUrl}" class="emote" alt="${emote.name}" onerror="this.outerHTML='${emote.name}'">`;
             emoteMap.set(emote.name, { html: emoteElement, raw: emote.name });
         }
     }
@@ -480,6 +498,7 @@ async function getYouTubeEmotes(data) {
 
     return container.innerHTML;
 }
+
 
 
 // ChatGPT created this. :)

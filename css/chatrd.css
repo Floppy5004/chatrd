@@ -466,6 +466,10 @@ body {
     transform: translateY(0);
 }
 
+#chat.oneline .item.announcement .message {
+    padding: 10px;
+}
+
 
 /* --------------------------- */
 /* ---- CHAT INPUT LAYOUT ---- */

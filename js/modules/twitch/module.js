@@ -677,17 +677,44 @@ async function getTwitchAvatar(user) {
 
 async function getTwitchEmotes(data) {
     const message = data.message.message;
-    const emotes = data.emotes.sort((a, b) => b.startIndex - a.startIndex);
+    const emotes = (data.emotes || []).sort((a, b) => b.startIndex - a.startIndex);
 
     const words = message.split(" ").map(word => {
         const emote = emotes.find(e => e.name === word);
-        return emote
-            ? `<img src="${emote.imageUrl}" data-emote-id="${emote.id}" alt="${emote.name}" class="emote">`
-            : word;
+        if (!emote) return word;
+
+        // Detecta Twemoji
+        const isTwemoji =
+            String(emote.type || "").toLowerCase() === "twemoji" ||
+            /(twemoji|jdecked)/i.test(emote.imageUrl || "");
+
+        let emoteUrl = emote.imageUrl;
+
+        if (isTwemoji) {
+            // Monta URL correta pro Twemoji
+            const codePoints = Array.from(emote.name).map(c => c.codePointAt(0).toString(16));
+            let fileName = codePoints.join('-');
+            fileName = fileName.replace(/-fe0f/g, ''); // remove FE0F
+            emoteUrl = `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/${fileName}.png`;
+        }
+
+        // Se ainda não tiver URL, usa o texto
+        if (!emoteUrl || emoteUrl.trim() === "") {
+            return emote.name;
+        }
+
+        // Retorna <img> com fallback automático para texto se der erro
+        return `<img src="${emoteUrl}" 
+                     data-emote-id="${emote.id || ""}" 
+                     alt="${emote.name}" 
+                     class="emote"
+                     onerror="this.outerHTML='${emote.name}'">`;
     });
 
     return words.join(" ");
 }
+
+
 
 
 
@@ -706,13 +733,33 @@ async function getTwitchEmotesOnParts(data) {
     for (const part of data.parts) {
         if (part.type === 'emote') {
             const emoteName = part.text;
-            const emoteUrl = part.imageUrl;
-            const emoteHTML = `<img src="${emoteUrl}" class="emote" alt="${emoteName}">`;
+            let emoteUrl = part.imageUrl;
 
+            // Detecta Twemoji
+            const isTwemoji =
+                String(part.emoteType || part.type).toLowerCase() === 'twemoji' ||
+                /(twemoji|jdecked)/i.test(emoteUrl || '');
+
+            if (isTwemoji) {
+                // Monta URL correta a partir do codepoint
+                const codePoints = Array.from(emoteName).map(c => c.codePointAt(0).toString(16));
+                let fileName = codePoints.join('-');
+                fileName = fileName.replace(/-fe0f/g, ''); // remove FE0F
+                emoteUrl = `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/${fileName}.png`;
+            }
+
+            // Se não tiver URL válida, volta pro texto
+            if (!emoteUrl || emoteUrl.trim() === '') {
+                continue;
+            }
+
+            // HTML do emote com fallback automático para texto
+            const emoteHTML = `<img src="${emoteUrl}" class="emote" alt="${emoteName}" onerror="this.outerHTML='${emoteName}'">`;
+
+            // Escapa caracteres especiais no nome
             const escaped = emoteName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
             let pattern;
-
             if (/^\w+$/.test(emoteName)) {
                 pattern = `\\b${escaped}\\b`;
             } else {
@@ -726,6 +773,8 @@ async function getTwitchEmotesOnParts(data) {
 
     return messageText;
 }
+
+
 
 
 
