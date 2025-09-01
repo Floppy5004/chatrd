@@ -36,3 +36,11 @@
 #chat .item.announcement.twitch .chatmoderation {
     display: none;
 }
+
+#chat:not(.horizontal) .item.announcement.twitch {
+    margin: 0 10px;
+}
+
+#chat.oneline .item.announcement.twitch {
+    margin: 10px 10px 0px 10px;
+}
