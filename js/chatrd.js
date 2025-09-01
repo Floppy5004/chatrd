@@ -559,7 +559,7 @@ chatInputForm.addEventListener("submit", function(event) {
         "message": chatInputText,
     }
     ).then( (sendchatstuff) => {
-        console.debug('ChatRD] Sending Chat to Streamer.Bot', sendchatstuff);
+        console.debug('[ChatRD] Sending Chat to Streamer.Bot', sendchatstuff);
     });
     
     // Sends Message to TikTok that are not commands

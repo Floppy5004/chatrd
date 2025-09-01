@@ -611,7 +611,7 @@ async function twitchChatMessageDeleted(data) {
 
 
 async function twitchUserBanned(data) {
-    chatContainer.querySelectorAll(`[data-user="${data.user_login}"]`).forEach(element => {
+    chatContainer.querySelectorAll(`[data-user="${data.targetUser.login}"]`).forEach(element => {
         element.remove();
     });
 }
