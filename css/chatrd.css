@@ -81,6 +81,11 @@ body {
     transition: all ease-in-out 300ms;
 }
 
+#chat .item .message .actual-message a {
+    color: #FFF;
+    font-weight: bold;
+}
+
 #chat .item .info {
     display: inline-flex;
     align-items: center;

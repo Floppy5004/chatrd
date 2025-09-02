@@ -83,6 +83,9 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
     root.id = messageid;
     root.style.opacity = '0';
 
+    const messageEl = clone.querySelector('.actual-message');
+    getAndReplaceLinks(messageEl);
+
     const platformElement = clone.querySelector('.platform');
     
     if (showPlatform == true) {
@@ -690,6 +693,60 @@ async function executeModCommand(event, command) {
     chatInput.value = command;
     chatInputForm.requestSubmit();
 }
+
+function getAndReplaceLinks(el) {
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+  const urlRegex = /\b((?:https?:\/\/|www\.)[^\s<>"')]+)\b/g;
+  const nodes = [];
+
+  // coleta os nós de texto
+  while (walker.nextNode()) {
+    const node = walker.currentNode;
+    if (!node.parentElement.closest('a,script,style,textarea,code,pre')) {
+      nodes.push(node);
+    }
+  }
+
+  nodes.forEach(node => {
+    const text = node.nodeValue;
+    let match, lastIndex = 0;
+    const frag = document.createDocumentFragment();
+
+    while ((match = urlRegex.exec(text))) {
+      const raw = match[1];
+
+      // texto antes do link
+      if (match.index > lastIndex) {
+        frag.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+      }
+
+      // cria <a>
+      const clean = raw.replace(/[.,!?;:)\]\}]+$/, '');
+      const a = document.createElement('a');
+      a.href = clean.startsWith('http') ? clean : `https://${clean}`;
+      a.textContent = clean;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      frag.appendChild(a);
+
+      // se tinha pontuação colada, mantém
+      if (clean.length < raw.length) {
+        frag.appendChild(document.createTextNode(raw.slice(clean.length)));
+      }
+
+      lastIndex = match.index + raw.length;
+    }
+
+    if (lastIndex === 0) return; // nada casou
+
+    if (lastIndex < text.length) {
+      frag.appendChild(document.createTextNode(text.slice(lastIndex)));
+    }
+
+    node.parentNode.replaceChild(frag, node);
+  });
+}
+
 
 document.addEventListener("DOMContentLoaded", function () {
 });
