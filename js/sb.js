@@ -50,7 +50,7 @@ function streamerBotConnect() {
     streamerBotClientActive = new StreamerbotClient({
         host: streamerBotServerAddress,
         port: streamerBotServerPort,
-        autoReconnect: false, // evita reconectar sozinho
+        //autoReconnect: false, // evita reconectar sozinho
         onConnect: () => {
             notifySuccess({
                 title: 'Connected to Streamer.bot',
