@@ -142,7 +142,7 @@ hr {
 #settings .config input[type=text],
 #settings .config input[type=number],
 #settings .config textarea {
-    font-family: "Inter", sans-serif;
+    font-family: "DM Sans", sans-serif;
     border: none;
     background:#222;
     color: #FFF;
@@ -324,7 +324,7 @@ hr {
 
 
 .url-bar button {
-    font-family: "Inter", sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-weight: bold;
     border: none;
     padding: 15px 30px;
@@ -439,7 +439,7 @@ footer .nav-bar a img {
 .modal-content input[type=text],
 .modal-content input[type=number],
 .modal-content textarea {
-    font-family: "Inter", sans-serif;
+    font-family: "DM Sans", sans-serif;
     border: none;
     background:#222;
     color: #FFF;
@@ -451,7 +451,7 @@ footer .nav-bar a img {
 
 
 .modal-content button {
-    font-family: "Inter", sans-serif;
+    font-family: "DM Sans", sans-serif;
     font-weight: bold;
     border: none;
     padding: 15px 30px;
