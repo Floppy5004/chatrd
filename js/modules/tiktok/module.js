@@ -425,13 +425,13 @@ async function tiktokUpdateStatistics(data, type) {
     if (showPlatformStatistics == false || showTikTokStatistics == false) return;
 
     if (type == 'viewers') {
-        const viewers = DOMPurify.sanitize(data.viewerCount);
-        document.querySelector('#statistics #tiktok .viewers span').textContent = formatNumber(viewers);
+        const viewers = formatNumber(DOMPurify.sanitize(data.viewerCount)) || "0";
+        document.querySelector('#statistics #tiktok .viewers span').textContent = viewers;
     }
 
     if (type == 'likes') {
-        const likes = DOMPurify.sanitize(data.totalLikeCount);
-        document.querySelector('#statistics #tiktok .likes span').textContent = formatNumber(likes);
+        const likes = formatNumber(DOMPurify.sanitize(data.totalLikeCount)) || "0";
+        document.querySelector('#statistics #tiktok .likes span').textContent = likes;
     }
     
 }

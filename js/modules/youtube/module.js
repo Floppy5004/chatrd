@@ -18,6 +18,16 @@ let youTubeBTTVEmotes = [];
 
 userColors.set('youtube', new Map());
 
+let youTubeStreamsStatistics = [
+    {
+        id : 'auivjbn_34278',
+        title: 'Live Stream'
+    },
+    {
+        id : 'adikpbjuvbv',
+        title: 'Live Stream Two'
+    },
+];
 
 // YOUTUBE EVENTS HANDLERS
 
@@ -48,27 +58,28 @@ const youtubeMessageHandlers = {
     },
     'YouTube.StatisticsUpdated': (response) => {
         youTubeUpdateStatistics(response.data);
+    },
+    'YouTube.BroadcastUpdated': (response) => {
+        youTubeAddStatistics(response.data);
     }
 };
 
+const youtubeStatistics = `
+    <div class="platform youtube" id="youtube" style="display: none;">
+        <img src="js/modules/youtube/images/logo-youtube.svg" alt="">
+        <span class="viewers"><i class="fa-solid fa-user"></i> <span>0</span></span>
+        <span class="likes"><i class="fa-solid fa-thumbs-up"></i> <span>0</span></span>
+        <span class="title"></span>
+    </div>
+`;
 
 
 if (showYoutube) {
-
-    const youtubeStatistics = `
-        <div class="platform" id="youtube" style="display: none;">
-            <img src="js/modules/youtube/images/logo-youtube.svg" alt="">
-            <span class="viewers"><i class="fa-solid fa-user"></i> <span>0</span></span>
-            <span class="likes"><i class="fa-solid fa-thumbs-up"></i> <span>0</span></span>
-        </div>
-    `;
-
     document.querySelector('#statistics').insertAdjacentHTML('beforeend', youtubeStatistics);
 
-    if (showYouTubeStatistics == true) { document.querySelector('#youtube').style.display = ''; }
+    if (showTwitchViewers == true) { document.querySelector('#youtube').style.display = ''; }
 
     registerPlatformHandlersToStreamerBot(youtubeMessageHandlers, '[YouTube]');
-    
 }
 
 
@@ -205,7 +216,6 @@ async function youTubeSuperStickerMessage(data) {
     else {
         header.remove();
     }
-
     
     user.innerHTML = `<strong>${data.user.name}</strong>`;
     action.innerHTML = ` sent a supersticker `;
@@ -343,21 +353,61 @@ async function youTubeUserBanned(data) {
 
 
 
+async function youTubeAddStatistics(data) {
+    
+    if (showPlatformStatistics == false || showYouTubeStatistics == false) return;
+    
+    const status = data.status;
+    const id = data.id;
+    const title = data.title;
+    const elementId = `youtubeStream-${id}`;
+
+    if (status == 'live') {
+
+        const original = document.querySelector('#statistics #youtube');
+        if (original) original.remove();
+
+        if (!document.querySelector( `#${elementId}` )) {
+            let youtubeStatisticsHTML = youtubeStatistics.replace(`id="youtube"`, `id="${elementId}"`);
+            document.querySelector('#statistics').insertAdjacentHTML('beforeend', youtubeStatisticsHTML);
+            document.querySelector(`#${elementId} .title`).textContent = title;
+            if (showYouTubeStatistics == true) {
+                for (const el of document.querySelectorAll('.youtube')) {
+                    el.style.display = '';
+                }
+            }
+        }
+        else {
+            document.querySelector(`#${elementId} .title`).textContent = title;
+        }
+    }
+    else if (status == 'complete') {
+    }
+}
+
+
 async function youTubeUpdateStatistics(data) {
     
     if (showPlatformStatistics == false || showYouTubeStatistics == false) return;
     
-    const viewers = DOMPurify.sanitize(data.concurrentViewers);
-    const likes = DOMPurify.sanitize(data.likeCount);
-    document.querySelector('#statistics #youtube .viewers span').textContent = formatNumber(viewers);
-    document.querySelector('#statistics #youtube .likes span').textContent = formatNumber(likes);
+    const id = data.broadcast.id;
+    const viewers = formatNumber(DOMPurify.sanitize(data.concurrentViewers)) || "0";
+    const likes = formatNumber(DOMPurify.sanitize(data.likeCount)) || "0";
+
+    youTubeAddStatistics({
+        status: data.broadcast.status,
+        id: id,
+        title: data.broadcast.title
+    })
+
+    document.querySelector(`#statistics #youtubeStream-${id} .viewers span`).textContent = formatNumber(viewers);
+    document.querySelector(`#statistics #youtubeStream-${id} .likes span`).textContent = formatNumber(likes);
 }
 
 
 
 
-
-
+        
 
 
 

@@ -27,4 +27,7 @@
     transform: translateY(2px);
 }
 
-#statistics .platform#tiktok { background: #ff0050; }
+#statistics .platform#tiktok {
+    order: 3;
+    background: #ff0050;
+}

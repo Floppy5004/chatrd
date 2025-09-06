@@ -585,8 +585,8 @@ async function kickUpdateStatistics(data) {
     if (showPlatformStatistics == false || showKickViewers == false) return;
     if (data.livestream == null) { }
     else {
-        const viewers = DOMPurify.sanitize(data.livestream.viewer_count);
-        document.querySelector('#statistics #kick .viewers span').textContent = formatNumber(viewers);
+        const viewers = formatNumber(DOMPurify.sanitize(data.livestream.viewer_count)) || "0";
+        document.querySelector('#statistics #kick .viewers span').textContent = viewers;
     }
 }
 
