@@ -675,6 +675,17 @@ async function getTwitchAvatar(user) {
 
 
 
+
+
+async function getTwitchBadges(data) {
+    const badges = data.message.badges;
+    return badges
+        .map(badge => `<img src="${badge.imageUrl}" class="badge">`)
+        .join('');
+}
+
+
+
 async function getTwitchEmotes(data) {
     const message = data.message.message;
     const emotes = (data.emotes || []).sort((a, b) => b.startIndex - a.startIndex);
@@ -716,17 +727,6 @@ async function getTwitchEmotes(data) {
 
 
 
-
-
-async function getTwitchBadges(data) {
-    const badges = data.message.badges;
-    return badges
-        .map(badge => `<img src="${badge.imageUrl}" class="badge">`)
-        .join('');
-}
-
-
-
 async function getTwitchEmotesOnParts(data) {
     let messageText = data.text;
 
@@ -748,17 +748,15 @@ async function getTwitchEmotesOnParts(data) {
                 emoteUrl = `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/${fileName}.png`;
             }
 
-            // Se não tiver URL válida, volta pro texto
-            if (!emoteUrl || emoteUrl.trim() === '') {
-                continue;
-            }
+            // Se não tiver URL válida, pula
+            if (!emoteUrl || emoteUrl.trim() === '') continue;
 
-            // HTML do emote com fallback automático para texto
-            const emoteHTML = `<img src="${emoteUrl}" class="emote" alt="${emoteName}" onerror="this.outerHTML='${emoteName}'">`;
+            // HTML do emote — NOTA: escapamos aspas no ALT
+            const safeAlt = emoteName.replace(/"/g, '&quot;');
+            const emoteHTML = `<img src="${emoteUrl}" class="emote" alt="${safeAlt}" onerror="this.outerHTML='${safeAlt}'">`;
 
-            // Escapa caracteres especiais no nome
+            // Regex seguro — evita substituir dentro de tags HTML
             const escaped = emoteName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-
             let pattern;
             if (/^\w+$/.test(emoteName)) {
                 pattern = `\\b${escaped}\\b`;
@@ -766,13 +764,14 @@ async function getTwitchEmotesOnParts(data) {
                 pattern = `(?<=^|[^\\w])${escaped}(?=$|[^\\w])`;
             }
 
-            const regex = new RegExp(pattern, 'g');
+            const regex = new RegExp(`(?<!<[^>]*)${pattern}(?![^<]*>)`, 'g');
             messageText = messageText.replace(regex, emoteHTML);
         }
     }
 
     return messageText;
 }
+
 
 
 
