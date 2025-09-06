@@ -370,7 +370,13 @@ async function youTubeAddStatistics(data) {
         if (!document.querySelector( `#${elementId}` )) {
             let youtubeStatisticsHTML = youtubeStatistics.replace(`id="youtube"`, `id="${elementId}"`);
             document.querySelector('#statistics').insertAdjacentHTML('beforeend', youtubeStatisticsHTML);
-            document.querySelector(`#${elementId} .title`).textContent = title;
+
+            const streamelement = document.querySelector(`#${elementId}`);
+            const streamtitle = streamelement.querySelector(`#${elementId} .title`);
+            
+            streamtitle.textContent = title;
+            streamelement.setAttribute('title', title);
+            
             if (showYouTubeStatistics == true) {
                 for (const el of document.querySelectorAll('.youtube')) {
                     el.style.display = '';
@@ -382,6 +388,16 @@ async function youTubeAddStatistics(data) {
         }
     }
     else if (status == 'complete') {
+        const streamelement = document.querySelector(`#${elementId}`);
+        streamelement.remove();
+
+        const youtubeStreamBoxes = document.querySelectorAll('.youtube').length;
+
+        if (youtubeStreamBoxes == 0) {
+            document.querySelector('#statistics').insertAdjacentHTML('beforeend', youtubeStatistics);
+            document.querySelector('#youtube').style.display = '';
+        }
+        
     }
 }
 
