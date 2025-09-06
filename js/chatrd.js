@@ -173,27 +173,20 @@ function addEventItem(platform, clone, classes, userid, messageid) {
     root.style.opacity = '0';
 
     const platformElement = clone.querySelector('.platform');
-    
-    if (showPlatform == true) {
-        platformElement.innerHTML = `<img src="js/modules/${platform}/images/logo-${platform}.svg">`; 
-    }
 
-    if (showPlatform == true && showPlatformDot == true) {
-        root.classList.add('no-platform');
-        platformElement.remove();
+    if (showPlatform == true) {
+        if (showPlatformDot == true) {
+            root.classList.add('no-platform');
+            platformElement.remove();
+        }
+        else {
+            platformElement.innerHTML = `<img src="js/modules/${platform}/images/logo-${platform}.svg">`; 
+        }
     }
     else {
         root.classList.add('no-platform');
         platformElement.remove();
     }
-
-    /*if (showPlatformDot == true) {
-        platformElement.innerHTML = `<span class="hidden-platform ${platform}"></span>`;
-    }
-
-    if (showPlatform == false && showPlatformDot == false) {
-        platformElement.remove();
-    }*/
 
     const timestamp = clone.querySelector('.timestamp');    
     if (timestamp) {

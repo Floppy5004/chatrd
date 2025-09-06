@@ -131,7 +131,7 @@ body {
 #chat .item .timestamp,
 #chat .item .pronouns {
     display: inline-block;
-    background: rgba(255,255,255,0.1);
+    background: rgba(0,0,0,0.40);
     padding: 0px 6px;
     font-size: 12px;
     border-radius: 5px;
