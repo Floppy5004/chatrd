@@ -256,13 +256,15 @@ async function youTubeNewSponsorMessage(data) {
 
     
     user.innerHTML = `<strong>${data.user.name}</strong>`;
-    action.innerHTML = ` became a member `;
+    action.innerHTML = ` became a member for `;
 
     var months = data.months > 1 ? 'months' : 'month';
     value.innerHTML = `<strong>${data.months || 1} ${months}</strong>`;
 
-    var fullmessage = await getYouTubeEmotes(data);
-    message.innerHTML = fullmessage;
+    if (data.message) {
+        var fullmessage = await getYouTubeEmotes(data);
+        message.innerHTML = fullmessage;
+    }
 
     addEventItem('youtube', clone, classes, userId, messageId);
 }
@@ -334,9 +336,9 @@ async function youTubeGiftBombReceivedMessage(data) {
     header.remove();
 
     
-    user.innerHTML = `<strong>${data.user.name}</strong>`;
-    action.innerHTML = ` gifted a membership <strong>(Tier ${data.tier})</strong> to `;
-    value.innerHTML = `<strong>${data.gifter.name}</strong>`;
+    user.innerHTML = `<strong>${data.gifter.name}</strong>`;
+    action.innerHTML = ` gifted a membership to `;
+    value.innerHTML = `<strong>${data.user.name}</strong>`;
 
     message.remove();
 
