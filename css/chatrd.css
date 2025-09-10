@@ -433,7 +433,7 @@ body {
 #chat.oneline .item .info,
 #chat.oneline .item .actual-message {
     display: inline-block !important;
-    transform: translateY(-5px);
+    /*transform: translateY(-5px);*/
 }
 
 #chat.oneline .item .info .timestamp {
@@ -467,7 +467,7 @@ body {
 #chat.oneline .event .info .action,
 #chat.oneline .event .info .value {
     display: inline-block;
-    transform: translateY(-5px);
+    /*transform: translateY(-5px);*/
 }
 
 #chat.oneline .event.no-platform .info .user,
