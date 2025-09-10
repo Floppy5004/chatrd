@@ -265,6 +265,7 @@ async function youTubeNewSponsorMessage(data) {
         var fullmessage = await getYouTubeEmotes(data);
         message.innerHTML = fullmessage;
     }
+    else { message.remove(); }
 
     addEventItem('youtube', clone, classes, userId, messageId);
 }
