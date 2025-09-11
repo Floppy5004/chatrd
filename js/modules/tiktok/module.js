@@ -267,7 +267,6 @@ async function tiktokLikesMessage(data) {
 
     const classes = ['tiktok', 'likes'];
 
-
     var likeCountTotal = parseInt(data.likeCount);
     
     // Search for Previous Likes from the Same User
@@ -280,22 +279,26 @@ async function tiktokLikesMessage(data) {
         if (likeCountElem) {
             var likeCountPrev = parseInt(likeCountElem.textContent);
             likeCountTotal = Math.floor(likeCountPrev + likeCountTotal);
-            removeItem(previousLikeContainer);
+            //removeItem(previousLikeContainer);
+            likeCountElem.textContent = likeCountTotal;
+            chatContainer.prepend(previousLikeContainer) 
         }
     }
+    else {
 
-    header.remove();
+        header.remove();
+        
+        user.innerHTML = `<strong>${data.nickname}</strong>`;
+        action.innerHTML = ` sent you `;
 
-    
-    user.innerHTML = `<strong>${data.nickname}</strong>`;
-    action.innerHTML = ` sent you `;
+        var likes = likeCountTotal > 1 ? 'likes' : 'like';
+        value.innerHTML = `<strong>${likeCountTotal}</strong> ${likes} ❤️`;
 
-    var likes = likeCountTotal > 1 ? 'likes' : 'like';
-    value.innerHTML = `<strong>${likeCountTotal}</strong> ${likes} ❤️`;
+        message.remove();
 
-    message.remove();
+        addEventItem('tiktok', clone, classes, userId, messageId);
 
-    addEventItem('tiktok', clone, classes, userId, messageId);
+    }
 }
 
 

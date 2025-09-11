@@ -52,7 +52,7 @@ async function patreonMemberships(data) {
 
     user.innerHTML = `<strong>${data.attributes.full_name}</strong>`;
     action.innerHTML = ` donated `;
-    value.innerHTML = `<strong>${money}</strong>`;
+    value.innerHTML = `<strong>$${money}</strong>`;
 
     message.remove();
 
