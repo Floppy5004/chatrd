@@ -401,8 +401,21 @@ const notifySuccess = (success) => {
 }
 
 
-
-
+function animateCounter(element, start, end, duration) {
+    let startTime = null;
+    
+    function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        const value = Math.floor(start + (end - start) * progress);
+        element.textContent = value;
+        if (progress < 1) {
+            requestAnimationFrame(step);
+        }
+    }
+    
+    requestAnimationFrame(step);
+}
 
 
 /* -------------------------- */

@@ -303,12 +303,26 @@ async function tiktokJoinMessage(data) {
     if (joinElement) {
         const messageElement = joinElement.querySelector('.message');
         
-        messageElement.classList.remove('animate__animated', 'animate__fadeInUp', 'animate__faster');
+        messageElement.classList.remove('animate__animated', 'animate__faster');
+
+        if (chatHorizontal == true) {
+            messageElement.classList.remove('animate__fadeInRight');
+        }
+        else {
+            messageElement.classList.remove('animate__fadeInUp');
+        }
 
         joinElement.querySelector('.user').innerHTML = userMessageHTML;
         joinElement.querySelector('.action').innerHTML = actionMessageHTML;
 
-        messageElement.classList.add('animate__animated', 'animate__fadeInUp', 'animate__faster');
+        messageElement.classList.add('animate__animated', 'animate__faster');
+
+        if (chatHorizontal == true) {
+            messageElement.classList.add('animate__fadeInRight');
+        }
+        else {
+            messageElement.classList.add('animate__fadeInUp');
+        }
         
         chatContainer.prepend(joinElement);
     }
@@ -382,6 +396,7 @@ async function tiktokLikesMessage(data) {
             likeCountTotal = Math.floor(likeCountPrev + likeCountTotal);
             //removeItem(previousLikeContainer);
             likeCountElem.textContent = likeCountTotal;
+            //animateCounter(likeCountElem, likeCountPrev, likeCountTotal, 250);
             chatContainer.prepend(previousLikeContainer);
         }
     }
@@ -469,10 +484,11 @@ async function tiktokGiftMessage(data) {
 
     header.remove();
 
+    var coins = Math.floor(data.repeatCount*data.diamondCount);
     
     user.innerHTML = `<strong>${data.nickname}</strong>`;
     action.innerHTML = ` has sent you `;
-    value.innerHTML = `<strong>x${data.repeatCount} ${data.giftName}</strong> <img src="${data.giftPictureUrl}"> `;
+    value.innerHTML = `<strong>x${data.repeatCount} ${data.giftName}</strong> <img src="${data.giftPictureUrl}"> <strong>(🪙 ${coins})</strong>`;
 
     message.remove();
 
