@@ -5,8 +5,10 @@
 const showTiktok                    = getURLParam("showTiktok", false);
 
 const showTikTokMessages            = getURLParam("showTikTokMessages", true);
+const showTikTokJoins               = getURLParam("showTikTokJoins", false);
 const showTikTokFollows             = getURLParam("showTikTokFollows", true);
-const showTikTokLikes               = getURLParam("showTikTokLikes", true);
+const showTikTokLikes               = getURLParam("showTikTokLikes", false);
+const showTikTokShares              = getURLParam("showTikTokShares", false);
 const showTikTokGifts               = getURLParam("showTikTokGifts", true);
 const showTikTokSubs                = getURLParam("showTikTokSubs", true);
 const showTikTokStatistics          = getURLParam("showTikTokStatistics", true);
@@ -35,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
+let tiktoJoinTimeOut;
 
 
 // -----------------------
@@ -70,6 +72,8 @@ async function tiktokConnection() {
             switch (data.event) {
                 case 'roomUser' : tiktokUpdateStatistics(tiktokData, 'viewers'); break;
                 case 'like': tiktokLikesMessage(tiktokData); tiktokUpdateStatistics(tiktokData, 'likes'); break;
+                case 'member' : tiktokJoinMessage(tiktokData); break;
+                case 'share' : tiktokShareMessage(tiktokData); break;
                 case 'chat': tiktokChatMessage(tiktokData); break;
                 case 'follow': tiktokFollowMessage(tiktokData); break;
                 case 'gift': tiktokGiftMessage(tiktokData); break;
@@ -243,6 +247,103 @@ async function tiktokFollowMessage(data) {
 }
 
 
+async function tiktokShareMessage(data) {
+
+    if (showTikTokShares == false) return;
+
+    const template = eventTemplate;
+	const clone = template.content.cloneNode(true);
+    const messageId = data.msgId;
+    const userId = data.userId;
+
+    const {
+        header,
+        platform,
+        user,
+        action,
+        value,
+        'actual-message': message
+    } = Object.fromEntries(
+        [...clone.querySelectorAll('[class]')]
+            .map(el => [el.className, el])
+    );
+
+    const classes = ['tiktok', 'share'];
+
+    header.remove();
+    message.remove();
+    value.remove();
+
+    
+    user.innerHTML = `<strong>${data.nickname}</strong>`;
+
+    action.innerHTML = ` shared the stream`;
+
+    addEventItem('tiktok', clone, classes, userId, messageId);
+}
+
+
+async function tiktokJoinMessage(data) {
+    if (showTikTokJoins == false) return;
+
+    function onIdle() {
+        container.style.paddingBottom = "0px";
+        if (container.lastElementChild) {
+            container.lastElementChild.remove();
+        }
+    }
+
+    const messageId = data.msgId;
+    const userId = data.userId;
+    const userMessageHTML = `<strong>${data.nickname}</strong>`;
+    const actionMessageHTML = ` joined the chat`;
+
+    const joinElement = container.querySelector(".event.tiktok.join");
+
+    if (joinElement) {
+        const messageElement = joinElement.querySelector('.message');
+        
+        messageElement.classList.remove('animate__animated', 'animate__fadeInUp', 'animate__faster');
+
+        joinElement.querySelector('.user').innerHTML = userMessageHTML;
+        joinElement.querySelector('.action').innerHTML = actionMessageHTML;
+
+        messageElement.classList.add('animate__animated', 'animate__fadeInUp', 'animate__faster');
+        
+        chatContainer.prepend(joinElement);
+    }
+
+    else {
+        const template = eventTemplate;
+        const clone = template.content.cloneNode(true);
+
+        const {
+            header,
+            platform,
+            user,
+            action,
+            value,
+            'actual-message': message
+        } = Object.fromEntries(
+            [...clone.querySelectorAll('[class]')]
+                .map(el => [el.className, el])
+        );
+
+        const classes = ['tiktok', 'join'];
+
+        header.remove();
+        message.remove();
+        value.remove();
+
+        user.innerHTML = userMessageHTML;
+        action.innerHTML = actionMessageHTML;
+
+        addEventItem('tiktok', clone, classes, userId, messageId);
+    }
+
+}
+
+
 
 async function tiktokLikesMessage(data) {
 
@@ -281,7 +382,7 @@ async function tiktokLikesMessage(data) {
             likeCountTotal = Math.floor(likeCountPrev + likeCountTotal);
             //removeItem(previousLikeContainer);
             likeCountElem.textContent = likeCountTotal;
-            chatContainer.prepend(previousLikeContainer) 
+            chatContainer.prepend(previousLikeContainer);
         }
     }
     else {

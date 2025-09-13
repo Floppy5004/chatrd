@@ -39,6 +39,10 @@
     margin: 0 10px;
 }
 
+#chat:not(.horizontal) .item.chat.first-chatter.twitch {
+    margin: 0 10px;
+}
+
 #chat.oneline .item.announcement.twitch {
     margin: 10px 10px 0px 10px;
 }

@@ -31,3 +31,17 @@
     order: 3;
     background: #ff0050;
 }
+
+#chat .event.tiktok.join .message {
+    background: none;
+    outline: none;
+}
+#chat .event.tiktok.join .message i {
+    font-size: 14px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    margin: 0 3px 0 1px;
+    text-shadow: none;
+}
