@@ -277,7 +277,7 @@ async function tiktokShareMessage(data) {
     
     user.innerHTML = `<strong>${data.nickname}</strong>`;
 
-    action.innerHTML = ` shared the stream`;
+    action.innerHTML = ` shared the stream ↪️`;
 
     addEventItem('tiktok', clone, classes, userId, messageId);
 }
