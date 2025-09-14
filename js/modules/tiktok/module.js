@@ -487,7 +487,7 @@ async function tiktokGiftMessage(data) {
     var coins = Math.floor(data.repeatCount*data.diamondCount);
     
     user.innerHTML = `<strong>${data.nickname}</strong>`;
-    action.innerHTML = ` has sent you `;
+    action.innerHTML = ` gifted you `;
     value.innerHTML = `<strong>x${data.repeatCount} ${data.giftName}</strong> <img src="${data.giftPictureUrl}"> <strong>(🪙 ${coins})</strong>`;
 
     message.remove();
