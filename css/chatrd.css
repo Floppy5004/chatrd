@@ -436,8 +436,6 @@ body {
     /*transform: translateY(-5px);*/
 }
 
-#chat.oneline .item .actual-message { word-break: break-word; }
-
 #chat.oneline .item .info .timestamp {
     transform: translateY(-3px);
 }
@@ -481,6 +479,14 @@ body {
 #chat.oneline .item.announcement .message {
     padding: 10px;
 }
+
+
+
+
+#chat .item .actual-message,
+#chat .item.announcement .message,
+#chat .event .actual-message
+{ word-break: break-word; }
 
 
 /* --------------------------- */
