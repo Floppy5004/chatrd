@@ -526,18 +526,75 @@ async function getTikTokAvatar(data) {
 }
 
 async function getTikTokBadges(data) {
-    const {
-        isSubscriber,
-        isModerator,
-    } = data;
+    const { isSubscriber, isModerator, userBadges } = data;
 
     let badgesHTML = [
         isSubscriber && '<span class="badge sub"><i class="fa-solid fa-star"></i></span>',
         isModerator && '<span class="badge mod"><i class="fa-solid fa-user-gear"></i></span>',
-    ].filter(Boolean).join('');
+    ];
     
+    const badgesLevelEight = [
+        { min: 1,  max: 4,  url: 'https://p16-webcast.tiktokcdn.com/webcast-va/grade_badge_icon_lite_lv1_v1.png~tplv-obj.image' },
+        { min: 5,  max: 9,  url: 'https://p16-webcast.tiktokcdn.com/webcast-va/grade_badge_icon_lite_lv5_v1.png~tplv-obj.image' },
+        { min: 10, max: 14, url: 'https://p16-webcast.tiktokcdn.com/webcast-va/grade_badge_icon_lite_lv10_v1.png~tplv-obj.image' },
+        { min: 15, max: 19, url: 'https://p16-webcast.tiktokcdn.com/webcast-va/grade_badge_icon_lite_lv15_v2.png~tplv-obj.image' },
+        { min: 20, max: 24, url: 'https://p16-webcast.tiktokcdn.com/webcast-va/grade_badge_icon_lite_lv20_v1.png~tplv-obj.image' },
+        { min: 25, max: 29, url: 'https://p16-webcast.tiktokcdn.com/webcast-va/grade_badge_icon_lite_lv25_v1.png~tplv-obj.image' },
+        { min: 30, max: 500, url: 'https://p16-webcast.tiktokcdn.com/webcast-va/grade_badge_icon_lite_lv30_v1.png~tplv-obj.image' },
+    ];
+
+    const badgesLevelTen = [
+        { min: 1,  max: 9,  url: 'https://p16-webcast.tiktokcdn.com/webcast-va/fans_badge_icon_lv1_v4.png~tplv-obj.image' },
+        { min: 10, max: 19,  url: 'https://p16-webcast.tiktokcdn.com/webcast-va/fans_badge_icon_lv10_v4.png~tplv-obj.image' },
+        { min: 20, max: 29, url: 'https://p16-webcast.tiktokcdn.com/webcast-va/fans_badge_icon_lv20_v4.png~tplv-obj.image' },
+        { min: 30, max: 39, url: 'https://p16-webcast.tiktokcdn.com/webcast-va/fans_badge_icon_lv30_v4.png~tplv-obj.image' },
+        { min: 40, max: 49, url: 'https://p16-webcast.tiktokcdn.com/webcast-va/fans_badge_icon_lv40_v4.png~tplv-obj.image' },
+        { min: 50, max: 500, url: 'https://p16-webcast.tiktokcdn.com/webcast-va/fans_badge_icon_lv50_v4.png~tplv-obj.image' },
+    ];
+
+    if (userBadges.length > 0) {
+        userBadges.forEach(badge => {
+            // Top Gifter Badges
+            if (badge.badgeSceneType === 6) {
+                badgesHTML.push(
+                    `<span class="badge top-gifter">
+                        <img src="${badge.url}" alt="${badge.displayType}">
+                        <em>No. ${badge.displayType}</em>
+                    </span>`
+                );
+            }
+
+            // Scene Eight - Grade Badges
+            if (badge.badgeSceneType === 8) {
+                const match = badgesLevelEight.find(lv => badge.level >= lv.min && badge.level <= lv.max);
+                if (match) {
+                    badgesHTML.push(
+                        `<span class="badge sceneEight">
+                            <img src="${match.url}" alt="Level ${badge.level}">
+                            <em> ${badge.level}</em>
+                        </span>`
+                    );
+                }
+            }
+
+            // Scene Ten - Fan Badges
+            if (badge.badgeSceneType === 10) {
+                const match = badgesLevelTen.find(lv => badge.level >= lv.min && badge.level <= lv.max);
+                if (match) {
+                    badgesHTML.push(
+                        `<span class="badge sceneTen">
+                            <img src="${match.url}" alt="Level ${badge.level}">
+                        </span>`
+                    );
+                }
+            }
+        });
+    }
+
+    badgesHTML = badgesHTML.filter(Boolean).join('');
     return badgesHTML;
 }
+
 
 
 async function tiktokUpdateStatistics(data, type) {

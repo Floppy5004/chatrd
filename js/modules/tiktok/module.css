@@ -45,3 +45,33 @@
     margin: 0 3px 0 1px;
     text-shadow: none;
 }
+
+#chat .item.tiktok span.badge.top-gifter,
+#chat .item.tiktok span.badge.sceneEight,
+#chat .item.tiktok span.badge.sceneTen {
+    width: auto;
+    padding: 3px;
+    border-radius: 3px;
+} 
+
+#chat .item.tiktok span.badge.top-gifter img,
+#chat .item.tiktok span.badge.sceneEight img,
+#chat .item.tiktok span.badge.sceneTen img {
+    margin: 0 3px 0 0;
+    height: 16px;
+}
+
+#chat .item.tiktok span.badge.sceneTen img { margin: 0; }
+
+#chat .item.tiktok span.badge.top-gifter em,
+#chat .item.tiktok span.badge.sceneEight em,
+#chat .item.tiktok span.badge.sceneTen em {
+    display: inline-block;
+    padding: 0 3px 0 0;
+    font-style: normal;
+    font-size: 11px;
+}
+
+#chat .item.tiktok span.badge.top-gifter { background: rgba(254, 44, 85, 0.4); }
+#chat .item.tiktok span.badge.sceneEight { background: rgba(71, 90, 255, 0.5); }
+#chat .item.tiktok span.badge.sceneTen { background: rgba(255, 94, 58, 0.5); }
