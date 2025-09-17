@@ -491,7 +491,7 @@ async function tiktokGiftMessage(data) {
     value.innerHTML = `
         <div class="gift-info">
             <span class="gift-image"><img src="${data.giftPictureUrl}" alt="${data.giftName}"></span>
-            <span class="gift-value">🪙 ${coins}</span>
+            <span class="gift-value"><img src="js/modules/tiktok/images/icon-tiktokcoin.svg" alt="Coins"> ${coins}</span>
         </div>
     `;
 

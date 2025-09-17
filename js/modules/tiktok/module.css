@@ -102,7 +102,7 @@
 
 #chat .event.tiktok.gift .value span.gift-value img {
     width: 16px;
-    margin-top: -1px;
+    transform: translateY(2px);
 }
 
 #chat .event.tiktok.gift .info {
