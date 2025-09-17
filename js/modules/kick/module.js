@@ -8,6 +8,7 @@ const kickUserName                  = getURLParam("kickUserName", "vortisrd");
 
 const showKickMessages              = getURLParam("showKickMessages", true);
 const showKickFollows               = getURLParam("showKickFollows", true);
+const showKickKicks                 = getURLParam("showKickKicks", true);
 const showKickSubs                  = getURLParam("showKickSubs", true);
 const showKickGiftedSubs            = getURLParam("showKickGiftedSubs", true);
 const showKickMassGiftedSubs        = getURLParam("showKickMassGiftedSubs", true);
@@ -33,7 +34,6 @@ const kickMessageHandlers = {
     /*'Kick.ChatMessage': (response) => {\
         kickChatMessage(response.data);
     },*/
-
     'Kick.Follow': (response) => {
         kickFollowMessage(response.data);
     },
@@ -94,6 +94,7 @@ async function kickConnection() {
             console.debug(`[Kick] User info for ${kickUserName}!`, kickUserInfo);
 
             const kickChatRoomId = kickUserInfo.chatroom.id;
+            const kickChannelId = kickUserInfo.chatroom.channel_id;
 
             if (!kickChatRoomId) {
                 console.error(`[Kick] Could not find chatroom id for ${kickUserName}!`);
@@ -155,7 +156,8 @@ async function kickConnection() {
                         `chatroom_${kickChatRoomId}`,
                         `chatrooms.${kickChatRoomId}`,
                         `chatrooms.${kickChatRoomId}.v2`,
-                        `predictions-channel-${kickChatRoomId}`
+                        `predictions-channel-${kickChatRoomId}`,
+                        `channel_${kickChannelId}`
                     ];
 
                     channels.forEach(channel => {
@@ -182,6 +184,7 @@ async function kickConnection() {
                     case 'MessageDeletedEvent': kickChatMessageDeleted(kickData); break;
                     case 'UserBannedEvent': kickUserBanned(kickData); break;
                     case 'ChatroomClearEvent': kickChatClearMessages(); break;
+                    case 'KicksGifted': kickKicksGiftedMessage(kickData); break;
                 }
             };
 
@@ -350,6 +353,49 @@ async function kickFollowMessage(data) {
 
     addEventItem('kick', clone, classes, userId, messageId);
 }
+
+
+
+async function kickKicksGiftedMessage(data) {
+
+    if (showKickKicks == false) return;
+
+    const template = eventTemplate;
+	const clone = template.content.cloneNode(true);
+    const messageId = createRandomString(40);
+    const userId = data.sender.username.toLowerCase();
+
+    const {
+        header,
+        platform,
+        user,
+        action,
+        value,
+        'actual-message': message
+    } = Object.fromEntries(
+        [...clone.querySelectorAll('[class]')]
+            .map(el => [el.className, el])
+    );
+
+    const classes = ['kick', 'kicksgifted'];
+
+    header.remove();
+
+    var kicksGiftId = data.gift.gift_id.replace('_', '-');
+    var kicksGiftImage = `<img src="https://files.kick.com/kicks/gifts/${kicksGiftId}.webp" alt="${data.gift.name}">`;
+    
+    user.innerHTML = `<strong>${data.sender.username}</strong>`;
+    action.innerHTML = ` sent a ${kicksGiftImage} <strong>${data.gift.name}</strong> `;
+
+    var kicksGift = data.gift.amount > 1 ? 'Kicks' : 'Kick';
+    value.innerHTML = `(<img class="icon" src="js/modules/kick/images/icon-kicks.svg" alt="${kicksGift}"> ${data.gift.amount})`;
+
+    if (!data.message) { message.innerHTML = data.message; }
+    else { message.remove(); }
+
+    addEventItem('kick', clone, classes, userId, messageId);
+}
+
 
 
 

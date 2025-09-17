@@ -25,3 +25,11 @@
     order: 4;
     background: #48d415;
 }
+
+#chat .event.kick.kicksgifted img:not(.icon) {
+    filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.5));
+}
+
+#chat .event.kick.kicksgifted img.icon {
+    width: 18px;
+}

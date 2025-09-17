@@ -1,9 +1,9 @@
 #chat .event.tiktok .message {
-    background: rgba(255,0,80,0.75);
+    background: rgba(254,40,88,0.75);
 }
 
 #chat .item.tiktok .platform .hidden-platform {
-    background: rgba(255,0,80,1);
+    background: rgba(254,40,88,1);
 }
 
 #chat .item.tiktok span.badge {
@@ -29,7 +29,7 @@
 
 #statistics .platform#tiktok {
     order: 3;
-    background: #ff0050;
+    background: #fe2858;
 }
 
 #chat .event.tiktok.join .message {
