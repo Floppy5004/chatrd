@@ -775,21 +775,3 @@ async function getKickBadges(badges) {
 
     return badgesArray.join(' ');
 }
-
-kickKicksGiftedMessage({
-    "message": "what uuup nutty!",
-    "sender": {
-        "id": 37920167,
-        "username": "elvischus",
-        "username_color": "#93EBE0"
-    },
-    "gift": {
-        "gift_id": "rage_quit",
-        "name": "Rage Quit",
-        "amount": 500,
-        "type": "LEVEL_UP",
-        "tier": "MID",
-        "character_limit": 150,
-        "pinned_time": 600000000000
-    }
-});
