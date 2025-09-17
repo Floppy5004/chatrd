@@ -26,10 +26,35 @@
     background: #48d415;
 }
 
-#chat .event.kick.kicksgifted img:not(.icon) {
+#chat .event.kick.kicksgifted .value .gift-info {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#chat .event.kick.kicksgifted .value span.gift-image,
+#chat .event.kick.kicksgifted .value span.gift-value {
+    display: inline-block;
+}
+
+#chat .event.kick.kicksgifted .value span.gift-image img {
+    width: 48px;
+    height: auto;
     filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.5));
 }
 
-#chat .event.kick.kicksgifted img.icon {
-    width: 18px;
+#chat .event.kick.kicksgifted .value span.gift-value {
+    background: rgba(0,0,0,0.2);
+    padding: 3px 9px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+#chat .event.kick.kicksgifted .value span.gift-value img {
+    width: 16px;
+    margin-top: -1px;
+}
+
+#chat .event.kick.kicksgifted .info {
+    margin: -5px 0 -5px 0;
 }

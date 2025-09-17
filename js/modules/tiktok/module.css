@@ -75,3 +75,36 @@
 #chat .item.tiktok span.badge.top-gifter { background: rgba(254, 44, 85, 0.4); }
 #chat .item.tiktok span.badge.sceneEight { background: rgba(71, 90, 255, 0.5); }
 #chat .item.tiktok span.badge.sceneTen { background: rgba(255, 94, 58, 0.5); }
+
+#chat .event.tiktok.gift .value .gift-info {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#chat .event.tiktok.gift .value span.gift-image,
+#chat .event.tiktok.gift .value span.gift-value {
+    display: inline-block;
+}
+
+#chat .event.tiktok.gift .value span.gift-image img {
+    width: 48px;
+    height: auto;
+    filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.5));
+}
+
+#chat .event.tiktok.gift .value span.gift-value {
+    background: rgba(0,0,0,0.2);
+    padding: 3px 9px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+#chat .event.tiktok.gift .value span.gift-value img {
+    width: 16px;
+    margin-top: -1px;
+}
+
+#chat .event.tiktok.gift .info {
+    margin: -5px 0 -5px 0;
+}

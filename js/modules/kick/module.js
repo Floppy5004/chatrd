@@ -382,16 +382,21 @@ async function kickKicksGiftedMessage(data) {
     header.remove();
 
     var kicksGiftId = data.gift.gift_id.replace('_', '-');
-    var kicksGiftImage = `<img src="https://files.kick.com/kicks/gifts/${kicksGiftId}.webp" alt="${data.gift.name}">`;
+    var kicksGiftImage = `<img class="gift-image" src="https://files.kick.com/kicks/gifts/${kicksGiftId}.webp" alt="${data.gift.name}">`;
     
     user.innerHTML = `<strong>${data.sender.username}</strong>`;
-    action.innerHTML = ` sent a ${kicksGiftImage} <strong>${data.gift.name}</strong> `;
+    action.innerHTML = ` sent a <strong>${data.gift.name}</strong> `;
 
     var kicksGift = data.gift.amount > 1 ? 'Kicks' : 'Kick';
-    value.innerHTML = `(<img class="icon" src="js/modules/kick/images/icon-kicks.svg" alt="${kicksGift}"> ${data.gift.amount})`;
+    value.innerHTML = `
+        <div class="gift-info">
+            <span class="gift-image">${kicksGiftImage}</span>
+            <span class="gift-value"><img src="js/modules/kick/images/icon-kicksgift.svg" alt="${kicksGift}"> ${data.gift.amount}</span>
+        </div>
+    `;
 
-    if (!data.message) { message.innerHTML = data.message; }
-    else { message.remove(); }
+    if (!data.message) { message.remove(); }
+    else { message.innerHTML = data.message; }
 
     addEventItem('kick', clone, classes, userId, messageId);
 }
@@ -770,3 +775,21 @@ async function getKickBadges(badges) {
 
     return badgesArray.join(' ');
 }
+
+kickKicksGiftedMessage({
+    "message": "what uuup nutty!",
+    "sender": {
+        "id": 37920167,
+        "username": "elvischus",
+        "username_color": "#93EBE0"
+    },
+    "gift": {
+        "gift_id": "rage_quit",
+        "name": "Rage Quit",
+        "amount": 500,
+        "type": "LEVEL_UP",
+        "tier": "MID",
+        "character_limit": 150,
+        "pinned_time": 600000000000
+    }
+});

@@ -485,10 +485,15 @@ async function tiktokGiftMessage(data) {
     header.remove();
 
     var coins = Math.floor(data.repeatCount*data.diamondCount);
-    
+
     user.innerHTML = `<strong>${data.nickname}</strong>`;
-    action.innerHTML = ` gifted you `;
-    value.innerHTML = `<strong>x${data.repeatCount} ${data.giftName}</strong> <img src="${data.giftPictureUrl}"> <strong>(🪙 ${coins})</strong>`;
+    action.innerHTML = ` gifted you <strong>${data.repeatCount} ${data.giftName}</strong>`;
+    value.innerHTML = `
+        <div class="gift-info">
+            <span class="gift-image"><img src="${data.giftPictureUrl}" alt="${data.giftName}"></span>
+            <span class="gift-value">🪙 ${coins}</span>
+        </div>
+    `;
 
     message.remove();
 
@@ -612,3 +617,83 @@ async function tiktokUpdateStatistics(data, type) {
     }
     
 }
+
+
+tiktokGiftMessage({
+    "giftId": 5879,
+    "repeatCount": 1,
+    "repeatEnd": true,
+    "groupId": "1758130388614",
+    "userIdentity": {
+        "isGiftGiverOfAnchor": true,
+        "isMutualFollowingWithAnchor": true,
+        "isFollowerOfAnchor": true
+    },
+    "userId": "197295433273012224",
+    "secUid": "MS4wLjABAAAArJwInBpgRtBEiXkMCbXHf3uOLhSIM1xck_PDwgvU-g8dOPWMbDkzZCIm6kny5fKY",
+    "uniqueId": "stockasf_ss",
+    "nickname": "Stockasf_SS",
+    "profilePictureUrl": "https://p16-sign.tiktokcdn-us.com/tos-useast5-avt-0068-tx/54c0fd89e33db8c22795d67a1363f874~tplv-tiktokx-cropcenter:100:100.webp?dr=9640&refresh_token=04fbc134&x-expires=1758301200&x-signature=yL2A1KR2GeaT3VZFEgQucrx2HWA%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=useast5",
+    "followRole": 0,
+    "userBadges": [
+        {
+            "type": "image",
+            "badgeSceneType": 6,
+            "displayType": 1,
+            "url": "https://p19-webcast.tiktokcdn.com/webcast-sg/new_top_gifter_version_2.png~tplv-obj.image"
+        },
+        {
+            "type": "privilege",
+            "privilegeId": "7138381747292477220",
+            "level": 11,
+            "badgeSceneType": 8
+        }
+    ],
+    "userSceneTypes": [
+        6,
+        8,
+        6
+    ],
+    "userDetails": {
+        "createTime": "0",
+        "bioDescription": "",
+        "profilePictureUrls": [
+            "https://p16-sign.tiktokcdn-us.com/tos-useast5-avt-0068-tx/54c0fd89e33db8c22795d67a1363f874~tplv-tiktokx-cropcenter:100:100.webp?dr=9640&refresh_token=04fbc134&x-expires=1758301200&x-signature=yL2A1KR2GeaT3VZFEgQucrx2HWA%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=useast5",
+            "https://p19-sign.tiktokcdn-us.com/tos-useast5-avt-0068-tx/54c0fd89e33db8c22795d67a1363f874~tplv-tiktokx-cropcenter:100:100.webp?dr=9640&refresh_token=83b64102&x-expires=1758301200&x-signature=RQyrE4jbm8XpK29mUImTkuYS7UU%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=useast5",
+            "https://p16-sign.tiktokcdn-us.com/tos-useast5-avt-0068-tx/54c0fd89e33db8c22795d67a1363f874~tplv-tiktokx-cropcenter:100:100.jpeg?dr=9640&refresh_token=da5a1a36&x-expires=1758301200&x-signature=UYysM1eKmpgIk2Zql%2BiOZL97Rxs%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=fdd36af4&idc=useast5"
+        ]
+    },
+    "followInfo": {
+        "followingCount": 422,
+        "followerCount": 247,
+        "followStatus": 0,
+        "pushStatus": 0
+    },
+    "isModerator": false,
+    "isNewGifter": false,
+    "isSubscriber": false,
+    "topGifterRank": 3,
+    "gifterLevel": 11,
+    "teamMemberLevel": 0,
+    "msgId": "7551112414000024375",
+    "createTime": "1758130392170",
+    "displayType": "webcast_aweme_gift_send_messageNew",
+    "label": "{0:user} sent {1:gift} × {2:string}",
+    "gift": {
+        "gift_id": 5879,
+        "repeat_count": 1,
+        "repeat_end": 1,
+        "gift_type": 1
+    },
+    "describe": "sent Doughnut",
+    "giftType": 1,
+    "diamondCount": 30,
+    "giftName": "Doughnut",
+    "giftPictureUrl": "https://p19-webcast.tiktokcdn.com/img/maliva/webcast-va/4e7ad6bdf0a1d860c538f38026d4e812~tplv-obj.png",
+    "timestamp": 1758130392170,
+    "receiverUserId": "6721278583930110981",
+    "originalName": "Doughnut",
+    "originalDescribe": "Sent Doughnut",
+    "tikfinityUserId": 732299,
+    "tikfinityUsername": "increased.backup"
+});
