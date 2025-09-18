@@ -54,36 +54,41 @@
 }
 
 
-#chat .event.twitch.bits .value .gift-info {
+#chat .event.twitch .value .gift-info {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-#chat .event.twitch.bits .value span.gift-image,
-#chat .event.twitch.bits .value span.gift-value {
+#chat .event.twitch .value span.gift-image,
+#chat .event.twitch .value span.gift-value {
     display: inline-block;
 }
 
-#chat .event.twitch.bits .value span.gift-image img {
+#chat .event.twitch .value span.gift-image img {
     width: 48px;
     height: auto;
     filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.5));
 }
 
-#chat .event.twitch.bits .value span.gift-value {
+#chat .event.twitch .value span.gift-value {
     background: rgba(0,0,0,0.2);
     padding: 3px 9px;
     border-radius: 5px;
     font-size: 14px;
 }
 
-#chat .event.twitch.bits .value span.gift-value img {
+#chat .event.twitch .value span.gift-value img {
     width: 16px;
     height: auto;
     margin-top: -1px;
 }
 
-#chat .event.twitch.bits .info {
+#chat .event.twitch.bits .info,
+#chat .event.twitch.reward .info {
     margin: -5px 0 -5px 0;
+}
+
+#chat .event.twitch.reward .value .gift-info {
+    gap: 10px;
 }

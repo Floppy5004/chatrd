@@ -46,7 +46,12 @@ const twitchMessageHandlers = {
         twitchBitsMessage(response.data);
     },
     'Twitch.AutomaticRewardRedemption': (response) => {
-        twitchChatMessageGiantEmote(response.data);
+        if (response.data.reward_type === "gigantify_an_emote") {
+            twitchChatMessageGiantEmote(response.data);
+        }
+        else {
+            twitchAutomaticRewardRedemption(response.data);
+        }
     },
     'Twitch.RewardRedemption': (response) => {
         twitchRewardRedemption(response.data);
@@ -356,10 +361,82 @@ async function twitchRewardRedemption(data) {
     user.innerHTML = `<strong>${data.user_name}</strong>`;
     action.innerHTML = ` redeemed `;
     value.innerHTML = `<strong>${data.reward.title}</strong> (${data.reward.cost})`;
+
+    value.innerHTML = `
+        <div class="gift-info">
+            <span class="gift-image"><strong>${data.reward.title}</strong></span>
+            <span class="gift-value"><img src="js/modules/twitch/images/icon-channel-points.svg" alt="Channel Points"> ${data.reward.cost}</span>
+        </div>
+    `;
     
-    var userInput = data.user_input ? `- ${data.user_input}` : '';
+    var userInput = data.user_input ? `${data.user_input}` : '';
     message.innerHTML = `${userInput}`;
 
+    addEventItem('twitch', clone, classes, userId, messageId);
+}
+
+
+
+async function twitchAutomaticRewardRedemption(data) {
+
+    if (showTwitchRewardRedemptions == false) return;
+
+    const template = eventTemplate;
+	const clone = template.content.cloneNode(true);
+    const messageId = createRandomString(40);
+    const userId = data.user_login.toLowerCase();
+
+    const {
+        header,
+        platform,
+        user,
+        action,
+        value,
+        'actual-message': message
+    } = Object.fromEntries(
+        [...clone.querySelectorAll('[class]')]
+            .map(el => [el.className, el])
+    );
+
+    const classes = ['twitch', 'reward'];
+
+    header.remove();
+
+    let title;
+
+    switch (data.reward_type) {
+        case "send_highlighted_message" :
+            title = "Highlight My Message";
+        break;
+
+        case "chosen_sub_emote_unlock" :
+            title = "Unlock an Emote for 24 hours";
+        break;
+
+        case "chosen_sub_emote_unlock" :
+            title = "Unlock a Random Sub Emote";
+        break;
+
+        case "chosen_modified_sub_emote_unlock" :
+            title = "Modify a Single Emote";
+        break;
+
+    }
+    
+    user.innerHTML = `<strong>${data.user_name}</strong>`;
+    action.innerHTML = ` redeemed `;
+
+    value.innerHTML = `
+        <div class="gift-info">
+            <span class="gift-image"><strong>${title}</strong></span>
+            <span class="gift-value"><img src="js/modules/twitch/images/icon-channel-points.svg" alt="Channel Points"> ${data.cost}</span>
+        </div>
+    `;
+    
+    /*var userInput = data.user_input ? `${data.user_input}` : '';
+    message.textContent = `${userInput}`;*/
+    message.remove();
+    
     addEventItem('twitch', clone, classes, userId, messageId);
 }
 
@@ -403,7 +480,6 @@ async function twitchBitsMessage(data) {
             <span class="gift-image"><strong>${data.message.bits} ${bits}</strong></span>
             <span class="gift-value"><img src="https://d3aqoihi2n8ty8.cloudfront.net/actions/cheer/dark/animated/${match.gifId}/4.gif" alt="${data.message.bits} ${bits}"></span>
         </div>
-        
     `;
 
     data.message.message = data.message.message.replace(/\bCheer\d+\b/g, '').replace(/\s+/g, ' ').trim();
