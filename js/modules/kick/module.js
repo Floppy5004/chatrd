@@ -396,7 +396,10 @@ async function kickKicksGiftedMessage(data) {
     `;
 
     if (!data.message) { message.remove(); }
-    else { message.innerHTML = data.message; }
+    else {
+        var kicksMessage = await getKickEmotes(data.message);
+        message.innerHTML = kicksMessage;
+    }
 
     addEventItem('kick', clone, classes, userId, messageId);
 }
@@ -775,3 +778,4 @@ async function getKickBadges(badges) {
 
     return badgesArray.join(' ');
 }
+

@@ -179,9 +179,9 @@ async function tiktokChatMessage(data) {
     if (data.isModerator) classes.push('mod');
     if (data.isSubscriber) classes.push('sub');
 
-    const [avatarImage, messageHTML, badgesHTML] = await Promise.all([
+    const [avatarImage,  badgesHTML] = await Promise.all([
         getTikTokAvatar(data),
-        getTikTokEmotes(data),
+        
         getTikTokBadges(data),
     ]);
 
@@ -204,7 +204,9 @@ async function tiktokChatMessage(data) {
 
     user.style.color = color;
     user.innerHTML = `<strong>${data.nickname}</strong>`;
-    message.innerHTML = messageHTML;
+    
+    message.textContent = data.comment;
+    await getTikTokEmotes(data, message),
 
     addMessageItem('tiktok', clone, classes, userId, messageId);
 }
@@ -502,24 +504,53 @@ async function tiktokGiftMessage(data) {
 
 
 
-async function getTikTokEmotes(data) {
+async function getTikTokEmotes(data, messageElement) {
     const {
         comment: message,
         emotes,
     } = data;
 
-    var fullmessage = message;
+    // Limpa o elemento de destino
+    messageElement.innerHTML = '';
 
-    if (emotes.length > 0) {
-        emotes.forEach(emote => {
-            var emotetoadd = ` <img src="${emote.emoteImageUrl}" class="emote" data-emote-id="${emote.emoteId}"> `;
-            var position = emote.placeInComment;
-            fullmessage = [fullmessage.slice(0, position), emotetoadd, fullmessage.slice(position)].join('');
-        });
+    if (!emotes || emotes.length === 0) {
+        // Sem emotes → só texto normal
+        messageElement.appendChild(document.createTextNode(message));
+        return;
     }
 
-    return fullmessage;
+    // Ordena os emotes pelo índice para garantir ordem correta
+    const sorted = [...emotes].sort((a, b) => a.placeInComment - b.placeInComment);
+
+    let lastIndex = 0;
+
+    for (const emote of sorted) {
+        const position = emote.placeInComment;
+
+        // adiciona texto antes do emote, se houver
+        if (lastIndex < position) {
+            const text = message.slice(lastIndex, position);
+            messageElement.appendChild(document.createTextNode(text));
+        }
+
+        // adiciona o emote
+        const img = document.createElement('img');
+        img.src = emote.emoteImageUrl;
+        img.className = 'emote';
+        img.dataset.emoteId = emote.emoteId;
+        img.onerror = () => (img.outerHTML = emote.emoteId); // fallback
+        messageElement.appendChild(img);
+
+        lastIndex = position + 1; // avança
+    }
+
+    // texto final depois do último emote
+    if (lastIndex < message.length) {
+        const text = message.slice(lastIndex);
+        messageElement.appendChild(document.createTextNode(text));
+    }
 }
+
 
 
 async function getTikTokAvatar(data) {

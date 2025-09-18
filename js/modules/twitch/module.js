@@ -21,6 +21,15 @@ const showTwitchViewers             = getURLParam("showTwitchViewers", true);
 const twitchAvatars = new Map();
 const twitchPronouns = new Map();
 
+const bitsGifAnimations = [
+    { min: 1, max: 99, gifId: 1 },
+    { min: 100, max: 999, gifId: 100 },
+    { min: 1000, max: 4999, gifId: 1000 },
+    { min: 5000, max: 9999, gifId: 5000 },
+    { min: 10000, max: 99999, gifId: 10000 },
+    { min: 100000, max: 1000000000000000, gifId: 100000 },
+];
+
 // TWITCH EVENTS HANDLERS
 
 const twitchMessageHandlers = {
@@ -130,9 +139,8 @@ async function twitchChatMessage(data) {
 
     const classes = ['twitch', 'chat'];
 
-    const [avatarImage, fullmessage, badgeList] = await Promise.all([
+    const [avatarImage, badgeList] = await Promise.all([
         getTwitchAvatar(data.message.username),
-        getTwitchEmotes(data),
         getTwitchBadges(data)
     ]);
 
@@ -140,7 +148,9 @@ async function twitchChatMessage(data) {
 
     user.style.color = data.message.color;
     user.innerHTML = `<strong>${data.message.displayName}</strong>`;
-    message.innerHTML = fullmessage;
+
+    message.textContent = data.message.message;
+    await getTwitchEmotes(data, message);
 
     if (data.message.isMe) {
         message.style.color = data.message.color;
@@ -161,7 +171,8 @@ async function twitchChatMessage(data) {
 
     if (data.message.isReply) {
         classes.push('reply');
-        reply.insertAdjacentHTML('beforeend', ` <strong>${data.message.reply.userName}:</strong> ${data.message.reply.msgBody}`);
+        reply.textContent = data.message.reply.msgBody;
+        reply.insertAdjacentHTML('afterbegin', ` <strong>${data.message.reply.userName}:</strong> `);
     }
     else { reply.remove(); }
 
@@ -296,8 +307,7 @@ async function twitchAnnouncementMessage(data) {
     pronoun.remove();
     reply.remove();
 
-    const [fullmessage, badgeList] = await Promise.all([
-        getTwitchEmotesOnParts(data),
+    const [badgeList] = await Promise.all([
         getTwitchAnnouncementBadges(data)
     ]);
 
@@ -305,7 +315,10 @@ async function twitchAnnouncementMessage(data) {
 
     user.style.color = data.user.color;
     user.innerHTML = `<strong>${data.user.name}</strong>`;
-    message.innerHTML = fullmessage;
+
+    
+    message.textContent = data.text;
+    await getTwitchEmotesOnParts(data, message);
 
     if (showBadges) badges.innerHTML = badgeList; else badges.remove();
 
@@ -382,10 +395,20 @@ async function twitchBitsMessage(data) {
     action.innerHTML = ` cheered with `;
 
     var bits = data.message.bits > 1 ? 'bits' : 'bit';
-    value.innerHTML = `<strong>${data.message.bits} ${bits}</strong>`;
 
-    var fullmessage = data.message.message.replace(/\bCheer\d+\b/g, '').replace(/\s+/g, ' ').trim();
-    message.innerHTML = fullmessage;
+    const match = bitsGifAnimations.find(lv => data.message.bits >= lv.min && data.message.bits <= lv.max);
+
+    value.innerHTML = `
+        <div class="gift-info">
+            <span class="gift-image"><strong>${data.message.bits} ${bits}</strong></span>
+            <span class="gift-value"><img src="https://d3aqoihi2n8ty8.cloudfront.net/actions/cheer/dark/animated/${match.gifId}/4.gif" alt="${data.message.bits} ${bits}"></span>
+        </div>
+        
+    `;
+
+    data.message.message = data.message.message.replace(/\bCheer\d+\b/g, '').replace(/\s+/g, ' ').trim();
+    message.textContent = data.message.message;
+    await getTwitchEmotes(data, message);
 
     addEventItem('twitch', clone, classes, userId, messageId);
 }
@@ -455,13 +478,8 @@ async function twitchReSubMessage(data) {
     );
 
     const classes = ['twitch', 'resub'];
-
-    const [fullmessage] = await Promise.all([
-        getTwitchEmotesOnParts(data)
-    ]);
-
+    
     header.remove();
-
     
     user.innerHTML = `<strong>${data.user.name}</strong>`;
 
@@ -472,7 +490,8 @@ async function twitchReSubMessage(data) {
     
     value.innerHTML = `<strong>${data.cumulativeMonths} ${months} (${tier})</strong>`;
 
-    message.innerHTML = fullmessage;
+    message.textContent = data.text;
+    await getTwitchEmotesOnParts(data, message);
 
     addEventItem('twitch', clone, classes, userId, messageId);
 }
@@ -686,91 +705,117 @@ async function getTwitchBadges(data) {
 
 
 
-async function getTwitchEmotes(data) {
+async function getTwitchEmotes(data, messageElement) {
     const message = data.message.message;
-    const emotes = (data.emotes || []).sort((a, b) => b.startIndex - a.startIndex);
+    const emotes = (data.emotes || []).sort((a, b) => a.startIndex - b.startIndex);
 
-    const words = message.split(" ").map(word => {
-        const emote = emotes.find(e => e.name === word);
-        if (!emote) return word;
+    // Limpa o conteúdo (vamos recriar com nodes)
+    messageElement.innerHTML = "";
+
+    let lastIndex = 0;
+
+    for (const emote of emotes) {
+        // texto antes do emote
+        if (lastIndex < emote.startIndex) {
+            const text = message.slice(lastIndex, emote.startIndex);
+            messageElement.appendChild(document.createTextNode(text));
+        }
+
+        let emoteUrl = emote.imageUrl;
 
         // Detecta Twemoji
         const isTwemoji =
             String(emote.type || "").toLowerCase() === "twemoji" ||
             /(twemoji|jdecked)/i.test(emote.imageUrl || "");
 
-        let emoteUrl = emote.imageUrl;
+        if (isTwemoji) {
+            const codePoints = Array.from(emote.name).map(c => c.codePointAt(0).toString(16));
+            let fileName = codePoints.join("-");
+            fileName = fileName.replace(/-fe0f/g, ""); // remove FE0F
+            emoteUrl = `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/${fileName}.png`;
+        }
+
+        if (!emoteUrl || emoteUrl.trim() === "") {
+            messageElement.appendChild(document.createTextNode(emote.name));
+        }
+        else {
+            const img = document.createElement("img");
+            img.src = emoteUrl;
+            img.alt = emote.name;
+            img.className = "emote";
+            img.dataset.emoteId = emote.id || "";
+            img.onerror = () => (img.outerHTML = emote.name);
+            messageElement.appendChild(img);
+        }
+
+        lastIndex = emote.endIndex + 1;
+    }
+
+    // texto final depois do último emote
+    if (lastIndex < message.length) {
+        const text = message.slice(lastIndex);
+        messageElement.appendChild(document.createTextNode(text));
+    }
+}
+
+
+
+
+
+async function getTwitchEmotesOnParts(data, messageElement) {
+    // Limpa o conteúdo atual do elemento
+    messageElement.innerHTML = "";
+
+    // Texto completo da mensagem
+    let messageText = data.text;
+    let cursor = 0; // índice atual no texto
+
+    for (const part of data.parts) {
+        // Se parte não é emote, apenas insere texto cru
+        if (part.type !== 'emote') {
+            // adiciona texto
+            messageElement.appendChild(document.createTextNode(part.text));
+            cursor += part.text.length;
+            continue;
+        }
+
+        // Parte é emote
+        const emoteName = part.text;
+        let emoteUrl = part.imageUrl;
+
+        // Detecta Twemoji
+        const isTwemoji =
+            String(part.emoteType || part.type).toLowerCase() === 'twemoji' ||
+            /(twemoji|jdecked)/i.test(emoteUrl || '');
 
         if (isTwemoji) {
-            // Monta URL correta pro Twemoji
-            const codePoints = Array.from(emote.name).map(c => c.codePointAt(0).toString(16));
+            const codePoints = Array.from(emoteName).map(c => c.codePointAt(0).toString(16));
             let fileName = codePoints.join('-');
             fileName = fileName.replace(/-fe0f/g, ''); // remove FE0F
             emoteUrl = `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/${fileName}.png`;
         }
 
-        // Se ainda não tiver URL, usa o texto
-        if (!emoteUrl || emoteUrl.trim() === "") {
-            return emote.name;
+        // Se não houver URL válida, só mostra o nome do emote
+        if (!emoteUrl || emoteUrl.trim() === '') {
+            messageElement.appendChild(document.createTextNode(emoteName));
+            cursor += emoteName.length;
+            continue;
         }
 
-        // Retorna <img> com fallback automático para texto se der erro
-        return `<img src="${emoteUrl}" 
-                     data-emote-id="${emote.id || ""}" 
-                     alt="${emote.name}" 
-                     class="emote"
-                     onerror="this.outerHTML='${emote.name}'">`;
-    });
+        // Cria o <img> do emote
+        const img = document.createElement('img');
+        img.src = emoteUrl;
+        img.alt = emoteName;
+        img.className = 'emote';
+        img.dataset.emoteId = part.id || '';
+        img.onerror = () => (img.outerHTML = emoteName);
 
-    return words.join(" ");
-}
-
-
-
-async function getTwitchEmotesOnParts(data) {
-    let messageText = data.text;
-
-    for (const part of data.parts) {
-        if (part.type === 'emote') {
-            const emoteName = part.text;
-            let emoteUrl = part.imageUrl;
-
-            // Detecta Twemoji
-            const isTwemoji =
-                String(part.emoteType || part.type).toLowerCase() === 'twemoji' ||
-                /(twemoji|jdecked)/i.test(emoteUrl || '');
-
-            if (isTwemoji) {
-                // Monta URL correta a partir do codepoint
-                const codePoints = Array.from(emoteName).map(c => c.codePointAt(0).toString(16));
-                let fileName = codePoints.join('-');
-                fileName = fileName.replace(/-fe0f/g, ''); // remove FE0F
-                emoteUrl = `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/${fileName}.png`;
-            }
-
-            // Se não tiver URL válida, pula
-            if (!emoteUrl || emoteUrl.trim() === '') continue;
-
-            // HTML do emote — NOTA: escapamos aspas no ALT
-            const safeAlt = emoteName.replace(/"/g, '&quot;');
-            const emoteHTML = `<img src="${emoteUrl}" class="emote" alt="${safeAlt}" onerror="this.outerHTML='${safeAlt}'">`;
-
-            // Regex seguro — evita substituir dentro de tags HTML
-            const escaped = emoteName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            let pattern;
-            if (/^\w+$/.test(emoteName)) {
-                pattern = `\\b${escaped}\\b`;
-            } else {
-                pattern = `(?<=^|[^\\w])${escaped}(?=$|[^\\w])`;
-            }
-
-            const regex = new RegExp(`(?<!<[^>]*)${pattern}(?![^<]*>)`, 'g');
-            messageText = messageText.replace(regex, emoteHTML);
-        }
+        // Anexa o <img>
+        messageElement.appendChild(img);
+        cursor += emoteName.length;
     }
-
-    return messageText;
 }
+
 
 
 

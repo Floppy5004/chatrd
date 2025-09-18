@@ -120,8 +120,7 @@ async function youTubeChatMessage(data) {
 
     const classes = ['youtube', 'chat'];
 
-    const [fullmessage, badgeList] = await Promise.all([
-        getYouTubeEmotes(data),
+    const [badgeList] = await Promise.all([
         getYouTubeBadges(data)
     ]);
 
@@ -135,7 +134,9 @@ async function youTubeChatMessage(data) {
 
     user.style.color = color;
     user.innerHTML = `<strong>${data.user.name}</strong>`;
-    message.innerHTML = fullmessage;
+    
+    message.textContent = data.message;
+    await getYouTubeEmotes(data, message);
 
     if (showAvatar) avatar.innerHTML = `<img src="${data.user.profileImageUrl}">`; else avatar.remove();
     if (showBadges) badges.innerHTML = badgeList; else badges.remove();
@@ -178,8 +179,8 @@ async function youTubeSuperChatMessage(data) {
     action.innerHTML = ` superchatted `;
     value.innerHTML = `<strong>${data.amount}</strong>`;
 
-    var fullmessage = await getYouTubeEmotes(data);
-    message.innerHTML = fullmessage;
+    message.textContent = data.message;
+    await getYouTubeEmotes(data, message);
 
     addEventItem('youtube', clone, classes, userId, messageId);
 }
@@ -262,8 +263,8 @@ async function youTubeNewSponsorMessage(data) {
     value.innerHTML = `<strong>${data.months || 1} ${months}</strong>`;
 
     if (data.message) {
-        var fullmessage = await getYouTubeEmotes(data);
-        message.innerHTML = fullmessage;
+        message.textContent = data.message;
+        await getYouTubeEmotes(data, message);
     }
     else { message.remove(); }
 
@@ -439,11 +440,12 @@ async function youTubeUpdateStatistics(data) {
 
 
 
-async function getYouTubeEmotes(data) {
+async function getYouTubeEmotes(data, messageElement) {
     let message = data.message;
     const channelId = data.broadcast?.channelId;
-    if (!channelId) return message;
+    if (!channelId) return;
 
+    // carrega os emotes customizados
     if (youTubeCustomEmotes.length == 0) {
         streamerBotClient.getGlobals().then((getglobals) => {
             youTubeCustomEmotes = JSON.parse(JSON.parse(getglobals.variables.chatrdytcustomemotes.value));
@@ -451,7 +453,7 @@ async function getYouTubeEmotes(data) {
         });
     }
 
-    // Load BTTV Emotes if not already loaded
+    // carrega os BTTV emotes se não carregados ainda
     if (youTubeBTTVEmotes.length === 0) {
         try {
             const res = await fetch(`https://api.betterttv.net/3/cached/users/youtube/${channelId}`);
@@ -476,7 +478,7 @@ async function getYouTubeEmotes(data) {
         }
     }
 
-    // Helper: gera URL Twemoji
+    // Helper: Twemoji URL
     function getTwemojiUrl(emoji) {
         const codePoints = Array.from(emoji).map(c => c.codePointAt(0).toString(16));
         let fileName = codePoints.join('-');
@@ -484,89 +486,55 @@ async function getYouTubeEmotes(data) {
         return `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/${fileName}.png`;
     }
 
-    // Create an Emote Map
+    // Limpa o elemento
+    messageElement.innerHTML = '';
+
+    // monta um mapa de emotes (nome → URL)
     const emoteMap = new Map();
 
     // BTTV emotes
     for (const emote of youTubeBTTVEmotes) {
-        const imageUrl = `https://cdn.betterttv.net/emote/${emote.id}/1x`;
-        const emoteElement = `<img src="${imageUrl}" class="emote" alt="${emote.code}">`;
-        emoteMap.set(emote.code, { html: emoteElement, raw: emote.code });
+        emoteMap.set(emote.code, `https://cdn.betterttv.net/emote/${emote.id}/1x`);
     }
 
     // YouTube emotes (Twemoji + normais)
     if (data.emotes) {
         for (const emote of data.emotes) {
             let emoteUrl = emote.imageUrl;
-
             if (String(emote.type || "").toLowerCase() === "twemoji") {
                 emoteUrl = getTwemojiUrl(emote.name);
             }
-
-            if (!emoteUrl || emoteUrl.trim() === '') {
-                continue;
-            }
-
-            const emoteElement = `<img src="${emoteUrl}" class="emote" alt="${emote.name}" onerror="this.outerHTML='${emote.name}'">`;
-            emoteMap.set(emote.name, { html: emoteElement, raw: emote.name });
+            if (!emoteUrl || emoteUrl.trim() === '') continue;
+            emoteMap.set(emote.name, emoteUrl);
         }
     }
 
     // Custom Member Emotes
     if (data.user.isSponsor === true || data.user.isOwner === true) {
         for (const [name, url] of Object.entries(youTubeCustomEmotes)) {
-            const emoteElement = `<img src="${url}" class="emote" alt="${name}">`;
-            emoteMap.set(`:${name}:`, { html: emoteElement, raw: `:${name}:` });
+            emoteMap.set(`:${name}:`, url);
         }
     }
 
-    // DOMParser just to replace the text nodes
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(`<div>${message}</div>`, 'text/html');
-    const container = doc.body.firstChild;
+    // quebra a mensagem por espaços para identificar possíveis emotes
+    const parts = message.split(/(\s+)/); // mantém os espaços
 
-    function escapeRegex(string) {
-        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    }
-
-    function replaceEmotesInText(text) {
-        // Sort them DESC to avoid conflicts with similar names
-        const sorted = Array.from(emoteMap.values()).sort((a, b) => b.raw.length - a.raw.length);
-
-        for (const { raw, html } of sorted) {
-            const escaped = escapeRegex(raw);
-
-            // Emotes with colons: :emote: → allow colons
-            const isDelimited = raw.startsWith(':') && raw.endsWith(':');
-            const regex = isDelimited
-                ? new RegExp(escaped, 'g')
-                : new RegExp(`(?<!\\S)${escaped}(?!\\S)`, 'g');
-
-            text = text.replace(regex, html);
-        }
-
-        return text;
-    }
-
-    function walk(node) {
-        if (node.nodeType === Node.TEXT_NODE) {
-            const replaced = replaceEmotesInText(node.nodeValue);
-            if (replaced !== node.nodeValue) {
-                const span = doc.createElement('span');
-                span.innerHTML = replaced;
-                node.replaceWith(...span.childNodes);
-            }
-        } else if (node.nodeType === Node.ELEMENT_NODE) {
-            for (const child of Array.from(node.childNodes)) {
-                walk(child);
-            }
+    for (const part of parts) {
+        // se for um emote conhecido
+        if (emoteMap.has(part)) {
+            const img = document.createElement('img');
+            img.src = emoteMap.get(part);
+            img.alt = part;
+            img.className = 'emote';
+            img.onerror = () => (img.outerHTML = part);
+            messageElement.appendChild(img);
+        } else {
+            // texto normal
+            messageElement.appendChild(document.createTextNode(part));
         }
     }
-
-    walk(container);
-
-    return container.innerHTML;
 }
+
 
 
 
