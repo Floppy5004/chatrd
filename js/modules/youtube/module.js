@@ -466,11 +466,8 @@ async function getYouTubeEmotes(data, messageElement) {
             if (youTubeBTTVEmotes.length === 0) {
                 console.debug('[YouTube] No BTTV Emotes found. Setting fake data so we avoid fetching the emotes again.');
                 youTubeBTTVEmotes = [
-                    {
-                        code: 'fakeemote',
-                        id: 'fakeemote'
-                    }
-                ];   
+                    { code: 'fakeemote', id: 'fakeemote' }
+                ];
             }
         }
         catch (err) {
@@ -516,11 +513,27 @@ async function getYouTubeEmotes(data, messageElement) {
         }
     }
 
-    // quebra a mensagem por espaços para identificar possíveis emotes
-    const parts = message.split(/(\s+)/); // mantém os espaços
+    // Nova quebra: detecta tokens de emotes/emoji mesmo colados
+    const tokenRegex = /(:[a-zA-Z0-9_\-]+:)|([\p{Emoji_Presentation}\p{Extended_Pictographic}])/gu;
+    let parts = [];
+    let lastIndex = 0;
 
+    for (const match of message.matchAll(tokenRegex)) {
+        // texto antes do emote
+        if (match.index > lastIndex) {
+            parts.push(message.slice(lastIndex, match.index));
+        }
+        // o próprio emote/emoji
+        parts.push(match[0]);
+        lastIndex = match.index + match[0].length;
+    }
+    // resto do texto
+    if (lastIndex < message.length) {
+        parts.push(message.slice(lastIndex));
+    }
+
+    // monta a mensagem final
     for (const part of parts) {
-        // se for um emote conhecido
         if (emoteMap.has(part)) {
             const img = document.createElement('img');
             img.src = emoteMap.get(part);
@@ -529,11 +542,11 @@ async function getYouTubeEmotes(data, messageElement) {
             img.onerror = () => (img.outerHTML = part);
             messageElement.appendChild(img);
         } else {
-            // texto normal
             messageElement.appendChild(document.createTextNode(part));
         }
     }
 }
+
 
 
 
