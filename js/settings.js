@@ -411,7 +411,8 @@ function populateEmoteList() {
             <button class="delete"><i class="fa-solid fa-trash-can"></i></button>
         `;
 
-        span.querySelector(".delete").addEventListener("click", () => {
+        span.querySelector(".delete").addEventListener("click", (event) => {
+            event.preventDefault();
             if (confirm(`Are you sure you want to delete '${emoteName}'?`)) {
                 delete emotes[emoteName];
                 textarea.value = JSON.stringify(JSON.stringify(emotes));
