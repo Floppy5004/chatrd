@@ -564,7 +564,7 @@ async function kickRewardRedemption(data) {
     action.innerHTML = ` redeemed `;
     value.innerHTML = `<strong>${data.reward_title}</strong>`;
     
-    var userInput = data.user_input ? `- ${data.user_input}` : '';
+    var userInput = data.user_input ? `${data.user_input}` : '';
     message.innerHTML = `${userInput}`;
 
     addEventItem('kick', clone, classes, userId, messageId);
