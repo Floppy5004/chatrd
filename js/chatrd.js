@@ -84,6 +84,8 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
     root.style.opacity = '0';
 
     const messageEl = clone.querySelector('.actual-message');
+    let messageClean = DOMPurify.sanitize(messageEl.innerHTML);
+    messageEl.textContent = messageClean;
     getAndReplaceLinks(messageEl);
 
     const platformElement = clone.querySelector('.platform');
@@ -171,6 +173,13 @@ function addEventItem(platform, clone, classes, userid, messageid) {
     root.dataset.user = userid;
     root.id = messageid;
     root.style.opacity = '0';
+
+    const messageEl = clone.querySelector('.actual-message');
+    if (messageEl) {
+        let messageClean = DOMPurify.sanitize(messageEl.innerHTML);
+        messageEl.textContent = messageClean;
+        getAndReplaceLinks(messageEl);    
+    }
 
     const platformElement = clone.querySelector('.platform');
 
