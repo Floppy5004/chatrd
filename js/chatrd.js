@@ -354,6 +354,25 @@ async function cleanStringOfHTMLButEmotes(string) {
 }
 
 
+function formatSubMonthDuration(months) {
+    /*if (months < 12) {
+        return `${months} ${months === 1 ? 'Month' : 'Months'}`;
+    }
+
+    const years = Math.floor(months / 12);
+    const remainingMonths = months % 12;
+
+    const yearText = `${years} ${years === 1 ? 'Year' : 'Years'}`;
+
+    const monthText = remainingMonths > 0 
+        ? ` and ${remainingMonths} ${remainingMonths === 1 ? 'Month' : 'Months'}`
+        : '';
+
+    return `${yearText}${monthText}`;*/
+    return `${months} ${months === 1 ? 'Month' : 'Months'}`;
+}
+
+
 const pushNotify = (data) => {
 
     const SimpleNotify = {

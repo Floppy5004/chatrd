@@ -449,9 +449,10 @@ async function tiktokSubMessage(data) {
     
     user.innerHTML = `<strong>${data.nickname}</strong>`;
     action.innerHTML = ` subscribed for `;
-
-    var months = data.subMonth > 1 ? 'months' : 'month';
-    value.innerHTML = `<strong>${data.subMonth} ${months}</strong>`;
+    
+    //var months = data.subMonth > 1 ? 'months' : 'month';
+    var months = formatSubMonthDuration(data.subMonth);
+    value.innerHTML = `<strong>${months}</strong>`;
 
     message.remove();
 

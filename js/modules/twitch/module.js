@@ -522,10 +522,17 @@ async function twitchSubMessage(data) {
 
     action.innerHTML = ` subscribed for `;
 
-    var months = data.duration_months > 1 ? 'months' : 'month';
+    //var months = data.duration_months > 1 ? 'months' : 'month';
+    var months = formatSubMonthDuration(data.duration_months);
     var tier = data.is_prime ? 'Prime' : 'Tier '+Math.floor(data.sub_tier/1000);
 
-    value.innerHTML = `<strong>${data.duration_months} ${months} (${tier})</strong>`;
+    //value.innerHTML = `<strong>${months} (${tier})</strong>`;
+    value.innerHTML = `
+        <div class="gift-info">
+            <span class="gift-image"><strong>${months}</strong></span>
+            <span class="gift-value">${tier}</span>
+        </div>
+    `;
 
     addEventItem('twitch', clone, classes, userId, messageId);
 }
@@ -561,10 +568,17 @@ async function twitchReSubMessage(data) {
 
     action.innerHTML = ` subscribed for `;
 
-    var months = data.cumulativeMonths > 1 ? 'months' : 'month';
+    //var months = data.cumulativeMonths > 1 ? 'months' : 'month';
+    var months = formatSubMonthDuration(data.cumulativeMonths);
     var tier = data.isPrime ? 'Prime' : 'Tier '+Math.floor(data.subTier/1000);
     
-    value.innerHTML = `<strong>${data.cumulativeMonths} ${months} (${tier})</strong>`;
+    //value.innerHTML = `<strong>${months} (${tier})</strong>`;
+    value.innerHTML = `
+        <div class="gift-info">
+            <span class="gift-image"><strong>${months}</strong></span>
+            <span class="gift-value">${tier}</span>
+        </div>
+    `;
 
     message.textContent = data.text;
     await getTwitchEmotesOnParts(data, message);
@@ -612,8 +626,11 @@ async function twitchGiftMessage(data) {
     
     user.innerHTML = `<strong>${data.user.name}</strong>`;
 
-    var months = data.durationMonths > 1 ? 'months' : 'month';
-    action.innerHTML = ` gifted <strong>${data.durationMonths} ${months}</strong> subscription <strong>(Tier ${Math.floor(data.subTier/1000)})</strong> to `;
+    //var months = data.durationMonths > 1 ? 'months' : 'month';
+    var months = formatSubMonthDuration(data.durationMonths);
+    var subs = data.durationMonths > 1 ? 'subscription' : 'subscription'
+
+    action.innerHTML = ` gifted <strong>${months}</strong> ${subs} <strong>(Tier ${Math.floor(data.subTier/1000)})</strong> to `;
     
     value.innerHTML = `<strong>${data.recipient.name}</strong>`;
 

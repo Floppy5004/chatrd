@@ -259,8 +259,9 @@ async function youTubeNewSponsorMessage(data) {
     user.innerHTML = `<strong>${data.user.name}</strong>`;
     action.innerHTML = ` became a member for `;
 
-    var months = data.months > 1 ? 'months' : 'month';
-    value.innerHTML = `<strong>${data.months || 1} ${months}</strong>`;
+    //var months = data.months > 1 ? 'months' : 'month';
+    var months = formatSubMonthDuration(data.months);
+    value.innerHTML = `<strong>${months}</strong>`;
 
     if (data.message) {
         message.textContent = data.message;

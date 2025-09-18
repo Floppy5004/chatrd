@@ -437,9 +437,10 @@ async function kickSubMessage(data) {
 
     action.innerHTML = ` subscribed for `;
 
-    var months = data.months > 1 ? 'months' : 'month';
+    //var months = data.months > 1 ? 'months' : 'month';
+    var months = formatSubMonthDuration(data.months);
     
-    value.innerHTML = `<strong>${data.months} ${months}</strong>`;
+    value.innerHTML = `<strong>${months}</strong>`;
 
     message.remove();
 
