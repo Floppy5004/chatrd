@@ -138,6 +138,8 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
     const item = document.getElementById(messageid);
     const itemDimension = item.querySelector('.message')?.[`offset${dimensionProp}`] || 0;
 
+
+    /*
     // Animates the item
     requestAnimationFrame(() => {
         item.style[dimensionProp.toLowerCase()] = itemDimension + 'px';
@@ -148,6 +150,16 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
         item.style[dimensionProp.toLowerCase()] = '';
         item.style.opacity = '';
     }, { once: true });
+    */
+
+    setTimeout(function () {
+    	item.style[dimensionProp.toLowerCase()] = itemDimension + 'px';
+        item.style.opacity = '1';
+    	setTimeout(function () {
+    		item.style[dimensionProp.toLowerCase()] = '';
+            item.style.opacity = '';
+    	}, 1000);
+    }, 10);
 
     // Hides it after a while
     if (hideAfter > 0) {
@@ -207,6 +219,7 @@ function addEventItem(platform, clone, classes, userid, messageid) {
     const item = document.getElementById(messageid);
     const itemDimension = item.querySelector('.message')?.[`offset${dimensionProp}`] || 0;
 
+    /*
     // Animates the item
     requestAnimationFrame(() => {
         item.style[dimensionProp.toLowerCase()] = itemDimension + 'px';
@@ -217,6 +230,16 @@ function addEventItem(platform, clone, classes, userid, messageid) {
         item.style[dimensionProp.toLowerCase()] = '';
         item.style.opacity = '';
     }, { once: true });
+    */
+
+    setTimeout(function () {
+    	item.style[dimensionProp.toLowerCase()] = itemDimension + 'px';
+        item.style.opacity = '1';
+    	setTimeout(function () {
+    		item.style[dimensionProp.toLowerCase()] = '';
+            item.style.opacity = '';
+    	}, 1000);
+    }, 10);
 
     // Hides it after a while
     if (hideAfter > 0) {
