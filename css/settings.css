@@ -274,7 +274,7 @@ hr {
 #speakerbot .switch input[type=checkbox]:checked + .slider { background-color: #00dbff; }
 #twitch .switch input[type=checkbox]:checked + .slider { background-color: #a970ff; }
 #youtube .switch input[type=checkbox]:checked + .slider { background-color: #FF0000; }
-#tiktok .switch input[type=checkbox]:checked + .slider { background-color: #ff0050; }
+#tiktok .switch input[type=checkbox]:checked + .slider { background-color: #F1204A; }
 #kick .switch input[type=checkbox]:checked + .slider { background-color: #48d415; }
 #streamelements .switch input[type=checkbox]:checked + .slider { background-color: #2700ff; }
 #streamlabs .switch input[type=checkbox]:checked + .slider { background-color: #80f5d2; }
