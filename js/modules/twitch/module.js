@@ -85,7 +85,13 @@ const twitchMessageHandlers = {
     },
     'Twitch.ChatCleared': (response) => {
         twitchChatClearMessages();
-    }
+    },
+
+
+    'Twitch.HypeTrainStart' : (response) => { },
+    'Twitch.HypeTrainUpdate' : (response) => { },
+    'Twitch.HypeTrainLevelUp' : (response) => { },
+    'Twitch.HypeTrainEnd' : (response) => { }
 };
 
 
