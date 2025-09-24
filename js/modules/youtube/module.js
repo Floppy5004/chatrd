@@ -98,6 +98,10 @@ async function youTubeChatMessage(data) {
 	const clone = template.content.cloneNode(true);
     const messageId = data.eventId;
     const userId = data.user.id;
+    const broadcastId = data.broadcast.id;
+
+    const root = clone.querySelector(".item");
+    root.dataset.broadcast = broadcastId;
 
     const {
         'first-message': firstMessage,
@@ -133,7 +137,8 @@ async function youTubeChatMessage(data) {
     var color = await createRandomColor('youtube', data.user.name);
 
     user.style.color = color;
-    user.innerHTML = `<strong>${data.user.name}</strong>`;
+    user.textContent = data.user.name;
+
     
     message.textContent = data.message;
     await getYouTubeEmotes(data, message);
@@ -175,7 +180,7 @@ async function youTubeSuperChatMessage(data) {
     header.remove();
 
     
-    user.innerHTML = `<strong>${data.user.name}</strong>`;
+    user.textContent = data.user.name;
     action.innerHTML = ` superchatted `;
     value.innerHTML = `<strong>${data.amount}</strong>`;
 
@@ -218,7 +223,7 @@ async function youTubeSuperStickerMessage(data) {
         header.remove();
     }
     
-    user.innerHTML = `<strong>${data.user.name}</strong>`;
+    user.textContent = data.user.name;
     action.innerHTML = ` sent a supersticker `;
 
     value.innerHTML = `<strong>(${data.amount})</strong>`;
@@ -256,7 +261,7 @@ async function youTubeNewSponsorMessage(data) {
     header.remove();
 
     
-    user.innerHTML = `<strong>${data.user.name}</strong>`;
+    user.textContent = data.user.name;
     action.innerHTML = ` became a member for `;
 
     //var months = data.months > 1 ? 'months' : 'month';
@@ -300,7 +305,7 @@ async function youTubeGiftBombMessage(data) {
     header.remove();
 
     
-    user.innerHTML = `<strong>${data.user.name}</strong>`;
+    user.textContent = data.user.name;
     action.innerHTML = ` gifted `;
 
     var count = data.count > 1 ? 'memberships' : 'membership';
@@ -339,9 +344,9 @@ async function youTubeGiftBombReceivedMessage(data) {
     header.remove();
 
     
-    user.innerHTML = `<strong>${data.gifter.name}</strong>`;
+    user.textContent = data.gifter.name;
     action.innerHTML = ` gifted a membership to `;
-    value.innerHTML = `<strong>${data.user.name}</strong>`;
+    value.innerHTML = `<strong>${escapeHTML(data.user.name)}</strong>`;
 
     message.remove();
 

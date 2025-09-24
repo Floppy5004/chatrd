@@ -113,8 +113,9 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
 
     // Starts it collapsed
     root.style[dimensionProp.toLowerCase()] = '0px';
-
-    if (chatModeration == true) {
+    
+    //if (chatModeration == true) {
+    if ((chatModeration == true) && (!root.classList.contains('streamer'))) {    
         switch (platform) {
             case "twitch":
                 root.insertAdjacentHTML("beforeend", chatmodtwitch);
@@ -504,8 +505,10 @@ let chatcommands = {
     ],
     "YouTube" : [
         { "name" : "/yt/title", "usage" : "Sets the stream title. <b>Usage: /yt/title [title]</b>"  },
-        { "name" : "/yt/timeout", "usage" : "Times out a user. <b>Usage: /yt/timeout [user] [duration]</b>"  },
-        { "name" : "/yt/ban", "usage" : "Bans a user. <b>Usage: /yt/ban [user]</b>"  }
+        { "name" : "/yt/timeout", "usage" : "Times out a user by ID. <b>Usage: /yt/timeout [user id] [duration]</b>"  },
+        { "name" : "/yt/timeout/name", "usage" : "Times out a user name. <b>Usage: /yt/timeout/name [user name] [duration]</b>"  },
+        { "name" : "/yt/ban", "usage" : "Bans a user by ID. <b>Usage: /yt/ban [user id]</b>"  },
+        { "name" : "/yt/ban/name", "usage" : "Bans a user by user name. <b>Usage: /yt/ban/name [user name]</b>"  }
     ],
     "Kick" : [
         { "name" : "/kick/title", "usage" : "Sets the stream title. <b>Usage: /kick/title [title]</b>"  },
@@ -798,3 +801,10 @@ function getAndReplaceLinks(el) {
 
 document.addEventListener("DOMContentLoaded", function () {
 });
+
+
+function escapeHTML(str) {
+    const div = document.createElement('div');
+    div.innerText = str;   // ou textContent
+    return div.innerHTML;
+}

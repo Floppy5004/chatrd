@@ -256,6 +256,8 @@ body {
     gap: 0 5px;
 }
 
+#chat .user { font-weight: bold; }
+
 
 
 #statistics {
@@ -749,13 +751,4 @@ body {
 
 .item.chat .chatmoderation button:hover {
     color: #ffcc00;
-}
-
-
-.item.chat.twitch.streamer .chatmoderation button:nth-child(2),
-.item.chat.twitch.streamer .chatmoderation button:nth-child(3),
-.item.chat.kick.streamer .chatmoderation button:nth-child(1),
-.item.chat.kick.streamer .chatmoderation button:nth-child(2),
-.item.chat.youtube.owner .chatmoderation {
-    display: none;
 }

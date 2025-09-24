@@ -158,7 +158,7 @@ async function twitchChatMessage(data) {
     header.remove();
 
     user.style.color = data.message.color;
-    user.innerHTML = `<strong>${data.message.displayName}</strong>`;
+    user.textContent = data.message.displayName;
 
     message.textContent = data.message.message;
     await getTwitchEmotes(data, message);
@@ -183,7 +183,7 @@ async function twitchChatMessage(data) {
     if (data.message.isReply) {
         classes.push('reply');
         reply.textContent = data.message.reply.msgBody;
-        reply.insertAdjacentHTML('afterbegin', ` <strong>${data.message.reply.userName}:</strong> `);
+        reply.insertAdjacentHTML('afterbegin', ` <strong>${escapeHTML(data.message.reply.userName)}:</strong> `);
     }
     else { reply.remove(); }
 
@@ -193,7 +193,7 @@ async function twitchChatMessage(data) {
             classes.push('shared-chat');
 
             if (!data.sharedChat.primarySource) {
-                sharedChat.querySelector('span.origin').insertAdjacentHTML('beforeend', ` <strong>${data.sharedChat.sourceRoom.name}</strong>`);
+                sharedChat.querySelector('span.origin').insertAdjacentHTML('beforeend', ` <strong>${escapeHTML(data.sharedChat.sourceRoom.name)}</strong>`);
             }
         }
         else if (!data.sharedChat.primarySource && showTwitchSharedChat == false) {
@@ -269,7 +269,7 @@ async function twitchFollowMessage(data) {
     value.remove();
 
     
-    user.innerHTML = `<strong>${data.user_name}</strong>`;
+    user.textContent = data.user_name;
 
     action.innerHTML = ` followed you`;
 
@@ -325,7 +325,7 @@ async function twitchAnnouncementMessage(data) {
     header.innerHTML = `<span><i class="fa-solid fa-bullhorn"></i> Announcement</span>`;
 
     user.style.color = data.user.color;
-    user.innerHTML = `<strong>${data.user.name}</strong>`;
+    user.textContent = data.user.name;
 
     
     message.textContent = data.text;
@@ -362,9 +362,8 @@ async function twitchRewardRedemption(data) {
     const classes = ['twitch', 'reward'];
 
     header.remove();
-
     
-    user.innerHTML = `<strong>${data.user_name}</strong>`;
+    user.textContent = data.user_name;
     action.innerHTML = ` redeemed `;
     value.innerHTML = `<strong>${data.reward.title}</strong> (${data.reward.cost})`;
 
@@ -376,7 +375,7 @@ async function twitchRewardRedemption(data) {
     `;
     
     var userInput = data.user_input ? `${data.user_input}` : '';
-    message.innerHTML = `${userInput}`;
+    message.textContent = userInput;
 
     addEventItem('twitch', clone, classes, userId, messageId);
 }
@@ -429,7 +428,7 @@ async function twitchAutomaticRewardRedemption(data) {
 
     }
     
-    user.innerHTML = `<strong>${data.user_name}</strong>`;
+    user.textContent = data.user_name;
     action.innerHTML = ` redeemed `;
 
     value.innerHTML = `
@@ -472,9 +471,8 @@ async function twitchBitsMessage(data) {
     const classes = ['twitch', 'bits'];
 
     header.remove();
-
     
-    user.innerHTML = `<strong>${data.user.name}</strong>`;
+    user.textContent = data.user.name;
     action.innerHTML = ` cheered with `;
 
     var bits = data.message.bits > 1 ? 'bits' : 'bit';
@@ -524,7 +522,7 @@ async function twitchSubMessage(data) {
     message.remove();
 
     
-    user.innerHTML = `<strong>${data.user.name}</strong>`;
+    user.textContent = data.user.name;
 
     action.innerHTML = ` subscribed for `;
 
@@ -570,7 +568,7 @@ async function twitchReSubMessage(data) {
     
     header.remove();
     
-    user.innerHTML = `<strong>${data.user.name}</strong>`;
+    user.textContent = data.user.name;
 
     action.innerHTML = ` subscribed for `;
 
@@ -630,15 +628,15 @@ async function twitchGiftMessage(data) {
     message.remove();
 
     
-    user.innerHTML = `<strong>${data.user.name}</strong>`;
+    user.textContent = data.user.name;
 
     //var months = data.durationMonths > 1 ? 'months' : 'month';
     var months = formatSubMonthDuration(data.durationMonths);
-    var subs = data.durationMonths > 1 ? 'subscription' : 'subscription'
+    var subs = data.durationMonths > 1 ? 'subscriptions' : 'subscription'
 
-    action.innerHTML = ` gifted <strong>${months}</strong> ${subs} <strong>(Tier ${Math.floor(data.subTier/1000)})</strong> to `;
+    action.innerHTML = ` gifted <strong>${months}</strong> of <strong>Tier ${Math.floor(data.subTier/1000)}</strong> ${subs} to `;
     
-    value.innerHTML = `<strong>${data.recipient.name}</strong>`;
+    value.innerHTML = `<strong>${escapeHTML(data.recipient.name)}</strong>`;
 
     addEventItem('twitch', clone, classes, userId, messageId);
 }
@@ -672,7 +670,7 @@ async function twitchGiftBombMessage(data) {
     value.remove();
 
     
-    user.innerHTML = `<strong>${data.user.name}</strong>`;
+    user.textContent = data.user.name;
 
     var subs = data.total > 1 ? 'subs' : 'sub';
     action.innerHTML = ` gifted <strong>${data.total} Tier ${Math.floor(data.sub_tier/1000)} ${subs}</strong> to the Community`;
@@ -711,7 +709,7 @@ async function twitchRaidMessage(data) {
     message.remove();
 
     
-    user.innerHTML = `<strong>${data.from_broadcaster_user_name}</strong>`;
+    user.textContent = data.from_broadcaster_user_name;
 
     var viewers = data.viewers > 1 ? 'viewers' : 'viewer';
     action.innerHTML = ` raided the channel with `;

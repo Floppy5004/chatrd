@@ -203,7 +203,7 @@ async function tiktokChatMessage(data) {
     var color = await createRandomColor('tiktok', data.uniqueId);
 
     user.style.color = color;
-    user.innerHTML = `<strong>${data.nickname}</strong>`;
+    user.textContent = data.nickname;
     
     message.textContent = data.comment;
     await getTikTokEmotes(data, message),
@@ -241,7 +241,7 @@ async function tiktokFollowMessage(data) {
     value.remove();
 
     
-    user.innerHTML = `<strong>${data.nickname}</strong>`;
+    user.textContent = data.nickname;
 
     action.innerHTML = ` followed you`;
 
@@ -277,7 +277,7 @@ async function tiktokShareMessage(data) {
     value.remove();
 
     
-    user.innerHTML = `<strong>${data.nickname}</strong>`;
+    user.textContent = data.nickname;
 
     action.innerHTML = ` shared the stream ↪️`;
 
@@ -297,7 +297,7 @@ async function tiktokJoinMessage(data) {
 
     const messageId = data.msgId;
     const userId = data.userId;
-    const userMessageHTML = `<strong>${data.nickname}</strong>`;
+    const userMessageHTML = `${data.nickname}`;
     const actionMessageHTML = ` joined the chat`;
 
     const joinElement = container.querySelector(".event.tiktok.join");
@@ -351,7 +351,7 @@ async function tiktokJoinMessage(data) {
         message.remove();
         value.remove();
 
-        user.innerHTML = userMessageHTML;
+        user.textContent = userMessageHTML;
         action.innerHTML = actionMessageHTML;
 
         addEventItem('tiktok', clone, classes, userId, messageId);
@@ -406,7 +406,7 @@ async function tiktokLikesMessage(data) {
 
         header.remove();
         
-        user.innerHTML = `<strong>${data.nickname}</strong>`;
+        user.textContent = data.nickname;
         action.innerHTML = ` sent you `;
 
         var likes = likeCountTotal > 1 ? 'likes' : 'like';
@@ -446,8 +446,7 @@ async function tiktokSubMessage(data) {
 
     header.remove();
 
-    
-    user.innerHTML = `<strong>${data.nickname}</strong>`;
+    user.textContent = data.nickname;
     action.innerHTML = ` subscribed for `;
     
     //var months = data.subMonth > 1 ? 'months' : 'month';
@@ -489,7 +488,7 @@ async function tiktokGiftMessage(data) {
 
     var coins = Math.floor(data.repeatCount*data.diamondCount);
 
-    user.innerHTML = `<strong>${data.nickname}</strong>`;
+    user.textContent = data.nickname;
     action.innerHTML = ` gifted you <strong>${data.repeatCount} ${data.giftName}</strong>`;
     value.innerHTML = `
         <div class="gift-info">

@@ -290,7 +290,7 @@ async function kickChatMessage(data) {
     firstMessage.remove();
 
     user.style.color = data.sender.identity.color;
-    user.innerHTML = `<strong>${data.sender.username}</strong>`;
+    user.textContent = data.sender.username;
     message.innerHTML = messageHTML;
 
     if (showAvatar) avatar.innerHTML = `<img src="${avatarImage}">`; else avatar.remove();
@@ -340,9 +340,8 @@ async function kickFollowMessage(data) {
     const classes = ['kick', 'follow'];
 
     header.remove();
-
     
-    user.innerHTML = `<strong>${data.user.name}</strong>`;
+    user.textContent = data.user.name;
     //user.innerHTML = `<strong>${data.userName}</strong>`;
 
     action.innerHTML = ` followed you`;
@@ -384,7 +383,7 @@ async function kickKicksGiftedMessage(data) {
     var kicksGiftId = data.gift.gift_id.replace('_', '-');
     var kicksGiftImage = `<img class="gift-image" src="https://files.kick.com/kicks/gifts/${kicksGiftId}.webp" alt="${data.gift.name}">`;
     
-    user.innerHTML = `<strong>${data.sender.username}</strong>`;
+    user.textContent = data.sender.username;
     action.innerHTML = ` sent a <strong>${data.gift.name}</strong> `;
 
     var kicksGift = data.gift.amount > 1 ? 'Kicks' : 'Kick';
@@ -432,8 +431,7 @@ async function kickSubMessage(data) {
 
     header.remove();
 
-    
-    user.innerHTML = `<strong>${data.username}</strong>`;
+    user.textContent = data.username;
 
     action.innerHTML = ` subscribed for `;
 
@@ -475,7 +473,7 @@ async function kickGiftMessage(data) {
     header.remove();
 
     
-    user.innerHTML = `<strong>${data.gifter_username}</strong>`;
+    user.textContent = data.gifter_username;
 
     var giftedLength = data.gifted_usernames.length;
     
@@ -523,12 +521,11 @@ async function kickGiftSingleSub(gifter, recipient) {
     header.remove();
     message.remove();
 
-    
-    user.innerHTML = `<strong>${gifter}</strong>`;
+    user.textContent = gifter;
 
     action.innerHTML = ` gifted a subscription to `;
     
-    value.innerHTML = `<strong>${recipient}</strong>`;
+    value.innerHTML = `<strong>${escapeHTML(recipient)}</strong>`;
 
     addEventItem('kick', clone, classes, userId, messageId);
 }
@@ -560,8 +557,7 @@ async function kickRewardRedemption(data) {
 
     header.remove();
 
-    
-    user.innerHTML = `<strong>${data.username}</strong>`;
+    user.textContent = data.username;
     action.innerHTML = ` redeemed `;
     value.innerHTML = `<strong>${data.reward_title}</strong>`;
     
@@ -600,8 +596,7 @@ async function kickRaidMessage(data) {
     header.remove();
     message.remove();
 
-    
-    user.innerHTML = `<strong>${data.host_username}</strong>`;
+    user.textContent = data.host_username;
 
     var viewers = data.number_viewers > 1 ? 'viewers' : 'viewer';
     action.innerHTML = ` hosted the channel with `;
