@@ -169,7 +169,6 @@ async function twitchChatMessage(data) {
 
     if (showAvatar) avatar.innerHTML = `<img src="${avatarImage}">`; else avatar.remove();
     if (showBadges) badges.innerHTML = badgeList; else badges.remove();
-    
 
     if (data.user.role == 4) { classes.push('streamer'); }
 
@@ -186,7 +185,6 @@ async function twitchChatMessage(data) {
         reply.insertAdjacentHTML('afterbegin', ` <strong>${escapeHTML(data.message.reply.userName)}:</strong> `);
     }
     else { reply.remove(); }
-
 
     if (data.message.isSharedChat) {
         if (showTwitchSharedChat == true) {

@@ -431,12 +431,15 @@ body {
 }
 
 #chat.oneline .item .first-message,
-#chat.oneline .item .shared-chat,
 #chat.oneline .item .info,
 #chat.oneline .item .actual-message {
-    display: inline-block !important;
+    display: inline !important;
+    /*display: inline-block !important;*/
     /*transform: translateY(-5px);*/
 }
+
+#chat.oneline .item .shared-chat { display: block; margin-top: 5px; }
+#chat.oneline .item .header { margin: 10px 0 -5px 0; }
 
 #chat.oneline .item .info .timestamp {
     transform: translateY(-3px);
