@@ -157,11 +157,10 @@ async function twitchChatMessage(data) {
 
     header.remove();
 
+    let streamData = data;
+
     user.style.color = data.message.color;
     user.textContent = data.message.displayName;
-
-    message.textContent = data.message.message;
-    await getTwitchEmotes(data, message);
 
     if (data.message.isMe) {
         message.style.color = data.message.color;
@@ -181,8 +180,32 @@ async function twitchChatMessage(data) {
 
     if (data.message.isReply) {
         classes.push('reply');
-        reply.textContent = data.message.reply.msgBody;
-        reply.insertAdjacentHTML('afterbegin', ` <strong>${escapeHTML(data.message.reply.userName)}:</strong> `);
+
+        let offset = 0;
+        let replyTo = `@${data.message.reply.userName}`;
+        let replyMessage = streamData.message.message;
+        
+        if (replyMessage.startsWith(replyTo)) {
+            let startIndex = replyTo.length;
+            if (replyMessage[startIndex] === " ") {
+                startIndex++;
+            }
+            replyMessage = replyMessage.slice(startIndex);
+            offset = startIndex;    
+        
+            let replyEmotes = (streamData.emotes || [])
+            .map(e => ({
+                ...e,
+                startIndex: e.startIndex - offset,
+                endIndex: e.endIndex - offset
+            }))
+            .sort((a, b) => a.startIndex - b.startIndex);
+
+            streamData.message.message = replyMessage;
+            streamData.emotes = replyEmotes;
+        }
+
+        reply.insertAdjacentHTML('beforeend', ` <strong>Replying to ${escapeHTML(data.message.reply.userName)}:</strong> ${data.message.reply.msgBody}`);
     }
     else { reply.remove(); }
 
@@ -209,6 +232,11 @@ async function twitchChatMessage(data) {
         }
     }
     else { pronoun.remove(); }
+
+    
+
+    message.textContent = streamData.message.message;
+    await getTwitchEmotes(streamData, message);
 
     addMessageItem('twitch', clone, classes, userId, messageId);
 }

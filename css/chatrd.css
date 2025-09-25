@@ -169,7 +169,7 @@ body {
 }
 
 #chat .item .reply i {
-    transform: rotate(90deg);
+    /*transform: rotate(90deg);*/
     margin: 0 5px;
 }
 
@@ -462,6 +462,10 @@ body {
 
 #chat.oneline .item .info .pronouns {
     transform: translateY(-3px);
+}
+
+#chat.oneline .item .reply {
+    margin: 0 0 -5px 0;
 }
 
 #chat.oneline .event .info {

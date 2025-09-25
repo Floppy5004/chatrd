@@ -303,7 +303,7 @@ async function kickChatMessage(data) {
     if (data.type == "reply") {
         classes.push('reply');
         var replyHTML = await getKickEmotes(data.metadata.original_message.content);
-        reply.insertAdjacentHTML('beforeend', ` <strong>${data.metadata.original_sender.username}:</strong> ${replyHTML}`);
+        reply.insertAdjacentHTML('beforeend', `Replying to <strong>${data.metadata.original_sender.username}:</strong> ${replyHTML}`);
     }
     else { reply.remove(); }
 
