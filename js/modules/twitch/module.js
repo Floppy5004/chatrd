@@ -171,7 +171,6 @@ async function twitchChatMessage(data) {
 
     if (data.user.role == 4) { classes.push('streamer'); }
 
-
     if (data.message.firstMessage) {
         classes.push('first-chatter');
     }
@@ -214,7 +213,10 @@ async function twitchChatMessage(data) {
             classes.push('shared-chat');
 
             if (!data.sharedChat.primarySource) {
-                sharedChat.querySelector('span.origin').insertAdjacentHTML('beforeend', ` <strong>${escapeHTML(data.sharedChat.sourceRoom.name)}</strong>`);
+                let sharedStreamer = data.sharedChat.sourceRoom.name;
+                let sharedStreamerAvatar = await getTwitchAvatar( sharedStreamer.toLowerCase() );
+                sharedChat.querySelector('span.origin img').src = sharedStreamerAvatar;
+                sharedChat.querySelector('span.origin strong').textContent = data.sharedChat.sourceRoom.name;
             }
         }
         else if (!data.sharedChat.primarySource && showTwitchSharedChat == false) {

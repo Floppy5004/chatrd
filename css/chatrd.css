@@ -173,14 +173,12 @@ body {
     margin: 0 5px;
 }
 
-#chat .item .shared-chat {
-    margin-bottom: 5px;
-}
 #chat .item .shared-chat span.origin {
     display: inline-flex;
     align-items: center;
     background: rgba(255,255,255,0.1);
-    padding: 0px 10px;
+    padding: 2px 8px;
+    margin: 0 3px;
     border-radius: 5px;
     font-weight: bold;
     font-size: 14px;
@@ -332,6 +330,7 @@ body {
     margin-bottom: -5px;
 }
 
+
 #chat.horizontal .item .first-message,
 #chat.horizontal .item .shared-chat,
 #chat.horizontal .item .header,
@@ -339,6 +338,10 @@ body {
 #chat.horizontal .item .actual-message {
     display: inline-block !important;
     transform: translateY(-5px);
+}
+
+#chat.horizontal .item .shared-chat {
+    transform: translateY(-2px);
 }
 
 #chat.horizontal .item .reply {
@@ -428,6 +431,11 @@ body {
 
 #chat.oneline .item .shared-chat::after {
     margin-bottom: -5px;
+}
+
+
+#chat.oneline .item .shared-chat {
+    margin-bottom: -8px;
 }
 
 #chat.oneline .item .first-message,
