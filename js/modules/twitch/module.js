@@ -30,6 +30,19 @@ const bitsGifAnimations = [
     { min: 100000, max: 1000000000000000, gifId: 100000 },
 ];
 
+
+
+const bitsGiftsClasses = [
+    { min: 1,  max: 99, class: 'normal-gift' },
+    { min: 100,  max: 499, class: 'bigger-than-100' },
+    { min: 500,  max: 999, class: 'bigger-than-500' },
+    { min: 1000,  max: 4999, class: 'bigger-than-1000' },
+    { min: 5000,  max: 9999, class: 'bigger-than-5000' },
+    { min: 10000,  max: 49999, class: 'bigger-than-10000' },
+    { min: 50000,  max: 99999, class: 'bigger-than-50000' },
+    { min: 100000,  max: 99999999999, class: 'bigger-than-100000' },
+];
+
 // TWITCH EVENTS HANDLERS
 
 const twitchMessageHandlers = {
@@ -506,6 +519,9 @@ async function twitchBitsMessage(data) {
     var bits = data.message.bits > 1 ? 'bits' : 'bit';
 
     const match = bitsGifAnimations.find(lv => data.message.bits >= lv.min && data.message.bits <= lv.max);
+    
+    const bitsMatch = bitsGiftsClasses.find(lv => data.message.bits >= lv.min && data.message.bits <= lv.max);
+    classes.push(bitsMatch.class);
 
     value.innerHTML = `
         <div class="gift-info">

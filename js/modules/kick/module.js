@@ -23,8 +23,16 @@ const kickSubBadges = [];
 
 const kickWebSocketURL = 'wss://ws-us2.pusher.com/app/32cbd69e4b950bf97679?protocol=7&client=js&version=8.4.0&flash=false';
 
-
-
+const kicksGiftsClasses = [
+    { min: 1,  max: 99, class: 'normal-gift' },
+    { min: 100,  max: 499, class: 'bigger-than-100' },
+    { min: 500,  max: 999, class: 'bigger-than-500' },
+    { min: 1000,  max: 4999, class: 'bigger-than-1000' },
+    { min: 5000,  max: 9999, class: 'bigger-than-5000' },
+    { min: 10000,  max: 49999, class: 'bigger-than-10000' },
+    { min: 50000,  max: 99999, class: 'bigger-than-50000' },
+    { min: 100000,  max: 99999999999, class: 'bigger-than-100000' },
+];
 
 
 // KICK EVENTS HANDLERS
@@ -385,6 +393,9 @@ async function kickKicksGiftedMessage(data) {
     
     user.textContent = data.sender.username;
     action.innerHTML = ` sent a <strong>${data.gift.name}</strong> `;
+
+    const kicksMatch = kicksGiftsClasses.find(lv => data.gift.amount >= lv.min && data.gift.amount <= lv.max);
+    classes.push(kicksMatch.class);
 
     var kicksGift = data.gift.amount > 1 ? 'Kicks' : 'Kick';
     value.innerHTML = `

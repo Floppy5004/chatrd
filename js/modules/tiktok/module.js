@@ -13,6 +13,17 @@ const showTikTokGifts               = getURLParam("showTikTokGifts", true);
 const showTikTokSubs                = getURLParam("showTikTokSubs", true);
 const showTikTokStatistics          = getURLParam("showTikTokStatistics", true);
 
+const tiktokGiftsClasses = [
+    { min: 1,  max: 99, class: 'normal-gift' },
+    { min: 100,  max: 499, class: 'bigger-than-100' },
+    { min: 500,  max: 999, class: 'bigger-than-500' },
+    { min: 1000,  max: 4999, class: 'bigger-than-1000' },
+    { min: 5000,  max: 9999, class: 'bigger-than-5000' },
+    { min: 10000,  max: 49999, class: 'bigger-than-10000' },
+    { min: 50000,  max: 99999, class: 'bigger-than-50000' },
+    { min: 100000,  max: 99999999999, class: 'bigger-than-100000' },
+];
+
 userColors.set('tiktok', new Map());
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -486,7 +497,10 @@ async function tiktokGiftMessage(data) {
 
     header.remove();
 
-    var coins = Math.floor(data.repeatCount*data.diamondCount);
+    let coins = Math.floor(data.repeatCount*data.diamondCount);
+
+    const tikTokGiftMatch = tiktokGiftsClasses.find(lv => coins >= lv.min && coins <= lv.max);
+    classes.push(tikTokGiftMatch.class);
 
     user.textContent = data.nickname;
     action.innerHTML = ` gifted you <strong>${data.repeatCount} ${data.giftName}</strong>`;
