@@ -14,7 +14,9 @@ const showTikTokSubs                = getURLParam("showTikTokSubs", true);
 const showTikTokStatistics          = getURLParam("showTikTokStatistics", true);
 
 const tiktokGiftsClasses = [
-    { min: 1,  max: 99, class: 'normal-gift' },
+    { min: 1,  max: 9, class: 'normal-gift' },
+    { min: 10,  max: 49, class: 'bigger-than-10' },
+    { min: 50,  max: 99, class: 'bigger-than-50' },
     { min: 100,  max: 499, class: 'bigger-than-100' },
     { min: 500,  max: 999, class: 'bigger-than-500' },
     { min: 1000,  max: 4999, class: 'bigger-than-1000' },
