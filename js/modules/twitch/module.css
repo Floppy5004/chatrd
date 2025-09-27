@@ -92,3 +92,47 @@
 #chat .event.twitch.reward .value .gift-info {
     gap: 10px;
 }
+
+
+
+
+
+
+/* BITS CUSTOMIZATION FOR BIG STREAMERS LOL */
+
+#chat .event.twitch.bits[class*="bigger-than-"] .message {
+    animation: bigStreamerBGAnimate 1s ease infinite;
+    background-size: 100% 200%;
+}
+
+#chat .event.twitch.bits.bigger-than-1000 .message {
+    background-image: linear-gradient(
+      180deg,
+      rgba(145, 70, 255, 0.75),
+      rgba(0, 255, 155, 0.75)
+    );
+}
+
+#chat .event.twitch.bits.bigger-than-5000 .message {
+    background-image: linear-gradient(
+      180deg,
+      rgba(145, 70, 255, 0.75),
+      rgba(0, 247, 219, 0.75)
+    );
+}
+
+#chat .event.twitch.bits.bigger-than-10000 .message {
+    background-image: linear-gradient(
+      180deg,
+      rgba(145, 70, 255, 0.75),
+      rgba(255, 25, 25, 0.75)
+    );
+}
+
+#chat .event.twitch.bits.bigger-than-100000 .message {
+    background-image: linear-gradient(
+      180deg,
+      rgba(145, 70, 255, 0.75),
+      rgba(255, 255, 0, 0.75)
+    );
+}

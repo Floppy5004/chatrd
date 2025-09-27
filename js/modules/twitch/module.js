@@ -30,8 +30,6 @@ const bitsGifAnimations = [
     { min: 100000, max: 1000000000000000, gifId: 100000 },
 ];
 
-
-
 const bitsGiftsClasses = [
     { min: 1,  max: 99, class: 'normal-gift' },
     { min: 100,  max: 499, class: 'bigger-than-100' },

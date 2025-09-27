@@ -108,3 +108,30 @@
 #chat .event.tiktok.gift .info {
     margin: -5px 0 -5px 0;
 }
+
+
+/* GIFT CUSTOMIZATION FOR BIG STREAMERS LOL */
+
+#chat .event.tiktok.gift[class*="bigger-than-"] .message {
+    animation: bigStreamerBGAnimate 1s ease infinite;
+    background-size: 100% 200%;
+}
+
+#chat .event.tiktok.gift.bigger-than-1000 .message,
+#chat .event.tiktok.gift.bigger-than-5000 .message {
+    background-image: linear-gradient(
+      180deg,
+      rgba(241,32,74, 0.75),
+      rgba(0, 175, 255, 0.75)
+    );
+}
+
+#chat .event.tiktok.gift.bigger-than-10000 .message,
+#chat .event.tiktok.gift.bigger-than-50000 .message,
+#chat .event.tiktok.gift.bigger-than-10000 .message {
+    background-image: linear-gradient(
+      180deg,
+      rgba(241,32,74, 0.75),
+      rgba(255, 255, 0, 0.75)
+    );
+}

@@ -767,3 +767,11 @@ body {
 .item.chat .chatmoderation button:hover {
     color: #ffcc00;
 }
+
+
+
+@keyframes bigStreamerBGAnimate {
+  0%   { background-position: 50% 0%; }
+  50%  { background-position: 50% 100%; }
+  100% { background-position: 50% 0%; }
+}
