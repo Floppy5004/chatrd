@@ -6,7 +6,6 @@ let speakerBotClient = null;
 
 const streamerBotServerAddress      = getURLParam("streamerBotServerAddress", "127.0.0.1");
 const streamerBotServerPort         = getURLParam("streamerBotServerPort", "8080");
-
 const showSpeakerbot                = getURLParam("showSpeakerbot", true);
 const speakerBotServerAddress       = getURLParam("speakerBotServerAddress", "127.0.0.1");
 const speakerBotServerPort          = getURLParam("speakerBotServerPort", "7580");

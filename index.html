@@ -164,6 +164,13 @@
                             </div>
 
                             <div class="config">
+                                <label>Font Family<br><small>Changes ChatRD's Font</small></label>
+                                <label>
+                                    <input type="text" name="chatFontFamily" value="DM Sans">
+                                </label>
+                            </div>
+
+                            <div class="config">
                                 <label>Background Color<br><small>Changes ChatRD's background color</small></label>
                                 <label>
                                     <input type="color" name="chatBackground" value="#121212">
@@ -471,7 +478,11 @@
                                 <label class="switch"><input type="checkbox" name="showTikTokShares"><span class="slider"></span></label>
                             </div>
                             <div class="config">
-                                <label>Gifts</label><label class="switch"><input type="checkbox" name="showTikTokGifts" checked><span class="slider"></span></label>
+                                <label>Gifts<br><small>Shows TikTok Gifts, such as roses, galaxies, etc.</small></label><label class="switch"><input type="checkbox" name="showTikTokGifts" checked><span class="slider"></span></label>
+                            </div>
+                            <div class="config">
+                                <label><i class="fa-solid fa-arrow-turn-up"></i> Small Gift Images<br><small>Shrinks the size of the gift image to 28px.</small></label>
+                                <label class="switch"><input type="checkbox" name="showSmallTikTokGifts"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label>Subscriptions</label><label class="switch"><input type="checkbox" name="showTikTokSubs" checked><span class="slider"></span></label>
@@ -534,6 +545,10 @@
                             <div class="config">
                                 <label>Kicks Gift<br><small>Shows Kicks Gift events.</small></label>
                                 <label class="switch"><input type="checkbox" name="showKickKicks" checked><span class="slider"></span></label>
+                            </div>
+                            <div class="config">
+                                <label><i class="fa-solid fa-arrow-turn-up"></i> Small Kicks Images<br><small>Shrinks the size of the gift image to 28px.</small></label>
+                                <label class="switch"><input type="checkbox" name="showSmallKicksGifts"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label>Subscriptions<br><small>Shows Subscription events. <u><strong>Disabling this disables all sub events</strong></u>.</small></label>
@@ -892,6 +907,8 @@
     <script src="https://cdn.jsdelivr.net/npm/simple-notify@1.0.4/dist/simple-notify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@streamerbot/client@1.12.1/dist/streamerbot-client.min.js"></script>
+
+    
     <script src="js/speakerbot.js"></script>
     <script src="js/settings.js"></script>
 </body>

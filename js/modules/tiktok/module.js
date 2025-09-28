@@ -10,6 +10,7 @@ const showTikTokFollows             = getURLParam("showTikTokFollows", true);
 const showTikTokLikes               = getURLParam("showTikTokLikes", false);
 const showTikTokShares              = getURLParam("showTikTokShares", false);
 const showTikTokGifts               = getURLParam("showTikTokGifts", true);
+const showSmallTikTokGifts          = getURLParam("showSmallTikTokGifts", false);
 const showTikTokSubs                = getURLParam("showTikTokSubs", true);
 const showTikTokStatistics          = getURLParam("showTikTokStatistics", true);
 
@@ -497,6 +498,8 @@ async function tiktokGiftMessage(data) {
 
     const classes = ['tiktok', 'gift'];
 
+    if (showSmallTikTokGifts == true) { classes.push('small-gift'); }
+
     header.remove();
 
     let coins = Math.floor(data.repeatCount*data.diamondCount);
@@ -581,7 +584,7 @@ async function getTikTokBadges(data) {
     const { isSubscriber, isModerator, userBadges } = data;
 
     let badgesHTML = [
-        isSubscriber && '<span class="badge sub"><i class="fa-solid fa-star"></i></span>',
+        //isSubscriber && '<span class="badge sub"><i class="fa-solid fa-star"></i></span>',
         isModerator && '<span class="badge mod"><i class="fa-solid fa-user-gear"></i></span>',
     ];
     

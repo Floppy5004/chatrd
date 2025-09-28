@@ -4,11 +4,12 @@
 
 const showKick                      = getURLParam("showKick", false);
 
-const kickUserName                  = getURLParam("kickUserName", "vortisrd");
+const kickUserName                  = getURLParam("kickUserName", "");
 
 const showKickMessages              = getURLParam("showKickMessages", true);
 const showKickFollows               = getURLParam("showKickFollows", true);
 const showKickKicks                 = getURLParam("showKickKicks", true);
+const showSmallKicksGifts           = getURLParam("showSmallKicksGifts", false);
 const showKickSubs                  = getURLParam("showKickSubs", true);
 const showKickGiftedSubs            = getURLParam("showKickGiftedSubs", true);
 const showKickMassGiftedSubs        = getURLParam("showKickMassGiftedSubs", true);
@@ -387,6 +388,8 @@ async function kickKicksGiftedMessage(data) {
     );
 
     const classes = ['kick', 'kicksgifted'];
+
+    if (showSmallKicksGifts == true) { classes.push('small-gift'); }
 
     header.remove();
 

@@ -3,7 +3,6 @@
 /* ----------------------------- */
 
 const showTipeee                 = getURLParam("showTipeee", false);
-
 const showTipeeeDonations        = getURLParam("showTipeeeDonations", true);
 
 // TIPEEESTREAM EVENTS HANDLERS

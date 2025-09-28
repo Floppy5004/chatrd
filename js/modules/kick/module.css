@@ -43,6 +43,10 @@
     filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.5));
 }
 
+#chat .event.kick.kicksgifted.small-gift .value span.gift-image img {
+    width: 28px;
+}
+
 #chat .event.kick.kicksgifted .value span.gift-value {
     background: rgba(0,0,0,0.2);
     padding: 3px 9px;

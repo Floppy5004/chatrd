@@ -14,6 +14,7 @@ const chatThreshold                 = 50;
 const chatOneLine                   = getURLParam("chatOneLine", false);
 const chatHorizontal                = getURLParam("chatHorizontal", false); 
 const chatFontSize                  = getURLParam("chatFontSize", 1);
+const chatFontFamily                = getURLParam("chatFontFamily", "DM Sans");
 const chatBackground                = getURLParam("chatBackground", "#121212"); 
 const chatBackgroundOpacity         = getURLParam("chatBackgroundOpacity", 1); 
 const chatScrollBar                 = getURLParam("chatScrollBar", false);
@@ -32,6 +33,8 @@ const eventTemplate                 = document.querySelector('#event-message');
 
 const userColors = new Map();
 
+const chatRDBody = document.body;
+chatRDBody.style.fontFamily = chatFontFamily;
 
 if (showPlatformStatistics == true) {
     var statistics = document.querySelector('#statistics');

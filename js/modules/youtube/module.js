@@ -3,7 +3,6 @@
 /* ------------------------ */
 
 const showYoutube                       = getURLParam("showYoutube", false);
-
 const showYouTubeMessages               = getURLParam("showYouTubeMessages", true);
 const showYouTubeSuperChats             = getURLParam("showYouTubeSuperChats", true);
 const showYouTubeSuperStickers          = getURLParam("showYouTubeSuperStickers", true);
@@ -17,17 +16,6 @@ let youTubeCustomEmotes = [];
 let youTubeBTTVEmotes = [];
 
 userColors.set('youtube', new Map());
-
-let youTubeStreamsStatistics = [
-    {
-        id : 'auivjbn_34278',
-        title: 'Live Stream'
-    },
-    {
-        id : 'adikpbjuvbv',
-        title: 'Live Stream Two'
-    },
-];
 
 // YOUTUBE EVENTS HANDLERS
 
