@@ -195,7 +195,6 @@ async function tiktokChatMessage(data) {
 
     const [avatarImage,  badgesHTML] = await Promise.all([
         getTikTokAvatar(data),
-        
         getTikTokBadges(data),
     ]);
 
@@ -618,7 +617,7 @@ async function getTikTokBadges(data) {
                 badgesHTML.push(
                     `<span class="badge top-gifter">
                         <img src="${badge.url}" alt="${badge.displayType}">
-                        <em>No. ${badge.displayType}</em>
+                        <em>No. ${data.topGifterRank}</em>
                     </span>`
                 );
             }
@@ -671,3 +670,6 @@ async function tiktokUpdateStatistics(data, type) {
     }
     
 }
+
+
+
