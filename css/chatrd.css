@@ -319,6 +319,10 @@ body {
     padding: 5px 10px;
 }
 
+#chat.horizontal .item .actual-message img {
+    height: 22px;
+    margin: 0 1px;
+}
 
 #chat.horizontal .item .first-message::after,
 #chat.horizontal .item .shared-chat::after {
