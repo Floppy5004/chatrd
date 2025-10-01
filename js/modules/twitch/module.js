@@ -6,6 +6,7 @@ const showTwitch                    = getURLParam("showTwitch", false);
 
 const showTwitchMessages            = getURLParam("showTwitchMessages", true);
 const showTwitchFollows             = getURLParam("showTwitchFollows", true);
+const showTwitchWatchStreak         = getURLParam("showTwitchWatchStreak", false);
 const showTwitchBits                = getURLParam("showTwitchBits", true);
 const showTwitchAnnouncements       = getURLParam("showTwitchAnnouncements", true);
 const showTwitchSubs                = getURLParam("showTwitchSubs", true);
@@ -46,6 +47,9 @@ const bitsGiftsClasses = [
 const twitchMessageHandlers = {
     'Twitch.ChatMessage': (response) => {
         twitchChatMessage(response.data);
+    },
+    'Twitch.WatchStreak': (response) => {
+        twitchWatchStreakMessage(response.data);
     },
     'Twitch.Follow': (response) => {
         twitchFollowMessage(response.data);
@@ -252,6 +256,44 @@ async function twitchChatMessage(data) {
     await getTwitchEmotes(streamData, message);
 
     addMessageItem('twitch', clone, classes, userId, messageId);
+}
+
+
+
+
+async function twitchWatchStreakMessage(data) {
+
+    if (showTwitchWatchStreak == false) return;
+
+    const template = eventTemplate;
+	const clone = template.content.cloneNode(true);
+    const messageId = data.msgId;
+    const userId = data.userName.toLowerCase();
+
+    const {
+        header,
+        platform,
+        user,
+        action,
+        value,
+        'actual-message': message
+    } = Object.fromEntries(
+        [...clone.querySelectorAll('[class]')]
+            .map(el => [el.className, el])
+    );
+
+    const classes = ['twitch', 'watch-streak'];
+
+    header.remove();
+    
+    user.textContent = data.displayName;
+
+    action.innerHTML = ` watched `;
+    value.innerHTML = `<strong>${data.watchStreak} consecutive streams</strong> this month`;
+    message.textContent = data.message;
+    await getTwitchEmotesForWatchedStreakMessage(data, message);
+
+    addEventItem('twitch', clone, classes, userId, messageId);
 }
 
 
@@ -846,6 +888,61 @@ async function getTwitchBadges(data) {
 
 async function getTwitchEmotes(data, messageElement) {
     const message = data.message.message;
+    const emotes = (data.emotes || []).sort((a, b) => a.startIndex - b.startIndex);
+
+    // Limpa o conteúdo (vamos recriar com nodes)
+    messageElement.innerHTML = "";
+
+    let lastIndex = 0;
+
+    for (const emote of emotes) {
+        // texto antes do emote
+        if (lastIndex < emote.startIndex) {
+            const text = message.slice(lastIndex, emote.startIndex);
+            messageElement.appendChild(document.createTextNode(text));
+        }
+
+        let emoteUrl = emote.imageUrl;
+
+        // Detecta Twemoji
+        const isTwemoji =
+            String(emote.type || "").toLowerCase() === "twemoji" ||
+            /(twemoji|jdecked)/i.test(emote.imageUrl || "");
+
+        if (isTwemoji) {
+            const codePoints = Array.from(emote.name).map(c => c.codePointAt(0).toString(16));
+            let fileName = codePoints.join("-");
+            fileName = fileName.replace(/-fe0f/g, ""); // remove FE0F
+            emoteUrl = `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/${fileName}.png`;
+        }
+
+        if (!emoteUrl || emoteUrl.trim() === "") {
+            messageElement.appendChild(document.createTextNode(emote.name));
+        }
+        else {
+            const img = document.createElement("img");
+            img.src = emoteUrl;
+            img.alt = emote.name;
+            img.className = "emote";
+            img.dataset.emoteId = emote.id || "";
+            img.onerror = () => (img.outerHTML = emote.name);
+            messageElement.appendChild(img);
+        }
+
+        lastIndex = emote.endIndex + 1;
+    }
+
+    // texto final depois do último emote
+    if (lastIndex < message.length) {
+        const text = message.slice(lastIndex);
+        messageElement.appendChild(document.createTextNode(text));
+    }
+}
+
+
+
+async function getTwitchEmotesForWatchedStreakMessage(data, messageElement) {
+    const message = data.message;
     const emotes = (data.emotes || []).sort((a, b) => a.startIndex - b.startIndex);
 
     // Limpa o conteúdo (vamos recriar com nodes)

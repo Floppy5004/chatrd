@@ -195,7 +195,6 @@
                                 </label>
                                 <label class="switch"><input type="checkbox" name="chatOneLine"><span class="slider"></span></label>
                             </div>
-
                             
                             <div class="config">
                                 <label>
@@ -203,6 +202,13 @@
                                     <strong><u>If enabled, it disables "One Line" option above.</u></strong></small>
                                 </label>
                                 <label class="switch"><input type="checkbox" name="chatHorizontal"><span class="slider"></span></label>
+                            </div>
+                            
+                            <div class="config">
+                                <label>
+                                    Group Chat Messages<br><small>Consecutive messages from the same user will be grouped.</small>
+                                </label>
+                                <label class="switch"><input type="checkbox" name="chatMessageGroup"><span class="slider"></span></label>
                             </div>
 
                             <div class="config">
@@ -308,15 +314,19 @@
                                 <div class="config">
                                     <label>Bits</label><label class="switch">
                                         <input type="checkbox" name="showTwitchBits" checked><span class="slider"></span></label>
-                                    </div>
+                                </div>
                                 <div class="config">
                                     <label>Announcements</label>
                                     <label class="switch"><input type="checkbox" name="showTwitchAnnouncements" checked><span class="slider"></span></label>
                                 </div>
                                 <div class="config">
+                                    <label>Watch Streaks<br><small>Shows Watch Streaks in chat.</small></label>
+                                    <label class="switch"><input type="checkbox" name="showTwitchWatchStreak"><span class="slider"></span></label>
+                                </div>
+                                <div class="config">
                                     <label>Subscriptions<br><small>Shows Sub events. <u><strong>Disabling this disables all sub events</strong></u>.</small></label>
                                     <label class="switch"><input type="checkbox" name="showTwitchSubs" checked><span class="slider"></span></label>
-                                    </div>
+                                </div>
                                 <div class="config">
                                     <label><i class="fa-solid fa-arrow-turn-up"></i> Gifted Subs<br><small>When a user gifts another user a sub.</small></label>
                                     <label class="switch"><input type="checkbox" name="showTwitchGiftedSubs" checked><span class="slider"></span></label>

@@ -21,6 +21,11 @@
 }
 
 
+
+#chat.oneline .event.tiktok.gift .info {
+    display: inline-flex !important;
+}
+
 #chat .event.tiktok.gift .value img { vertical-align: sub; }
 
 #chat.horizontal .item.tiktok .info .badges {
@@ -52,6 +57,16 @@
     width: auto;
     padding: 3px;
     border-radius: 3px;
+} 
+
+#chat .item.tiktok span.badge.sceneTen.inactive-fan {
+    filter: saturate(0%);
+}
+
+#chat.oneline .item.tiktok span.badge.top-gifter,
+#chat.oneline .item.tiktok span.badge.sceneEight,
+#chat.oneline .item.tiktok span.badge.sceneTen {
+    transform: translateY(-3px);
 } 
 
 #chat .item.tiktok span.badge.top-gifter img,

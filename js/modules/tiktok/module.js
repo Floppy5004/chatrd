@@ -299,6 +299,7 @@ async function tiktokShareMessage(data) {
 
 
 async function tiktokJoinMessage(data) {
+    
     if (showTikTokJoins == false) return;
 
     function onIdle() {
@@ -637,10 +638,15 @@ async function getTikTokBadges(data) {
 
             // Scene Ten - Fan Badges
             if (badge.badgeSceneType === 10) {
+
+                let badgeClasses = ['badge', 'sceneTen'];
+                //if (badge.privilegeId == "7196929090442513157") { badgeClasses.push('inactive-fan'); }
+                badgeClasses = badgeClasses.join(" ");
+
                 const match = badgesLevelTen.find(lv => badge.level >= lv.min && badge.level <= lv.max);
                 if (match) {
                     badgesHTML.push(
-                        `<span class="badge sceneTen">
+                        `<span class="${badgeClasses}">
                             <img src="${match.url}" alt="Level ${badge.level}">
                         </span>`
                     );
@@ -670,6 +676,3 @@ async function tiktokUpdateStatistics(data, type) {
     }
     
 }
-
-
-

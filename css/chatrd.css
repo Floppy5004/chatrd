@@ -81,6 +81,10 @@ body {
     transition: all ease-in-out 300ms;
 }
 
+#chat:not(.oneline):not(.horizontal) .item.chat.grouped .message {
+    padding: 2px 5px 3px 5px;
+}
+
 #chat .item .message .actual-message a {
     color: #FFF;
     font-weight: bold;
@@ -319,6 +323,10 @@ body {
     padding: 5px 10px;
 }
 
+#chat.horizontal .item.chat.grouped .message {
+    padding: 0px 5px 7px 5px;
+}
+
 #chat.horizontal .item .actual-message img {
     height: 22px;
     margin: 0 1px;
@@ -478,10 +486,6 @@ body {
 
 #chat.oneline .item .reply {
     margin: 0 0 -5px 0;
-}
-
-#chat.oneline .event .info {
-    display: inline-block;
 }
 
 #chat.oneline .event .info .user,

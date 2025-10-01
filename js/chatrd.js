@@ -13,6 +13,7 @@ const showPlatformStatistics        = getURLParam("showPlatformStatistics", true
 const chatThreshold                 = 50;
 const chatOneLine                   = getURLParam("chatOneLine", false);
 const chatHorizontal                = getURLParam("chatHorizontal", false); 
+const chatMessageGroup              = getURLParam("chatMessageGroup", false); 
 const chatFontSize                  = getURLParam("chatFontSize", 1);
 const chatFontFamily                = getURLParam("chatFontFamily", "DM Sans");
 const chatBackground                = getURLParam("chatBackground", "#121212"); 
@@ -87,6 +88,7 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
     root.style.opacity = '0';
 
     const messageEl = clone.querySelector('.actual-message');
+    const infoEl = clone.querySelector('.info');
     getAndReplaceLinks(messageEl);
 
     const platformElement = clone.querySelector('.platform');
@@ -134,6 +136,14 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
 
             default:
                 console.warn(`Plataforma desconhecida: ${platform}`);
+        }
+    }
+
+    if (chatMessageGroup == true && chatContainer.children.length > 0) {
+        let lastUserId = chatContainer.firstElementChild.dataset.user;        
+        if (lastUserId == userid) {
+            infoEl.remove();
+            root.classList.add('grouped');
         }
     }
 
