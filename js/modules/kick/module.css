@@ -62,3 +62,6 @@
 #chat .event.kick.kicksgifted .info {
     margin: -5px 0 -5px 0;
 }
+
+
+.msm-platform.green { background: rgba(72,212,21,0.75); }

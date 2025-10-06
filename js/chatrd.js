@@ -22,6 +22,8 @@ const chatScrollBar                 = getURLParam("chatScrollBar", false);
 const chatField                     = getURLParam("chatField", false);
 const chatModeration                = getURLParam("chatModeration", false);
 
+const multiStreamerMode             = getURLParam("multiStreamerMode", false);
+
 const excludeCommands               = getURLParam("excludeCommands", true);
 const ignoreChatters                = getURLParam("ignoreChatters", "");
 const ignoreUserList                = ignoreChatters.split(',').map(item => item.trim().toLowerCase()) || [];
@@ -89,7 +91,10 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
 
     const messageEl = clone.querySelector('.actual-message');
     const infoEl = clone.querySelector('.info');
-    getAndReplaceLinks(messageEl);
+    
+    getAndReplaceLinks(messageEl).then(() => {
+        multiStreamChat(messageEl);
+    });
 
     const platformElement = clone.querySelector('.platform');
     
@@ -140,8 +145,15 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
     }
 
     if (chatMessageGroup == true && chatContainer.children.length > 0) {
-        let lastUserId = chatContainer.firstElementChild.dataset.user;        
-        if (lastUserId == userid) {
+        let lastUserId = chatContainer.firstElementChild.dataset.user;
+
+        let lastClasses = Array.from(chatContainer.firstElementChild.classList);
+        lastClasses = lastClasses.filter(c => c !== 'item');
+        lastClasses = lastClasses.join(' ');
+
+        let currentClasses = Array.from( classes ).join(' ');
+
+        if (lastUserId == userid && lastClasses == currentClasses) {
             infoEl.remove();
             root.classList.add('grouped');
         }
@@ -758,7 +770,7 @@ async function executeModCommand(event, command) {
     chatInputForm.requestSubmit();
 }
 
-function getAndReplaceLinks(el) {
+async function getAndReplaceLinks(el) {
   const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
   const urlRegex = /\b((?:https?:\/\/|www\.)[^\s<>"')]+)\b/g;
   const nodes = [];
@@ -820,4 +832,60 @@ function escapeHTML(str) {
     const div = document.createElement('div');
     div.innerText = str;   // ou textContent
     return div.innerHTML;
+}
+
+async function multiStreamChat(element) {
+    const platforms = {
+        twitch: 'Purple Platform',
+        youtube: 'Red Platform',
+        kick: 'Green Platform',
+        tiktok: 'Short Video App'
+    };
+
+    const platformClasses = {
+        twitch: 'purple',
+        youtube: 'red',
+        kick: 'green',
+        tiktok: 'vertical'
+    };
+
+    const regex = new RegExp(`\\b(${Object.keys(platforms).join('|')})\\b`, 'gi');
+
+    function replaceInTextNode(node) {
+        const text = node.textContent;
+        const parts = text.split(regex);
+
+        // If there are no matches, do nothing
+        if (parts.length === 1) return;
+
+        const fragment = document.createDocumentFragment();
+
+        for (const part of parts) {
+            const key = part.toLowerCase();
+            const replacement = platforms[key];
+            if (replacement) {
+                const em = document.createElement('em');
+                em.classList.add('msm-platform'); // base class
+                if (platformClasses[key]) em.classList.add(platformClasses[key]); // add color class
+                em.textContent = replacement;
+                fragment.appendChild(em);
+            } else {
+                fragment.appendChild(document.createTextNode(part));
+            }
+        }
+
+        node.replaceWith(fragment);
+    }
+
+    function traverse(node) {
+        // Ignore <a> elements and their children
+        if (node.nodeType === Node.ELEMENT_NODE) {
+            if (node.tagName === 'A') return;
+            for (const child of node.childNodes) traverse(child);
+        } else if (node.nodeType === Node.TEXT_NODE) {
+            replaceInTextNode(node);
+        }
+    }
+
+    traverse(element);
 }

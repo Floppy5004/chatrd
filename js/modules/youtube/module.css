@@ -91,3 +91,6 @@
 #statistics .platform.youtube#youtube .title {
     display: none;
 } 
+
+
+.msm-platform.red { background: rgba(255,0,0,0.75); }
