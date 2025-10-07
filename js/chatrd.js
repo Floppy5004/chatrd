@@ -149,6 +149,7 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
 
         let lastClasses = Array.from(chatContainer.firstElementChild.classList);
         lastClasses = lastClasses.filter(c => c !== 'item');
+        lastClasses = lastClasses.filter(c => c !== 'grouped');
         lastClasses = lastClasses.join(' ');
 
         let currentClasses = Array.from( classes ).join(' ');
