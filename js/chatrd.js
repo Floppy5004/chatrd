@@ -835,57 +835,59 @@ function escapeHTML(str) {
 }
 
 async function multiStreamChat(element) {
-    const platforms = {
-        twitch: 'Purple Platform',
-        youtube: 'Red Platform',
-        kick: 'Green Platform',
-        tiktok: 'Short Video App'
-    };
+    if (multiStreamerMode == true) {
+        const platforms = {
+            twitch: 'Purple Platform',
+            youtube: 'Red Platform',
+            kick: 'Green Platform',
+            tiktok: 'Short Video App'
+        };
 
-    const platformClasses = {
-        twitch: 'purple',
-        youtube: 'red',
-        kick: 'green',
-        tiktok: 'vertical'
-    };
+        const platformClasses = {
+            twitch: 'purple',
+            youtube: 'red',
+            kick: 'green',
+            tiktok: 'vertical'
+        };
 
-    const regex = new RegExp(`\\b(${Object.keys(platforms).join('|')})\\b`, 'gi');
+        const regex = new RegExp(`\\b(${Object.keys(platforms).join('|')})\\b`, 'gi');
 
-    function replaceInTextNode(node) {
-        const text = node.textContent;
-        const parts = text.split(regex);
+        function replaceInTextNode(node) {
+            const text = node.textContent;
+            const parts = text.split(regex);
 
-        // If there are no matches, do nothing
-        if (parts.length === 1) return;
+            // If there are no matches, do nothing
+            if (parts.length === 1) return;
 
-        const fragment = document.createDocumentFragment();
+            const fragment = document.createDocumentFragment();
 
-        for (const part of parts) {
-            const key = part.toLowerCase();
-            const replacement = platforms[key];
-            if (replacement) {
-                const em = document.createElement('em');
-                em.classList.add('msm-platform'); // base class
-                if (platformClasses[key]) em.classList.add(platformClasses[key]); // add color class
-                em.textContent = replacement;
-                fragment.appendChild(em);
-            } else {
-                fragment.appendChild(document.createTextNode(part));
+            for (const part of parts) {
+                const key = part.toLowerCase();
+                const replacement = platforms[key];
+                if (replacement) {
+                    const em = document.createElement('em');
+                    em.classList.add('msm-platform'); // base class
+                    if (platformClasses[key]) em.classList.add(platformClasses[key]); // add color class
+                    em.textContent = replacement;
+                    fragment.appendChild(em);
+                } else {
+                    fragment.appendChild(document.createTextNode(part));
+                }
+            }
+
+            node.replaceWith(fragment);
+        }
+
+        function traverse(node) {
+            // Ignore <a> elements and their children
+            if (node.nodeType === Node.ELEMENT_NODE) {
+                if (node.tagName === 'A') return;
+                for (const child of node.childNodes) traverse(child);
+            } else if (node.nodeType === Node.TEXT_NODE) {
+                replaceInTextNode(node);
             }
         }
 
-        node.replaceWith(fragment);
+        traverse(element);
     }
-
-    function traverse(node) {
-        // Ignore <a> elements and their children
-        if (node.nodeType === Node.ELEMENT_NODE) {
-            if (node.tagName === 'A') return;
-            for (const child of node.childNodes) traverse(child);
-        } else if (node.nodeType === Node.TEXT_NODE) {
-            replaceInTextNode(node);
-        }
-    }
-
-    traverse(element);
 }
