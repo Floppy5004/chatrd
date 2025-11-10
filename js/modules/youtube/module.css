@@ -41,6 +41,7 @@
 #chat .item.youtube span.member {
     background: #2ba640;
 }
+
 #chat .item.youtube span.verified {
     background: #aaa;
 }
@@ -52,6 +53,14 @@
     box-shadow: 2px 2px 5px rgba(0,0,0,0.25);
     padding: 0 5px;
     border-radius: 5px;
+}
+
+#chat .item.youtube.sub .user {
+    color: #2ba640 !important;
+}
+
+#chat .item.youtube.mod .user {
+    color: #5e84f1 !important;
 }
 
 #chat .item.youtube .platform .hidden-platform {

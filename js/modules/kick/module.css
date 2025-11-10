@@ -38,8 +38,10 @@
 }
 
 #chat .event.kick.kicksgifted .value span.gift-image img {
-    width: 48px;
-    height: auto;
+    /*width: 48px;
+    height: auto;*/
+    height: 48px;
+    width: auto;
     filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.5));
 }
 

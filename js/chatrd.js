@@ -99,7 +99,16 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
     const platformElement = clone.querySelector('.platform');
     
     if (showPlatform == true) {
-        platformElement.innerHTML = `<img src="js/modules/${platform}/images/logo-${platform}.svg">`; 
+        let platformContent;
+
+        if (root.classList.contains('youtube-vertical')) {
+            platformContent = `<img src="js/modules/${platform}/images/logo-${platform}-vertical.svg">`;     
+        }
+        else {
+            platformContent = `<img src="js/modules/${platform}/images/logo-${platform}.svg">`;     
+        }
+        
+        platformElement.innerHTML = platformContent;
     }
 
     if (showPlatformDot == true) {
@@ -214,14 +223,25 @@ function addEventItem(platform, clone, classes, userid, messageid) {
     const platformElement = clone.querySelector('.platform');
 
     if (showPlatform == true) {
+        let platformContent;
+
         if (showPlatformDot == true) {
             root.classList.add('no-platform');
             platformElement.remove();
         }
+
         else {
-            platformElement.innerHTML = `<img src="js/modules/${platform}/images/logo-${platform}.svg">`; 
-        }
+            if (root.classList.contains('youtube-vertical')) {
+            platformContent = `<img src="js/modules/${platform}/images/logo-${platform}-vertical.svg">`;     
+            }
+            else {
+                platformContent = `<img src="js/modules/${platform}/images/logo-${platform}.svg">`;     
+            }
+        }        
+        
+        platformElement.innerHTML = platformContent;
     }
+    
     else {
         root.classList.add('no-platform');
         platformElement.remove();

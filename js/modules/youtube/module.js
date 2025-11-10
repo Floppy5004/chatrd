@@ -112,6 +112,13 @@ async function youTubeChatMessage(data) {
 
     const classes = ['youtube', 'chat'];
 
+    const verticalTags = ["vertical", "shorts"];
+    const isVertical = data.broadcast.tags.some(item =>
+        verticalTags.some(target => item.toLowerCase() === target.toLowerCase())
+    );
+
+    if (isVertical) { classes.push('youtube-vertical'); }
+
     const [badgeList] = await Promise.all([
         getYouTubeBadges(data)
     ]);
@@ -165,6 +172,13 @@ async function youTubeSuperChatMessage(data) {
 
     const classes = ['youtube', 'superchat'];
 
+    const verticalTags = ["vertical", "shorts"];
+    const isVertical = data.broadcast.tags.some(item =>
+        verticalTags.some(target => item.toLowerCase() === target.toLowerCase())
+    );
+
+    if (isVertical) { classes.push('youtube-vertical'); }
+
     header.remove();
 
     
@@ -202,6 +216,13 @@ async function youTubeSuperStickerMessage(data) {
     );
 
     const classes = ['youtube', 'sticker'];
+
+    const verticalTags = ["vertical", "shorts"];
+    const isVertical = data.broadcast.tags.some(item =>
+        verticalTags.some(target => item.toLowerCase() === target.toLowerCase())
+    );
+
+    if (isVertical) { classes.push('youtube-vertical'); }
 
     if (showYouTubeSuperStickerGif == true) {
         youtubeStickerUrl = await getYouTubeStickerImage(data);
@@ -245,6 +266,13 @@ async function youTubeNewSponsorMessage(data) {
     );
 
     const classes = ['youtube', 'sponsor'];
+
+    const verticalTags = ["vertical", "shorts"];
+    const isVertical = data.broadcast.tags.some(item =>
+        verticalTags.some(target => item.toLowerCase() === target.toLowerCase())
+    );
+
+    if (isVertical) { classes.push('youtube-vertical'); }
 
     header.remove();
 
@@ -290,6 +318,13 @@ async function youTubeGiftBombMessage(data) {
 
     const classes = ['youtube', 'giftbomb'];
 
+    const verticalTags = ["vertical", "shorts"];
+    const isVertical = data.broadcast.tags.some(item =>
+        verticalTags.some(target => item.toLowerCase() === target.toLowerCase())
+    );
+
+    if (isVertical) { classes.push('youtube-vertical'); }
+
     header.remove();
 
     
@@ -329,6 +364,13 @@ async function youTubeGiftBombReceivedMessage(data) {
 
     const classes = ['youtube', 'giftbomb'];
 
+    const verticalTags = ["vertical", "shorts"];
+    const isVertical = data.broadcast.tags.some(item =>
+        verticalTags.some(target => item.toLowerCase() === target.toLowerCase())
+    );
+
+    if (isVertical) { classes.push('youtube-vertical'); }
+
     header.remove();
 
     
@@ -360,6 +402,8 @@ async function youTubeAddStatistics(data) {
     const title = data.title;
     const elementId = `youtubeStream-${id}`;
 
+    const tags = data.broadcast?.tags || data.tags;
+
     if (status == 'live') {
 
         const original = document.querySelector('#statistics #youtube');
@@ -367,6 +411,16 @@ async function youTubeAddStatistics(data) {
 
         if (!document.querySelector( `#${elementId}` )) {
             let youtubeStatisticsHTML = youtubeStatistics.replace(`id="youtube"`, `id="${elementId}"`);
+            
+            const verticalTags = ["vertical", "shorts"];
+            const isVertical = tags.some(item =>
+                verticalTags.some(target => item.toLowerCase() === target.toLowerCase())
+            );
+
+            if (isVertical) {
+                youtubeStatisticsHTML = youtubeStatisticsHTML.replace('logo-youtube.svg', 'logo-youtube-vertical.svg');
+            }
+
             document.querySelector('#statistics').insertAdjacentHTML('beforeend', youtubeStatisticsHTML);
 
             const streamelement = document.querySelector(`#${elementId}`);
@@ -411,7 +465,8 @@ async function youTubeUpdateStatistics(data) {
     youTubeAddStatistics({
         status: data.broadcast.status,
         id: id,
-        title: data.broadcast.title
+        title: data.broadcast.title,
+        tags: data.broadcast.tags
     })
 
     document.querySelector(`#statistics #youtubeStream-${id} .viewers span`).textContent = formatNumber(viewers);

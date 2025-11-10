@@ -289,7 +289,7 @@ async function twitchWatchStreakMessage(data) {
     user.textContent = data.displayName;
 
     action.innerHTML = ` watched `;
-    value.innerHTML = `<strong>${data.watchStreak} consecutive streams</strong> this month`;
+    value.innerHTML = `<strong>${data.watchStreak} consecutive streams</strong>!`;
     message.textContent = data.message;
     await getTwitchEmotesForWatchedStreakMessage(data, message);
 
