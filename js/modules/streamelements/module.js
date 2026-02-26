@@ -19,7 +19,7 @@ if (showStreamelements) {
 
 async function streamElementsEventMessage(data) {
 
-    if (showTwitchRewardRedemptions == false) return;
+    if (showStreamElementsTips == false) return;
 
     const template = eventTemplate;
 	const clone = template.content.cloneNode(true);
