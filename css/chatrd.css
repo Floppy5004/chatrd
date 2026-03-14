@@ -419,8 +419,9 @@ body {
     transform: translateY(0);
 }
 
-
-
+#chat.horizontal .item.chat .message:has(div.info > span.pronouns) {
+    padding: 3px 10px;
+}
 
 
 /* --------------------------- */
