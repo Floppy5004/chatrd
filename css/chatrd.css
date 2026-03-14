@@ -433,7 +433,7 @@ body {
 }
 
 #chat.oneline .item {
-    margin: 2px 0;
+    margin: -1px 0;
 }
 
 #chat.oneline .item .message {
