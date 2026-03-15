@@ -488,11 +488,11 @@ footer .nav-bar a img {
     font-size: 14px;
 }
 
-.modal-content #confirmAddEmote {
+.modal-content .confirm {
     background: #00dd63;
 }
 
-.modal-content #cancelAddEmote {
+.modal-content .cancel {
     background: #ff0000;
 }
 

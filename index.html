@@ -913,6 +913,7 @@
             <div class="url-bar">
                 <input type="text" id="outputUrl" placeholder="URL Here..." readonly="">
                 <button onclick="copyUrl()">Copy URL</button>
+                <button id="openImportModal">Import Settings</button>
             </div>
 
             <p>Made with ❤️ by <strong>VortisRD</strong></p>
@@ -946,8 +947,22 @@
 				<input type="text" id="newEmoteURL" placeholder="https://example.com/emote.png" class="avoid">
 			</label>
 			<div class="modal-buttons">
-				<button id="confirmAddEmote">Add</button>
-				<button id="cancelAddEmote">Cancel</button>
+				<button id="confirmAddEmote" class="confirm">Add</button>
+				<button id="cancelAddEmote" class="cancel">Cancel</button>
+			</div>
+		</div>
+	</div>
+
+    <div id="importUrlModal" class="modal hidden">
+		<div class="modal-content">
+			<h3>Import Settings</h3>
+			<label>
+				Paste your existing ChatRD URL
+				<input type="text" id="importUrlString" placeholder="https://vortisrd.github.io/chatrd/chat.html?..." class="avoid">
+			</label>
+			<div class="modal-buttons">
+				<button id="confirmImportUrl" class="confirm">Import</button>
+				<button id="cancelImportUrl" class="cancel">Cancel</button>
 			</div>
 		</div>
 	</div>

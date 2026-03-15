@@ -103,6 +103,114 @@ async function loadStreamerBotSettings() {
     });
 }
 
+
+function chatRdImportSettings(url) {
+    const qIndex = url.indexOf("?");
+    
+    if (qIndex === -1) return {};
+
+    const queryString = url.slice(qIndex + 1);
+    const params = new URLSearchParams(queryString);
+    const json = {};
+
+    for (const [key, value] of params.entries()) {
+      if (key === "") continue;
+
+      if (value === "true")       json[key] = true;
+      else if (value === "false") json[key] = false;
+      else if (value !== "" && !isNaN(value)) json[key] = Number(value);
+      else json[key] = decodeURIComponent(value);
+    }
+    
+    Object.keys(json).forEach(key => {
+        const input = document.querySelector(`[name="${key}"]`);
+        if (input) {
+            if (input.type === "checkbox") {
+                input.checked = json[key];
+            } else {
+                input.value = json[key];
+            }
+        }
+    });
+}
+
+
+
+
+
+
+/* -------------------------
+   Modal para importar URL
+-------------------------- */
+function setupImportUrlModal() {
+    const modal = document.getElementById("importUrlModal");
+    const urlInput = document.getElementById("importUrlString");
+    const openImportModal = document.getElementById("openImportModal");
+    const confirmBtn = document.getElementById("confirmImportUrl");
+    const cancelBtn = document.getElementById("cancelImportUrl");
+
+    if (!modal || !openImportModal) return;
+
+    // ESC global → aciona cancelBtn
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !modal.classList.contains("hidden")) {
+            cancelBtn.click();
+        }
+    });
+
+    // ENTER nos inputs → aciona confirmBtn
+    [urlInput].forEach(input => {
+        input.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault(); // evita submit/form
+                confirmBtn.click();
+            }
+        });
+    });
+
+    openImportModal.onclick = (event) => {
+        event.preventDefault();
+        if (streamerBotConnected) {
+            urlInput.value = "";
+            modal.classList.remove("hidden");
+            urlInput.focus();
+        } else {
+            alert("Streamer.bot is Offline!");
+        }
+    };
+
+    cancelBtn.onclick = (e) => {
+        e.preventDefault();
+        modal.classList.add("hidden");
+    };
+
+    confirmBtn.onclick = (e) => {
+        e.preventDefault();
+        const url = urlInput.value.trim();
+
+        if (!url) {
+            alert("URL Field is required.");
+            return;
+        }
+        chatRdImportSettings(url);
+
+        modal.classList.add("hidden");
+
+        openImportModal.textContent = 'Settings imported! Reloading...';
+        openImportModal.style.backgroundColor = "#00dd63";
+
+        saveSettingsToLocalStorage();
+
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
+    };
+}
+
+
+
+
+
 /* -------------------------
    Configurar eventos para salvar mudanças
 -------------------------- */
@@ -378,6 +486,10 @@ function setupAddEmoteModal() {
 }
 
 
+
+
+
+
 /* -------------------------
    Lista de emotes
 -------------------------- */
@@ -491,6 +603,7 @@ function streamerBotConnect() {
             generateUrl();
             setupFooterNavBar();
             setupAddEmoteModal();
+            setupImportUrlModal();
             setupPlatformToggles();
             speakerBotConnection();
             loadYouTubeCustomEmotes();
