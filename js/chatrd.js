@@ -2,6 +2,8 @@
 /*         OPTIONS         */
 /* ----------------------- */
 
+const isOBS = typeof window.obsstudio !== 'undefined';
+
 const showPlatform                  = getURLParam("showPlatform", true);
 const showPlatformDot               = getURLParam("showPlatformDot", false);
 const showAvatar                    = getURLParam("showAvatar", true);
@@ -173,9 +175,12 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
         let lastClasses = Array.from(chatContainer.firstElementChild.classList);
         lastClasses = lastClasses.filter(c => c !== 'item');
         lastClasses = lastClasses.filter(c => c !== 'grouped');
+        lastClasses = lastClasses.filter(c => c !== 'streamer-mentioned');
         lastClasses = lastClasses.join(' ');
 
-        let currentClasses = Array.from( classes ).join(' ');
+        let currentClasses = Array.from(classes)
+        //.filter(c => c !== 'streamer-mentioned')
+        .join(' ');
 
         if (lastUserId == userid && lastClasses == currentClasses) {
             infoEl.remove();

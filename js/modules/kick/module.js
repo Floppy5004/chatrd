@@ -18,6 +18,8 @@ const showKickRewardRedemptions     = getURLParam("showKickRewardRedemptions", t
 const showKickRaids                 = getURLParam("showKickRaids", true);
 const showKickViewers               = getURLParam("showKickViewers", true);
 
+let kickStreamer = null;
+
 const kickAvatars = new Map();
 const kick7TVEmojis = new Map();
 const kickSubBadges = [];
@@ -299,6 +301,23 @@ async function kickChatMessage(data) {
 
     header.remove();
     firstMessage.remove();
+
+
+    
+
+    if (isOBS == false) {
+        if (kickStreamer == null) {
+            const streamerInfo = await getStreamerInfo();
+            kickStreamer = streamerInfo.platforms.kick;
+        }
+
+        if (data.content.toLowerCase().includes( kickStreamer.broadcasterUserName.toLowerCase() )) {
+            classes.push('streamer-mentioned');
+        }
+    }
+
+
+
 
     user.style.color = data.sender.identity.color;
     user.textContent = data.sender.username;

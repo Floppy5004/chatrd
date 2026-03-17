@@ -19,6 +19,8 @@ const showTwitchSharedChat          = getURLParam("showTwitchSharedChat", true);
 const showTwitchPronouns            = getURLParam("showTwitchPronouns", false);
 const showTwitchViewers             = getURLParam("showTwitchViewers", true);
 
+let twitchStreamer = null;
+
 const twitchAvatars = new Map();
 const twitchPronouns = new Map();
 
@@ -125,7 +127,6 @@ if (showTwitch) {
     if (showTwitchViewers == true) { document.querySelector('#twitch').style.display = ''; }
 
     registerPlatformHandlersToStreamerBot(twitchMessageHandlers, '[Twitch]');
-
 }
 
 
@@ -173,6 +174,18 @@ async function twitchChatMessage(data) {
     header.remove();
 
     let streamData = data;
+
+    if (isOBS == false) {
+        if (twitchStreamer == null) {
+            const streamerInfo = await getStreamerInfo();
+            console.log(streamerInfo);
+            twitchStreamer = streamerInfo.platforms.twitch;
+        }
+        
+        if (data.message.message.toLowerCase().includes( twitchStreamer.broadcastUser.toLowerCase() )) {
+            classes.push('streamer-mentioned');
+        }
+    }
 
     user.style.color = data.message.color;
     user.textContent = data.message.displayName;
@@ -249,9 +262,7 @@ async function twitchChatMessage(data) {
         }
     }
     else { pronoun.remove(); }
-
     
-
     message.textContent = streamData.message.message;
     await getTwitchEmotes(streamData, message);
 

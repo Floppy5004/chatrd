@@ -12,6 +12,8 @@ const showYouTubeGiftMemberships        = getURLParam("showYouTubeGiftMembership
 const showYouTubeMembershipsTrain       = getURLParam("showYouTubeMembershipsTrain", true);
 const showYouTubeStatistics             = getURLParam("showYouTubeStatistics", true);
 
+let youtubeStreamer = null;
+
 let youTubeCustomEmotes = [];
 let youTubeBTTVEmotes = [];
 
@@ -65,7 +67,7 @@ const youtubeStatistics = `
 if (showYoutube) {
     document.querySelector('#statistics').insertAdjacentHTML('beforeend', youtubeStatistics);
 
-    if (showTwitchViewers == true) { document.querySelector('#youtube').style.display = ''; }
+    if (showYouTubeStatistics == true) { document.querySelector('#youtube').style.display = ''; }
 
     registerPlatformHandlersToStreamerBot(youtubeMessageHandlers, '[YouTube]');
 }
@@ -128,6 +130,21 @@ async function youTubeChatMessage(data) {
     sharedChat.remove();
     reply.remove();
     pronoun.remove();
+
+    
+
+    if (isOBS == false) {
+        if (youtubeStreamer == null) {
+            const streamerInfo = await getStreamerInfo();
+            youtubeStreamer = streamerInfo.platforms.youtube;
+        }
+        
+        if (data.message.message.toLowerCase().includes( youtubeStreamer.broadcastUserName.toLowerCase() )) {
+            classes.push('streamer-mentioned');
+        }
+    }
+
+
 
     var color = await createRandomColor('youtube', data.user.name);
 

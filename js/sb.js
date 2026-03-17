@@ -68,7 +68,10 @@ function streamerBotConnect() {
 const streamerBotClient = streamerBotConnect();
 
 
-
+async function getStreamerInfo() {
+    const requestForStreamer = await streamerBotClient.getBroadcaster();
+    return requestForStreamer;
+}
 
 function getURLParam(param, defaultValue) {
     const urlParams = new URLSearchParams(window.location.search);

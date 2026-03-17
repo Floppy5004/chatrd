@@ -428,6 +428,11 @@ body {
 /* ----- ONE LINE LAYOUT ----- */
 /* --------------------------- */
 
+
+
+
+
+
 #chat.oneline {
     white-space: wrap;
 }
@@ -773,11 +778,69 @@ body {
 }
 
 .item.chat:hover .message {
-    background: rgba(255,255,255,0.03);
+    /*background: rgba(255,255,255,0.03);*/
 }
+
+.item.chat.streamer-mentioned .message,
+.item.chat.streamer-mentioned .message .info,
+.item.chat.streamer-mentioned .message .actual-message {
+    position: relative;
+    z-index: 11;
+}
+
+.item.chat.streamer-mentioned .message::before {
+    content: 'mentioned you';
+    display: block;
+    position: absolute;
+    top: -5px;
+    right: 5px;
+    color: #FF0000;
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-shadow: none !important;
+}
+
+.item.chat.streamer-mentioned .message::after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-53.5%);
+    background: rgba(255,0,0,0.1);
+    border: 2px solid rgba(255,0,0,0.1);
+    padding: 0px 1px;
+    border-radius: 5px;
+}
+
+.item.chat.grouped.streamer-mentioned .message {
+    padding: 10px !important;
+}
+
+
+#chat:not(.oneline):not(.horizontal) .item.chat.streamer-mentioned {
+    margin: 5px 0;
+}
+
+#chat.oneline .item.chat.streamer-mentioned {
+    margin: 5px 0;
+}
+
+#chat.oneline .item.chat.streamer-mentioned .message {
+    padding: 1px 10px 10px 10px;
+}
+
+#chat.horizontal .item.chat.streamer-mentioned .message:has(.timestamp) {
+    padding: 5px 10px;
+}
+
 
 .item.chat:hover .chatmoderation {
     opacity: 1;
+    z-index: 11;
 }
 
 .item.chat .chatmoderation button {

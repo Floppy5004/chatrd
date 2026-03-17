@@ -81,7 +81,7 @@ async function tiktokConnection() {
             const data = JSON.parse(response.data);
             const tiktokData = data.data;
 
-            console.debug(`[TikTok] ${data.event}`, data.data);
+            console.debug(`[TikTok] ${data.event}`, data);
 
             switch (data.event) {
                 case 'roomUser' : tiktokUpdateStatistics(tiktokData, 'viewers'); break;

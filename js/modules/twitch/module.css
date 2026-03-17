@@ -139,3 +139,15 @@
 
 
 .msm-platform.purple { background: rgba(145,70,255,0.75); }
+
+
+
+.item.twitch.chat.streamer-mentioned .message::after {
+    transform: translate(-50%,-53.5%);
+    background: rgba(145,70,255,0.15);
+    border: 2px solid rgba(145,70,255,0.15);
+}
+
+.item.twitch.chat.streamer-mentioned .message::before {
+    color: #ac46ff;
+}
