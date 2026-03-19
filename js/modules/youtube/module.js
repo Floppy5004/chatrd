@@ -139,7 +139,7 @@ async function youTubeChatMessage(data) {
             youtubeStreamer = streamerInfo.platforms.youtube;
         }
         
-        if (data.message.message.toLowerCase().includes( youtubeStreamer.broadcastUserName.toLowerCase() )) {
+        if (data.message.toLowerCase().includes( youtubeStreamer.broadcastUserName.toLowerCase() )) {
             classes.push('streamer-mentioned');
         }
     }
