@@ -88,6 +88,8 @@ const twitchMessageHandlers = {
     'Twitch.Raid': (response) => {
         twitchRaidMessage(response.data);
     },
+
+
     'Twitch.ChatMessageDeleted': (response) => {
         twitchChatMessageDeleted(response.data);
     },
@@ -97,6 +99,21 @@ const twitchMessageHandlers = {
     'Twitch.UserTimedOut': (response) => {
         twitchUserBanned(response.data);
     },
+    
+
+    'Twitch.SharedChatMessageDeleted': (response) => {
+	    twitchChatMessageDeleted(response.data);
+    },
+
+    'Twitch.SharedChatUserBanned': (response) => {
+        twitchUserBanned(response.data);
+    },
+
+    'Twitch.SharedChatUserTimedout': (response) => {
+        twitchUserBanned(response.data);
+    },
+
+
     'Twitch.ViewerCountUpdate': (response) => {
         twitchUpdateStatistics(response.data);
     },
@@ -178,7 +195,6 @@ async function twitchChatMessage(data) {
     if (isOBS == false) {
         if (twitchStreamer == null) {
             const streamerInfo = await getStreamerInfo();
-            console.log(streamerInfo);
             twitchStreamer = streamerInfo.platforms.twitch;
         }
         
@@ -236,7 +252,7 @@ async function twitchChatMessage(data) {
     }
     else { reply.remove(); }
 
-    if (data.message.isSharedChat) {
+    /*if (data.message.isSharedChat) {
         if (showTwitchSharedChat == true) {
             classes.push('shared-chat');
 
@@ -248,6 +264,21 @@ async function twitchChatMessage(data) {
             }
         }
         else if (!data.sharedChat.primarySource && showTwitchSharedChat == false) {
+            return;
+        }
+    }
+    else { sharedChat.remove(); }*/
+
+    if (data.isFromSharedChatGuest) {
+        if (showTwitchSharedChat == true) {
+            classes.push('shared-chat');
+
+            let sharedStreamer = data.sharedChatSource.login.toLowerCase();
+            let sharedStreamerAvatar = await getTwitchAvatar( sharedStreamer );
+            sharedChat.querySelector('span.origin img').src = sharedStreamerAvatar;
+            sharedChat.querySelector('span.origin strong').textContent = data.sharedChatSource.name;
+        }
+        else {
             return;
         }
     }
