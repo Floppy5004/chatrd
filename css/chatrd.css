@@ -424,6 +424,11 @@ body {
 }
 
 
+#chat.horizontal .item.chat .message:has(div.info > span.pronouns:empty) {
+    padding: 5px 10px;
+}
+
+
 /* --------------------------- */
 /* ----- ONE LINE LAYOUT ----- */
 /* --------------------------- */
