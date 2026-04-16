@@ -12,7 +12,7 @@ const showYouTubeGiftMemberships        = getURLParam("showYouTubeGiftMembership
 const showYouTubeMembershipsTrain       = getURLParam("showYouTubeMembershipsTrain", true);
 const showYouTubeStatistics             = getURLParam("showYouTubeStatistics", true);
 
-let youtubeStreamer = null;
+const youtubeStreamer = {};
 
 let youTubeCustomEmotes = [];
 let youTubeBTTVEmotes = [];
@@ -65,9 +65,11 @@ const youtubeStatistics = `
 
 
 if (showYoutube) {
-    document.querySelector('#statistics').insertAdjacentHTML('beforeend', youtubeStatistics);
 
-    if (showYouTubeStatistics == true) { document.querySelector('#youtube').style.display = ''; }
+    if ((showYouTubeStatistics == true) && (showPlatformStatistics == true)) {
+        document.querySelector('#statistics').insertAdjacentHTML('beforeend', youtubeStatistics);
+        document.querySelector('#youtube').style.display = '';
+    }
 
     registerPlatformHandlersToStreamerBot(youtubeMessageHandlers, '[YouTube]');
 }
@@ -134,9 +136,10 @@ async function youTubeChatMessage(data) {
     
 
     if (isOBS == false) {
-        if (youtubeStreamer == null) {
+        
+        if (!youtubeStreamer.broadcastUserName) {
             const streamerInfo = await getStreamerInfo();
-            youtubeStreamer = streamerInfo.platforms.youtube;
+            youtubeStreamer.broadcastUserName = streamerInfo.platforms.youtube.broadcastUserName;
         }
         
         if (data.message.toLowerCase().includes( youtubeStreamer.broadcastUserName.toLowerCase() )) {
@@ -151,7 +154,6 @@ async function youTubeChatMessage(data) {
     user.style.color = color;
     user.textContent = data.user.name;
 
-    
     message.textContent = data.message;
     await getYouTubeEmotes(data, message);
 

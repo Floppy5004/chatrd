@@ -29,23 +29,32 @@
 #chat .item img.gigantified {
     display: block;
     height: 96px;
+    margin-top: 5px;
 }
 
 #chat .item.announcement.twitch .chatmoderation {
     display: none;
 }
 
-#chat:not(.horizontal) .item.announcement.twitch {
+/*#chat:not(.horizontal) .item.announcement.twitch {
+    margin: 0 5px 5px 5px;
+}*/
+
+/*#chat:not(.horizontal) .item.chat.first-chatter.twitch {
     margin: 0 10px;
+}*/
+
+#chat .item.twitch.highlighted .message {
+    background: rgba(145,70,255,0.75);
 }
 
-#chat:not(.horizontal) .item.chat.first-chatter.twitch {
-    margin: 0 10px;
+#chat.oneline .item.highlighted .message {
+    padding: 3px 13px 10px 10px;
 }
 
-#chat.oneline .item.announcement.twitch {
-    margin: 10px 10px 0px 10px;
-}
+/*#chat.oneline .item.announcement.twitch {
+    margin: 10px 10px 10px 10px;
+}*/
 
 
 #statistics .platform#twitch {
@@ -141,13 +150,141 @@
 .msm-platform.purple { background: rgba(145,70,255,0.75); }
 
 
-
-.item.twitch.chat.streamer-mentioned .message::after {
-    transform: translate(-50%,-53.5%);
+#chat .item.twitch.chat.streamer-mentioned:not(.first-message) .message {
     background: rgba(145,70,255,0.15);
-    border: 2px solid rgba(145,70,255,0.15);
 }
 
 .item.twitch.chat.streamer-mentioned .message::before {
     color: #ac46ff;
 }
+
+
+
+
+
+
+
+
+#hypetrain,
+.goal-bar {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 10px;
+    padding: 6px 15px 6px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    text-shadow: 0px 2px 5px rgba(0,0,0,1);
+    color: #FFF;
+
+    background: #a970ff;
+    outline: 1px solid rgba(255,255,255,0.25);
+    outline-offset: -1px;
+
+    min-width: 260px;
+    overflow: hidden;
+}
+
+.goal-bar {
+    min-width: unset;
+    width: fit-content;
+    gap: 20px;
+}
+
+#hypetrain div:not(.progressbar-fill):not(.info),
+.goal-bar div:not(.progressbar-fill):not(.info) {
+    position: relative;
+    z-index: 111;
+}
+
+#hypetrain .logo img,
+.goal-bar .logo img {
+    width: 18px;
+    filter: drop-shadow(0px 0px 5px rgba(0,0,0,1));
+    transform: translateY(2px);
+}
+
+#hypetrain .progressbar-fill,
+.goal-bar .progressbar-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.5));
+    border-radius: 5px;
+    
+    outline: 1px solid rgba(255,255,255,0.1);
+    outline-offset: -1px;
+
+    transition: all 1s ease;
+}
+
+#hypetrain .level,
+#hypetrain .timeremaining {
+    font-size: 12px;
+    background: rgba(0,0,0,0.2);
+    padding: 3px 9px;
+    border-radius: 5px;
+}
+
+#hypetrain .level {
+    min-width: 64px;
+    text-align: center;
+}
+
+#hypetrain .timeremaining {
+    min-width: 56px;
+    text-align: center;
+}
+
+#hypetrain .percentage,
+.goal-bar .percentage {
+    min-width: 58px;
+    text-align: right;
+    font-size: 20px;
+}
+
+.goal-bar .percentage { font-size: 16px; line-height: 100%; }
+.goal-bar .percentage small { font-size: 16px; }
+
+#hypetrain .info,
+.goal-bar .info {
+    position: absolute;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+
+    background: #a970ff;
+    outline: 1px solid rgba(255,255,255,0.25);
+    outline-offset: -1px;
+    font-size: 16px;
+    
+    z-index: 111;
+}
+
+.goal-bar .info { opacity: 0; }
+
+#hypetrain.golden-kappa-train,
+#hypetrain.golden-kappa-train .info {
+    background: #ffb521;
+}
+
+#hypetrain.treasure-train,
+#hypetrain.treasure-train .info {
+    background: #ff9721;
+}
+
+#chat .event.twitch.hypetrain.golden-kappa-train .message { background: #ffb521; }
+#chat .event.twitch.hypetrain.treasure-train .message { background: #ff9721; }

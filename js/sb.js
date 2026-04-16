@@ -55,6 +55,8 @@ function streamerBotConnect() {
                 title: 'Connected to Streamer.bot',
                 text: ``
             });
+            twitchGoalsFetch();
+            kickConnection();
         },
         onDisconnect: () => {
             console.debug("[ChatRD][Settings] Streamer.bot disconnected.");

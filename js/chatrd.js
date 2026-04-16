@@ -12,7 +12,7 @@ const ampmTimeStamps                = getURLParam("ampmTimeStamps", false);
 const showBadges                    = getURLParam("showBadges", true);
 const showPlatformStatistics        = getURLParam("showPlatformStatistics", true);
 
-const chatThreshold                 = 50;
+const chatThreshold                 = 100;
 const chatOneLine                   = getURLParam("chatOneLine", false);
 const chatHorizontal                = getURLParam("chatHorizontal", false); 
 const chatMessageGroup              = getURLParam("chatMessageGroup", false); 
@@ -56,10 +56,11 @@ const chatRDBody = document.body;
 chatRDBody.style.fontFamily = chatFontFamily;
 
 if (showPlatformStatistics == true) {
-    var statistics = document.querySelector('#statistics');
     statistics.style.display = '';
-    statistics.style.zoom = chatFontSize;
 }
+
+document.querySelector('#bars').style.zoom = chatFontSize;
+
 if (chatScrollBar == false) { chatContainer.classList.add('noscrollbar'); }
 if (chatOneLine == true && !chatHorizontal) { chatContainer.classList.add('oneline'); }
 if (chatHorizontal == true) {
@@ -165,7 +166,7 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
                 break;
 
             default:
-                console.warn(`Plataforma desconhecida: ${platform}`);
+                //console.warn(`Plataforma desconhecida: ${platform}`);
         }
     }
 
@@ -187,25 +188,11 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
             root.classList.add('grouped');
         }
     }
-
+   
     chatContainer.prepend(clone);
 
     const item = document.getElementById(messageid);
     const itemDimension = item.querySelector('.message')?.[`offset${dimensionProp}`] || 0;
-
-
-    /*
-    // Animates the item
-    requestAnimationFrame(() => {
-        item.style[dimensionProp.toLowerCase()] = itemDimension + 'px';
-        item.style.opacity = '1';
-    });
-
-    item.addEventListener('transitionend', () => {
-        item.style[dimensionProp.toLowerCase()] = '';
-        item.style.opacity = '';
-    }, { once: true });
-    */
 
     setTimeout(function () {
     	item.style[dimensionProp.toLowerCase()] = itemDimension + 'px';
@@ -250,12 +237,24 @@ function addEventItem(platform, clone, classes, userid, messageid) {
         }
 
         else {
-            if (root.classList.contains('youtube-vertical')) {
-            platformContent = `<img src="js/modules/${platform}/images/logo-${platform}-vertical.svg">`;     
+            
+        
+            const isTwitch = platform === "twitch";
+
+            if (root.classList.contains("youtube-vertical")) {
+                platformContent = `<img src="js/modules/youtube/images/logo-youtube-vertical.svg">`;
+            }
+            else if (isTwitch && root.classList.contains("golden-kappa-train")) {
+                platformContent = `<img src="js/modules/twitch/images/golden-kappa-emote.png">`;
+            }
+            else if (isTwitch && root.classList.contains("treasure-train")) {
+                platformContent = `<img src="js/modules/twitch/images/icon-treasure.svg">`;
             }
             else {
-                platformContent = `<img src="js/modules/${platform}/images/logo-${platform}.svg">`;     
+                platformContent = `<img src="js/modules/${platform}/images/logo-${platform}.svg">`;
             }
+
+
         }        
         
         platformElement.innerHTML = platformContent;
@@ -317,6 +316,31 @@ function addEventItem(platform, clone, classes, userid, messageid) {
         }, Math.floor(hideAfter * 1000));
     }
 }
+
+
+async function preloadAndPrepend(container, fragment) {
+    const tempDiv = document.createElement('div');
+    tempDiv.appendChild(fragment.cloneNode(true));
+    
+    const images = tempDiv.querySelectorAll('img');
+
+    if (images.length > 0) {
+        await Promise.all(
+            Array.from(images).map(img => new Promise((resolve) => {
+                const src = img.src || img.dataset.src;
+                if (!src) return resolve();
+
+                const preloader = new Image();
+                preloader.onload = resolve;
+                preloader.onerror = resolve;
+                preloader.src = src;
+            }))
+        );
+    }
+
+    container.prepend(fragment);
+}
+
 
 
 function removeItem(element) {
@@ -383,6 +407,12 @@ function formatCurrency(amount, currencyCode) {
     }).format(amount);
 }
 
+function formatTime(seconds) {
+    if (seconds <= 0) return '0:00';
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s.toString().padStart(2, '0')}`;
+}
 
 function createRandomString(length) {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -853,24 +883,6 @@ function renderTemplate(template, data) {
 }
 
 
-async function cleanStringOfHTMLButEmotes(string) {
-    // Cria um elemento DOM temporário
-    const container = document.createElement('div');
-    container.innerHTML = string;
-
-    // Substitui <img class="emote" alt="..."> por texto do alt
-    const emotes = container.querySelectorAll('img.emote[alt]');
-    emotes.forEach(img => {
-        const altText = img.getAttribute('alt');
-        const textNode = document.createTextNode(altText);
-        img.replaceWith(textNode);
-    });
-
-    // Remove todo o restante do HTML
-    return container.textContent || "";
-}
-
-
 async function executeModCommand(event, command) {
     event.preventDefault();
     chatInput.value = command;
@@ -931,16 +943,10 @@ async function getAndReplaceLinks(el) {
 }
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    pushChatInputSettings();
-    loadChatInputSettingFromLocalStorage();
-});
-
-
+const _escapeDiv = document.createElement('div');
 function escapeHTML(str) {
-    const div = document.createElement('div');
-    div.innerText = str;   // ou textContent
-    return div.innerHTML;
+    _escapeDiv.textContent = str;
+    return _escapeDiv.innerHTML;
 }
 
 async function multiStreamChat(element) {
@@ -1000,3 +1006,110 @@ async function multiStreamChat(element) {
         traverse(element);
     }
 }
+
+
+
+
+/* ------------------------------ */
+/* ---- AUTO SCROLL, FINALLY ---- */
+/* ------ Yo RexBordz!😁 ------- */
+/* ----------------------------- */
+
+function useAutoScroll(container, options = {}) {
+    const {
+        pauseThreshold = 0.10,
+        resumeThreshold = 0.05,
+        notice = null,
+        smoothScroll = false,
+    } = options;
+
+    let autoScroll = true;
+    let scrolling = false;
+
+    function showNotice() {
+        if (!notice) return;
+        notice.style.setProperty('visibility', 'visible');
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                notice.style.setProperty('opacity', '1');
+            });
+        });
+    }
+
+    function hideNotice() {
+        if (!notice) return;
+        notice.style.setProperty('opacity', '0');
+        notice.addEventListener('transitionend', () => {
+            notice.style.setProperty('visibility', 'hidden');
+        }, { once: true });
+    }
+
+    if (notice) {
+        notice.style.setProperty('visibility', 'hidden');
+        notice.style.setProperty('opacity', '0');
+        notice.addEventListener('click', () => scrollToBottom());
+    }
+
+    container.addEventListener('scroll', () => {
+        if (scrolling) return;
+
+        const { scrollTop, scrollHeight, clientHeight } = container;
+        const totalScrollable = scrollHeight - clientHeight;
+        if (totalScrollable === 0) return;
+
+        const percent = Math.abs(scrollTop) / totalScrollable;
+
+        if (autoScroll && percent > pauseThreshold) {
+            autoScroll = false;
+            showNotice();
+        }
+        if (!autoScroll && percent < resumeThreshold) {
+            autoScroll = true;
+            hideNotice();
+        }
+    });
+
+    function scrollToBottom() {
+        scrolling = true;
+        autoScroll = true;
+        hideNotice();
+
+        const prev = container.style.scrollBehavior;
+        container.style.scrollBehavior = 'auto';
+        container.scrollTop = 0;
+        container.style.scrollBehavior = prev;
+
+        const release = () => { scrolling = false; };
+        if ('onscrollend' in window) {
+            container.addEventListener('scrollend', release, { once: true });
+        } else {
+            setTimeout(release, 500);
+        }
+    }
+
+    return {
+        onPrepend: () => { if (autoScroll) container.scrollTop = 0; },
+        scrollToBottom,
+        isActive: () => autoScroll,
+    };
+}
+
+
+
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    pushChatInputSettings();
+    loadChatInputSettingFromLocalStorage();
+
+    if (document.querySelector('#chat:not(.noscrollbar)')) {
+        const scroll = useAutoScroll(document.querySelector('#chat:not(.noscrollbar)'), {
+            notice: document.querySelector('#chat-scroll-bottom'),
+        });
+    }
+});

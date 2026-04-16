@@ -6,25 +6,44 @@
 #chat .item:has(.avatar) .message { padding-left: 65px; }
 
 /* Two-lined Vertical Chat */
-#chat:not(.horizontal):not(.oneline) .item { margin-bottom: 10px !important; }
-#chat:not(.horizontal):not(.oneline) .item .actual-message { margin-top: 0 !important; }
 
-#chat:not(.horizontal):not(.oneline) .item .info .avatar { position: absolute !important; top: 10px; left: 10px; width: 50px; height: 50px; }
+#chat:not(.horizontal):not(.oneline) .item .info .avatar { position: absolute !important; top: 5px; left: 10px; width: 50px; height: 50px; }
 #chat:not(.horizontal):not(.oneline) .item .info .avatar img { height: 50px; }
 #chat:not(.horizontal):not(.oneline) .item.chat.grouped .message { padding: 5px 10px; }
+#chat:not(.oneline):not(.horizontal) .item.chat.streamer-mentioned { margin: 0; }
+
+#chat:not(.horizontal):not(.oneline) .item.streamer-mentioned .info .avatar {
+    top: 2px;
+    left: -60px;
+}
+
+#chat:not(.horizontal):not(.oneline) .item.streamer-mentioned .message:has(.avatar) {
+    padding-left: 70px !important;
+}
 
 /* One-lined Vertical Chat */
-#chat.oneline .item .info .avatar { position: absolute !important; top: 2px; left: 10px; }
+#chat.oneline .item .info .avatar { position: absolute !important; top: -10px; left: -33px; }
 #chat.oneline .item:not(.grouped) .message { padding: 10px; }
-#chat.oneline .item:not(.grouped):has(.avatar) .message { padding: 10px 10px 10px 48px; }
-#chat.oneline .item.grouped .message { padding: 10px; }
-#chat.oneline .item { margin-bottom: 8px !important; }
+#chat.oneline .item:not(.grouped):has(.avatar) .message { padding: 10px 10px 0px 38px; }
+#chat.oneline .item.grouped .message { padding: 10px 10px 0 10px; }
+#chat.oneline:not(.horizontal) .item.chat.streamer-mentioned { margin: 0; }
+
+#chat:not(.horizontal).oneline .item.streamer-mentioned .message:has(.avatar) {
+    padding-left: 48px !important;
+}
+
+#chat:not(.horizontal).oneline .item.streamer-mentioned .info .avatar {
+    top: -9px;
+    left: -40px;
+}
+
+#chat.oneline .item:not(.grouped):has(.avatar).streamer-mentioned .message { padding: 10px 10px 10px 38px; }
 
 /* One-lined Horizontal Chat */
 #chat.horizontal .item .info .avatar { position: absolute !important; top: -10px; left: -38px; }
 #chat.horizontal .item:not(.grouped) .message { padding: 10px !important; }
 #chat.horizontal .item:not(.grouped):has(.avatar) .message { padding: 10px 10px 10px 48px !important; }
-#chat.horizontal .item.grouped .message { padding: 11px !important; }
+#chat.horizontal .item.grouped .message { padding: 13px !important; }
 
 #chat.horizontal .item:not(.grouped) .first-message,
 #chat.horizontal .item:not(.grouped) .shared-chat,

@@ -4,7 +4,8 @@
 
 const showKick                      = getURLParam("showKick", false);
 
-const kickUserName                  = getURLParam("kickUserName", "");
+//const kickUserName                  = getURLParam("kickUserName", "");
+let kickUserName = null;
 
 const showKickMessages              = getURLParam("showKickMessages", true);
 const showKickFollows               = getURLParam("showKickFollows", true);
@@ -18,7 +19,7 @@ const showKickRewardRedemptions     = getURLParam("showKickRewardRedemptions", t
 const showKickRaids                 = getURLParam("showKickRaids", true);
 const showKickViewers               = getURLParam("showKickViewers", true);
 
-let kickStreamer = null;
+const kickStreamer = {};
 
 const kickAvatars = new Map();
 const kick7TVEmojis = new Map();
@@ -47,8 +48,13 @@ const kickMessageHandlers = {
     /*'Kick.ChatMessage': (response) => {\
         kickChatMessage(response.data);
     },*/
+
     'Kick.Follow': (response) => {
         kickFollowMessage(response.data);
+    },
+
+    'Kick.ViewerCountUpdate': (response) => {
+        kickUpdateStatistics(response.data);
     },
 
 };
@@ -58,22 +64,22 @@ const kickMessageHandlers = {
 document.addEventListener('DOMContentLoaded', () => {
     if (showKick) {
 
-        const kickStatistics = `
-            <div class="platform" id="kick" style="display: none;">
-                <img src="js/modules/kick/images/logo-kick.svg" alt="">
-                <span class="viewers"><i class="fa-solid fa-user"></i> <span>0</span></span>
-            </div>
-        `;
-
-        document.querySelector('#statistics').insertAdjacentHTML('beforeend', kickStatistics);
-
-        if (showKickViewers == true) { document.querySelector('#statistics #kick').style.display = ''; }
+        if ((showKickViewers == true) && (showPlatformStatistics == true)) {
+            const kickStatistics = `
+                <div class="platform" id="kick" style="display: none;">
+                    <img src="js/modules/kick/images/logo-kick.svg" alt="">
+                    <span class="viewers"><i class="fa-solid fa-user"></i> <span>0</span></span>
+                </div>
+            `;
+            document.querySelector('#statistics').insertAdjacentHTML('beforeend', kickStatistics);
+            document.querySelector('#statistics #kick').style.display = '';        
+        }
 
         console.debug('[Kick][Debug] DOMContentLoaded fired');
 
         registerPlatformHandlersToStreamerBot(kickMessageHandlers, '[Kick][SB1]');
         
-        kickConnection();
+        //kickConnection();
     }
     
 });
@@ -87,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // KICK CONNECT HANDLER
 
 async function kickConnection() {
-    if (!kickUserName) return;
+    //if (!kickUserName) return;
 
     const kickMaxTries = 20;
     const kickReconnectDelay = 10000;
@@ -96,8 +102,44 @@ async function kickConnection() {
 
 
     async function connect() {
+        let kickUserInfo = "";
+        
         try {
-            const kickUserInfo = await kickGetUserInfo(kickUserName);
+            if (kickUserName == null) {
+                console.debug('[Kick] Kick username is null. Trying to get it...');
+
+                let streamerInfo = await getStreamerInfo();
+                let kickUserLogin = streamerInfo.platforms.kick.broadcasterLogin;
+                let kickUrlCheck = `https://kick.com/api/v2/channels/${kickUserLogin}`;
+
+                try {
+                    let response = await fetch(kickUrlCheck);
+                    if (response.ok) {
+                        kickUserName = kickUserLogin;
+                        kickUserInfo = await response.json();
+                    } 
+                    else {
+                        let kickTryUserAgain = kickUserLogin.replace(/_/g, "-");
+                        kickUrlCheck = `https://kick.com/api/v2/channels/${kickTryUserAgain}`;
+                        response = await fetch(kickUrlCheck);
+
+                        if (response.ok) {
+                            kickUserName = kickTryUserAgain;
+                            kickUserInfo = await response.json();
+                        }
+                        else {
+                            throw new Error(`HTTP error ${response.status}`);
+                        }
+                    }
+                }
+                catch (error) {
+                    console.error("[Kick] Failed to fetch user based on Streamer.bot's login: ", error.message);
+                    return null;
+                }
+
+            }
+
+            //const kickUserInfo = await kickGetUserInfo(kickUserName);
             const kickUserId = kickUserInfo.user_id;
 
             if (!kickUserInfo || !kickUserInfo.chatroom || !kickUserInfo.chatroom.id) {
@@ -129,8 +171,6 @@ async function kickConnection() {
                     title: 'Connected to Kick',
                     text: `User set to <strong>${kickUserName}</strong>.`
                 });
-
-
                 
                 // Getting 7TV User Emotes and Global Emotes
                 (async () => {
@@ -142,16 +182,13 @@ async function kickConnection() {
                     }
                 })();
 
-
-
-
-                if (showKickViewers === true) {
+                /*if (showKickViewers === true) {
                     setInterval(() => {
                         kickGetUserInfo(kickUserName).then(data => {
                             kickUpdateStatistics(data);
                         });
                     }, 15000);
-                }
+                }*/
             };
 
             kickWebSocket.onmessage = (response) => {
@@ -306,11 +343,12 @@ async function kickChatMessage(data) {
     
 
     if (isOBS == false) {
-        if (kickStreamer == null) {
+        
+        if (!kickStreamer.broadcasterUserName) {
             const streamerInfo = await getStreamerInfo();
-            kickStreamer = streamerInfo.platforms.kick;
+            kickStreamer.broadcasterUserName = streamerInfo.platforms.kick.broadcasterUserName;
         }
-
+        
         if (data.content.toLowerCase().includes( kickStreamer.broadcasterUserName.toLowerCase() )) {
             classes.push('streamer-mentioned');
         }
@@ -666,13 +704,21 @@ async function kickChatClearMessages() {
 
 
 
-async function kickUpdateStatistics(data) {
+/*async function kickUpdateStatistics(data) {
     if (showPlatformStatistics == false || showKickViewers == false) return;
     if (data.livestream == null) { }
     else {
         const viewers = formatNumber(DOMPurify.sanitize(data.livestream.viewer_count)) || "0";
         document.querySelector('#statistics #kick .viewers span').textContent = viewers;
     }
+}*/
+
+
+async function kickUpdateStatistics(data) {
+    if (showPlatformStatistics == false || showKickViewers == false) return;
+
+    const viewers = formatNumber(DOMPurify.sanitize(data.viewerCount))  || "0";
+    document.querySelector('#statistics #kick .viewers span').textContent = viewers;
 }
 
 

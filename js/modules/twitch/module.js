@@ -15,11 +15,15 @@ const showTwitchGiftedSubsUserTrain = getURLParam("showTwitchGiftedSubsUserTrain
 const showTwitchMassGiftedSubs      = getURLParam("showTwitchMassGiftedSubs", true);
 const showTwitchRewardRedemptions   = getURLParam("showTwitchRewardRedemptions", true);
 const showTwitchRaids               = getURLParam("showTwitchRaids", true);
+const showTwitchHypeTrain           = getURLParam("showTwitchHypeTrain", false);
+const showTwitchHypeTrainBar        = getURLParam("showTwitchHypeTrainBar", false);
+const showTwitchGoals               = getURLParam("showTwitchGoals", false);
+const showTwitchGoalsBars           = getURLParam("showTwitchGoalsBars", false);
 const showTwitchSharedChat          = getURLParam("showTwitchSharedChat", true);
 const showTwitchPronouns            = getURLParam("showTwitchPronouns", false);
 const showTwitchViewers             = getURLParam("showTwitchViewers", true);
 
-let twitchStreamer = null;
+const twitchStreamer = {};
 
 const twitchAvatars = new Map();
 const twitchPronouns = new Map();
@@ -122,26 +126,50 @@ const twitchMessageHandlers = {
     },
 
 
-    'Twitch.HypeTrainStart' : (response) => { },
-    'Twitch.HypeTrainUpdate' : (response) => { },
-    'Twitch.HypeTrainLevelUp' : (response) => { },
-    'Twitch.HypeTrainEnd' : (response) => { }
+    'Twitch.HypeTrainStart' : (response) => {
+        twitchHypeTrainStart(response.data);
+    },
+    'Twitch.HypeTrainUpdate' : (response) => {
+        twitchHypeTrainUpdate(response.data);
+    },
+    'Twitch.HypeTrainLevelUp' : (response) => {
+        twitchHypeTrainLevelUp(response.data);
+    },
+    'Twitch.HypeTrainEnd' : (response) => {
+        twitchHypeTrainEnd(response.data);
+    },
+
+    'Twitch.GoalBegin' : (response) => {
+        twitchGoalBegin(response.data);
+    },
+    'Twitch.GoalProgress' : (response) => {
+         twitchGoalProgress(response.data);
+    },
+    'Twitch.GoalEnd' : (response) => {
+         twitchGoalEnd(response.data);
+    },
+
+    'General.Custom' : (response) => {
+        if (response.data.data.eventName === 'Twitch.GoalFetch') {
+            twitchGoalsRenderer(response.data.data.event);
+        }
+    }
 };
 
 
 
 if (showTwitch) {
-    
-    const twitchStatistics = `
-        <div class="platform" id="twitch" style="display: none;">
-            <img src="js/modules/twitch/images/logo-twitch.svg" alt="">
-            <span class="viewers"><i class="fa-solid fa-user"></i> <span>0</span></span>
-        </div>
-    `;
 
-    document.querySelector('#statistics').insertAdjacentHTML('beforeend', twitchStatistics);
-
-    if (showTwitchViewers == true) { document.querySelector('#twitch').style.display = ''; }
+    if ((showTwitchViewers == true) && (showPlatformStatistics == true)) {
+        const twitchStatistics = `
+            <div class="platform" id="twitch" style="display: none;">
+                <img src="js/modules/twitch/images/logo-twitch.svg" alt="">
+                <span class="viewers"><i class="fa-solid fa-user"></i> <span>0</span></span>
+            </div>
+        `;
+        document.querySelector('#statistics').insertAdjacentHTML('beforeend', twitchStatistics);
+        document.querySelector('#twitch').style.display = '';
+    }
 
     registerPlatformHandlersToStreamerBot(twitchMessageHandlers, '[Twitch]');
 }
@@ -151,16 +179,21 @@ if (showTwitch) {
 // ---------------------------
 // TWITCH EVENT FUNCTIONS
 
+
+
 async function twitchChatMessage(data) {
     
     if (showTwitchMessages == false) return;
-    if (ignoreUserList.includes(data.message.username.toLowerCase())) return;
-    if (data.message.message.startsWith("!") && excludeCommands == true)  return;
+    /*if (ignoreUserList.includes(data.message.username.toLowerCase())) return;
+    if (data.message.message.startsWith("!") && excludeCommands == true)  return;*/
+    
+    if (ignoreUserList.includes(data.user.login)) return;
+    if (data.text.startsWith("!") && excludeCommands == true)  return;
 
 	const template = chatTemplate;
 	const clone = template.content.cloneNode(true);
     const messageId = data.messageId;
-    const userId = data.message.username;
+    const userId = data.user.login;
 
     const {
         'first-message': firstMessage,
@@ -184,30 +217,37 @@ async function twitchChatMessage(data) {
     const classes = ['twitch', 'chat'];
 
     const [avatarImage, badgeList] = await Promise.all([
-        getTwitchAvatar(data.message.username),
-        getTwitchBadges(data)
+        //getTwitchAvatar(data.message.username),
+        getTwitchAvatar(data.user.login),
+        getTwitchBadges(data.user.badges)
     ]);
 
     header.remove();
 
-    let streamData = data;
+    //let streamData = data;
 
     if (isOBS == false) {
-        if (twitchStreamer == null) {
+        if (!twitchStreamer.broadcastUser) {
             const streamerInfo = await getStreamerInfo();
-            twitchStreamer = streamerInfo.platforms.twitch;
+            twitchStreamer.broadcastUser = streamerInfo.platforms.twitch.broadcastUser;
         }
         
-        if (data.message.message.toLowerCase().includes( twitchStreamer.broadcastUser.toLowerCase() )) {
+        if (data.text.toLowerCase().includes( twitchStreamer.broadcastUser.toLowerCase() )) {
             classes.push('streamer-mentioned');
         }
     }
 
-    user.style.color = data.message.color;
-    user.textContent = data.message.displayName;
+    /*user.style.color = data.message.color;
+    user.textContent = data.message.displayName;*/
+    user.style.color = data.user.color;
+    user.textContent = data.user.name
 
-    if (data.message.isMe) {
+    /*if (data.message.isMe) {
         message.style.color = data.message.color;
+    }*/
+
+    if (data.meta.isMe) {
+        message.style.color = data.user.color;
     }
 
     if (showAvatar) avatar.innerHTML = `<img src="${avatarImage}">`; else avatar.remove();
@@ -215,20 +255,28 @@ async function twitchChatMessage(data) {
 
     if (data.user.role == 4) { classes.push('streamer'); }
 
-    if (data.message.firstMessage) {
+    if (data.meta.firstMessage) {
         classes.push('first-chatter');
     }
     else { firstMessage.remove(); }
+
+    if (data.meta.isHighlighted) {
+        classes.push('highlighted');
+    }
     
 
-    if (data.message.isReply) {
+    //if (data.message.isReply) {
+    if (data.isReply == true) {
         classes.push('reply');
 
-        let offset = 0;
+        /*let offset = 0;
+
         let replyTo = `@${data.message.reply.userName}`;
-        let replyMessage = streamData.message.message;
+        let replyMessage = streamData.message.message;*/
+
+        let replyMessage = data.reply.msgBody.replace(/^@\S+\s*/, '') ?? '';
         
-        if (replyMessage.startsWith(replyTo)) {
+        /*if (replyMessage.startsWith(replyTo)) {
             let startIndex = replyTo.length;
             if (replyMessage[startIndex] === " ") {
                 startIndex++;
@@ -246,28 +294,11 @@ async function twitchChatMessage(data) {
 
             streamData.message.message = replyMessage;
             streamData.emotes = replyEmotes;
-        }
+        }*/
 
-        reply.insertAdjacentHTML('beforeend', ` <strong>Replying to ${escapeHTML(data.message.reply.userName)}:</strong> ${data.message.reply.msgBody}`);
+        reply.insertAdjacentHTML('beforeend', ` <strong>Replying to ${escapeHTML(data.reply.userName)}:</strong> ${escapeHTML(replyMessage)}`);
     }
     else { reply.remove(); }
-
-    /*if (data.message.isSharedChat) {
-        if (showTwitchSharedChat == true) {
-            classes.push('shared-chat');
-
-            if (!data.sharedChat.primarySource) {
-                let sharedStreamer = data.sharedChat.sourceRoom.name;
-                let sharedStreamerAvatar = await getTwitchAvatar( sharedStreamer.toLowerCase() );
-                sharedChat.querySelector('span.origin img').src = sharedStreamerAvatar;
-                sharedChat.querySelector('span.origin strong').textContent = data.sharedChat.sourceRoom.name;
-            }
-        }
-        else if (!data.sharedChat.primarySource && showTwitchSharedChat == false) {
-            return;
-        }
-    }
-    else { sharedChat.remove(); }*/
 
     if (data.isFromSharedChatGuest) {
         if (showTwitchSharedChat == true) {
@@ -275,6 +306,7 @@ async function twitchChatMessage(data) {
 
             let sharedStreamer = data.sharedChatSource.login.toLowerCase();
             let sharedStreamerAvatar = await getTwitchAvatar( sharedStreamer );
+
             sharedChat.querySelector('span.origin img').src = sharedStreamerAvatar;
             sharedChat.querySelector('span.origin strong').textContent = data.sharedChatSource.name;
         }
@@ -284,22 +316,61 @@ async function twitchChatMessage(data) {
     }
     else { sharedChat.remove(); }
 
-
-
     if (showTwitchPronouns === true) {
-        const userPronouns = await getTwitchUserPronouns(data.message.username);
+        //const userPronouns = await getTwitchUserPronouns(data.message.username);
+        const userPronouns = await getTwitchUserPronouns(data.user.login);
         if (userPronouns) {
             pronoun.innerHTML = userPronouns;
         }
     }
     else { pronoun.remove(); }
     
-    message.textContent = streamData.message.message;
-    await getTwitchEmotes(streamData, message);
+    /*message.textContent = streamData.message.message;
+    await getTwitchEmotes(streamData, message);*/
+
+    let messageFromParts;
+
+    if (data.isReply == true) {
+        const cleanParts = data.parts.map((part, index) => {
+            if (index === 0 && part.type === 'text') {
+                return { ...part, text: part.text.replace(/^@\S+\s*/, '') };
+            }
+            return part;
+        });
+
+        messageFromParts = await getTwitchMessageFromParts(cleanParts);
+    }
+    else {
+        messageFromParts = await getTwitchMessageFromParts(data.parts);
+    }
+
+    message.innerHTML = DOMPurify.sanitize(messageFromParts);
 
     addMessageItem('twitch', clone, classes, userId, messageId);
 }
 
+
+
+async function twitchChatMessageGiantEmote(data) {
+    
+    if (showTwitchMessages == false) return;
+    
+    const userMessages = chatContainer.querySelectorAll(`.chat.twitch[data-user="${data.user_login}"]`);
+
+    if (userMessages.length === 0) return;
+
+    const firstMessage = userMessages[0];
+    const emoteImages = firstMessage.querySelectorAll(`img.emote[alt="${data.gigantified_emote.name}"]`);
+
+    if (emoteImages.length === 0) return;
+
+    emoteImages.forEach(img => {
+        img.classList.add("gigantified");
+        if (img.src.endsWith("2.0")) {
+            img.src = img.src.replace("2.0", "3.0");
+        }
+    });
+}
 
 
 
@@ -332,35 +403,15 @@ async function twitchWatchStreakMessage(data) {
 
     action.innerHTML = ` watched `;
     value.innerHTML = `<strong>${data.watchStreak} consecutive streams</strong>!`;
-    message.textContent = data.message;
-    await getTwitchEmotesForWatchedStreakMessage(data, message);
+
+    /*message.textContent = data.message;
+    await getTwitchEmotesForWatchedStreakMessage(data, message);*/
+
+    let messageFromParts = await getTwitchMessageFromParts(data.parts);
+    message.innerHTML = DOMPurify.sanitize(messageFromParts);
 
     addEventItem('twitch', clone, classes, userId, messageId);
 }
-
-
-
-async function twitchChatMessageGiantEmote(data) {
-    
-    if (showTwitchMessages == false) return;
-    
-    const userMessages = chatContainer.querySelectorAll(`.chat.twitch[data-user="${data.user_login}"]`);
-
-    if (userMessages.length === 0) return;
-
-    const firstMessage = userMessages[0];
-    const emoteImages = firstMessage.querySelectorAll(`img[data-emote-id="${data.gigantified_emote.id}"]`);
-
-    if (emoteImages.length === 0) return;
-
-    emoteImages.forEach(img => {
-        img.classList.add("gigantified");
-        if (img.src.endsWith("2.0")) {
-            img.src = img.src.replace("2.0", "3.0");
-        }
-    });
-}
-
 
 
 
@@ -442,19 +493,21 @@ async function twitchAnnouncementMessage(data) {
     reply.remove();
 
     const [badgeList] = await Promise.all([
-        getTwitchAnnouncementBadges(data)
+        getTwitchBadges(data.user.badges)
     ]);
 
     header.innerHTML = `<span><i class="fa-solid fa-bullhorn"></i> Announcement</span>`;
 
     user.style.color = data.user.color;
     user.textContent = data.user.name;
-
     
-    message.textContent = data.text;
-    await getTwitchEmotesOnParts(data, message);
+    /*message.textContent = data.text;
+    await getTwitchEmotesOnParts(data, message);*/
 
     if (showBadges) badges.innerHTML = badgeList; else badges.remove();
+
+    let messageFromParts = await getTwitchMessageFromParts(data.parts);
+    message.innerHTML = DOMPurify.sanitize(messageFromParts);
 
     addMessageItem('twitch', clone, classes, userId, messageId);
 }
@@ -598,23 +651,26 @@ async function twitchBitsMessage(data) {
     user.textContent = data.user.name;
     action.innerHTML = ` cheered with `;
 
-    var bits = data.message.bits > 1 ? 'bits' : 'bit';
+    var bits = data.bits > 1 ? 'bits' : 'bit';
 
-    const match = bitsGifAnimations.find(lv => data.message.bits >= lv.min && data.message.bits <= lv.max);
+    const match = bitsGifAnimations.find(lv => data.bits >= lv.min && data.bits <= lv.max);
     
-    const bitsMatch = bitsGiftsClasses.find(lv => data.message.bits >= lv.min && data.message.bits <= lv.max);
+    const bitsMatch = bitsGiftsClasses.find(lv => data.bits >= lv.min && data.bits <= lv.max);
     classes.push(bitsMatch.class);
 
     value.innerHTML = `
         <div class="gift-info">
-            <span class="gift-image"><strong>${data.message.bits} ${bits}</strong></span>
-            <span class="gift-value"><img src="https://d3aqoihi2n8ty8.cloudfront.net/actions/cheer/dark/animated/${match.gifId}/4.gif" alt="${data.message.bits} ${bits}"></span>
+            <span class="gift-image"><strong>${data.bits} ${bits}</strong></span>
+            <span class="gift-value"><img src="https://d3aqoihi2n8ty8.cloudfront.net/actions/cheer/dark/animated/${match.gifId}/4.gif" alt="${data.bits} ${bits}"></span>
         </div>
     `;
 
-    data.message.message = data.message.message.replace(/\bCheer\d+\b/g, '').replace(/\s+/g, ' ').trim();
+    /*data.message.message = data.message.message.replace(/\bCheer\d+\b/g, '').replace(/\s+/g, ' ').trim();
     message.textContent = data.message.message;
-    await getTwitchEmotes(data, message);
+    await getTwitchEmotes(data, message);*/
+
+    let messageFromParts = await getTwitchMessageFromParts(data.parts);
+    message.innerHTML = DOMPurify.sanitize(messageFromParts);
 
     addEventItem('twitch', clone, classes, userId, messageId);
 }
@@ -710,8 +766,11 @@ async function twitchReSubMessage(data) {
         </div>
     `;
 
-    message.textContent = data.text;
-    await getTwitchEmotesOnParts(data, message);
+    /*message.textContent = data.text;
+    await getTwitchEmotesOnParts(data, message);*/
+    
+    let messageFromParts = await getTwitchMessageFromParts(data.parts);
+    message.innerHTML = DOMPurify.sanitize(messageFromParts);
 
     addEventItem('twitch', clone, classes, userId, messageId);
 }
@@ -879,8 +938,700 @@ async function twitchUpdateStatistics(data) {
 
 
 
+async function twitchHypeTrainStart(data) {
+
+    const classes = ['twitch', 'hypetrain'];
+
+    const {
+        level,
+        is_golden_kappa_train,
+        is_treasure_train,
+        goal,
+        progress,
+        started_at,
+        expires_at
+    } = data;
+
+    let hypetrainInfo = 'Hype Train Started! 🔥';
+    
+    let htProgress = Math.floor(progress/goal * 100);
+
+    if (is_golden_kappa_train == true) {
+        hypetrainInfo = 'Golden Kappa Train Started! 🪙';
+        classes.push('golden-kappa-train');
+    }
+
+    if (is_treasure_train == true) {
+        hypetrainInfo = 'Treasure Train Started! ✨';
+        classes.push('treasure-train');
+    }
+    
+    
+
+    if (showTwitchHypeTrain == true) {
+
+        const template = eventTemplate;
+        const clone = template.content.cloneNode(true);
+        const messageId = createRandomString(40);
+        const userId = createRandomString(40);
+
+        const {
+            header,
+            platform,
+            user,
+            action,
+            value,
+            'actual-message': message
+        } = Object.fromEntries(
+            [...clone.querySelectorAll('[class]')]
+                .map(el => [el.className, el])
+        );
+
+        header.remove();
+
+        user.textContent = hypetrainInfo;
+        action.textContent = ``;
+        value.innerHTML = `
+            <div class="gift-info">
+                <span class="gift-value"><strong>LVL ${level}</strong> at <strong>${htProgress}%</strong></span>
+            </div>
+        `;
+
+        message.remove();
+
+        addEventItem('twitch', clone, classes, userId, messageId);
+
+    }
 
 
+    /* HYPE TRAIN BAR */
+
+    if (showTwitchHypeTrainBar == true) {
+        const goalElement = document.querySelector('#goals');
+        const hypeTrainTemplate = document.querySelector('#hypetrain-template');
+        const hypeTrainClone = hypeTrainTemplate.content.cloneNode(true);
+        const hypeTrainElement = hypeTrainClone.firstElementChild;
+
+        const {
+            'progressbar-fill': progressBarFill,
+            logo,
+            icon,
+            'level' : currentLevel,
+            'timeremaining' : timeRemaining,
+            percentage,
+            info
+        } = Object.fromEntries(
+            [...hypeTrainClone.querySelectorAll('[class]')]
+                .map(el => [el.className, el])
+        );
+
+        if (is_golden_kappa_train == true) {
+            hypeTrainElement.classList.add('golden-kappa-train');
+            logo.querySelector('img').src = 'js/modules/twitch/images/golden-kappa-emote.png';
+            icon.querySelector('span').textContent = 'Golden Kappa Train';
+        }
+
+        if (is_treasure_train == true) {
+            hypeTrainElement.classList.add('treasure-train');
+            logo.querySelector('img').src = 'js/modules/twitch/images/icon-treasure.svg';
+            icon.querySelector('i').remove();
+            icon.querySelector('span').textContent = '✨ Treasure Train';
+        }
+
+        currentLevel.textContent = `LVL ${level}`;
+        progressBarFill.style.width = `${htProgress}%`;
+        percentage.textContent = `${htProgress}%`;
+
+        info.textContent = hypetrainInfo;
+        info.classList.add('animate__animated');
+
+        hypeTrainElement.classList.add('animate__fadeInDown');
+
+        goalElement.insertAdjacentElement('beforeend', hypeTrainElement);
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+
+                setTimeout(() => {
+                    document.querySelector('#hypetrain').classList.remove('animate__fadeInDown');
+                }, 1000);
+
+                setTimeout(() => {
+                    document.querySelector('#hypetrain').querySelector('.info').classList.add('animate__fadeOut');
+                }, 3000);
+
+                hypeTrainStartCountdown(started_at, expires_at);
+
+            });
+        });
+        
+    }
+
+}
+
+
+async function twitchHypeTrainUpdate(data) {
+
+    if (showTwitchHypeTrainBar == false) return;
+
+    const hypetrainElement = document.querySelector('#hypetrain');
+
+    if (hypetrainElement == null) return;
+
+    const {
+        goal,
+        progress
+    } = data;
+
+    let htProgress = Math.floor(progress/goal * 100);
+
+    hypetrainElement.querySelector('.progressbar-fill').style.width = `${htProgress}%`;
+    hypetrainElement.querySelector('.percentage').textContent = `${htProgress}%`;
+}
+
+
+async function twitchHypeTrainLevelUp(data) {
+
+    const classes = ['twitch', 'hypetrain'];
+
+    const {
+        level,
+        is_golden_kappa_train,
+        is_treasure_train,
+        goal,
+        progress,
+        started_at,
+        expires_at
+    } = data;
+
+    let hypetrainInfo = 'Hype Train Level Up! 🚀';
+    let htProgress = Math.floor(progress/goal * 100);
+
+    if (is_golden_kappa_train == true) {
+        hypetrainInfo = 'Golden Kappa Train Level Up! 🚀';
+        classes.push('golden-kappa-train');
+    }
+
+    if (is_treasure_train == true) {
+        hypetrainInfo = 'Treasure Train Level Up! 🚀';
+        classes.push('treasure-train');
+    }
+   
+    if (showTwitchHypeTrain == true) {    
+        const template = eventTemplate;
+        const clone = template.content.cloneNode(true);
+        const messageId = createRandomString(40);
+        const userId = createRandomString(40);
+
+        const {
+            header,
+            platform,
+            user,
+            action,
+            value,
+            'actual-message': message
+        } = Object.fromEntries(
+            [...clone.querySelectorAll('[class]')]
+                .map(el => [el.className, el])
+        );
+
+        header.remove();
+
+        user.textContent = hypetrainInfo;
+        action.textContent = ``;
+        value.innerHTML = `
+            <div class="gift-info">
+                <span class="gift-value"><strong>LVL ${level}</strong> at <strong>${htProgress}%</strong></span>
+            </div>
+        `;
+
+        message.remove();
+
+        addEventItem('twitch', clone, classes, userId, messageId);
+    }
+
+
+    /* HYPE TRAIN BAR */
+
+    if (showTwitchHypeTrainBar == true) {
+
+        const hypetrainElement = document.querySelector('#hypetrain');
+
+        hypetrainElement.querySelector('.level').textContent = `LVL ${level}`;
+        hypetrainElement.querySelector('.progressbar-fill').style.width = `${htProgress}%`;
+        hypetrainElement.querySelector('.percentage').textContent = `${htProgress}%`;
+
+        hypetrainElement.querySelector('.info').textContent = hypetrainInfo;
+
+        hypeTrainStopCountdown();
+        hypeTrainStartCountdown(started_at, expires_at);
+
+        hypetrainElement.classList.add('animate__pulse');
+        
+        hypetrainElement.querySelector('.info').classList.remove('animate__fadeOut');
+        hypetrainElement.querySelector('.info').classList.add('animate__fadeIn');
+
+        setTimeout(() => {
+            hypetrainElement.classList.remove('animate__pulse');
+        }, 1000);
+
+        setTimeout(() => {
+            hypetrainElement.querySelector('.info').classList.remove('animate__fadeIn');
+            hypetrainElement.querySelector('.info').classList.add('animate__fadeOut');
+        }, 3000);
+
+    }
+    
+
+}
+
+
+async function twitchHypeTrainEnd(data) {
+
+    const classes = ['twitch', 'hypetrain'];
+    
+    const {
+        level,
+        is_golden_kappa_train,
+        is_treasure_train
+    } = data;
+
+    let hypetrainInfo = 'Hype Train Ended';
+
+    if (is_golden_kappa_train == true) {
+        hypetrainInfo = 'Golden Kappa Ended';
+        classes.push('golden-kappa-train');
+    }
+    
+    if (is_treasure_train == true) {
+        hypetrainInfo = 'Treasure Train Ended';
+        classes.push('treasure-train');
+    }
+    
+    if (showTwitchHypeTrain == true) {    
+
+        const template = eventTemplate;
+        const clone = template.content.cloneNode(true);
+        const messageId = createRandomString(40);
+        const userId = createRandomString(40);
+
+        const {
+            header,
+            platform,
+            user,
+            action,
+            value,
+            'actual-message': message
+        } = Object.fromEntries(
+            [...clone.querySelectorAll('[class]')]
+                .map(el => [el.className, el])
+        );
+
+        header.remove();
+
+        user.textContent = hypetrainInfo;
+        action.textContent = ` 👏👏👏 `;
+        value.innerHTML = `
+            <div class="gift-info">
+                <span class="gift-value"><strong>LVL ${level}</strong></span>
+            </div>
+        `;
+
+        message.remove();
+
+        addEventItem('twitch', clone, classes, userId, messageId);
+
+    }
+    
+
+
+    /* HYPE TRAIN BAR */
+
+    if (showTwitchHypeTrainBar == true) {
+
+        const hypetrainElement = document.querySelector('#hypetrain');
+
+        if (is_golden_kappa_train == true) hypetrainElement.classList.add('golden-kappa-train');
+        if (is_treasure_train == true) hypetrainElement.classList.add('treasure-train');
+
+        hypetrainElement.querySelector('.info').textContent = `${hypetrainInfo} at LVL ${level} 👏👏👏`;
+
+        hypeTrainStopCountdown();
+        
+        hypetrainElement.querySelector('.info').classList.remove('animate__fadeOut');
+        hypetrainElement.querySelector('.info').classList.add('animate__fadeIn');
+
+        setTimeout(() => {
+            hypetrainElement.classList.add('animate__fadeOut');
+            setTimeout(() => {
+                hypetrainElement.remove();
+            }, 1000);
+        }, 6000);
+
+    }
+
+
+}
+
+
+let hypeTrainTimerInterval = null;
+
+function hypeTrainStartCountdown(startedAt, expiresAt) {
+    hypeTrainStopCountdown();
+
+    const total = new Date(expiresAt) - new Date(startedAt);
+    
+    hypeTrainTimerInterval = setInterval(() => {
+        const remaining = new Date(expiresAt) - Date.now();
+        
+        if (remaining <= 0) {
+            hypeTrainStopCountdown();
+            hypeTrainUpdateDisplay(0);
+            return;
+        }
+        
+        hypeTrainUpdateDisplay(remaining);
+    }, 1000);
+
+    hypeTrainUpdateDisplay(new Date(expiresAt) - Date.now());
+}
+
+function hypeTrainStopCountdown() {
+    if (hypeTrainTimerInterval) {
+        clearInterval(hypeTrainTimerInterval);
+        hypeTrainTimerInterval = null;
+    }
+}
+
+function hypeTrainUpdateDisplay(remaining) {
+    const seconds = Math.max(0, Math.floor(remaining / 1000));
+
+    const hypetrainElement = document.querySelector('#hypetrain');
+    hypetrainElement.querySelector('.timeremaining').textContent = `${formatTime(seconds)}`;
+}
+
+
+
+
+
+async function twitchGoalsRenderer(data) {
+
+    const {
+        id,
+        type,
+        description,
+        'currentAmount' : current_amount,
+        'targetAmount' : target_amount
+    } = data;
+
+    const goalMap = {
+        follower:                   { type: 'Follower Goal',      item: 'Followers' },
+        subscription:               { type: 'Subscription Goal',  item: 'Subs Points' },
+        subscription_count:         { type: 'Subscription Goal',  item: 'Subs' },
+        new_subscription:           { type: 'Subscription Goal',  item: 'New Subs' },
+        new_subscription_count:     { type: 'Subscription Goal',  item: 'New Subs Points' },
+        new_bit:                    { type: 'Bits Goal',  item: 'New Bits' },
+        new_cheerer:                { type: 'Cheerer Goal',  item: 'New Cheerers' },
+    };
+
+    const resolvedKey = type || 'unknown';
+
+    const { type: goalType, item: goalItem } = goalMap[resolvedKey] ?? { type: 'New Bits/Cheerers', item: '' };
+
+
+    /* GOAL BAR */
+
+    if (showTwitchGoalsBars == true) {
+
+        const goalBarId = `goal-${id}`;
+
+        if (document.getElementById(goalBarId)) return;
+
+        const goalElement = document.querySelector('#goals');
+        const goalBarTemplate = document.querySelector('#goal-template');
+        const goalBarClone = goalBarTemplate.content.cloneNode(true);
+        const goalBarElement = goalBarClone.firstElementChild;
+
+        const {
+            logo,
+            icon,
+            percentage,
+            info,
+            'progressbar-fill': progressBarFill,
+        } = Object.fromEntries(
+            [...goalBarClone.querySelectorAll('[class]')]
+                .map(el => [el.className, el])
+        );
+
+        let goalProgress = Math.floor(current_amount/target_amount * 100);
+
+        goalBarElement.id = goalBarId;
+        icon.querySelector('span').textContent = description ? `${description}`: goalType;
+        progressBarFill.style.width = `${goalProgress}%`;
+        percentage.querySelector('span').textContent = `${current_amount}/${target_amount}`;
+        percentage.querySelector('small').textContent = `${goalItem}`;
+
+        goalBarElement.classList.add('animate__fadeInDown');
+
+        goalElement.insertAdjacentElement('beforeend', goalBarElement);
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+
+                setTimeout(() => {
+                    goalBarElement.classList.remove('animate__fadeInDown');
+                }, 1000);
+
+            });
+        });
+        
+    }
+
+}
+
+
+
+
+
+async function twitchGoalBegin(data) {
+
+    const classes = ['twitch', 'goal'];
+
+    const {
+        id,
+        type,
+        description,
+        current_amount,
+        target_amount
+    } = data;
+
+    const goalMap = {
+        follow:                     { type: 'Follower Goal',      item: 'Followers' },
+        subscription:               { type: 'Subscription Goal',  item: 'Subs Points' },
+        subscription_count:         { type: 'Subscription Goal',  item: 'Subs' },
+        new_subscription:           { type: 'Subscription Goal',  item: 'New Subs' },
+        new_subscription_count:     { type: 'Subscription Goal',  item: 'New Subs Points' },
+        new_bit:                    { type: 'Bits Goal',  item: 'New Bits' },
+        new_cheerer:                { type: 'Bits Goal',  item: 'New Cheerer' },
+    };
+
+    const { type: goalType, item: goalItem } = goalMap[type] ?? { type: '', item: '' };
+
+    if (showTwitchGoals == true) {
+
+        const template = eventTemplate;
+        const clone = template.content.cloneNode(true);
+        const messageId = createRandomString(40);
+        const userId = createRandomString(40);
+
+        const {
+            header,
+            platform,
+            user,
+            action,
+            value,
+            'actual-message': message
+        } = Object.fromEntries(
+            [...clone.querySelectorAll('[class]')]
+                .map(el => [el.className, el])
+        );
+
+        header.remove();
+
+        user.textContent = `New ${goalType}`;
+        action.textContent = description ? ` - ${description} ` : ``;
+        value.innerHTML = `
+            <div class="gift-info">
+                <span class="gift-value">${current_amount}/${target_amount} ${goalItem}</span>
+            </div>
+        `;
+
+        addEventItem('twitch', clone, classes, userId, messageId);
+
+    }
+
+
+    /* GOAL BAR */
+
+    if (showTwitchGoalsBars == true) {
+        const goalElement = document.querySelector('#goals');
+        const goalBarTemplate = document.querySelector('#goal-template');
+        const goalBarClone = goalBarTemplate.content.cloneNode(true);
+        const goalBarElement = goalBarClone.firstElementChild;
+
+        const {
+            logo,
+            icon,
+            percentage,
+            info,
+            'progressbar-fill': progressBarFill,
+        } = Object.fromEntries(
+            [...goalBarClone.querySelectorAll('[class]')]
+                .map(el => [el.className, el])
+        );
+
+        let goalProgress = Math.floor(current_amount/target_amount * 100);
+
+        const goalBarId = `goal-${id}`;
+        goalBarElement.id = goalBarId;
+        icon.querySelector('span').textContent = description ? `${description}`: goalType;
+        progressBarFill.style.width = `${goalProgress}%`;
+        percentage.querySelector('span').textContent = `${current_amount}/${target_amount}`;
+        percentage.querySelector('small').textContent = `${goalItem}`;
+
+        goalBarElement.classList.add('animate__fadeInDown');
+
+        goalElement.insertAdjacentElement('beforeend', goalBarElement);
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+
+                setTimeout(() => {
+                    goalBarElement.classList.remove('animate__fadeInDown');
+                }, 1000);
+
+            });
+        });
+        
+    }
+
+}
+
+
+
+
+
+async function twitchGoalProgress(data) {
+
+    const {
+        id,
+        current_amount,
+        target_amount
+    } = data;
+
+
+    /* GOAL BAR */
+
+    if (showTwitchGoalsBars == true) {
+        
+        const goalElement = document.querySelector('#goals');
+        const goalBarId = `goal-${id}`;
+        const goalBarElement = goalElement.querySelector(`#${goalBarId}`);
+
+        const {
+            percentage,
+            'progressbar-fill': progressBarFill,
+        } = Object.fromEntries(
+            [...goalBarElement.querySelectorAll('[class]')]
+                .map(el => [el.className, el])
+        );
+
+
+        let goalProgress = Math.floor(current_amount/target_amount * 100);
+        progressBarFill.style.width = `${goalProgress}%`;
+        percentage.querySelector('span').textContent = `${current_amount}/${target_amount}`;
+        
+    }
+
+}
+
+
+
+async function twitchGoalEnd(data) {
+
+    const classes = ['twitch', 'goal'];
+
+    const {
+        id,
+        type,
+        description,
+        current_amount,
+        target_amount
+    } = data;
+
+    const goalMap = {
+        follow:                     { type: 'Follower Goal',      item: 'Followers' },
+        subscription:               { type: 'Subscription Goal',  item: 'Subs Points' },
+        subscription_count:         { type: 'Subscription Goal',  item: 'Subs' },
+        new_subscription:           { type: 'Subscription Goal',  item: 'New Subs' },
+        new_subscription_count:     { type: 'Subscription Goal',  item: 'New Subs Points' },
+        new_bit:                    { type: 'Bits Goal',  item: 'New Bits' },
+        new_cheerer:                { type: 'Bits Goal',  item: 'New Cheerer' },
+    };
+
+    const { type: goalType, item: goalItem } = goalMap[type] ?? { type: '', item: '' };
+
+    if (showTwitchGoals == true) {
+
+        const template = eventTemplate;
+        const clone = template.content.cloneNode(true);
+        const messageId = createRandomString(40);
+        const userId = createRandomString(40);
+
+        const {
+            header,
+            platform,
+            user,
+            action,
+            value,
+            'actual-message': message
+        } = Object.fromEntries(
+            [...clone.querySelectorAll('[class]')]
+                .map(el => [el.className, el])
+        );
+
+        header.remove();
+
+        const goalStatus = current_amount >= target_amount ? 'Completed' : 'Ended';
+
+        user.textContent = `${goalType} ${goalStatus}`;
+        action.textContent = description ? ` - ${description} ` : ``;
+        value.innerHTML = `
+            <div class="gift-info">
+                <span class="gift-value">${current_amount}/${target_amount} ${goalItem}</span>
+            </div>
+        `;
+
+        addEventItem('twitch', clone, classes, userId, messageId);
+
+    }
+
+
+    /* GOAL BAR */
+
+    if (showTwitchGoalsBars == true) {
+        const goalElement = document.querySelector('#goals');
+        const goalBarId = `goal-${id}`;
+        const goalBarElement = goalElement.querySelector(`#${goalBarId}`);
+
+        goalBarElement.classList.add('animate__fadeOut');
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+
+                setTimeout(() => {
+                    goalBarElement.remove();
+                }, 1000);
+
+            });
+        });
+        
+    }
+
+}
+
+
+
+async function twitchGoalsFetch() {
+    if (showTwitchGoalsBars) {
+        console.debug('[ChatRD][Twitch] Fetching Twitch Goals...');    
+        streamerBotClient.doAction(
+        { name : "[Twitch] Fetch Goals" }, { }
+        ).then( () => {
+            console.debug('[ChatRD][Twitch] Twitch Goals Fetched!');
+        });   
+    }
+}
 
 
 
@@ -919,8 +1670,7 @@ async function getTwitchAvatar(user) {
 
 
 
-async function getTwitchBadges(data) {
-    const badges = data.message.badges;
+async function getTwitchBadges(badges) {
     return badges
         .map(badge => `<img src="${badge.imageUrl}" class="badge">`)
         .join('');
@@ -928,184 +1678,22 @@ async function getTwitchBadges(data) {
 
 
 
-async function getTwitchEmotes(data, messageElement) {
-    const message = data.message.message;
-    const emotes = (data.emotes || []).sort((a, b) => a.startIndex - b.startIndex);
 
-    // Limpa o conteúdo (vamos recriar com nodes)
-    messageElement.innerHTML = "";
-
-    let lastIndex = 0;
-
-    for (const emote of emotes) {
-        // texto antes do emote
-        if (lastIndex < emote.startIndex) {
-            const text = message.slice(lastIndex, emote.startIndex);
-            messageElement.appendChild(document.createTextNode(text));
+async function getTwitchMessageFromParts(parts) {
+    const html = parts.map(part => {
+        if (part.type === 'emote') {
+            return `<img src="${part.imageUrl}" alt="${escapeHTML(part.text)}" title="${escapeHTML(part.text)}" class="emote">`;
         }
 
-        let emoteUrl = emote.imageUrl;
-
-        // Detecta Twemoji
-        const isTwemoji =
-            String(emote.type || "").toLowerCase() === "twemoji" ||
-            /(twemoji|jdecked)/i.test(emote.imageUrl || "");
-
-        if (isTwemoji) {
-            const codePoints = Array.from(emote.name).map(c => c.codePointAt(0).toString(16));
-            let fileName = codePoints.join("-");
-            fileName = fileName.replace(/-fe0f/g, ""); // remove FE0F
-            emoteUrl = `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/${fileName}.png`;
+        if (part.type === 'cheer') {
+            return ``;
         }
-
-        if (!emoteUrl || emoteUrl.trim() === "") {
-            messageElement.appendChild(document.createTextNode(emote.name));
-        }
-        else {
-            const img = document.createElement("img");
-            img.src = emoteUrl;
-            img.alt = emote.name;
-            img.className = "emote";
-            img.dataset.emoteId = emote.id || "";
-            img.onerror = () => (img.outerHTML = emote.name);
-            messageElement.appendChild(img);
-        }
-
-        lastIndex = emote.endIndex + 1;
-    }
-
-    // texto final depois do último emote
-    if (lastIndex < message.length) {
-        const text = message.slice(lastIndex);
-        messageElement.appendChild(document.createTextNode(text));
-    }
-}
-
-
-
-async function getTwitchEmotesForWatchedStreakMessage(data, messageElement) {
-    const message = data.message;
-    const emotes = (data.emotes || []).sort((a, b) => a.startIndex - b.startIndex);
-
-    // Limpa o conteúdo (vamos recriar com nodes)
-    messageElement.innerHTML = "";
-
-    let lastIndex = 0;
-
-    for (const emote of emotes) {
-        // texto antes do emote
-        if (lastIndex < emote.startIndex) {
-            const text = message.slice(lastIndex, emote.startIndex);
-            messageElement.appendChild(document.createTextNode(text));
-        }
-
-        let emoteUrl = emote.imageUrl;
-
-        // Detecta Twemoji
-        const isTwemoji =
-            String(emote.type || "").toLowerCase() === "twemoji" ||
-            /(twemoji|jdecked)/i.test(emote.imageUrl || "");
-
-        if (isTwemoji) {
-            const codePoints = Array.from(emote.name).map(c => c.codePointAt(0).toString(16));
-            let fileName = codePoints.join("-");
-            fileName = fileName.replace(/-fe0f/g, ""); // remove FE0F
-            emoteUrl = `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/${fileName}.png`;
-        }
-
-        if (!emoteUrl || emoteUrl.trim() === "") {
-            messageElement.appendChild(document.createTextNode(emote.name));
-        }
-        else {
-            const img = document.createElement("img");
-            img.src = emoteUrl;
-            img.alt = emote.name;
-            img.className = "emote";
-            img.dataset.emoteId = emote.id || "";
-            img.onerror = () => (img.outerHTML = emote.name);
-            messageElement.appendChild(img);
-        }
-
-        lastIndex = emote.endIndex + 1;
-    }
-
-    // texto final depois do último emote
-    if (lastIndex < message.length) {
-        const text = message.slice(lastIndex);
-        messageElement.appendChild(document.createTextNode(text));
-    }
-}
-
-
-
-
-
-async function getTwitchEmotesOnParts(data, messageElement) {
-    // Limpa o conteúdo atual do elemento
-    messageElement.innerHTML = "";
-
-    // Texto completo da mensagem
-    let messageText = data.text;
-    let cursor = 0; // índice atual no texto
-
-    for (const part of data.parts) {
-        // Se parte não é emote, apenas insere texto cru
-        if (part.type !== 'emote') {
-            // adiciona texto
-            messageElement.appendChild(document.createTextNode(part.text));
-            cursor += part.text.length;
-            continue;
-        }
-
-        // Parte é emote
-        const emoteName = part.text;
-        let emoteUrl = part.imageUrl;
-
-        // Detecta Twemoji
-        const isTwemoji =
-            String(part.emoteType || part.type).toLowerCase() === 'twemoji' ||
-            /(twemoji|jdecked)/i.test(emoteUrl || '');
-
-        if (isTwemoji) {
-            const codePoints = Array.from(emoteName).map(c => c.codePointAt(0).toString(16));
-            let fileName = codePoints.join('-');
-            fileName = fileName.replace(/-fe0f/g, ''); // remove FE0F
-            emoteUrl = `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/${fileName}.png`;
-        }
-
-        // Se não houver URL válida, só mostra o nome do emote
-        if (!emoteUrl || emoteUrl.trim() === '') {
-            messageElement.appendChild(document.createTextNode(emoteName));
-            cursor += emoteName.length;
-            continue;
-        }
-
-        // Cria o <img> do emote
-        const img = document.createElement('img');
-        img.src = emoteUrl;
-        img.alt = emoteName;
-        img.className = 'emote';
-        img.dataset.emoteId = part.id || '';
-        img.onerror = () => (img.outerHTML = emoteName);
-
-        // Anexa o <img>
-        messageElement.appendChild(img);
-        cursor += emoteName.length;
-    }
-}
-
-
-
-
-
-
-
-
-async function getTwitchAnnouncementBadges(data) {
-    const badges = data.user.badges;
-    return badges
-        .map(badge => `<img src="${badge.imageUrl}" class="badge">`)
-        .join('');
+        
+        return escapeHTML(part.text);
+        
+    }).join('');
+    
+    return html;
 }
 
 

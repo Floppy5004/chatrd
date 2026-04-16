@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -67,7 +66,7 @@
                             <div class="platform-enable">
                                 <label><small>Enable</small></label>
                                 <label class="switch">
-                                    <input type="checkbox" name="showSpeakerbot"><span class="slider"></span>
+                                    <input type="checkbox" name="showSpeakerbot" data-default="false"><span class="slider"></span>
                                 </label>
                             </div>
                         </div>
@@ -99,13 +98,13 @@
 
                             <div class="config">
                                 <label>Enable Chat Read</label>
-                                <label class="switch"><input type="checkbox" name="speakerBotChatRead"><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="speakerBotChatRead" data-default="false"><span class="slider"></span></label>
                             </div>
 
                             
                             <div class="config">
                                 <label>Enable Events Read</label>
-                                <label class="switch"><input type="checkbox" name="speakerBotEventRead"><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="speakerBotEventRead" data-default="false"><span class="slider"></span></label>
                             </div>
 
                             <div class="config">
@@ -153,7 +152,7 @@
 
                         <div class="setup">
 
-                            <div class="config"><label>Scroll Bar<br><small>Adds a scrollbar.</small></label></label><label class="switch"><input type="checkbox" name="chatScrollBar"><span class="slider"></span></label></div>
+                            <div class="config"><label>Scroll Bar<br><small>Adds a scrollbar.</small></label></label><label class="switch"><input type="checkbox" name="chatScrollBar" data-default="false"><span class="slider"></span></label></div>
 
                             <div class="config">
                                 <label>Size<br><small>Changes ChatRD's size</small></label>
@@ -217,7 +216,7 @@
                                 <label>
                                     One Line<br><small>One line chat instead of two in Vertical Chat.</small>
                                 </label>
-                                <label class="switch"><input type="checkbox" name="chatOneLine"><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="chatOneLine" data-default="false"><span class="slider"></span></label>
                             </div>
                             
                             <div class="config">
@@ -225,56 +224,56 @@
                                     Horizontal Direction<br><small>Chat/Events will be horizontal.<br>
                                     <strong><u>If enabled, it disables "One Line" option above.</u></strong></small>
                                 </label>
-                                <label class="switch"><input type="checkbox" name="chatHorizontal"><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="chatHorizontal" data-default="false"><span class="slider"></span></label>
                             </div>
                             
                             <div class="config">
                                 <label>
                                     Group Chat Messages<br><small>Consecutive messages from the same user will be grouped.</small>
                                 </label>
-                                <label class="switch"><input type="checkbox" name="chatMessageGroup"><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="chatMessageGroup" data-default="false"><span class="slider"></span></label>
                             </div>
 
                             <div class="config">
                                 <label>Platforms<br><small>Shows the platforms logos.</small></label>
-                                <label class="switch"><input type="checkbox" name="showPlatform" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showPlatform" checked data-default="true"><span class="slider"></span></label>
                             </div>
 
                             <div class="config">
                                 <label>Platforms Dots<br><small>Shows a 12x12px dot with the platform color instead of it's logo.<br>
                                 <strong><u>If enabled, it disables "Platforms" option above.</u></strong> (Twitch ToS is 🤮)</small></label>
                                     
-                                <label class="switch"><input type="checkbox" name="showPlatformDot"><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showPlatformDot" data-default="false"><span class="slider"></span></label>
                             </div>
 
                             <div class="config">
                                 <label>Avatars</label>
-                                <label class="switch"><input type="checkbox" name="showAvatar" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showAvatar" checked data-default="true"><span class="slider"></span></label>
                             </div>
 
                             <div class="config">
                                 <label>Timestamps</label>
-                                <label class="switch"><input type="checkbox" name="showTimestamps" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showTimestamps" checked data-default="true"><span class="slider"></span></label>
                             </div>
 
                             <div class="config">
                                 <label><i class="fa-solid fa-arrow-turn-up"></i> AM/PM</label>
-                                <label class="switch"><input type="checkbox" name="ampmTimeStamps"><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="ampmTimeStamps" data-default="false"><span class="slider"></span></label>
                             </div>
 
                             <div class="config">
                                 <label>Badges</label>
-                                <label class="switch"><input type="checkbox" name="showBadges" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showBadges" checked data-default="true"><span class="slider"></span></label>
                             </div>
 
                             <div class="config">
                                 <label>Platform Statistics<br><small>Shows all platform statistics.</small></label>
-                                <label class="switch"><input type="checkbox" name="showPlatformStatistics" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showPlatformStatistics" checked data-default="true"><span class="slider"></span></label>
                             </div>
 
                             <div class="config">
                                 <label>Ignore Commands<br><small>Ignores texts starting with "!".</small></label>
-                                <label class="switch"><input type="checkbox" name="excludeCommands" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="excludeCommands" checked data-default="true"><span class="slider"></span></label>
                             </div>
 
                             <div class="config">
@@ -294,19 +293,19 @@
                                     <small>Changes <strong>Twitch</strong> to <em class="msm-platform purple">Purple Platform</em>, <strong>YouTube</strong> to <em class="msm-platform red">Red Platform</em>,<br><strong>Kick</strong> to <em class="msm-platform green">Green Platform</em> and <strong>TikTok</strong> to <em class="msm-platform vertical">Short Video App</em><br>on all chat messages.
                                     </small>
                                 </label>
-                                <label class="switch"><input type="checkbox" name="multiStreamerMode"><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="multiStreamerMode" data-default="false"><span class="slider"></span></label>
                             </div>
 
                             <hr>
 
                             <div class="config">
                                 <label>Chat Field<br><small>Adds a chat field for you to type in your chat.</small></label>
-                                <label class="switch"><input type="checkbox" name="chatField"><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="chatField" data-default="false"><span class="slider"></span></label>
                             </div>
 
                             <div class="config">
                                 <label>Moderation Buttons<br><small>Adds buttons for moderator actions.</small></label>
-                                <label class="switch"><input type="checkbox" name="chatModeration"><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="chatModeration" data-default="false"><span class="slider"></span></label>
                             </div>
 
                             <div class="config">
@@ -329,7 +328,7 @@
                             <div class="platform-enable">
                                 <label><small>Enable</small></label>
                                 <label class="switch">
-                                    <input type="checkbox" name="showTwitch"><span class="slider"></span>
+                                    <input type="checkbox" name="showTwitch" data-default="false"><span class="slider"></span>
                                 </label>
                             </div>
                         </div>
@@ -338,60 +337,85 @@
 
                                 <div class="config">
                                     <label><strong>Chat</strong><br><small>Reads Twitch chat.</small></label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchMessages" checked><span class="slider"></span></label>
+                                    <label class="switch"><input type="checkbox" name="showTwitchMessages" checked data-default="true"><span class="slider"></span></label>
                                 </div>
 
                                 <div class="config">
                                     <label>Followers</label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchFollows" checked><span class="slider"></span></label>
+                                    <label class="switch"><input type="checkbox" name="showTwitchFollows" checked data-default="true"><span class="slider"></span></label>
                                 </div>
                                 <div class="config">
                                     <label>Bits</label><label class="switch">
-                                        <input type="checkbox" name="showTwitchBits" checked><span class="slider"></span></label>
+                                        <input type="checkbox" name="showTwitchBits" checked data-default="true"><span class="slider"></span></label>
                                 </div>
                                 <div class="config">
                                     <label>Announcements</label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchAnnouncements" checked><span class="slider"></span></label>
+                                    <label class="switch"><input type="checkbox" name="showTwitchAnnouncements" checked data-default="true"><span class="slider"></span></label>
                                 </div>
                                 <div class="config">
                                     <label>Watch Streaks<br><small>Shows Watch Streaks in chat.</small></label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchWatchStreak"><span class="slider"></span></label>
+                                    <label class="switch"><input type="checkbox" name="showTwitchWatchStreak" data-default="false"><span class="slider"></span></label>
                                 </div>
                                 <div class="config">
                                     <label>Subscriptions<br><small>Shows Sub events. <u><strong>Disabling this disables all sub events</strong></u>.</small></label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchSubs" checked><span class="slider"></span></label>
+                                    <label class="switch"><input type="checkbox" name="showTwitchSubs" checked data-default="true"><span class="slider"></span></label>
                                 </div>
                                 <div class="config">
                                     <label><i class="fa-solid fa-arrow-turn-up"></i> Gifted Subs<br><small>When a user gifts another user a sub.</small></label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchGiftedSubs" checked><span class="slider"></span></label>
+                                    <label class="switch"><input type="checkbox" name="showTwitchGiftedSubs" checked data-default="true"><span class="slider"></span></label>
                                 </div>
                                 <div class="config">
                                     <label><i class="fa-solid fa-arrow-turn-up"></i> Gifted Bomb<br><small>When a user gifts subs massively.</small></label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchMassGiftedSubs" checked><span class="slider"></span></label>
+                                    <label class="switch"><input type="checkbox" name="showTwitchMassGiftedSubs" checked data-default="true"><span class="slider"></span></label>
                                 </div>
                                 <div class="config">
                                     <label><i class="fa-solid fa-arrow-turn-up"></i> Gifted Bomb Users Train<br><small>Shows all users that were gifted a  sub on a Gifted Bomb.</small></label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchGiftedSubsUserTrain" checked><span class="slider"></span></label>
+                                    <label class="switch"><input type="checkbox" name="showTwitchGiftedSubsUserTrain" checked data-default="true"><span class="slider"></span></label>
                                 </div>
                                 <div class="config">
                                     <label>Channel Point Rewards</label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchRewardRedemptions" checked><span class="slider"></span></label>
+                                    <label class="switch"><input type="checkbox" name="showTwitchRewardRedemptions" checked data-default="true"><span class="slider"></span></label>
                                 </div>
                                 <div class="config">
                                     <label>Raids</label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchRaids" checked><span class="slider"></span></label>
+                                    <label class="switch"><input type="checkbox" name="showTwitchRaids" checked data-default="true"><span class="slider"></span></label>
                                 </div>
                                 <div class="config">
                                     <label>Shared Chat</label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchSharedChat" checked><span class="slider"></span></label>
+                                    <label class="switch"><input type="checkbox" name="showTwitchSharedChat" checked data-default="true"><span class="slider"></span></label>
+                                </div>
+                                <hr>
+                                <div class="config">
+                                    <label>Hype Train</label>
                                 </div>
                                 <div class="config">
+                                    <label><i class="fa-solid fa-arrow-turn-up"></i> Hype Train Event<br><small>Shows when a Hype Train event starts, levels up and ends.</small></label>
+                                    <label class="switch"><input type="checkbox" name="showTwitchHypeTrain" data-default="false"><span class="slider"></span></label>
+                                </div>
+                                <div class="config">
+                                    <label><i class="fa-solid fa-arrow-turn-up"></i> Hype Train Bar<br><small>Show the Hype Train Bar under the Statistics.</small></label>
+                                    <label class="switch"><input type="checkbox" name="showTwitchHypeTrainBar" data-default="false"><span class="slider"></span></label>
+                                </div>
+                                <hr>
+                                <div class="config">
+                                    <label>Goals</label>
+                                </div>
+                                <div class="config">
+                                    <label><i class="fa-solid fa-arrow-turn-up"></i> Goal Event<br><small>Shows when a Goal event starts, progress and completes.</small></label>
+                                    <label class="switch"><input type="checkbox" name="showTwitchGoals" data-default="false"><span class="slider"></span></label>
+                                </div>
+                                <div class="config">
+                                    <label><i class="fa-solid fa-arrow-turn-up"></i> Goal Bars<br><small>Show a Goal Bar for each goal under the Statistics.</small></label>
+                                    <label class="switch"><input type="checkbox" name="showTwitchGoalsBars" data-default="false"><span class="slider"></span></label>
+                                </div>
+                                <hr>
+                                <div class="config">
                                     <label>Pronouns<br><small>Shows Pronouns to those whom enabled them on Twitch chat.</small></label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchPronouns"><span class="slider"></span></label>
+                                    <label class="switch"><input type="checkbox" name="showTwitchPronouns" data-default="false"><span class="slider"></span></label>
                                 </div>
                                 <div class="config">
                                     <label>Statistics<br><small>Shows Twitch Viewers.</small></label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchViewers" checked><span class="slider"></span></label>
+                                    <label class="switch"><input type="checkbox" name="showTwitchViewers" checked data-default="true"><span class="slider"></span></label>
                                 </div>
 
                         </div>
@@ -413,7 +437,7 @@
                             <div class="platform-enable">
                                 <label><small>Enable</small></label>
                                 <label class="switch">
-                                    <input type="checkbox" name="showYoutube"><span class="slider"></span>
+                                    <input type="checkbox" name="showYoutube" data-default="false"><span class="slider"></span>
                                 </label>
                             </div>
                         </div>
@@ -422,35 +446,35 @@
 
                             <div class="config">
                                 <label>Chat<br><small>Reads YouTube chat.</small></label>
-                                <label class="switch"><input type="checkbox" name="showYouTubeMessages" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showYouTubeMessages" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label>SuperChat</label>
-                                <label class="switch"><input type="checkbox" name="showYouTubeSuperChats" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showYouTubeSuperChats" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label>Super Sticker</label>
-                                <label class="switch"><input type="checkbox" name="showYouTubeSuperStickers" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showYouTubeSuperStickers" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label><i class="fa-solid fa-arrow-turn-up"></i> Shows Super Sticker GIF</label>
-                                <label class="switch"><input type="checkbox" name="showYouTubeSuperStickerGif" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showYouTubeSuperStickerGif" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label>Membership<br><small>Shows Membership events. <u><strong>Disabling this disables all member events</strong></u>.</small></label>
-                                <label class="switch"><input type="checkbox" name="showYouTubeMemberships" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showYouTubeMemberships" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label><i class="fa-solid fa-arrow-turn-up"></i> Gifted Membership<br><small>Shows the person gifting members.</small></label>
-                                <label class="switch"><input type="checkbox" name="showYouTubeGiftMemberships" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showYouTubeGiftMemberships" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label><i class="fa-solid fa-arrow-turn-up"></i> Gifted Membership Train<br><small>Shows all users that were gifted a membership on a massive gifting membership.</small></label>
-                                <label class="switch"><input type="checkbox" name="showYouTubeMembershipsTrain" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showYouTubeMembershipsTrain" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label>Statistics<br><small>Shows YouTube Viewers and Likes.</small></label>
-                                <label class="switch"><input type="checkbox" name="showYouTubeStatistics" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showYouTubeStatistics" checked data-default="true"><span class="slider"></span></label>
                             </div>
 
                             <div class="config">
@@ -495,7 +519,7 @@
                             <div class="platform-enable">
                                 <label><small>Enable</small></label>
                                 <label class="switch">
-                                    <input type="checkbox" name="showTiktok"><span class="slider"></span>
+                                    <input type="checkbox" name="showTiktok" data-default="false"><span class="slider"></span>
                                 </label>
                             </div>
                         </div>
@@ -504,36 +528,40 @@
 
                             <div class="config">
                                 <label>Chat<br><small>Reads TikTok chat.</small></label>
-                                <label class="switch"><input type="checkbox" name="showTikTokMessages" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showTikTokMessages" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
-                                <label>Followers</label><label class="switch"><input type="checkbox" name="showTikTokFollows" checked><span class="slider"></span></label>
+                                <label>Followers</label><label class="switch"><input type="checkbox" name="showTikTokFollows" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label>Likes<br><small>Shows likes in <strong>15</strong> increments. Why? <em>Blame TikFinity!</em> 🤣</small></label>
-                                <label class="switch"><input type="checkbox" name="showTikTokLikes"><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showTikTokLikes" data-default="false"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label>Joins<br><small>Shows who joined chat at the bottom of the widget.</small></label>
-                                <label class="switch"><input type="checkbox" name="showTikTokJoins"><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showTikTokJoins" data-default="false"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label>Shares<br><small>Shows who shared -or clicks the "Share" button- to the stream.</small></label>
-                                <label class="switch"><input type="checkbox" name="showTikTokShares"><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showTikTokShares" data-default="false"><span class="slider"></span></label>
                             </div>
                             <div class="config">
-                                <label>Gifts<br><small>Shows TikTok Gifts, such as roses, galaxies, etc.</small></label><label class="switch"><input type="checkbox" name="showTikTokGifts" checked><span class="slider"></span></label>
+                                <label>Gifts<br><small>Shows TikTok Gifts, such as roses, galaxies, etc.</small></label><label class="switch"><input type="checkbox" name="showTikTokGifts" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label><i class="fa-solid fa-arrow-turn-up"></i> Small Gift Images<br><small>Shrinks the size of the gift image to 28px.</small></label>
-                                <label class="switch"><input type="checkbox" name="showSmallTikTokGifts"><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showSmallTikTokGifts" data-default="false"><span class="slider"></span></label>
                             </div>
                             <div class="config">
-                                <label>Subscriptions</label><label class="switch"><input type="checkbox" name="showTikTokSubs" checked><span class="slider"></span></label>
+                                <label>SuperFans/Subscribers</label><label class="switch"><input type="checkbox" name="showTikTokSubs" checked data-default="true"><span class="slider"></span></label>
                             </div>
+                            <!--<div class="config">
+                                <label><i class="fa-solid fa-arrow-turn-up"></i> SuperFan Box<br><small>Shows when you get a SuperFan Box (Gifted Sub).</small></label>
+                                <label class="switch"><input type="checkbox" name="showTikTokGiftedSub"><span class="slider"></span></label>
+                            </div>-->
                             <div class="config">
                                 <label>Statistics<br><small>Shows TikTok Viewers and Likes.</small></label>
-                                <label class="switch"><input type="checkbox" name="showTikTokStatistics" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showTikTokStatistics" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <hr>
                             <div class="config">
@@ -560,7 +588,7 @@
                             <div class="platform-enable">
                                 <label><small>Enable</small></label>
                                 <label class="switch">
-                                    <input type="checkbox" name="showKick"><span class="slider"></span>
+                                    <input type="checkbox" name="showKick" data-default="false"><span class="slider"></span>
                                 </label>
                             </div>
                         </div>
@@ -575,51 +603,51 @@
 
                             <hr>
 
-                            <div class="config">
+                            <!--<div class="config">
                                 <label>Your Kick Username<br><small>Your user handle. It's on kick.com/<strong><u>username</u></strong></small></label>
                                 <input type="text" name="kickUserName" value="" placeholder="username">
-                            </div>
+                            </div>-->
                             <div class="config">
                                 <label>Chat<br><small>Reads Kick chat.</small></label>
-                                <label class="switch"><input type="checkbox" name="showKickMessages" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showKickMessages" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
-                                <label>Followers</label><label class="switch"><input type="checkbox" name="showKickFollows" checked><span class="slider"></span></label>
+                                <label>Followers</label><label class="switch"><input type="checkbox" name="showKickFollows" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label>Kicks Gift<br><small>Shows Kicks Gift events.</small></label>
-                                <label class="switch"><input type="checkbox" name="showKickKicks" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showKickKicks" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label><i class="fa-solid fa-arrow-turn-up"></i> Small Kicks Images<br><small>Shrinks the size of the gift image to 28px.</small></label>
-                                <label class="switch"><input type="checkbox" name="showSmallKicksGifts"><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showSmallKicksGifts" data-default="false"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label>Subscriptions<br><small>Shows Subscription events. <u><strong>Disabling this disables all sub events</strong></u>.</small></label>
-                                <label class="switch"><input type="checkbox" name="showKickSubs" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showKickSubs" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label><i class="fa-solid fa-arrow-turn-up"></i> Gifted Subs<br><small>When a user gifts another user a sub.</small></label>
-                                <label class="switch"><input type="checkbox" name="showKickGiftedSubs" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showKickGiftedSubs" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label><i class="fa-solid fa-arrow-turn-up"></i> Gifted Bomb<br><small>When a user gifts subs massively.</small></label>
-                                <label class="switch"><input type="checkbox" name="showKickMassGiftedSubs" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showKickMassGiftedSubs" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label><i class="fa-solid fa-arrow-turn-up"></i> Gifted Bomb Users Train<br><small>Shows all users that were gifted a  sub on a Gifted Bomb.</small></label>
-                                <label class="switch"><input type="checkbox" name="showKickGiftedSubsUserTrain" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showKickGiftedSubsUserTrain" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label>Channel Point Rewards</label>
-                                <label class="switch"><input type="checkbox" name="showKickRewardRedemptions" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showKickRewardRedemptions" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
-                                <label>Host<br><small>It's like "raid" but on Kick.</small></label><label class="switch"><input type="checkbox" name="showKickRaids" checked><span class="slider"></span></label>
+                                <label>Host<br><small>It's like "raid" but on Kick.</small></label><label class="switch"><input type="checkbox" name="showKickRaids" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label>Statistics<br><small>Shows Kick Viewers. <strong>Self-updates each 15 seconds.</strong></small></label>
-                                <label class="switch"><input type="checkbox" name="showKickViewers" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showKickViewers" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             
                         </div>
@@ -641,7 +669,7 @@
                             <div class="platform-enable">
                                 <label><small>Enable</small></label>
                                 <label class="switch">
-                                    <input type="checkbox" name="showStreamelements"><span class="slider"></span>
+                                    <input type="checkbox" name="showStreamelements" data-default="false"><span class="slider"></span>
                                 </label>
                             </div>
                         </div>
@@ -655,7 +683,7 @@
                             </div>
 					        <div class="config">
                                 <label>Tips</label>
-                                <label class="switch"><input type="checkbox" name="showStreamElementsTips" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showStreamElementsTips" checked data-default="true"><span class="slider"></span></label>
                             </div>
                         </div>
 
@@ -676,7 +704,7 @@
                             <div class="platform-enable">
                                 <label><small>Enable</small></label>
                                 <label class="switch">
-                                    <input type="checkbox" name="showStreamlabs"><span class="slider"></span>
+                                    <input type="checkbox" name="showStreamlabs" data-default="false"><span class="slider"></span>
                                 </label>
                             </div>
                         </div>
@@ -690,7 +718,7 @@
                             </div>
 					        <div class="config">
                                 <label>Donations</label>
-                                <label class="switch"><input type="checkbox" name="showStreamlabsDonations" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showStreamlabsDonations" checked data-default="true"><span class="slider"></span></label>
                             </div>
                         </div>
 
@@ -711,7 +739,7 @@
                             <div class="platform-enable">
                                 <label><small>Enable</small></label>
                                 <label class="switch">
-                                    <input type="checkbox" name="showPatreon"><span class="slider"></span>
+                                    <input type="checkbox" name="showPatreon" data-default="false"><span class="slider"></span>
                                 </label>
                             </div>
                         </div>
@@ -725,7 +753,7 @@
                             </div>
 					        <div class="config">
                                 <label>Memberships</label>
-                                <label class="switch"><input type="checkbox" name="showPatreonMemberships" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showPatreonMemberships" checked data-default="true"><span class="slider"></span></label>
                             </div>
                         </div>
 
@@ -746,7 +774,7 @@
                             <div class="platform-enable">
                                 <label><small>Enable</small></label>
                                 <label class="switch">
-                                    <input type="checkbox" name="showTipeee"><span class="slider"></span>
+                                    <input type="checkbox" name="showTipeee" data-default="false"><span class="slider"></span>
                                 </label>
                             </div>
                         </div>
@@ -761,7 +789,7 @@
                             </div>
 					        <div class="config">
                                 <label>Donations</label>
-                                <label class="switch"><input type="checkbox" name="showTipeeeDonations" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showTipeeeDonations" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             
                         </div>
@@ -783,7 +811,7 @@
                             <div class="platform-enable">
                                 <label><small>Enable</small></label>
                                 <label class="switch">
-                                    <input type="checkbox" name="showKofi"><span class="slider"></span>
+                                    <input type="checkbox" name="showKofi" data-default="false"><span class="slider"></span>
                                 </label>
                             </div>
                         </div>
@@ -796,13 +824,13 @@
                                 </small>
                             </div>
                             <div class="config">
-                                <label>Donations</label><label class="switch"><input type="checkbox" name="showKofiDonations" checked><span class="slider"></span></label>
+                                <label>Donations</label><label class="switch"><input type="checkbox" name="showKofiDonations" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
-                                <label>Subscriptions</label><label class="switch"><input type="checkbox" name="showKofiSubscriptions" checked><span class="slider"></span></label>
+                                <label>Subscriptions</label><label class="switch"><input type="checkbox" name="showKofiSubscriptions" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
-                                <label>Orders</label><label class="switch"><input type="checkbox" name="showKofiOrders" checked><span class="slider"></span></label>
+                                <label>Orders</label><label class="switch"><input type="checkbox" name="showKofiOrders" checked data-default="true"><span class="slider"></span></label>
                             </div>
                         </div>
 
@@ -823,7 +851,7 @@
                             <div class="platform-enable">
                                 <label><small>Enable</small></label>
                                 <label class="switch">
-                                    <input type="checkbox" name="showFourthwall"><span class="slider"></span>
+                                    <input type="checkbox" name="showFourthwall" data-default="false"><span class="slider"></span>
                                 </label>
                             </div>
                         </div>
@@ -837,32 +865,32 @@
                             </div>
                             <div class="config">
                                 <label>Donations</label>
-                                <label class="switch"><input type="checkbox" name="showFourthwallDonations" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showFourthwallDonations" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label>Subscriptions</label>
-                                <label class="switch"><input type="checkbox" name="showFourthwallSubscriptions" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showFourthwallSubscriptions" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label>Orders</label>
-                                <label class="switch"><input type="checkbox" name="showFourthwallOrders" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showFourthwallOrders" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label><i class="fa-solid fa-arrow-turn-up"></i> Shows Order Image</small>
                                 </label>
-                                <label class="switch"><input type="checkbox" name="showFourthwallShowImage" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showFourthwallShowImage" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label>Gift Purchase</label>
-                                <label class="switch"><input type="checkbox" name="showFourthwallGiftPurchase" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showFourthwallGiftPurchase" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label><i class="fa-solid fa-arrow-turn-up"></i> Shows Gift Image</label>
-                                <label class="switch"><input type="checkbox" name="showFourthwallShowGiftImage" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showFourthwallShowGiftImage" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label>Gift Draw</label>
-                                <label class="switch"><input type="checkbox" name="showFourthwallGiftDraw" checked><span class="slider"></span></label>
+                                <label class="switch"><input type="checkbox" name="showFourthwallGiftDraw" checked data-default="true"><span class="slider"></span></label>
                             </div>
                             <div class="config">
                                 <label>Gift Command<br><small>Command used to join the Gift Draw. </small></label>

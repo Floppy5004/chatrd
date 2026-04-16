@@ -31,27 +31,25 @@ userColors.set('tiktok', new Map());
 
 document.addEventListener('DOMContentLoaded', () => {
     if (showTiktok) {
-        const tiktokStatistics = `
-            <div class="platform" id="tiktok" style="display: none;">
-                <img src="js/modules/tiktok/images/logo-tiktok.svg" alt="">
-                <span class="viewers"><i class="fa-solid fa-user"></i> <span>0</span></span>
-                <span class="likes"><i class="fa-solid fa-heart"></i> <span>0</span></span>
-            </div>
-        `;
 
-        document.querySelector('#statistics').insertAdjacentHTML('beforeend', tiktokStatistics);
+        if ((showTikTokStatistics == true)  && (showPlatformStatistics == true)) {
+            const tiktokStatistics = `
+                <div class="platform" id="tiktok" style="display: none;">
+                    <img src="js/modules/tiktok/images/logo-tiktok.svg" alt="">
+                    <span class="viewers"><i class="fa-solid fa-user"></i> <span>0</span></span>
+                    <span class="likes"><i class="fa-solid fa-heart"></i> <span>0</span></span>
+                </div>
+            `;
 
-        if (showTikTokStatistics == true) { document.querySelector('#statistics #tiktok').style.display = ''; }
+            document.querySelector('#statistics').insertAdjacentHTML('beforeend', tiktokStatistics);
+            document.querySelector('#statistics #tiktok').style.display = '';
+        }
         
         console.debug('[TikTok][Debug] DOMContentLoaded fired');
         
         tiktokConnection();
     }
 });
-
-
-
-let tiktoJoinTimeOut;
 
 
 // -----------------------
@@ -92,6 +90,7 @@ async function tiktokConnection() {
                 case 'follow': tiktokFollowMessage(tiktokData); break;
                 case 'gift': tiktokGiftMessage(tiktokData); break;
                 case 'subscribe': tiktokSubMessage(tiktokData); break;
+                //default: console.debug(`[TikTok] ${data.event}`, data); 
             }
         };
 
@@ -461,15 +460,21 @@ async function tiktokSubMessage(data) {
     header.remove();
 
     user.textContent = data.nickname;
-    action.innerHTML = ` subscribed for `;
+    action.innerHTML = ` just subscribed to the channel.`;
     
-    //var months = data.subMonth > 1 ? 'months' : 'month';
+    /*var months = data.subMonth > 1 ? 'months' : 'month';
     var months = formatSubMonthDuration(data.subMonth);
-    value.innerHTML = `<strong>${months}</strong>`;
+    value.innerHTML = `<strong>${months}</strong>`;*/
 
+    value.remove();
     message.remove();
 
     addEventItem('tiktok', clone, classes, userId, messageId);
+}
+
+
+
+async function tiktokEnvelopeMessage(data) {
 }
 
 

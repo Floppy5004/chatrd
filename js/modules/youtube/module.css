@@ -1,5 +1,5 @@
 #chat .event.youtube .message {
-    background: rgba(255,0,0,0.75);
+    background: rgba(238,0,0,0.75);
 }
 
 #chat .event.youtube.sticker .header {
@@ -11,7 +11,7 @@
 }
 
 #chat .item.kick .platform .hidden-platform {
-    background: rgba(255,0,0,1);
+    background: rgba(238,0,0,1);
 }
 
 
@@ -31,7 +31,7 @@
 }
 
 #chat .item.youtube span.badge.owner {
-    background: #FF0000;
+    background: #EE0000;
 }
 
 #chat .item.youtube span.mod {
@@ -64,11 +64,11 @@
 }
 
 #chat .item.youtube .platform .hidden-platform {
-    background: #FF0000;
+    background: #EE0000;
 }
 
 #statistics .platform.youtube {
-    background: #FF0000;
+    background: #EE0000;
     position: relative;
     order: 2;
 }
@@ -102,4 +102,4 @@
 } 
 
 
-.msm-platform.red { background: rgba(255,0,0,0.75); }
+.msm-platform.red { background: rgba(238,0,0,0.75); }

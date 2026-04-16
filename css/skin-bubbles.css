@@ -1,10 +1,9 @@
 
 #chat .item .message { background: rgba(0,0,0,0.25); padding: 10px; }
 
-#chat:not(.horizontal):not(.oneline) .item { margin-bottom: 5px !important; }
 #chat:not(.horizontal):not(.oneline) .item.grouped .message { padding: 10px !important;  }
 
-#chat.oneline .item:not(.grouped) .message { padding: 0px 10px 10px 10px; }
+#chat.oneline .item:not(.grouped) .message { padding: 5px 10px 5px 10px; }
 #chat.oneline .item.grouped .message { padding: 5px 10px 8px 10px; }
 
 #chat.horizontal .item.chat:not(.grouped) .message { padding: 5px 10px; }

@@ -105,6 +105,27 @@ async function loadStreamerBotSettings() {
 
 
 function chatRdImportSettings(url) {
+
+    const elements = document.querySelector("form").querySelectorAll("input, select");
+
+    elements.forEach(el => {
+        switch (el.type) {
+            case "checkbox":
+            case "radio":
+                el.checked = el.defaultChecked;
+                break;
+            case "range":
+            case "text":
+            case "number":
+            /*case "email":
+            case "password":
+                el.value = el.defaultValue;
+                break;*/
+            default:
+                el.value = el.defaultValue;
+        }
+    })
+
     const qIndex = url.indexOf("?");
     
     if (qIndex === -1) return {};
@@ -127,7 +148,8 @@ function chatRdImportSettings(url) {
         if (input) {
             if (input.type === "checkbox") {
                 input.checked = json[key];
-            } else {
+            }
+            else {
                 input.value = json[key];
             }
         }
@@ -272,7 +294,51 @@ function generateUrl() {
 
     selects.forEach(s => params.set(s.name, s.value));
     ranges.forEach(r => params.set(r.name, r.value));
-    checkboxes.forEach(cb => params.set(cb.name, cb.checked));
+
+    let letTwitch               = document.querySelector("input[type=checkbox][name=showTwitch]:not(.avoid)").checked;
+    let letYoutube              = document.querySelector("input[type=checkbox][name=showYoutube]:not(.avoid)").checked;
+    let letTiktok               = document.querySelector("input[type=checkbox][name=showTiktok]:not(.avoid)").checked;
+    let letKick                 = document.querySelector("input[type=checkbox][name=showKick]:not(.avoid)").checked;
+
+    let letStreamelements       = document.querySelector("input[type=checkbox][name=showStreamelements]:not(.avoid)").checked;
+    let letStreamlabs           = document.querySelector("input[type=checkbox][name=showStreamlabs]:not(.avoid)").checked;
+    let letPatreon              = document.querySelector("input[type=checkbox][name=showPatreon]:not(.avoid)").checked;
+    let letTipeee               = document.querySelector("input[type=checkbox][name=showTipeee]:not(.avoid)").checked;
+    let letKofi                 = document.querySelector("input[type=checkbox][name=showKofi]:not(.avoid)").checked;
+    let letFourthwall           = document.querySelector("input[type=checkbox][name=showFourthwall]:not(.avoid)").checked;
+
+    checkboxes.forEach(cb => {
+        const dataDefault = cb.dataset.default === "true";
+
+        const isTwitchParam = cb.name.toLowerCase().includes("twitch");
+        const isYoutubeParam = cb.name.toLowerCase().includes("youtube");
+        const isTiktokParam = cb.name.toLowerCase().includes("tiktok");
+        const isKickParam = cb.name.toLowerCase().includes("kick");
+
+        const isStreamelements = cb.name.toLowerCase().includes("streamelements");
+        const isStreamlabs = cb.name.toLowerCase().includes("streamlabs");
+        const isPatreon = cb.name.toLowerCase().includes("patreon");
+        const isTipeeestream = cb.name.toLowerCase().includes("tipeee");
+        const isKofi = cb.name.toLowerCase().includes("kofi");
+        const isFourthwall = cb.name.toLowerCase().includes("fourthwall");
+
+        if (isTwitchParam && !letTwitch) return;
+        if (isYoutubeParam && !letYoutube) return;
+        if (isTiktokParam && !letTiktok) return;
+        if (isKickParam && !letKick) return;
+
+        if (isStreamelements && !letStreamelements) return;
+        if (isStreamlabs && !letStreamlabs) return;
+        if (isPatreon && !letPatreon) return;
+        if (isTipeeestream && !letTipeee) return;
+        if (isKofi && !letKofi) return;
+        if (isFourthwall && !letFourthwall) return;
+
+        if (cb.checked !== dataDefault) {
+            params.set(cb.name, cb.checked);
+        }
+    });
+
     colorfields.forEach(cf => params.set(cf.name, cf.value));
     textfields.forEach(tf => params.set(tf.name, tf.value));
     numberfields.forEach(nf => params.set(nf.name, nf.value));

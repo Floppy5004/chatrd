@@ -68,10 +68,8 @@
 
 .msm-platform.green { background: rgba(72,212,21,0.75); }
 
-.item.kick.chat.streamer-mentioned .message::after {
-    transform: translate(-50%,-53.5%);
+#chat .item.kick.chat.streamer-mentioned:not(.first-message) .message {
     background: rgba(72,212,21,0.15);
-    border: 2px solid rgba(72,212,21,0.15);
 }
 
 .item.kick.chat.streamer-mentioned .message::before {
