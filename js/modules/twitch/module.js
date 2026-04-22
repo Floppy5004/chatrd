@@ -1682,7 +1682,12 @@ async function getTwitchBadges(badges) {
 async function getTwitchMessageFromParts(parts) {
     const html = parts.map(part => {
         if (part.type === 'emote') {
-            return `<img src="${part.imageUrl}" alt="${escapeHTML(part.text)}" title="${escapeHTML(part.text)}" class="emote">`;
+            if (part.source == "Twemoji") {
+                return escapeHTML(part.text);
+            }
+            else {
+                return `<img src="${part.imageUrl}" alt="${escapeHTML(part.text)}" title="${escapeHTML(part.text)}" class="emote">`;
+            }
         }
 
         if (part.type === 'cheer') {

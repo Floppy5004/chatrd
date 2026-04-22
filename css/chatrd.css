@@ -222,7 +222,8 @@ body {
 }
 #chat .item .actual-message img {
     vertical-align: middle;
-    height: 28px;
+    /*height: 28px;*/
+    height: 22px;
     margin: 1px;
 }
 
