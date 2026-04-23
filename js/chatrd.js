@@ -1097,7 +1097,100 @@ function useAutoScroll(container, options = {}) {
 
 
 
+function initFakeScrollbar(scrollEl, thumbEl) {
+    const track = thumbEl.parentElement;
 
+    track.style.visibility = 'hidden';
+
+    function updateThumb() {
+        const scrollHeight = scrollEl.scrollHeight;
+        const clientHeight = scrollEl.clientHeight;
+
+        track.style.top = scrollEl.offsetTop + 'px';
+        track.style.height = scrollEl.offsetHeight + 'px';
+        track.style.bottom = 'auto';
+
+        const trackH = track.offsetHeight;
+
+        if (scrollHeight <= clientHeight || trackH === 0) {
+            track.style.visibility = 'hidden';
+            thumbEl.style.display = 'none';
+            return;
+        }
+
+        track.style.visibility = 'visible';
+        thumbEl.style.display = 'block';
+
+        const scrollTop = Math.abs(scrollEl.scrollTop);
+        const maxScroll = scrollHeight - clientHeight;
+        const ratio = 1 - Math.min(1, Math.max(0, scrollTop / maxScroll));
+        const thumbH = Math.max(30, (clientHeight / scrollHeight) * trackH);
+        thumbEl.style.height = thumbH + 'px';
+        thumbEl.style.top = (ratio * (trackH - thumbH)) + 'px';
+    }
+
+    let isDragging = false;
+    let dragStartY = 0;
+    let dragStartScrollTop = 0;
+
+    thumbEl.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        dragStartY = e.clientY;
+        dragStartScrollTop = scrollEl.scrollTop;
+        document.body.style.userSelect = 'none';
+        e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+
+        const trackH = track.offsetHeight;
+        const thumbH = thumbEl.offsetHeight;
+        const scrollHeight = scrollEl.scrollHeight;
+        const clientHeight = scrollEl.clientHeight;
+        const maxScroll = scrollHeight - clientHeight;
+
+        const deltaY = e.clientY - dragStartY;
+        const scrollDelta = (deltaY / (trackH - thumbH)) * maxScroll;
+        scrollEl.scrollTop = dragStartScrollTop + scrollDelta;
+
+        updateThumb();
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        document.body.style.userSelect = '';
+    });
+
+    track.style.pointerEvents = 'auto';
+
+    track.addEventListener('click', (e) => {
+        if (e.target === thumbEl) return;
+
+        const trackRect = track.getBoundingClientRect();
+        const clickY = e.clientY - trackRect.top;
+        const trackH = track.offsetHeight;
+        const scrollHeight = scrollEl.scrollHeight;
+        const clientHeight = scrollEl.clientHeight;
+        const maxScroll = scrollHeight - clientHeight;
+
+        const ratio = 1 - Math.min(1, Math.max(0, clickY / trackH));
+        scrollEl.scrollTop = -(ratio * maxScroll);
+    });
+
+    scrollEl.addEventListener('scroll', updateThumb);
+    window.addEventListener('resize', updateThumb);
+
+    new ResizeObserver(() => requestAnimationFrame(updateThumb)).observe(scrollEl);
+
+    new MutationObserver(() => requestAnimationFrame(updateThumb)).observe(scrollEl, {
+        childList: true,
+        subtree: true
+    });
+
+    requestAnimationFrame(() => requestAnimationFrame(updateThumb));
+}
 
 
 
@@ -1111,5 +1204,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const scroll = useAutoScroll(document.querySelector('#chat:not(.noscrollbar)'), {
             notice: document.querySelector('#chat-scroll-bottom'),
         });
+        
+        initFakeScrollbar(
+            document.getElementById('chat'),
+            document.querySelector('.fake-thumb')
+        );
     }
 });
