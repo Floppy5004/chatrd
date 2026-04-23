@@ -314,7 +314,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    padding: 15px 25px;
+    padding: 5px 25px;
     z-index: 111;
 
     display: flex;

@@ -1106,7 +1106,7 @@ function initFakeScrollbar(scrollEl, thumbEl) {
         const scrollHeight = scrollEl.scrollHeight;
         const clientHeight = scrollEl.clientHeight;
 
-        track.style.top = scrollEl.offsetTop + 'px';
+        //track.style.top = scrollEl.offsetTop + 'px';
         track.style.height = scrollEl.offsetHeight + 'px';
         track.style.bottom = 'auto';
 
