@@ -93,6 +93,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // KICK CONNECT HANDLER
 
 async function kickConnection() {
+    if (!showKick) return;
+    
     //if (!kickUserName) return;
 
     const kickMaxTries = 20;
