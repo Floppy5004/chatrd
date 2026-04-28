@@ -89,9 +89,8 @@ async function kickConnection() {
     
 
     const kickMaxTries = 20;
-    const kickReconnectDelay = 10000;
+    const kickReconnectDelay = 5000;
     let retryCount = 0;
-    
 
 
     async function connect() {

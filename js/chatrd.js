@@ -180,7 +180,6 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
         lastClasses = lastClasses.join(' ');
 
         let currentClasses = Array.from(classes)
-        //.filter(c => c !== 'streamer-mentioned')
         .join(' ');
 
         if (lastUserId == userid && lastClasses == currentClasses) {
@@ -483,51 +482,7 @@ function formatSubMonthDuration(months) {
 }
 
 
-const pushNotify = (data) => {
 
-    const SimpleNotify = {
-        effect: 'fade',
-        speed: 500,
-        customClass: 'toasty',
-        customIcon: '',
-        showIcon: true,
-        showCloseButton: true,
-        autoclose: true,
-        autotimeout: 2500,
-        notificationsGap: null,
-        notificationsPadding: null,
-        type: 'outline',
-        position: 'x-center bottom',
-        customWrapper: '',
-    };
-    const mergedData = {
-        ...SimpleNotify,
-        ...data
-    }
-    new Notify (mergedData);
-    
-}
-
-const notifyError = (err) => {
-    err.status = 'error';
-    pushNotify(err);
-}
-
-const notifyInfo = (info) => {
-    info.status = 'info';
-    pushNotify(info);
-}
-
-const notifyWarning = (warn) => {
-    warn.status = 'warning';
-    pushNotify(warn);
-}
-
-
-const notifySuccess = (success) => {
-    success.status = 'success';
-    pushNotify(success);
-}
 
 
 function animateCounter(element, start, end, duration) {
