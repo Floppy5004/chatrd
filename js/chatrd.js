@@ -42,10 +42,10 @@ const userColors = new Map();
 
 /* ✅ Explicit whitelist */
 const SKINS = {
-    default: "skin-default.css",
-    nutting: "skin-nutting.css",
-    kimballs: "skin-kimballs.css",
-    bubbles: "skin-bubbles.css"
+    default: "skin-default.css?nocache=30",
+    nutting: "skin-nutting.css?nocache=30",
+    kimballs: "skin-kimballs.css?nocache=30",
+    bubbles: "skin-bubbles.css?nocache=30"
 };
 
 const skinFile = SKINS[chatrdSkin] || SKINS.default;

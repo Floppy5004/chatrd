@@ -15,3 +15,5 @@
 #chat.oneline .item.chat.streamer-mentioned:has(.avatar) .first-message,
 #chat.oneline .item.chat.streamer-mentioned:has(.avatar) .info,
 #chat.oneline .item.chat.streamer-mentioned:has(.avatar) .actual-message { top: 0 !important; }
+
+#chat.oneline .item.chat .info, #chat.oneline .item.chat .actual-message { top: -5px; }

@@ -41,6 +41,8 @@
     transform: translateY(0);
 }
 
+#chat.oneline .item.chat .info, #chat.oneline .item.chat .actual-message { top: -5px; }
+
 
 #chat.oneline .item:not(.grouped):has(.avatar).streamer-mentioned .message { padding: 10px 10px 10px 38px; }
 
