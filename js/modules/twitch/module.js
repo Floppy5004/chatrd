@@ -184,8 +184,6 @@ if (showTwitch) {
 async function twitchChatMessage(data) {
     
     if (showTwitchMessages == false) return;
-    /*if (ignoreUserList.includes(data.message.username.toLowerCase())) return;
-    if (data.message.message.startsWith("!") && excludeCommands == true)  return;*/
     
     if (ignoreUserList.includes(data.user.login)) return;
     if (data.text.startsWith("!") && excludeCommands == true)  return;
@@ -237,14 +235,17 @@ async function twitchChatMessage(data) {
         }
     }
 
-    /*user.style.color = data.message.color;
-    user.textContent = data.message.displayName;*/
-    user.style.color = data.user.color;
-    user.textContent = data.user.name
+    
 
-    /*if (data.message.isMe) {
-        message.style.color = data.message.color;
-    }*/
+    const userLinkElement = user.querySelector('a');
+    const userLink = `https://twitch.tv/${data.user.login}`;
+
+    userLinkElement.href = userLink;
+    userLinkElement.target = '_blank';
+    userLinkElement.style = `--user-color: ${data.user.color}`;
+    userLinkElement.textContent = data.user.name;
+
+
 
     if (data.meta.isMe) {
         message.style.color = data.user.color;
@@ -265,36 +266,10 @@ async function twitchChatMessage(data) {
     }
     
 
-    //if (data.message.isReply) {
     if (data.isReply == true) {
         classes.push('reply');
 
-        /*let offset = 0;
-
-        let replyTo = `@${data.message.reply.userName}`;
-        let replyMessage = streamData.message.message;*/
-
         let replyMessage = data.reply.msgBody.replace(/^@\S+\s*/, '') ?? '';
-        
-        /*if (replyMessage.startsWith(replyTo)) {
-            let startIndex = replyTo.length;
-            if (replyMessage[startIndex] === " ") {
-                startIndex++;
-            }
-            replyMessage = replyMessage.slice(startIndex);
-            offset = startIndex;    
-        
-            let replyEmotes = (streamData.emotes || [])
-            .map(e => ({
-                ...e,
-                startIndex: e.startIndex - offset,
-                endIndex: e.endIndex - offset
-            }))
-            .sort((a, b) => a.startIndex - b.startIndex);
-
-            streamData.message.message = replyMessage;
-            streamData.emotes = replyEmotes;
-        }*/
 
         reply.insertAdjacentHTML('beforeend', ` <strong>${tRD('twitch.reply_label', { user: escapeHTML(data.reply.userName) })}</strong> ${escapeHTML(replyMessage)}`);
     }
@@ -317,16 +292,12 @@ async function twitchChatMessage(data) {
     else { sharedChat.remove(); }
 
     if (showTwitchPronouns === true) {
-        //const userPronouns = await getTwitchUserPronouns(data.message.username);
         const userPronouns = await getTwitchUserPronouns(data.user.login);
         if (userPronouns) {
             pronoun.innerHTML = userPronouns;
         }
     }
     else { pronoun.remove(); }
-    
-    /*message.textContent = streamData.message.message;
-    await getTwitchEmotes(streamData, message);*/
 
     let messageFromParts;
 
@@ -398,14 +369,11 @@ async function twitchWatchStreakMessage(data) {
     const classes = ['twitch', 'watch-streak'];
 
     header.remove();
-    
+
     user.textContent = data.displayName;
 
     action.innerHTML = tRD('twitch.watch_streak_action');
     value.innerHTML = `<strong>${tRD('twitch.watch_streak_value', { count: data.watchStreak })}</strong>!`;
-
-    /*message.textContent = data.message;
-    await getTwitchEmotesForWatchedStreakMessage(data, message);*/
 
     let messageFromParts = await getTwitchMessageFromParts(data.parts);
     message.innerHTML = DOMPurify.sanitize(messageFromParts);
@@ -422,7 +390,7 @@ async function twitchFollowMessage(data) {
     const template = eventTemplate;
 	const clone = template.content.cloneNode(true);
     const messageId = createRandomString(40);
-    const userId = data.user_name.toLowerCase();
+    const userId = data.user_login.toLowerCase();
 
     const {
         header,
@@ -442,10 +410,8 @@ async function twitchFollowMessage(data) {
     message.remove();
     value.remove();
 
-    
     user.textContent = data.user_name;
 
-    //action.innerHTML = ` followed you`;
     action.innerHTML = tRD('twitch.follow_action');
 
     addEventItem('twitch', clone, classes, userId, messageId);
@@ -499,11 +465,19 @@ async function twitchAnnouncementMessage(data) {
 
     header.innerHTML = `<span><i class="fa-solid fa-bullhorn"></i> ${tRD('twitch.announcement_header')}</span>`;
 
-    user.style.color = data.user.color;
-    user.textContent = data.user.name;
+
     
-    /*message.textContent = data.text;
-    await getTwitchEmotesOnParts(data, message);*/
+
+    const userLinkElement = user.querySelector('a');
+    const userLink = `https://twitch.tv/${data.user.login}`;
+
+    userLinkElement.href = userLink;
+    userLinkElement.target = '_blank';
+    userLinkElement.style = `--user-color: ${data.user.color}`;
+    userLinkElement.textContent = data.user.name;
+
+
+
 
     if (showBadges) badges.innerHTML = badgeList; else badges.remove();
 
@@ -522,7 +496,7 @@ async function twitchRewardRedemption(data) {
     const template = eventTemplate;
 	const clone = template.content.cloneNode(true);
     const messageId = createRandomString(40);
-    const userId = data.user_name.toLowerCase();
+    const userId = data.user_login.toLowerCase();
 
     const {
         header,
@@ -540,7 +514,12 @@ async function twitchRewardRedemption(data) {
 
     header.remove();
     
+    
+
     user.textContent = data.user_name;
+
+
+
     action.innerHTML = tRD('twitch.reward_action');
 
     value.innerHTML = `
@@ -604,7 +583,18 @@ async function twitchAutomaticRewardRedemption(data) {
 
     }
     
-    user.textContent = data.user_name;
+    
+    
+
+    const userLinkElement = user.querySelector('a');
+    const userLink = `https://twitch.tv/${data.user_login}`;
+
+    userLinkElement.href = userLink;
+    userLinkElement.target = '_blank';
+    userLinkElement.textContent = data.user_name;
+
+
+
     action.innerHTML = tRD('twitch.reward_action');
 
     value.innerHTML = `
@@ -664,10 +654,6 @@ async function twitchBitsMessage(data) {
             <span class="gift-value"><img src="https://d3aqoihi2n8ty8.cloudfront.net/actions/cheer/dark/animated/${match.gifId}/4.gif" alt="${data.bits} ${bits}"></span>
         </div>
     `;
-
-    /*data.message.message = data.message.message.replace(/\bCheer\d+\b/g, '').replace(/\s+/g, ' ').trim();
-    message.textContent = data.message.message;
-    await getTwitchEmotes(data, message);*/
 
     let messageFromParts = await getTwitchMessageFromParts(data.parts);
     message.innerHTML = DOMPurify.sanitize(messageFromParts);

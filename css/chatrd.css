@@ -181,6 +181,11 @@ body {
     font-weight: bold;
 }
 
+#chat .item .timestamp {
+    min-width: 48px;
+    text-align: center;
+}
+
 #chat .item .pronouns em {
     font-style: normal;
 }
@@ -272,6 +277,11 @@ body {
     margin: 0px 5px;
 }
 
+#chat .event .user a { color: #FFF; text-decoration: none; }
+#chat .event .user a:hover {
+    text-shadow: 0 0 10px #FFF;
+}
+
 #chat .event .actual-message {
     line-height: 150%;
     font-weight: 300;
@@ -308,6 +318,16 @@ body {
 }
 
 #chat .user { font-weight: bold; }
+#chat .user a {
+    display: inline-block;
+    text-decoration: none;
+    transition: all ease-in-out 300ms;
+    color: var(--user-color);
+}
+
+#chat .user a:hover {
+    text-shadow: 0px 0px 10px var(--user-color);
+}
 
 #bars {
     width: 100%;

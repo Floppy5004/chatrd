@@ -212,8 +212,15 @@ async function tiktokChatMessage(data) {
 
     var color = await createRandomColor('tiktok', data.uniqueId);
 
-    user.style.color = color;
-    user.textContent = data.nickname;
+
+    const userLinkElement = user.querySelector('a');
+    const userLink = `https://tiktok.com/@${data.uniqueId}`;
+
+    userLinkElement.href = userLink;
+    userLinkElement.target = '_blank';
+    userLinkElement.style = `--user-color: ${color}`;
+    userLinkElement.textContent = data.nickname;
+
     
     message.textContent = data.comment;
     await getTikTokEmotes(data, message),
@@ -459,10 +466,6 @@ async function tiktokSubMessage(data) {
 
     user.textContent = data.nickname;
     action.innerHTML = tRD('tiktok.sub_action');
-    
-    /*var months = data.subMonth > 1 ? 'months' : 'month';
-    var months = formatSubMonthDuration(data.subMonth);
-    value.innerHTML = `<strong>${months}</strong>`;*/
 
     value.remove();
     message.remove();

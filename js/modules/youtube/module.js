@@ -150,9 +150,18 @@ async function youTubeChatMessage(data) {
 
 
     var color = await createRandomColor('youtube', data.user.name);
+    
+    
 
-    user.style.color = color;
-    user.textContent = data.user.name;
+    const userLinkElement = user.querySelector('a');
+    const userLink = `https://youtube.com/channel/${userId}`;
+
+    userLinkElement.href = userLink;
+    userLinkElement.target = '_blank';
+    userLinkElement.style = `--user-color: ${color}`;
+    userLinkElement.textContent = data.user.name;
+
+
 
     message.textContent = data.message;
     await getYouTubeEmotes(data, message);

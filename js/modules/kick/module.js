@@ -45,10 +45,6 @@ const kicksGiftsClasses = [
 
 const kickMessageHandlers = {
 
-    /*'Kick.ChatMessage': (response) => {\
-        kickChatMessage(response.data);
-    },*/
-
     'Kick.Follow': (response) => {
         kickFollowMessage(response.data);
     },
@@ -76,8 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         registerPlatformHandlersToStreamerBot(kickMessageHandlers, '[Kick][SB1]');
-        
-        //kickConnection();
     }
     
 });
@@ -93,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
 async function kickConnection() {
     if (!showKick) return;
     
-    //if (!kickUserName) return;
 
     const kickMaxTries = 20;
     const kickReconnectDelay = 10000;
@@ -139,7 +132,6 @@ async function kickConnection() {
 
             }
 
-            //const kickUserInfo = await kickGetUserInfo(kickUserName);
             const kickUserId = kickUserInfo.user_id;
 
             if (!kickUserInfo || !kickUserInfo.chatroom || !kickUserInfo.chatroom.id) {
@@ -171,7 +163,6 @@ async function kickConnection() {
                     title: 'ChatRD 🤝 Kick'
                 });
                 
-                // Getting 7TV User Emotes and Global Emotes
                 (async () => {
                     const kick7TVEmotes = await getKick7TVEmotes(kickUserId);
                     if (kick7TVEmotes != null) {
@@ -180,14 +171,7 @@ async function kickConnection() {
                         });
                     }
                 })();
-
-                /*if (showKickViewers === true) {
-                    setInterval(() => {
-                        kickGetUserInfo(kickUserName).then(data => {
-                            kickUpdateStatistics(data);
-                        });
-                    }, 15000);
-                }*/
+                
             };
 
             kickWebSocket.onmessage = (response) => {
@@ -239,22 +223,6 @@ async function kickConnection() {
 
             kickWebSocket.onclose = (event) => {
                 setTimeout(connect, kickReconnectDelay);
-
-                /*console.warn(`[Kick] WebSocket closed (code: ${event.code})`);
-
-                if (retryCount < kickMaxTries) {
-                    retryCount++;
-                    notifyError({
-                        title: 'Kick Disconnected',
-                        text: `Retrying in ${kickReconnectDelay / 1000}s (${retryCount}/${kickMaxTries})`
-                    });
-                    setTimeout(connect, kickReconnectDelay);
-                } else {
-                    notifyError({
-                        title: 'Kick Reconnect Failed',
-                        text: `Maximum retries (${kickMaxTries}) reached.`
-                    });
-                }*/
             };
 
             kickWebSocket.onerror = (error) => {
@@ -265,22 +233,6 @@ async function kickConnection() {
         }
         catch (error) {
             setTimeout(connect, kickReconnectDelay);
-            
-            /*console.error(`[Kick] Failed to connect: ${error.message}`);
-
-            if (retryCount < kickMaxTries) {
-                retryCount++;
-                notifyError({
-                    title: 'Kick Connection Error',
-                    text: `Retrying in ${kickReconnectDelay / 1000}s (${retryCount}/${kickMaxTries})`
-                });
-                setTimeout(connect, kickReconnectDelay);
-            } else {
-                notifyError({
-                    title: 'Kick Reconnect Failed',
-                    text: `Maximum retries (${kickMaxTries}) reached.`
-                });
-            }*/
         }
     }
 
@@ -354,10 +306,14 @@ async function kickChatMessage(data) {
     }
 
 
+    const userLinkElement = user.querySelector('a');
+    const userLink = `https://kick.com/${data.sender.slug}`;
 
+    userLinkElement.href = userLink;
+    userLinkElement.target = '_blank';
+    userLinkElement.style = `--user-color: ${data.sender.identity.color}`;
+    userLinkElement.textContent = data.sender.username;
 
-    user.style.color = data.sender.identity.color;
-    user.textContent = data.sender.username;
     message.innerHTML = messageHTML;
 
     if (showAvatar) avatar.innerHTML = `<img src="${avatarImage}">`; else avatar.remove();
@@ -390,7 +346,6 @@ async function kickFollowMessage(data) {
 	const clone = template.content.cloneNode(true);
     const messageId = createRandomString(40);
     const userId = data.user.login.toLowerCase();
-    //const userId = data.userName.toLowerCase();
 
     const {
         header,
@@ -409,7 +364,6 @@ async function kickFollowMessage(data) {
     header.remove();
     
     user.textContent = data.user.name;
-    //user.innerHTML = `<strong>${data.userName}</strong>`;
 
     action.innerHTML = tRD('kick.follow_action');
     
@@ -507,7 +461,6 @@ async function kickSubMessage(data) {
 
     action.innerHTML = tRD('kick.sub_action');
 
-    //var months = data.months > 1 ? 'months' : 'month';
     var months = formatSubMonthDuration(data.months);
     
     value.innerHTML = `<strong>${months}</strong>`;
@@ -713,22 +666,21 @@ async function kickUpdateStatistics(data) {
 
 
 async function kickGetUserInfo(user) {
-    const response = await fetch( `https://kick.com/api/v2/channels/${user}` );
+    const response = await fetch(`https://kick.com/api/v2/channels/${user}`);
     
-    if (response.status === 404) {
-        console.error("[Kick] User was not found!");
-        return 404;
+    if (!response.ok) {
+        console.error(`[Kick] Error trying to find the user: ${response.status}`);
+        return null;
     }
-    else {
-        const data = await response.json();
-        return data;
-    }
+
+    const data = await response.json();
+    return data;
 }
 
 async function getKickAvatar(user) {
     if (!showAvatar) return;
 
-    const DEFAULT_AVATAR = 'https://kick.com/img/default-profile-pictures/default2.jpeg';
+    const DEFAULT_AVATAR = 'https://kick.com/img/default-profile-pictures/default-avatar-2.webp';
 
     if (kickAvatars.has(user)) {
         console.debug(`[Kick] Kick avatar found for ${user}!`);
@@ -739,6 +691,13 @@ async function getKickAvatar(user) {
 
     try {
         const response = await kickGetUserInfo(user);
+        
+        if (response == null) {
+            console.debug(`[Kick] Kick avatar couldn't be found for ${user}. Using default...`);
+            kickAvatars.set(user, DEFAULT_AVATAR);
+            return DEFAULT_AVATAR;
+        }
+
         const rawPic = response?.user?.profile_pic;
 
         const avatarUrl = (typeof rawPic === "string" && rawPic)
