@@ -356,11 +356,11 @@ function generateUrl() {
 function copyUrl() {
     const output = document.getElementById("outputUrl");
     const value = output.value;
-    const button = document.querySelector('.url-bar button');
-    const buttonDefaultText = 'Copy URL';
+    const button = document.querySelector('#copyUrlButton');
+    const buttonDefaultText = button.textContent;
 
     navigator.clipboard.writeText(value).then(() => {
-        button.textContent = 'ChatRD URL Copied!';
+        button.textContent = '👍';
         button.style.backgroundColor = "#00dd63";
 
         setTimeout(() => {
@@ -662,7 +662,6 @@ function streamerBotConnect() {
             streamerBotConnected = true;
 
             streamerBotStatus.classList.add('connected');
-            streamerBotStatus.querySelector('small').textContent = `Connected`;
 
             loadSettingsFromLocalStorage();
             pushChangeEvents();
@@ -676,7 +675,6 @@ function streamerBotConnect() {
         },
         onDisconnect: () => {
             streamerBotStatus.classList.remove('connected');
-            streamerBotStatus.querySelector('small').textContent = `Awaiting for connection`;
             streamerBotConnected = false;
             console.debug(`[ChatRD][Settings] Streamer.bot Disconnected!`);
         }
@@ -716,12 +714,10 @@ async function speakerBotConnection() {
 
         onConnect: () => {
             speakerBotStatus.classList.add('connected');
-            speakerBotStatus.querySelector('small').textContent = `Connected`;
         },
 
         onDisconnect: () => {
             speakerBotStatus.classList.remove('connected');
-            speakerBotStatus.querySelector('small').textContent = `Awaiting for connection`;
         }
     });
 }

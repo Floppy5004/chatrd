@@ -1,0 +1,261 @@
+{
+  "readme": {
+    "text": "Você pode encontrar a documentação e como configurar o ChatRD <a target=\"_blank\" href=\"https://github.com/vortisrd/chatrd/blob/main/README.md\">aqui</a>."
+  },
+
+  "streamerbot": {
+    "title": "Streamer.bot",
+    "server": "Servidor",
+    "port": "Porta"
+  },
+
+  "speakerbot": {
+    "title": "Speaker.bot",
+    "enable": "Ativar",
+    "status_label": "Status do Speaker.bot",
+    "server": "Servidor",
+    "port": "Porta",
+    "chat_read": "Ativar Leitura do Chat",
+    "event_read": "Ativar Leitura de Eventos",
+    "voice_alias": "Alias de Voz",
+    "voice_alias_hint": "Configure em <strong><em>Settings -> Voice Alias</em></strong> no Speaker.bot.",
+    "chat_template": "Template de Mensagem do Chat",
+    "chat_template_hint": "As variáveis são <strong><em>{user}</em></strong> e <strong><em>{message}</em></strong>.",
+    "warning_engine": "<i class=\"fa-solid fa-triangle-exclamation\"></i> Você precisa configurar um Motor de Voz e um Alias de Voz no Speaker.bot. <strong><a target=\"_blank\" href=\"https://speaker.bot/get-started/speech-engines\">Siga o tutorial</a>.</strong>",
+    "warning_websocket": "<i class=\"fa-solid fa-triangle-exclamation\"></i> O WebSocket do Speaker.bot precisa estar ativado e em execução. <strong><a target=\"_blank\" href=\"https://speaker.bot/api/websocket\">Siga o tutorial</a>.</strong>"
+  },
+
+  "general": {
+    "title": "Configurações",
+    "language": "Idioma",
+    "language_hint": "Altera o idioma do ChatRD",
+    "scroll_bar": "Barra de Rolagem",
+    "scroll_bar_hint": "Adiciona uma barra de rolagem.",
+    "size": "Tamanho",
+    "size_hint": "Altera o tamanho do ChatRD",
+    "font_family": "Fonte",
+    "font_family_hint": "Altera a fonte do ChatRD",
+    "background_color": "Cor de Fundo",
+    "background_color_hint": "Altera a cor de fundo do ChatRD",
+    "background_opacity": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Opacidade do Fundo",
+    "background_opacity_hint": "Altera a opacidade da cor de fundo do ChatRD",
+    "skin": "Skin do ChatRD",
+    "skin_hint": "Altera os visuais do ChatRD usando \"SKINS\".",
+    "skin_beta_warning": "<i class=\"fa-solid fa-circle-info\"></i> A Skin do ChatRD está em <strong>BETA</strong>.",
+    "skin_options": {
+      "default": "Padrão",
+      "nutting": "Nutting",
+      "kimballs": "Kimballs",
+      "bubbles": "Bubbles"
+    },
+    "one_line": "Linha Única",
+    "one_line_hint": "Chat em uma linha ao invés de duas no Chat Vertical.",
+    "horizontal": "Direção Horizontal",
+    "horizontal_hint": "Chat/Eventos serão exibidos na horizontal.<br><strong><u>Se ativado, desativa a opção \"Linha Única\" acima.</u></strong>",
+    "group_messages": "Agrupar Mensagens do Chat",
+    "group_messages_hint": "Mensagens consecutivas do mesmo usuário serão agrupadas.",
+    "platforms": "Plataformas",
+    "platforms_hint": "Exibe os logos das plataformas.",
+    "avatars": "Avatares",
+    "timestamps": "Horários",
+    "ampm": "<i class=\"fa-solid fa-arrow-turn-up\"></i> AM/PM",
+    "badges": "Badges",
+    "platform_statistics": "Estatísticas das Plataformas",
+    "platform_statistics_hint": "Exibe as estatísticas de todas as plataformas.",
+    "ignore_commands": "Ignorar Comandos",
+    "ignore_commands_hint": "Ignora textos que começam com \"!\".",
+    "ignore_chatters": "Ignorar Usuários",
+    "ignore_chatters_hint": "Separe os nomes por vírgula. ex.: StreamLabs,StreamElements",
+    "hide_after": "Ocultar Msg do Chat",
+    "hide_after_hint": "Oculta uma mensagem após X segundos. (0 desativa)",
+    "multi_streamer_mode": "Modo Multi-Streamer",
+    "multi_streamer_mode_hint": "Altera <strong>Twitch</strong> para <em class=\"msm-platform purple\">Plataforma Roxa</em>, <strong>YouTube</strong> para <em class=\"msm-platform red\">Plataforma Vermelha</em>,<br><strong>Kick</strong> para <em class=\"msm-platform green\">Plataforma Verde</em> e <strong>TikTok</strong> para <em class=\"msm-platform vertical\">App de Vídeos Curtos</em><br>em todas as mensagens do chat.",
+    "chat_field": "Campo de Chat",
+    "chat_field_hint": "Adiciona um campo para você digitar no seu chat.",
+    "moderation_buttons": "Botões de Moderação",
+    "moderation_buttons_hint": "Adiciona botões para ações de moderação.",
+    "chat_field_warning": "<i class=\"fa-solid fa-circle-info\"></i> O Campo de Chat também aceita <strong>/comandos</strong>. <strong><a target=\"_blank\" href=\"https://github.com/vortisrd/chatrd#-commands-supported-by-the-chat-field\">Comandos Suportados</a>.</strong>"
+  },
+
+  "twitch": {
+    "title": "Twitch",
+    "enable": "Ativar",
+    "chat": "Chat",
+    "chat_hint": "Lê o chat da Twitch.",
+    "followers": "Seguidores",
+    "bits": "Bits",
+    "announcements": "Anúncios",
+    "watch_streaks": "Sequências de Lives",
+    "watch_streaks_hint": "Exibe Sequências de Lives no chat.",
+    "subscriptions": "Inscrições",
+    "subscriptions_hint": "Exibe eventos de inscrição. <u><strong>Desativar isso desativa todos os eventos de inscrição</strong></u>.",
+    "gifted_subs": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Inscrições Presenteadas",
+    "gifted_subs_hint": "Quando um usuário presenteia outro com uma inscrição.",
+    "gifted_bomb": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Gifted Bomb",
+    "gifted_bomb_hint": "Quando um usuário presenteia inscrições em massa.",
+    "gifted_bomb_train": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Trem de Usuários do Gifted Bomb",
+    "gifted_bomb_train_hint": "Exibe todos os usuários que receberam uma inscrição em um Gifted Bomb.",
+    "channel_points": "Resgates de Pontos do Canal",
+    "raids": "Raids",
+    "shared_chat": "Chat Compartilhado",
+    "hype_train_section": "Hype Train",
+    "hype_train_event": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Evento de Hype Train",
+    "hype_train_event_hint": "Exibe quando uma Hype Train começa, sobe de nível e termina.",
+    "hype_train_bar": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Barra de Hype Train",
+    "hype_train_bar_hint": "Exibe a Barra de Hype Train abaixo das Estatísticas.",
+    "goals_section": "Metas",
+    "goal_event": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Evento de Meta",
+    "goal_event_hint": "Exibe quando uma Meta começa, progride e é concluída.",
+    "goal_bars": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Barras de Meta",
+    "goal_bars_hint": "Exibe uma Barra de Meta para cada meta abaixo das Estatísticas.",
+    "pronouns": "Pronomes",
+    "pronouns_hint": "Exibe os Pronomes de quem os ativou no chat da Twitch.",
+    "statistics": "Estatísticas",
+    "statistics_hint": "Exibe os Espectadores da Twitch."
+  },
+
+  "youtube": {
+    "title": "YouTube",
+    "enable": "Ativar",
+    "chat": "Chat",
+    "chat_hint": "Lê o chat do YouTube.",
+    "superchat": "Super Chat",
+    "super_sticker": "Super Sticker",
+    "super_sticker_gif": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Exibir GIF do Super Sticker",
+    "memberships": "Membros",
+    "memberships_hint": "Exibe eventos de membros. <u><strong>Desativar isso desativa todos os eventos de membros</strong></u>.",
+    "gifted_membership": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Membro Presenteado",
+    "gifted_membership_hint": "Exibe a pessoa que está presenteando membros.",
+    "gifted_membership_train": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Trem de Membros Presenteados",
+    "gifted_membership_train_hint": "Exibe todos os usuários que receberam uma membro em um presenteamento em massa.",
+    "statistics": "Estatísticas",
+    "statistics_hint": "Exibe Espectadores e Curtidas do YouTube.",
+    "custom_emotes_label": "Emotes Exclusivos de Membros",
+    "custom_emotes_hint": "Você precisa adicionar os emotes de membros manualmente porque a API do YouTube não os repassa ao Streamer.bot."
+  },
+
+  "tiktok": {
+    "title": "TikTok",
+    "enable": "Ativar",
+    "chat": "Chat",
+    "chat_hint": "Lê o chat do TikTok.",
+    "followers": "Seguidores",
+    "likes": "Curtidas",
+    "likes_hint": "Exibe curtidas em incrementos de <strong>15</strong>. Por quê? <em>Culpa do TikFinity!</em> 🤣",
+    "joins": "Entradas",
+    "joins_hint": "Exibe quem entrou no chat na parte inferior do widget.",
+    "shares": "Compartilhamentos",
+    "shares_hint": "Exibe quem compartilhou -ou clicou no botão \"Compartilhar\"- a live.",
+    "gifts": "Presentes",
+    "gifts_hint": "Exibe os Presentes do TikTok, como rosas, galáxias, etc.",
+    "small_gifts": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Imagens de Presentes Pequenas",
+    "small_gifts_hint": "Reduz o tamanho da imagem do presente para 28px.",
+    "superfans": "SuperFãs/Inscritos",
+    "statistics": "Estatísticas",
+    "statistics_hint": "Exibe Espectadores e Curtidas do TikTok.",
+    "chat_field_warning": "<i class=\"fa-solid fa-circle-info\"></i> Se você tiver o <strong>Campo de Chat</strong> ativado, precisa <strong><a target=\"_blank\" href=\"https://github.com/vortisrd/chatrd/?tab=readme-ov-file#-sending-messages-to-tiktok\">seguir as instruções</a></strong> para enviar mensagens ao TikTok."
+  },
+
+  "kick": {
+    "title": "Kick",
+    "enable": "Ativar",
+    "api_warning": "<i class=\"fa-solid fa-triangle-exclamation\"></i> Em horários de pico, <strong>a API do Kick fica instável</strong> e demora mais para repassar eventos. Isso não é um problema do Streamer.bot ou do ChatRD. O Kick tem o <em>\"glitch de dinheiro infinito\"</em>, então espero que melhore no futuro. 😣",
+    "chat": "Chat",
+    "chat_hint": "Lê o chat do Kick.",
+    "followers": "Seguidores",
+    "kicks_gift": "Kicks Gift",
+    "kicks_gift_hint": "Exibe eventos de Kicks Gift.",
+    "small_kicks_images": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Imagens de Kicks Pequenas",
+    "small_kicks_images_hint": "Reduz o tamanho da imagem do presente para 28px.",
+    "subscriptions": "Inscrições",
+    "subscriptions_hint": "Exibe eventos de inscrição. <u><strong>Desativar isso desativa todos os eventos de inscrição</strong></u>.",
+    "gifted_subs": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Inscrições Presenteadas",
+    "gifted_subs_hint": "Quando um usuário presenteia outro com uma inscrição.",
+    "gifted_bomb": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Gifted Bomb",
+    "gifted_bomb_hint": "Quando um usuário presenteia inscrições em massa.",
+    "gifted_bomb_train": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Trem de Usuários do Gifted Bomb",
+    "gifted_bomb_train_hint": "Exibe todos os usuários que receberam uma inscrição em um Gifted Bomb.",
+    "channel_points": "Resgates de Pontos do Canal",
+    "raids": "Host",
+    "raids_hint": "É como um \"raid\", mas no Kick.",
+    "statistics": "Estatísticas",
+    "statistics_hint": "Exibe Espectadores do Kick."
+  },
+
+  "streamelements": {
+    "title": "StreamElements",
+    "enable": "Ativar",
+    "setup_warning": "<i class=\"fa-solid fa-circle-exclamation\"></i> Você precisa conectar o StreamElements ao Streamer.Bot. <strong><a target=\"_blank\" href=\"https://docs.streamer.bot/guide/integrations/streamelements\">Siga o tutorial</a>.</strong>",
+    "tips": "Doações"
+  },
+
+  "streamlabs": {
+    "title": "Streamlabs",
+    "enable": "Ativar",
+    "setup_warning": "<i class=\"fa-solid fa-circle-exclamation\"></i> Você precisa conectar o Streamlabs ao Streamer.Bot. <strong><a target=\"_blank\" href=\"https://docs.streamer.bot/guide/integrations/streamlabs\">Siga o tutorial</a>.</strong>",
+    "donations": "Doações"
+  },
+
+  "patreon": {
+    "title": "Patreon",
+    "enable": "Ativar",
+    "setup_warning": "<i class=\"fa-solid fa-circle-exclamation\"></i> Você precisa conectar o Patreon ao Streamer.Bot. <strong><a target=\"_blank\" href=\"https://docs.streamer.bot/guide/integrations/patreon\">Siga o tutorial</a>.</strong>",
+    "memberships": "Membros"
+  },
+
+  "tipeee": {
+    "title": "TipeeeStream",
+    "enable": "Ativar",
+    "setup_warning": "<i class=\"fa-solid fa-circle-exclamation\"></i> Você precisa conectar o TipeeeStream ao Streamer.Bot. <strong><a target=\"_blank\" href=\"https://docs.streamer.bot/guide/integrations/tipeee-stream\">Siga o tutorial</a>.</strong>",
+    "donations": "Doações"
+  },
+
+  "kofi": {
+    "title": "Ko-fi",
+    "enable": "Ativar",
+    "setup_warning": "<i class=\"fa-solid fa-circle-exclamation\"></i> Você precisa conectar o Ko-Fi ao Streamer.Bot. <strong><a target=\"_blank\" href=\"https://docs.streamer.bot/guide/integrations/ko-fi\">Siga o tutorial</a>.</strong>",
+    "donations": "Doações",
+    "subscriptions": "Inscrições",
+    "orders": "Pedidos"
+  },
+
+  "fourthwall": {
+    "title": "Fourthwall",
+    "enable": "Ativar",
+    "setup_warning": "<i class=\"fa-solid fa-circle-exclamation\"></i> Você precisa conectar o Fourthwall ao Streamer.Bot. <strong><a target=\"_blank\" href=\"https://docs.streamer.bot/guide/integrations/fourthwall\">Siga o tutorial</a>.</strong>",
+    "donations": "Doações",
+    "subscriptions": "Inscrições",
+    "orders": "Pedidos",
+    "show_order_image": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Exibir Imagem do Pedido",
+    "gift_purchase": "Compra de Presente",
+    "show_gift_image": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Exibir Imagem do Presente",
+    "gift_draw": "Sorteio de Presente",
+    "gift_draw_command": "Comando do Sorteio",
+    "gift_draw_command_hint": "Comando usado para entrar no Sorteio de Presente."
+  },
+
+  "footer": {
+    "copy_url": "Copiar URL",
+    "import_settings": "Importar Configurações",
+    "made_by": "Feito com ❤️ por <strong>VortisRD</strong>"
+  },
+
+  "modal_add_emote": {
+    "title": "Adicionar Emote de Membro do YouTube",
+    "emote_name": "Nome do Emote",
+    "emote_name_placeholder": "Use \"NomeDoEmote\", não use \":NomeDoEmote:\"",
+    "image_url": "URL da Imagem",
+    "image_url_hint": "Não use domínios de imagem temporários. Nem imagens vinculadas ao Discord.",
+    "image_url_placeholder": "https://example.com/emote.png",
+    "confirm": "Adicionar",
+    "cancel": "Cancelar"
+  },
+
+  "modal_import": {
+    "title": "Importar Configurações",
+    "label": "Cole sua URL existente do ChatRD",
+    "placeholder": "https://vortisrd.github.io/chatrd/chat.html?...",
+    "confirm": "Importar",
+    "cancel": "Cancelar"
+  }
+}

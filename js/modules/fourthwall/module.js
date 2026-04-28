@@ -75,7 +75,7 @@ async function fourthwallDonationMessage(data) {
 
     
     user.innerHTML = `<strong>${data.username}</strong>`;
-    action.innerHTML = ` donated `;
+    action.innerHTML = tRD('fourthwall.donated_action');
 
     var money = formatCurrency(data.amount,data.currency);
     value.innerHTML = `<strong>${money}</strong>`;
@@ -126,17 +126,17 @@ async function fourthwallOrderMessage(data) {
 
     
     var userName = '';
-    if (username == undefined) { userName = 'Someone'; }
+    if (username == undefined) { userName = tRD('fourthwall.someone'); }
     else { userName = username; }
 
     user.innerHTML = `<strong>${userName}</strong>`;
-    action.innerHTML = ` ordered `;
+    action.innerHTML = tRD('fourthwall.ordered_action');
 
     var money = formatCurrency(total,currency);
     var html = `<strong>${item}</strong>`;
 
-    if (itemsQuantity > 1) { html += ` and <strong>${itemsQuantity - 1} other ${(itemsQuantity - 1) == 1 ? 'item' : 'items'}</strong> (${total == 0 ? 'Free' : money})`; }
-    else { html += ` (${total == 0 ? 'Free' : money})`; }
+    if (itemsQuantity > 1) { html += ` ${tRD('fourthwall.winners_and')} <strong>${itemsQuantity - 1} ${tRD((itemsQuantity - 1) == 1 ? 'fourthwall.order_singular' : 'fourthwall.order_plural')}</strong> (${total == 0 ? tRD('fourthwall.free') : money})`; }
+    else { html += ` (${total == 0 ? tRD('fourthwall.free') : money})`; }
 
     value.innerHTML = html;
 
@@ -186,11 +186,11 @@ async function fourthwallGiftMessage(data) {
 
     
     user.innerHTML = `<strong>${userName}</strong>`;
-    action.innerHTML = ` gifted `;
+    action.innerHTML = tRD('fourthwall.gifted_action');
 
     var money = formatCurrency(total,currency);
     var html = `<strong>${itemsQuantity} ${item}</strong>`;
-    html += ` (${total == 0 ? 'Free' : money})`;
+    html += ` (${total == 0 ? tRD('fourthwall.free') : money})`;
 
     value.innerHTML = html;
 
@@ -228,10 +228,10 @@ async function fourthwallGiftDrawStartMessage(data) {
     header.remove();
 
     
-    user.innerHTML = `<strong><i class="fa-solid fa-gifts"></i> Giveaway started!</strong>`;
-    action.innerHTML = ` Type <strong>${fourthWallGiftDrawCommand}</strong> to have a chance to win `;
+    user.innerHTML = `<strong><i class="fa-solid fa-gifts"></i> ${tRD('fourthwall.giftdraw_user')}</strong>`;
+    action.innerHTML = tRD('fourthwall.giftdraw_action', { command: `<strong>${fourthWallGiftDrawCommand}</strong>` });
     value.innerHTML = `<strong>${data.offer.name}</strong>. `
-    message.innerHTML = `You have <strong>${durationSeconds}</strong> seconds! Good Luck!`;
+    message.innerHTML = tRD('fourthwall.giftdraw_message', { seconds: `<strong>${durationSeconds}</strong>` });
 
     addEventItem('fourthwall', clone, classes, userId, messageId);
 }
@@ -264,8 +264,8 @@ async function fourthwallGiftDrawEndMessage(data) {
     header.remove();
 
     
-    user.innerHTML = `<strong>🎉 Giveaway Ended!</strong>`;
-    action.innerHTML = ` Congratulations to: `;
+    user.innerHTML = `<strong>${tRD('fourthwall.giftdrawend_user')}</strong>`;
+    action.innerHTML = tRD('fourthwall.giftdrawend_action');
     value.remove();
 
     var winners = await getWinnersList(data.gifts);
@@ -282,10 +282,10 @@ async function getWinnersList(gifts) {
 
 	if (numWinners === 0) { return ""; }
 	if (numWinners === 1) { return winners[0]; }
-	if (numWinners === 2) { return `${winners[0]} and ${winners[1]}`; }
+	if (numWinners === 2) { return `${winners[0]} ${tRD('fourthwall.winners_and')} ${winners[1]}`; }
 
 	// For 3 or more, use the Oxford comma style: A, B, and C
 	const allButLast = winners.slice(0, -1).join(", ");
 	const lastWinner = winners[winners.length - 1];
-	return `${allButLast}, and ${lastWinner}`;
+	return `${allButLast}${tRD('fourthwall.winners_oxford')} ${lastWinner}`;
 }

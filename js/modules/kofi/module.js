@@ -36,7 +36,7 @@ if (showKofi) {
 
 async function kofiDonationMessage(data) {
 
-    if (kofiDonationMessage == false) return;
+    if (showKofiDonations == false) return; // Corrigido de kofiDonationMessage para a variável correta
 
     const template = eventTemplate;
 	const clone = template.content.cloneNode(true);
@@ -61,7 +61,7 @@ async function kofiDonationMessage(data) {
 
     
     user.innerHTML = `<strong>${data.from}</strong>`;
-    action.innerHTML = ` donated `;
+    action.innerHTML = tRD('kofi.donated_action'); //
 
     var money = formatCurrency(data.amount,data.currency);
     value.innerHTML = `<strong>${money}</strong>`;
@@ -100,7 +100,7 @@ async function kofiSubMessage(data) {
 
     
     user.innerHTML = `<strong>${data.from}</strong>`;
-    action.innerHTML = ` just subscribed `;
+    action.innerHTML = tRD('kofi.sub_action'); //
 
     var money = formatCurrency(data.amount,data.currency);
     value.innerHTML = `<strong>(${money})</strong>`;
@@ -139,7 +139,7 @@ async function kofiReSubMessage(data) {
 
     
     user.innerHTML = `<strong>${data.from}</strong>`;
-    action.innerHTML = ` just resubscribed `;
+    action.innerHTML = tRD('kofi.resub_action'); //
 
     var money = formatCurrency(data.amount,data.currency);
     value.innerHTML = `<strong>(${money}) ${data.tier ? '(Tier '+data.tier+')' : ''}</strong>`;
@@ -178,13 +178,16 @@ async function kofiOrderMessage(data) {
 
     
     user.innerHTML = `<strong>${data.from}</strong>`;
-    action.innerHTML = ` just ordered `;
+    action.innerHTML = tRD('kofi.order_action'); //
     
     var money = '';
-    if (data.amount == 0) money = 'Free';
+    if (data.amount == 0) money = tRD('kofi.free'); //
     else money = formatCurrency(data.amount,data.currency);
     
-    value.innerHTML = `<strong>${data.items.length} ${data.items.length > 1 ? 'item' : 'items'} (${money})</strong>`;
+    // Lógica para singular/plural de itens
+    const itemLabel = data.items.length > 1 ? tRD('kofi.order_plural') : tRD('kofi.order_singular'); //
+    
+    value.innerHTML = `<strong>${data.items.length} ${itemLabel} (${money})</strong>`;
 
     if (data.message) message.innerHTML = `${data.message}`;
 

@@ -48,7 +48,10 @@ async function streamLabsEventMessage(data) {
     var money = formatCurrency(data.amount,data.currency);
 
     user.innerHTML = `<strong>${data.from}</strong>`;
-    action.innerHTML = ` donated `;
+
+    // Aplicação da tradução baseada no en.json
+    action.innerHTML = tRD('streamlabs.donated_action');
+
     value.innerHTML = `<strong>${money}</strong>`;
     
     if (data.message) { message.innerHTML = `${data.message}`; }

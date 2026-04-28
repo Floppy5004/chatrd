@@ -202,7 +202,7 @@ async function youTubeSuperChatMessage(data) {
 
     
     user.textContent = data.user.name;
-    action.innerHTML = ` superchatted `;
+    action.innerHTML = tRD('youtube.superchat_action');
     value.innerHTML = `<strong>${data.amount}</strong>`;
 
     message.textContent = data.message;
@@ -252,7 +252,7 @@ async function youTubeSuperStickerMessage(data) {
     }
     
     user.textContent = data.user.name;
-    action.innerHTML = ` sent a supersticker `;
+    action.innerHTML = tRD('youtube.supersticker_action');
 
     value.innerHTML = `<strong>(${data.amount})</strong>`;
     
@@ -297,7 +297,7 @@ async function youTubeNewSponsorMessage(data) {
 
     
     user.textContent = data.user.name;
-    action.innerHTML = ` became a member for `;
+    action.innerHTML = tRD('youtube.sponsor_action');
 
     //var months = data.months > 1 ? 'months' : 'month';
     var months = formatSubMonthDuration(data.months);
@@ -348,10 +348,10 @@ async function youTubeGiftBombMessage(data) {
 
     
     user.textContent = data.user.name;
-    action.innerHTML = ` gifted `;
+    action.innerHTML = tRD('youtube.giftbomb_action');
 
-    var count = data.count > 1 ? 'memberships' : 'membership';
-    value.innerHTML = `<strong>${data.count} ${count} (Tier ${data.tier})</strong> to the channel`;
+    var count = data.count > 1 ? tRD('youtube.giftbomb_plural') : tRD('youtube.giftbomb_singular');
+    value.innerHTML = `<strong>${data.count} ${count} (Tier ${data.tier})</strong>${tRD('youtube.giftbomb_suffix')}`;
 
     message.remove();
 
@@ -394,7 +394,7 @@ async function youTubeGiftBombReceivedMessage(data) {
 
     
     user.textContent = data.gifter.name;
-    action.innerHTML = ` gifted a membership to `;
+    action.innerHTML = tRD('youtube.giftbomb_received_action');
     value.innerHTML = `<strong>${escapeHTML(data.user.name)}</strong>`;
 
     message.remove();

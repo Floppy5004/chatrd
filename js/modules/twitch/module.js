@@ -296,7 +296,7 @@ async function twitchChatMessage(data) {
             streamData.emotes = replyEmotes;
         }*/
 
-        reply.insertAdjacentHTML('beforeend', ` <strong>Replying to ${escapeHTML(data.reply.userName)}:</strong> ${escapeHTML(replyMessage)}`);
+        reply.insertAdjacentHTML('beforeend', ` <strong>${tRD('twitch.reply_label', { user: escapeHTML(data.reply.userName) })}</strong> ${escapeHTML(replyMessage)}`);
     }
     else { reply.remove(); }
 
@@ -401,8 +401,8 @@ async function twitchWatchStreakMessage(data) {
     
     user.textContent = data.displayName;
 
-    action.innerHTML = ` watched `;
-    value.innerHTML = `<strong>${data.watchStreak} consecutive streams</strong>!`;
+    action.innerHTML = tRD('twitch.watch_streak_action');
+    value.innerHTML = `<strong>${tRD('twitch.watch_streak_value', { count: data.watchStreak })}</strong>!`;
 
     /*message.textContent = data.message;
     await getTwitchEmotesForWatchedStreakMessage(data, message);*/
@@ -445,7 +445,8 @@ async function twitchFollowMessage(data) {
     
     user.textContent = data.user_name;
 
-    action.innerHTML = ` followed you`;
+    //action.innerHTML = ` followed you`;
+    action.innerHTML = tRD('twitch.follow_action');
 
     addEventItem('twitch', clone, classes, userId, messageId);
 }
@@ -496,7 +497,7 @@ async function twitchAnnouncementMessage(data) {
         getTwitchBadges(data.user.badges)
     ]);
 
-    header.innerHTML = `<span><i class="fa-solid fa-bullhorn"></i> Announcement</span>`;
+    header.innerHTML = `<span><i class="fa-solid fa-bullhorn"></i> ${tRD('twitch.announcement_header')}</span>`;
 
     user.style.color = data.user.color;
     user.textContent = data.user.name;
@@ -540,8 +541,7 @@ async function twitchRewardRedemption(data) {
     header.remove();
     
     user.textContent = data.user_name;
-    action.innerHTML = ` redeemed `;
-    value.innerHTML = `<strong>${data.reward.title}</strong> (${data.reward.cost})`;
+    action.innerHTML = tRD('twitch.reward_action');
 
     value.innerHTML = `
         <div class="gift-info">
@@ -587,25 +587,25 @@ async function twitchAutomaticRewardRedemption(data) {
 
     switch (data.reward_type) {
         case "send_highlighted_message" :
-            title = "Highlight My Message";
+            title = tRD('twitch.reward_auto.send_highlighted_message');
         break;
 
         case "chosen_sub_emote_unlock" :
-            title = "Unlock an Emote for 24 hours";
+            title = tRD('twitch.reward_auto.chosen_sub_emote_unlock');
         break;
 
         case "chosen_sub_emote_unlock" :
-            title = "Unlock a Random Sub Emote";
+            title = tRD('twitch.reward_auto.random_sub_emote_unlock');
         break;
 
         case "chosen_modified_sub_emote_unlock" :
-            title = "Modify a Single Emote";
+            title = tRD('twitch.reward_auto.chosen_modified_sub_emote_unlock');
         break;
 
     }
     
     user.textContent = data.user_name;
-    action.innerHTML = ` redeemed `;
+    action.innerHTML = tRD('twitch.reward_action');
 
     value.innerHTML = `
         <div class="gift-info">
@@ -649,9 +649,9 @@ async function twitchBitsMessage(data) {
     header.remove();
     
     user.textContent = data.user.name;
-    action.innerHTML = ` cheered with `;
+    action.innerHTML = tRD('twitch.bits_action');
 
-    var bits = data.bits > 1 ? 'bits' : 'bit';
+    var bits = data.bits > 1 ? tRD('twitch.bits_plural') : tRD('twitch.bits_singular');
 
     const match = bitsGifAnimations.find(lv => data.bits >= lv.min && data.bits <= lv.max);
     
@@ -706,9 +706,7 @@ async function twitchSubMessage(data) {
     
     user.textContent = data.user.name;
 
-    action.innerHTML = ` subscribed for `;
-
-    //var months = data.duration_months > 1 ? 'months' : 'month';
+    action.innerHTML = tRD('twitch.sub_action');
     var months = formatSubMonthDuration(data.duration_months);
     var tier = data.is_prime ? 'Prime' : 'Tier '+Math.floor(data.sub_tier/1000);
 
@@ -752,7 +750,7 @@ async function twitchReSubMessage(data) {
     
     user.textContent = data.user.name;
 
-    action.innerHTML = ` subscribed for `;
+    action.innerHTML = tRD('twitch.resub_action');
 
     //var months = data.cumulativeMonths > 1 ? 'months' : 'month';
     var months = formatSubMonthDuration(data.cumulativeMonths);
@@ -815,11 +813,10 @@ async function twitchGiftMessage(data) {
     
     user.textContent = data.user.name;
 
-    //var months = data.durationMonths > 1 ? 'months' : 'month';
     var months = formatSubMonthDuration(data.durationMonths);
-    var subs = data.durationMonths > 1 ? 'subscriptions' : 'subscription'
+    var subs = data.durationMonths > 1 ? tRD('twitch.giftsub_plural') : tRD('twitch.giftsub_singular');
 
-    action.innerHTML = ` gifted <strong>${months}</strong> of <strong>Tier ${Math.floor(data.subTier/1000)}</strong> ${subs} to `;
+    action.innerHTML = tRD('twitch.giftsub_action', { months: `<strong>${months}</strong>`, tier: `<strong>${Math.floor(data.subTier/1000)}</strong>`, duration: subs });
     
     value.innerHTML = `<strong>${escapeHTML(data.recipient.name)}</strong>`;
 
@@ -857,10 +854,10 @@ async function twitchGiftBombMessage(data) {
     
     user.textContent = data.user.name;
 
-    var subs = data.total > 1 ? 'subs' : 'sub';
-    action.innerHTML = ` gifted <strong>${data.total} Tier ${Math.floor(data.sub_tier/1000)} ${subs}</strong> to the Community`;
+    var subs = data.total > 1 ? tRD('twitch.giftbomb_subs_plural') : tRD('twitch.giftbomb_subs_singular');
+    action.innerHTML = tRD('twitch.giftbomb_action', { total: `<strong>${data.total}</strong>`, tier: Math.floor(data.sub_tier/1000), subs: `<strong>${subs}</strong>` });
 
-    message.innerHTML = `They've gifted a total of <strong>${data.cumulative_total} subs</strong>`;
+    message.innerHTML = tRD('twitch.giftbomb_message', { total: `<strong>${data.cumulative_total} subs</strong>` });
 
     addEventItem('twitch', clone, classes, userId, messageId);
 }
@@ -896,8 +893,8 @@ async function twitchRaidMessage(data) {
     
     user.textContent = data.from_broadcaster_user_name;
 
-    var viewers = data.viewers > 1 ? 'viewers' : 'viewer';
-    action.innerHTML = ` raided the channel with `;
+    var viewers = data.viewers > 1 ? tRD('twitch.raid_plural') : tRD('twitch.raid_singular');
+    action.innerHTML = tRD('twitch.raid_action');
     value.innerHTML = `<strong>${data.viewers} ${viewers}</strong>`;
 
     addEventItem('twitch', clone, classes, userId, messageId);
@@ -952,17 +949,17 @@ async function twitchHypeTrainStart(data) {
         expires_at
     } = data;
 
-    let hypetrainInfo = 'Hype Train Started! 🔥';
+    let hypetrainInfo = tRD('twitch.hypetrain.started');
     
     let htProgress = Math.floor(progress/goal * 100);
 
     if (is_golden_kappa_train == true) {
-        hypetrainInfo = 'Golden Kappa Train Started! 🪙';
+        hypetrainInfo = tRD('twitch.hypetrain.started_golden');
         classes.push('golden-kappa-train');
     }
 
     if (is_treasure_train == true) {
-        hypetrainInfo = 'Treasure Train Started! ✨';
+        hypetrainInfo = tRD('twitch.hypetrain.started_treasure');
         classes.push('treasure-train');
     }
     
@@ -993,7 +990,7 @@ async function twitchHypeTrainStart(data) {
         action.textContent = ``;
         value.innerHTML = `
             <div class="gift-info">
-                <span class="gift-value"><strong>LVL ${level}</strong> at <strong>${htProgress}%</strong></span>
+                <span class="gift-value"><strong>LVL ${level}</strong> @ <strong>${htProgress}%</strong></span>
             </div>
         `;
 
@@ -1028,14 +1025,14 @@ async function twitchHypeTrainStart(data) {
         if (is_golden_kappa_train == true) {
             hypeTrainElement.classList.add('golden-kappa-train');
             logo.querySelector('img').src = 'js/modules/twitch/images/golden-kappa-emote.png';
-            icon.querySelector('span').textContent = 'Golden Kappa Train';
+            icon.querySelector('span').textContent = tRD('twitch.hypetrain.bar_golden_kappa');
         }
 
         if (is_treasure_train == true) {
             hypeTrainElement.classList.add('treasure-train');
             logo.querySelector('img').src = 'js/modules/twitch/images/icon-treasure.svg';
             icon.querySelector('i').remove();
-            icon.querySelector('span').textContent = '✨ Treasure Train';
+            icon.querySelector('span').textContent = tRD('twitch.hypetrain.bar_treasure');
         }
 
         currentLevel.textContent = `LVL ${level}`;
@@ -1104,16 +1101,16 @@ async function twitchHypeTrainLevelUp(data) {
         expires_at
     } = data;
 
-    let hypetrainInfo = 'Hype Train Level Up! 🚀';
+    let hypetrainInfo = tRD('twitch.hypetrain.levelup');
     let htProgress = Math.floor(progress/goal * 100);
 
     if (is_golden_kappa_train == true) {
-        hypetrainInfo = 'Golden Kappa Train Level Up! 🚀';
+        hypetrainInfo = tRD('twitch.hypetrain.levelup_golden');
         classes.push('golden-kappa-train');
     }
 
     if (is_treasure_train == true) {
-        hypetrainInfo = 'Treasure Train Level Up! 🚀';
+        hypetrainInfo = tRD('twitch.hypetrain.levelup_treasure');
         classes.push('treasure-train');
     }
    
@@ -1141,7 +1138,7 @@ async function twitchHypeTrainLevelUp(data) {
         action.textContent = ``;
         value.innerHTML = `
             <div class="gift-info">
-                <span class="gift-value"><strong>LVL ${level}</strong> at <strong>${htProgress}%</strong></span>
+                <span class="gift-value"><strong>LVL ${level}</strong> @ <strong>${htProgress}%</strong></span>
             </div>
         `;
 
@@ -1196,15 +1193,15 @@ async function twitchHypeTrainEnd(data) {
         is_treasure_train
     } = data;
 
-    let hypetrainInfo = 'Hype Train Ended';
+    let hypetrainInfo = tRD('twitch.hypetrain.ended');
 
     if (is_golden_kappa_train == true) {
-        hypetrainInfo = 'Golden Kappa Ended';
+        hypetrainInfo = tRD('twitch.hypetrain.ended_golden');
         classes.push('golden-kappa-train');
     }
     
     if (is_treasure_train == true) {
-        hypetrainInfo = 'Treasure Train Ended';
+        hypetrainInfo = tRD('twitch.hypetrain.ended_treasure');
         classes.push('treasure-train');
     }
     
@@ -1254,7 +1251,7 @@ async function twitchHypeTrainEnd(data) {
         if (is_golden_kappa_train == true) hypetrainElement.classList.add('golden-kappa-train');
         if (is_treasure_train == true) hypetrainElement.classList.add('treasure-train');
 
-        hypetrainElement.querySelector('.info').textContent = `${hypetrainInfo} at LVL ${level} 👏👏👏`;
+        hypetrainElement.querySelector('.info').textContent = `${hypetrainInfo} @ LVL ${level} 👏👏👏`;
 
         hypeTrainStopCountdown();
         
@@ -1325,18 +1322,18 @@ async function twitchGoalsRenderer(data) {
     } = data;
 
     const goalMap = {
-        follower:                   { type: 'Follower Goal',      item: 'Followers' },
-        subscription:               { type: 'Subscription Goal',  item: 'Subs Points' },
-        subscription_count:         { type: 'Subscription Goal',  item: 'Subs' },
-        new_subscription:           { type: 'Subscription Goal',  item: 'New Subs' },
-        new_subscription_count:     { type: 'Subscription Goal',  item: 'New Subs Points' },
-        new_bit:                    { type: 'Bits Goal',  item: 'New Bits' },
-        new_cheerer:                { type: 'Cheerer Goal',  item: 'New Cheerers' },
+        follower:                   { type: tRD('twitch.goal.types.follower'),              item: tRD('twitch.goal.items.follower') },
+        subscription:               { type: tRD('twitch.goal.types.subscription'),          item: tRD('twitch.goal.items.subscription') },
+        subscription_count:         { type: tRD('twitch.goal.types.subscription_count'),    item: tRD('twitch.goal.items.subscription_count') },
+        new_subscription:           { type: tRD('twitch.goal.types.new_subscription'),      item: tRD('twitch.goal.items.new_subscription') },
+        new_subscription_count:     { type: tRD('twitch.goal.types.new_subscription_count'),item: tRD('twitch.goal.items.new_subscription_count') },
+        new_bit:                    { type: tRD('twitch.goal.types.new_bit'),                item: tRD('twitch.goal.items.new_bit') },
+        new_cheerer:                { type: tRD('twitch.goal.types.new_cheerer'),            item: tRD('twitch.goal.items.new_cheerer') },
     };
 
     const resolvedKey = type || 'unknown';
 
-    const { type: goalType, item: goalItem } = goalMap[resolvedKey] ?? { type: 'New Bits/Cheerers', item: '' };
+    const { type: goalType, item: goalItem } = goalMap[resolvedKey] ?? { type: tRD('twitch.goal.types.unknown'), item: tRD('twitch.goal.items.unknown') };
 
 
     /* GOAL BAR */
@@ -1406,13 +1403,13 @@ async function twitchGoalBegin(data) {
     } = data;
 
     const goalMap = {
-        follow:                     { type: 'Follower Goal',      item: 'Followers' },
-        subscription:               { type: 'Subscription Goal',  item: 'Subs Points' },
-        subscription_count:         { type: 'Subscription Goal',  item: 'Subs' },
-        new_subscription:           { type: 'Subscription Goal',  item: 'New Subs' },
-        new_subscription_count:     { type: 'Subscription Goal',  item: 'New Subs Points' },
-        new_bit:                    { type: 'Bits Goal',  item: 'New Bits' },
-        new_cheerer:                { type: 'Bits Goal',  item: 'New Cheerer' },
+        follow:                     { type: tRD('twitch.goal.types.follow'),                 item: tRD('twitch.goal.items.follow') },
+        subscription:               { type: tRD('twitch.goal.types.subscription'),           item: tRD('twitch.goal.items.subscription') },
+        subscription_count:         { type: tRD('twitch.goal.types.subscription_count'),     item: tRD('twitch.goal.items.subscription_count') },
+        new_subscription:           { type: tRD('twitch.goal.types.new_subscription'),       item: tRD('twitch.goal.items.new_subscription') },
+        new_subscription_count:     { type: tRD('twitch.goal.types.new_subscription_count'), item: tRD('twitch.goal.items.new_subscription_count') },
+        new_bit:                    { type: tRD('twitch.goal.types.new_bit'),                 item: tRD('twitch.goal.items.new_bit') },
+        new_cheerer:                { type: tRD('twitch.goal.types.new_cheerer'),             item: tRD('twitch.goal.items.new_cheerer') },
     };
 
     const { type: goalType, item: goalItem } = goalMap[type] ?? { type: '', item: '' };
@@ -1438,7 +1435,7 @@ async function twitchGoalBegin(data) {
 
         header.remove();
 
-        user.textContent = `New ${goalType}`;
+        user.textContent = tRD('twitch.goal.new', { type: goalType });
         action.textContent = description ? ` - ${description} ` : ``;
         value.innerHTML = `
             <div class="gift-info">
@@ -1550,13 +1547,13 @@ async function twitchGoalEnd(data) {
     } = data;
 
     const goalMap = {
-        follow:                     { type: 'Follower Goal',      item: 'Followers' },
-        subscription:               { type: 'Subscription Goal',  item: 'Subs Points' },
-        subscription_count:         { type: 'Subscription Goal',  item: 'Subs' },
-        new_subscription:           { type: 'Subscription Goal',  item: 'New Subs' },
-        new_subscription_count:     { type: 'Subscription Goal',  item: 'New Subs Points' },
-        new_bit:                    { type: 'Bits Goal',  item: 'New Bits' },
-        new_cheerer:                { type: 'Bits Goal',  item: 'New Cheerer' },
+        follow:                     { type: tRD('twitch.goal.types.follow'),                 item: tRD('twitch.goal.items.follow') },
+        subscription:               { type: tRD('twitch.goal.types.subscription'),           item: tRD('twitch.goal.items.subscription') },
+        subscription_count:         { type: tRD('twitch.goal.types.subscription_count'),     item: tRD('twitch.goal.items.subscription_count') },
+        new_subscription:           { type: tRD('twitch.goal.types.new_subscription'),       item: tRD('twitch.goal.items.new_subscription') },
+        new_subscription_count:     { type: tRD('twitch.goal.types.new_subscription_count'), item: tRD('twitch.goal.items.new_subscription_count') },
+        new_bit:                    { type: tRD('twitch.goal.types.new_bit'),                 item: tRD('twitch.goal.items.new_bit') },
+        new_cheerer:                { type: tRD('twitch.goal.types.new_cheerer'),             item: tRD('twitch.goal.items.new_cheerer') },
     };
 
     const { type: goalType, item: goalItem } = goalMap[type] ?? { type: '', item: '' };
@@ -1582,7 +1579,7 @@ async function twitchGoalEnd(data) {
 
         header.remove();
 
-        const goalStatus = current_amount >= target_amount ? 'Completed' : 'Ended';
+        const goalStatus = current_amount >= target_amount ? tRD('twitch.goal.completed') : tRD('twitch.goal.ended');
 
         user.textContent = `${goalType} ${goalStatus}`;
         action.textContent = description ? ` - ${description} ` : ``;

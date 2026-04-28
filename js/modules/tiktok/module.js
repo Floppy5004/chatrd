@@ -45,8 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('#statistics #tiktok').style.display = '';
         }
         
-        console.debug('[TikTok][Debug] DOMContentLoaded fired');
-        
         tiktokConnection();
     }
 });
@@ -69,7 +67,7 @@ async function tiktokConnection() {
             retryCount = 0; // Reset retry count on success
 
             notifySuccess({
-                title: 'Connected to TikFinity',
+                title: 'ChatRD 🤝 TikFinity',
                 text: ``
             });
         };
@@ -255,7 +253,7 @@ async function tiktokFollowMessage(data) {
     
     user.textContent = data.nickname;
 
-    action.innerHTML = ` followed you`;
+    action.innerHTML = tRD('tiktok.follow_action');
 
     addEventItem('tiktok', clone, classes, userId, messageId);
 }
@@ -291,7 +289,7 @@ async function tiktokShareMessage(data) {
     
     user.textContent = data.nickname;
 
-    action.innerHTML = ` shared the stream ↪️`;
+    action.innerHTML = tRD('tiktok.share_action');
 
     addEventItem('tiktok', clone, classes, userId, messageId);
 }
@@ -311,7 +309,7 @@ async function tiktokJoinMessage(data) {
     const messageId = data.msgId;
     const userId = data.userId;
     const userMessageHTML = `${data.nickname}`;
-    const actionMessageHTML = ` joined the chat`;
+    const actionMessageHTML = tRD('tiktok.join_action');
 
     const joinElement = container.querySelector(".event.tiktok.join");
 
@@ -420,9 +418,9 @@ async function tiktokLikesMessage(data) {
         header.remove();
         
         user.textContent = data.nickname;
-        action.innerHTML = ` sent you `;
+        action.innerHTML = tRD('tiktok.likes_action');
 
-        var likes = likeCountTotal > 1 ? 'likes' : 'like';
+        var likes = likeCountTotal > 1 ? tRD('tiktok.likes_plural') : tRD('tiktok.likes_singular');
         value.innerHTML = `<strong>${likeCountTotal}</strong> ${likes} ❤️`;
 
         message.remove();
@@ -460,7 +458,7 @@ async function tiktokSubMessage(data) {
     header.remove();
 
     user.textContent = data.nickname;
-    action.innerHTML = ` just subscribed to the channel.`;
+    action.innerHTML = tRD('tiktok.sub_action');
     
     /*var months = data.subMonth > 1 ? 'months' : 'month';
     var months = formatSubMonthDuration(data.subMonth);
@@ -513,7 +511,7 @@ async function tiktokGiftMessage(data) {
     classes.push(tikTokGiftMatch.class);
 
     user.textContent = data.nickname;
-    action.innerHTML = ` gifted you <strong>${data.repeatCount} ${data.giftName}</strong>`;
+    action.innerHTML = tRD('tiktok.gift_action', { count: data.repeatCount, name: data.giftName });
     value.innerHTML = `
         <div class="gift-info">
             <span class="gift-image"><img src="${data.giftPictureUrl}" alt="${data.giftName}"></span>
@@ -681,5 +679,3 @@ async function tiktokUpdateStatistics(data, type) {
     }
     
 }
-
-

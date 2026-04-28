@@ -22,7 +22,7 @@ function getSpeakerBotInstance() {
             voiceAlias: speakerBotVoiceAlias,
             onConnect: () => {
                 notifySuccess({
-                    title: 'Connected to Speaker.bot',
+                    title: 'ChatRD 🤝 Speaker.bot',
                     text: ''
                 });
             },
@@ -30,7 +30,6 @@ function getSpeakerBotInstance() {
     }
     return speakerBotClient;
 }
-
 
 let streamerBotClientActive = null;
 
@@ -52,7 +51,7 @@ function streamerBotConnect() {
         //autoReconnect: false, // evita reconectar sozinho
         onConnect: () => {
             notifySuccess({
-                title: 'Connected to Streamer.bot',
+                title: 'ChatRD 🤝 Streamer.bot',
                 text: ``
             });
             twitchGoalsFetch();

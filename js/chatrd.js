@@ -479,21 +479,7 @@ async function cleanStringOfHTMLButEmotes(string) {
 
 
 function formatSubMonthDuration(months) {
-    /*if (months < 12) {
-        return `${months} ${months === 1 ? 'Month' : 'Months'}`;
-    }
-
-    const years = Math.floor(months / 12);
-    const remainingMonths = months % 12;
-
-    const yearText = `${years} ${years === 1 ? 'Year' : 'Years'}`;
-
-    const monthText = remainingMonths > 0 
-        ? ` and ${remainingMonths} ${remainingMonths === 1 ? 'Month' : 'Months'}`
-        : '';
-
-    return `${yearText}${monthText}`;*/
-    return `${months} ${months === 1 ? 'Month' : 'Months'}`;
+    return `${months} ${months === 1 ? tRD('chatrd.month.singular') : tRD('chatrd.month.plural')}`;
 }
 
 
@@ -573,9 +559,11 @@ const chatInputSettings = document.getElementById("chat-input-settings");
 const chatInputForm = document.querySelector("#chat-input form");
 const chatInput = chatInputForm.querySelector("input[type=text]")
 
-let chatcommands = {
-    "Twitch" : [
-        { "name" : "/me", "usage" : "Creates a colored message. <b>Usage: /me [message]</b>"  },
+let chatcommands;
+
+/*let chatcommands = {
+     "Twitch" : [
+       { "name" : "/me", "usage" : "Creates a colored message. <b>Usage: /me [message]</b>"  },
         { "name" : "/clip", "usage" : "Creates a 30s clip. <b>Usage: /clip</b>"  },
         { "name" : "/announce", "usage" : "Sends an announcement. <b>Usage: /announce [message]</b>"  },
         { "name" : "/announceblue", "usage" : "Sends an announcement in blue. <b>Usage: /announceblue [message]</b>"  },
@@ -619,7 +607,7 @@ let chatcommands = {
         { "name" : "/kick/ban", "usage" : "Bans a user. <b>Usage: /kick/ban [user]</b>"  },
         { "name" : "/kick/unban", "usage" : "Unbans a user. <b>Usage: /kick/unban [user]</b>"  }
     ]
-};
+};*/
 
 
 
@@ -951,11 +939,12 @@ function escapeHTML(str) {
 
 async function multiStreamChat(element) {
     if (multiStreamerMode == true) {
+
         const platforms = {
-            twitch: 'Purple Platform',
-            youtube: 'Red Platform',
-            kick: 'Green Platform',
-            tiktok: 'Short Video App'
+            twitch:  tRD('chatrd.multistreamer.twitch'),
+            youtube: tRD('chatrd.multistreamer.youtube'),
+            kick:    tRD('chatrd.multistreamer.kick'),
+            tiktok:  tRD('chatrd.multistreamer.tiktok'),
         };
 
         const platformClasses = {
@@ -1196,7 +1185,15 @@ function initFakeScrollbar(scrollEl, thumbEl) {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
+    console.debug(`[ChatRD] Initializing ...`);
+    
+    await loadLang();
+
+    chatcommands = tRD('chatrd.commands');
+    
+    console.log('Twitch commands', chatcommands);
+
     pushChatInputSettings();
     loadChatInputSettingFromLocalStorage();
 

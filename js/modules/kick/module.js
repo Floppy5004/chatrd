@@ -75,8 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('#statistics #kick').style.display = '';        
         }
 
-        console.debug('[Kick][Debug] DOMContentLoaded fired');
-
         registerPlatformHandlersToStreamerBot(kickMessageHandlers, '[Kick][SB1]');
         
         //kickConnection();
@@ -170,8 +168,7 @@ async function kickConnection() {
 
                 console.debug(`[Kick] Connected to Kick!`);
                 notifySuccess({
-                    title: 'Connected to Kick',
-                    text: `User set to <strong>${kickUserName}</strong>.`
+                    title: 'ChatRD 🤝 Kick'
                 });
                 
                 // Getting 7TV User Emotes and Global Emotes
@@ -373,7 +370,7 @@ async function kickChatMessage(data) {
     if (data.type == "reply") {
         classes.push('reply');
         var replyHTML = await getKickEmotes(data.metadata.original_message.content);
-        reply.insertAdjacentHTML('beforeend', `Replying to <strong>${data.metadata.original_sender.username}:</strong> ${replyHTML}`);
+        reply.insertAdjacentHTML('beforeend', `${tRD('kick.reply_label', { user: `<strong>${data.metadata.original_sender.username}</strong>` })} ${replyHTML}`);
     }
     else { reply.remove(); }
 
@@ -414,7 +411,7 @@ async function kickFollowMessage(data) {
     user.textContent = data.user.name;
     //user.innerHTML = `<strong>${data.userName}</strong>`;
 
-    action.innerHTML = ` followed you`;
+    action.innerHTML = tRD('kick.follow_action');
     
     value.remove()
 
@@ -456,12 +453,12 @@ async function kickKicksGiftedMessage(data) {
     var kicksGiftImage = `<img class="gift-image" src="https://files.kick.com/kicks/gifts/${kicksGiftId}.webp" alt="${data.gift.name}">`;
     
     user.textContent = data.sender.username;
-    action.innerHTML = ` sent a <strong>${data.gift.name}</strong> `;
+    action.innerHTML = tRD('kick.kicksgift_action', { name: data.gift.name });
 
     const kicksMatch = kicksGiftsClasses.find(lv => data.gift.amount >= lv.min && data.gift.amount <= lv.max);
     classes.push(kicksMatch.class);
 
-    var kicksGift = data.gift.amount > 1 ? 'Kicks' : 'Kick';
+    var kicksGift = data.gift.amount > 1 ? tRD('kick.kicks_plural') : tRD('kick.kicks_singular');
     value.innerHTML = `
         <div class="gift-info">
             <span class="gift-image">${kicksGiftImage}</span>
@@ -508,7 +505,7 @@ async function kickSubMessage(data) {
 
     user.textContent = data.username;
 
-    action.innerHTML = ` subscribed for `;
+    action.innerHTML = tRD('kick.sub_action');
 
     //var months = data.months > 1 ? 'months' : 'month';
     var months = formatSubMonthDuration(data.months);
@@ -553,8 +550,8 @@ async function kickGiftMessage(data) {
     var giftedLength = data.gifted_usernames.length;
     
     if (giftedLength > 1 && showKickMassGiftedSubs == true) {
-        action.innerHTML = ` gifted <strong>${giftedLength} subs</strong> to the Community`;
-        message.innerHTML = `They've gifted a total of <strong>${data.gifter_total} subs</strong>`;
+        action.innerHTML = tRD('kick.giftbomb_action', { count: giftedLength });
+        message.innerHTML = tRD('kick.giftbomb_message', { total: data.gifter_total });
         value.remove();
 
         if (showKickGiftedSubsUserTrain == true) {    
@@ -598,7 +595,7 @@ async function kickGiftSingleSub(gifter, recipient) {
 
     user.textContent = gifter;
 
-    action.innerHTML = ` gifted a subscription to `;
+    action.innerHTML = tRD('kick.giftsub_single_action');
     
     value.innerHTML = `<strong>${escapeHTML(recipient)}</strong>`;
 
@@ -633,7 +630,7 @@ async function kickRewardRedemption(data) {
     header.remove();
 
     user.textContent = data.username;
-    action.innerHTML = ` redeemed `;
+    action.innerHTML = tRD('kick.reward_action');
     value.innerHTML = `<strong>${data.reward_title}</strong>`;
     
     var userInput = data.user_input ? `${data.user_input}` : '';
@@ -673,8 +670,8 @@ async function kickRaidMessage(data) {
 
     user.textContent = data.host_username;
 
-    var viewers = data.number_viewers > 1 ? 'viewers' : 'viewer';
-    action.innerHTML = ` hosted the channel with `;
+    var viewers = data.number_viewers > 1 ? tRD('kick.raid_plural') : tRD('kick.raid_singular');
+    action.innerHTML = tRD('kick.raid_action');
     value.innerHTML = `<strong>${data.number_viewers} ${viewers}</strong>`;
 
     addEventItem('kick', clone, classes, userId, messageId);
@@ -704,16 +701,6 @@ async function kickChatClearMessages() {
     });
 }
 
-
-
-/*async function kickUpdateStatistics(data) {
-    if (showPlatformStatistics == false || showKickViewers == false) return;
-    if (data.livestream == null) { }
-    else {
-        const viewers = formatNumber(DOMPurify.sanitize(data.livestream.viewer_count)) || "0";
-        document.querySelector('#statistics #kick .viewers span').textContent = viewers;
-    }
-}*/
 
 
 async function kickUpdateStatistics(data) {
@@ -857,4 +844,3 @@ async function getKickBadges(badges) {
 
     return badgesArray.join(' ');
 }
-

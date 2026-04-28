@@ -22,7 +22,7 @@
 }
 
 /* One-lined Vertical Chat */
-#chat.oneline .item .info .avatar { position: absolute !important; top: -10px; left: -33px; }
+#chat.oneline .item .info .avatar { position: absolute !important; top: -5px; left: -33px; }
 #chat.oneline .item:not(.grouped) .message { padding: 10px; }
 #chat.oneline .item:not(.grouped):has(.avatar) .message { padding: 10px 10px 0px 38px; }
 #chat.oneline .item.grouped .message { padding: 10px 10px 0 10px; }
@@ -33,11 +33,27 @@
 }
 
 #chat:not(.horizontal).oneline .item.streamer-mentioned .info .avatar {
-    top: -9px;
+    top: -6px;
     left: -40px;
 }
 
+#chat.oneline .item .avatar {
+    transform: translateY(0);
+}
+
+
 #chat.oneline .item:not(.grouped):has(.avatar).streamer-mentioned .message { padding: 10px 10px 10px 38px; }
+
+#chat.oneline .item.chat .info:has(.avatar),
+#chat.oneline .item.chat .info:has(.avatar) .actual-message { top: -5px; }
+
+#chat.oneline .item.chat.streamer-mentioned:has(.avatar) .first-message,
+#chat.oneline .item.chat.streamer-mentioned:has(.avatar) .info,
+#chat.oneline .item.chat.streamer-mentioned:has(.avatar) .actual-message { top: 0 !important; }
+
+#chat.oneline .item.chat.streamer-mentioned:has(.avatar) .first-message,
+#chat.oneline .item.chat.streamer-mentioned:has(.avatar) .info,
+#chat.oneline .item.chat.streamer-mentioned:has(.avatar) .actual-message { top: 0px; }
 
 /* One-lined Horizontal Chat */
 #chat.horizontal .item .info .avatar { position: absolute !important; top: -10px; left: -38px; }

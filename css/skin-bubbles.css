@@ -8,3 +8,10 @@
 
 #chat.horizontal .item.chat:not(.grouped) .message { padding: 5px 10px; }
 #chat.horizontal .item.chat.grouped .message { padding: 16px 10px 6px 10px; }
+
+#chat.oneline .item.chat .info:has(.avatar),
+#chat.oneline .item.chat .info:has(.avatar) .actual-message { top: -5px; }
+
+#chat.oneline .item.chat.streamer-mentioned:has(.avatar) .first-message,
+#chat.oneline .item.chat.streamer-mentioned:has(.avatar) .info,
+#chat.oneline .item.chat.streamer-mentioned:has(.avatar) .actual-message { top: 0 !important; }

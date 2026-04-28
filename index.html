@@ -4,1003 +4,967 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChatRD</title>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css">
-
     <link rel="stylesheet" href="css/settings.css">
 </head>
-
 <body>
-    <div id="container">
-        <div class="wrapper">
-            <div id="settings">
-                <div class="title"><h1>ChatRD</h1></div>
+<div id="container">
+    <div class="wrapper">
+        <div id="settings">
+            <div class="title"><h1>ChatRD</h1></div>
 
-                
-                <form>
-                    
+            <form>
 
-                    <div class="platform" id="readme" style="text-align: center;">
+                <!-- ── Readme ─────────────────────────────────────────────── -->
+                <div class="platform" id="readme" style="text-align: center;">
+                    <span data-i18n-html="readme.text">
                         You can find the documentation and how to setup ChatRD <a target="_blank" href="https://github.com/vortisrd/chatrd/blob/main/README.md">right here</a>.
+                    </span>
+                </div>
+
+                <!-- ── Streamer.bot ───────────────────────────────────────── -->
+                <div class="platform" id="streamerbot">
+                    <div class="config">
+                        <h2><img src="images/logo-streamerbot.png"> <span data-i18n="streamerbot.title">Streamer.bot</span></h2>
+                        <div id="streamerBotStatus" class="platform-enable">
+                            <label><i class="fa-solid fa-circle"></i></label>
+                        </div>
                     </div>
-
-
-                    <div class="platform" id="streamerbot">
-
+                    <div class="setup">
                         <div class="config">
-                            <h2><img src="images/logo-streamerbot.png"> Streamer.bot</h2>
+                            <label data-i18n="streamerbot.server">Server</label>
+                            <input type="text" name="streamerBotServerAddress" value="127.0.0.1" class="avoid">
+                        </div>
+                        <div class="config">
+                            <label data-i18n="streamerbot.port">Port</label>
+                            <input type="text" name="streamerBotServerPort" value="8080" class="avoid">
+                        </div>
+                    </div>
+                </div>
 
-                            <div id="streamerBotStatus" class="platform-enable">
-                                <small>Awaiting for connection</small>
+                <!-- ── Speaker.bot ───────────────────────────────────────── -->
+                <div class="platform" id="speakerbot">
+                    <div class="config">
+                        <h2><img src="images/logo-speakerbot.png"> <span data-i18n="speakerbot.title">Speaker.bot</span></h2>
+                        <div class="platform-enable">
+                            <label><small data-i18n="speakerbot.enable">Enable</small></label>
+                            <label class="switch">
+                                <input type="checkbox" name="showSpeakerbot" data-default="false"><span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
+                        <div class="config"></div>
+                        <div class="config">
+                            <label data-i18n="speakerbot.status_label">Speaker.bot Status</label>
+                            <div id="speakerBotStatus" class="platform-enable">
                                 <label><i class="fa-solid fa-circle"></i></label>
                             </div>
                         </div>
-
-                        <div class="setup">
-                            <div class="config">
-                                <label>Server</label>
-                                <input type="text" name="streamerBotServerAddress" value="127.0.0.1" class="avoid">
-                            </div>
-                            <div class="config">
-                                <label>Port</label>
-                                <input type="text" name="streamerBotServerPort" value="8080" class="avoid">
-                            </div>
+                        <div class="config"></div>
+                        <div class="config">
+                            <label data-i18n="speakerbot.server">Server</label>
+                            <input type="text" name="speakerBotServerAddress" value="127.0.0.1">
                         </div>
-
-
+                        <div class="config">
+                            <label data-i18n="speakerbot.port">Port</label>
+                            <input type="text" name="speakerBotServerPort" value="7580">
+                        </div>
+                        <div class="config">
+                            <label data-i18n="speakerbot.chat_read">Enable Chat Read</label>
+                            <label class="switch"><input type="checkbox" name="speakerBotChatRead" data-default="false"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="speakerbot.event_read">Enable Events Read</label>
+                            <label class="switch"><input type="checkbox" name="speakerBotEventRead" data-default="false"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="speakerbot.voice_alias">Voice Alias</span><br>
+                                <small data-i18n-html="speakerbot.voice_alias_hint">Set in <strong><em>Settings -> Voice Alias</em></strong> on Speaker.bot.</small>
+                            </label>
+                            <input type="text" name="speakerBotVoiceAlias" placeholder="e.g. Maria">
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="speakerbot.chat_template">Chat Message Template</span><br>
+                                <small data-i18n-html="speakerbot.chat_template_hint">Variables are <strong><em>{user}</em></strong> and <strong><em>{message}</em></strong>.</small>
+                            </label>
+                            <input type="text" name="speakerBotChatTemplate" value="{user} said {message}">
+                        </div>
+                        <hr>
+                        <div class="config">
+                            <small class="warning" data-i18n-html="speakerbot.warning_engine">
+                                <i class="fa-solid fa-triangle-exclamation"></i> You need to set a Speech Engine and a Voice Alias on Speaker.bot. <strong><a target="_blank" href="https://speaker.bot/get-started/speech-engines">Follow the tutorial</a>.</strong>
+                            </small>
+                        </div>
+                        <div class="config">
+                            <small class="warning" data-i18n-html="speakerbot.warning_websocket">
+                                <i class="fa-solid fa-triangle-exclamation"></i> Speaker.bot's WebSocket need to be activated and running. <strong><a target="_blank" href="https://speaker.bot/api/websocket">Follow the tutorial</a>.</strong>
+                            </small>
+                        </div>
                     </div>
+                </div>
 
-
-
-
-                    <div class="platform" id="speakerbot">
+                <!-- ── General / Setup ───────────────────────────────────── -->
+                <div class="platform" id="general">
+                    <div class="config">
+                        <h2><i class="fa-solid fa-wrench"></i> <span data-i18n="general.title">Setup</span></h2>
+                    </div>
+                    <div class="setup">
 
                         <div class="config">
-                            <h2><img src="images/logo-speakerbot.png"> Speaker.bot</h2>
-
-                            <div class="platform-enable">
-                                <label><small>Enable</small></label>
-                                <label class="switch">
-                                    <input type="checkbox" name="showSpeakerbot" data-default="false"><span class="slider"></span>
-                                </label>
-                            </div>
+                            <label>
+                                <span data-i18n="general.language">Language</span><br>
+                                <small data-i18n="general.language_hint">Set ChatRD's language.</small>
+                            </label>
+                            <label>
+                                <select name="lang" id="i18n-locale-selector">
+                                    <option value="de">Deutsch</option>
+                                    <option value="en" selected>English</option>
+                                    <option value="es-ES">Español</option>
+                                    <option value="pt-BR">Português (Brasil)</option>
+                                    <option value="pl">Polski</option>
+                                    <option value="tl-PH">Filipino</option>
+                                </select>
+                            </label>
                         </div>
-
-
-                        <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
-                            
-
-                            <div class="config"></div>
-                            
-                            <div class="config">
-                                <label>Speaker.bot Status</label>
-                                <div id="speakerBotStatus" class="platform-enable">
-                                    <small>Awaiting for connection</small>
-                                    <label><i class="fa-solid fa-circle"></i></label>
-                                </div>
-                            </div>
-
-                            <div class="config"></div>
-
-                            <div class="config">
-                                <label>Server</label>
-                                <input type="text" name="speakerBotServerAddress" value="127.0.0.1">
-                            </div>
-                            <div class="config">
-                                <label>Port</label>
-                                <input type="text" name="speakerBotServerPort" value="7580">
-                            </div>
-
-                            <div class="config">
-                                <label>Enable Chat Read</label>
-                                <label class="switch"><input type="checkbox" name="speakerBotChatRead" data-default="false"><span class="slider"></span></label>
-                            </div>
-
-                            
-                            <div class="config">
-                                <label>Enable Events Read</label>
-                                <label class="switch"><input type="checkbox" name="speakerBotEventRead" data-default="false"><span class="slider"></span></label>
-                            </div>
-
-                            <div class="config">
-                                <label>
-                                    Voice Alias<br>
-                                    <small>Set in <strong><em>Settings -> Voice Alias</em></strong> on Speaker.bot.</small>
-                                </label>
-                                <input type="text" name="speakerBotVoiceAlias" placeholder="e.g. Maria">
-                            </div>
-
-                            <div class="config">
-                                <label>
-                                    Chat Message Template<br>
-                                    <small>Variables are <strong><em>{user}</em></strong> and <strong><em>{message}</em></strong>.</small>
-                                </label>
-                                <input type="text" name="speakerBotChatTemplate" value="{user} said {message}">
-                            </div>
-
-                            <hr>
-                            
-                            <div class="config">
-                                <small class="warning">
-                                    <i class="fa-solid fa-triangle-exclamation"></i> You need to set a Speech Engine and a Voice Alias on Speaker.bot. <strong><a target="_blank" href="https://speaker.bot/get-started/speech-engines">Follow the tutorial</a>.</strong>
-                                </small>
-                            </div>
-
-                            <div class="config">
-                                <small class="warning">
-                                    <i class="fa-solid fa-triangle-exclamation"></i> Speaker.bot's WebSocket need to be activated and running. <strong><a target="_blank" href="https://speaker.bot/api/websocket">Follow the tutorial</a>.</strong>
-                                </small>
-                            </div>
-
-
-                        </div>
-                    </div>
-
-
-
-
-
-                    <div class="platform" id="general">
-                        <div class="config">
-                            <h2><i class="fa-solid fa-wrench"></i> Setup</h2>
-                        </div>
-
-                        <div class="setup">
-
-                            <div class="config"><label>Scroll Bar<br><small>Adds a scrollbar.</small></label></label><label class="switch"><input type="checkbox" name="chatScrollBar" data-default="false"><span class="slider"></span></label></div>
-
-                            <div class="config">
-                                <label>Size<br><small>Changes ChatRD's size</small></label>
-                                <label>
-                                    <input type="range" id="font-slider" name="chatFontSize" min="0.1" max="3" step="0.1" value="1">
-                                    <br><em id="font-value" class="slider-value">100%</em>
-                                </label>
-                            </div>
-
-                            <div class="config">
-                                <label>Font Family<br><small>Changes ChatRD's Font</small></label>
-                                <label>
-                                    <input type="text" name="chatFontFamily" value="DM Sans">
-                                </label>
-                            </div>
-
-                            <div class="config">
-                                <label>Background Color<br><small>Changes ChatRD's background color</small></label>
-                                <label>
-                                    <input type="color" name="chatBackground" value="#121212">
-                                </label>
-                            </div>
-                            
-                            <div class="config">
-                                <label>
-                                    <i class="fa-solid fa-arrow-turn-up"></i> Background Opacity<br>
-                                    <small>Changes ChatRD's background color opacity</small>
-                                </label>
-                                <label>
-                                    <input type="range" id="bg-opacity-slider" name="chatBackgroundOpacity" min="0.0" max="1" step="0.1" value="1">
-                                    <br><em id="bg-opacity-value" class="slider-value">1</em>
-                                </label>
-                            </div>
-                            
-                            <hr>
-
-                                <div class="config">
-                                    <label>
-                                        ChatRD Skin<br>
-                                        <small>Changes ChatRD visuals using "SKINS".</small>
-                                    </label>
-                                    <label>
-                                        <select name="chatrdSkin" id="chatrdskins">
-                                            <option value="default" selected>Default</option>
-                                            <option value="nutting">Nutting</option>
-                                            <option value="kimballs">Kimballs</option>
-                                            <option value="bubbles">Bubbles</option>
-                                        </select>
-                                    </label>
-                                </div>
-                                <div class="config">
-                                    <small class="warning">
-                                        <i class="fa-solid fa-circle-info"></i> ChatRD Skin is in <strong>BETA</strong>.
-                                    </small>
-                                </div>
-
-                            <hr>
-
-                            
-                            <div class="config">
-                                <label>
-                                    One Line<br><small>One line chat instead of two in Vertical Chat.</small>
-                                </label>
-                                <label class="switch"><input type="checkbox" name="chatOneLine" data-default="false"><span class="slider"></span></label>
-                            </div>
-                            
-                            <div class="config">
-                                <label>
-                                    Horizontal Direction<br><small>Chat/Events will be horizontal.<br>
-                                    <strong><u>If enabled, it disables "One Line" option above.</u></strong></small>
-                                </label>
-                                <label class="switch"><input type="checkbox" name="chatHorizontal" data-default="false"><span class="slider"></span></label>
-                            </div>
-                            
-                            <div class="config">
-                                <label>
-                                    Group Chat Messages<br><small>Consecutive messages from the same user will be grouped.</small>
-                                </label>
-                                <label class="switch"><input type="checkbox" name="chatMessageGroup" data-default="false"><span class="slider"></span></label>
-                            </div>
-
-                            <div class="config">
-                                <label>Platforms<br><small>Shows the platforms logos.</small></label>
-                                <label class="switch"><input type="checkbox" name="showPlatform" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-
-                            <!--<div class="config">
-                                <label>Platforms Dots<br><small>Shows a 12x12px dot with the platform color instead of it's logo.<br>
-                                <strong><u>If enabled, it disables "Platforms" option above.</u></strong> (Twitch ToS is 🤮)</small></label>
-                                    
-                                <label class="switch"><input type="checkbox" name="showPlatformDot" data-default="false"><span class="slider"></span></label>
-                            </div>-->
-
-                            <div class="config">
-                                <label>Avatars</label>
-                                <label class="switch"><input type="checkbox" name="showAvatar" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-
-                            <div class="config">
-                                <label>Timestamps</label>
-                                <label class="switch"><input type="checkbox" name="showTimestamps" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-
-                            <div class="config">
-                                <label><i class="fa-solid fa-arrow-turn-up"></i> AM/PM</label>
-                                <label class="switch"><input type="checkbox" name="ampmTimeStamps" data-default="false"><span class="slider"></span></label>
-                            </div>
-
-                            <div class="config">
-                                <label>Badges</label>
-                                <label class="switch"><input type="checkbox" name="showBadges" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-
-                            <div class="config">
-                                <label>Platform Statistics<br><small>Shows all platform statistics.</small></label>
-                                <label class="switch"><input type="checkbox" name="showPlatformStatistics" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-
-                            <div class="config">
-                                <label>Ignore Commands<br><small>Ignores texts starting with "!".</small></label>
-                                <label class="switch"><input type="checkbox" name="excludeCommands" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-
-                            <div class="config">
-                                <label>Ignore Chatters<br><small>Separate their names by commas. eg.: StreamLabs,StreamElements</small></label>
-                                <input type="text" name="ignoreChatters" value="Streamlabs,Streamelements">
-                            </div>
-
-                            <div class="config">
-                                <label>Hide Chat Msg<br><small>Hides a message after X seconds. (0 disables it)</small></label>
-                                <input type="number" name="hideAfter" value="0">
-                            </div>
-
-                            <hr>
-                            
-                            <div class="config">
-                                <label>Multi-Streamer Mode<br>
-                                    <small>Changes <strong>Twitch</strong> to <em class="msm-platform purple">Purple Platform</em>, <strong>YouTube</strong> to <em class="msm-platform red">Red Platform</em>,<br><strong>Kick</strong> to <em class="msm-platform green">Green Platform</em> and <strong>TikTok</strong> to <em class="msm-platform vertical">Short Video App</em><br>on all chat messages.
-                                    </small>
-                                </label>
-                                <label class="switch"><input type="checkbox" name="multiStreamerMode" data-default="false"><span class="slider"></span></label>
-                            </div>
-
-                            <hr>
-
-                            <div class="config">
-                                <label>Chat Field<br><small>Adds a chat field for you to type in your chat.</small></label>
-                                <label class="switch"><input type="checkbox" name="chatField" data-default="false"><span class="slider"></span></label>
-                            </div>
-
-                            <div class="config">
-                                <label>Moderation Buttons<br><small>Adds buttons for moderator actions.</small></label>
-                                <label class="switch"><input type="checkbox" name="chatModeration" data-default="false"><span class="slider"></span></label>
-                            </div>
-
-                            <div class="config">
-                                <small class="warning">
-                                    <i class="fa-solid fa-circle-info"></i> The Chat Field also accepts <strong>/commands</strong>. <strong><a target="_blank" href="https://github.com/vortisrd/chatrd#-commands-supported-by-the-chat-field">Commands Supported</a>.</strong>
-                                </small>
-                            </div>
-
-                        </div>
-                    </div>
-
-
-
-
-                    <div class="platform" id="twitch">
+                        
+                        <hr>
 
                         <div class="config">
-                            <h2><img src="js/modules/twitch/images/logo-twitch.svg">Twitch</h2>
-
-                            <div class="platform-enable">
-                                <label><small>Enable</small></label>
-                                <label class="switch">
-                                    <input type="checkbox" name="showTwitch" data-default="false"><span class="slider"></span>
-                                </label>
-                            </div>
+                            <label>
+                                <span data-i18n="general.scroll_bar">Scroll Bar</span><br>
+                                <small data-i18n="general.scroll_bar_hint">Adds a scrollbar.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="chatScrollBar" data-default="false"><span class="slider"></span></label>
                         </div>
-
-                        <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
-
-                                <div class="config">
-                                    <label>Chat<br><small>Reads Twitch chat.</small></label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchMessages" checked data-default="true"><span class="slider"></span></label>
-                                </div>
-
-                                <div class="config">
-                                    <label>Followers</label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchFollows" checked data-default="true"><span class="slider"></span></label>
-                                </div>
-                                <div class="config">
-                                    <label>Bits</label><label class="switch">
-                                        <input type="checkbox" name="showTwitchBits" checked data-default="true"><span class="slider"></span></label>
-                                </div>
-                                <div class="config">
-                                    <label>Announcements</label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchAnnouncements" checked data-default="true"><span class="slider"></span></label>
-                                </div>
-                                <div class="config">
-                                    <label>Watch Streaks<br><small>Shows Watch Streaks in chat.</small></label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchWatchStreak" data-default="false"><span class="slider"></span></label>
-                                </div>
-                                <div class="config">
-                                    <label>Subscriptions<br><small>Shows Sub events. <u><strong>Disabling this disables all sub events</strong></u>.</small></label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchSubs" checked data-default="true"><span class="slider"></span></label>
-                                </div>
-                                <div class="config">
-                                    <label><i class="fa-solid fa-arrow-turn-up"></i> Gifted Subs<br><small>When a user gifts another user a sub.</small></label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchGiftedSubs" checked data-default="true"><span class="slider"></span></label>
-                                </div>
-                                <div class="config">
-                                    <label><i class="fa-solid fa-arrow-turn-up"></i> Gifted Bomb<br><small>When a user gifts subs massively.</small></label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchMassGiftedSubs" checked data-default="true"><span class="slider"></span></label>
-                                </div>
-                                <div class="config">
-                                    <label><i class="fa-solid fa-arrow-turn-up"></i> Gifted Bomb Users Train<br><small>Shows all users that were gifted a  sub on a Gifted Bomb.</small></label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchGiftedSubsUserTrain" checked data-default="true"><span class="slider"></span></label>
-                                </div>
-                                <div class="config">
-                                    <label>Channel Point Rewards</label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchRewardRedemptions" checked data-default="true"><span class="slider"></span></label>
-                                </div>
-                                <div class="config">
-                                    <label>Raids</label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchRaids" checked data-default="true"><span class="slider"></span></label>
-                                </div>
-                                <div class="config">
-                                    <label>Shared Chat</label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchSharedChat" checked data-default="true"><span class="slider"></span></label>
-                                </div>
-                                <hr>
-                                <div class="config">
-                                    <label>Hype Train</label>
-                                </div>
-                                <div class="config">
-                                    <label><i class="fa-solid fa-arrow-turn-up"></i> Hype Train Event<br><small>Shows when a Hype Train event starts, levels up and ends.</small></label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchHypeTrain" data-default="false"><span class="slider"></span></label>
-                                </div>
-                                <div class="config">
-                                    <label><i class="fa-solid fa-arrow-turn-up"></i> Hype Train Bar<br><small>Show the Hype Train Bar under the Statistics.</small></label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchHypeTrainBar" data-default="false"><span class="slider"></span></label>
-                                </div>
-                                <hr>
-                                <div class="config">
-                                    <label>Goals</label>
-                                </div>
-                                <div class="config">
-                                    <label><i class="fa-solid fa-arrow-turn-up"></i> Goal Event<br><small>Shows when a Goal event starts, progress and completes.</small></label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchGoals" data-default="false"><span class="slider"></span></label>
-                                </div>
-                                <div class="config">
-                                    <label><i class="fa-solid fa-arrow-turn-up"></i> Goal Bars<br><small>Show a Goal Bar for each goal under the Statistics.</small></label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchGoalsBars" data-default="false"><span class="slider"></span></label>
-                                </div>
-                                <hr>
-                                <div class="config">
-                                    <label>Pronouns<br><small>Shows Pronouns to those whom enabled them on Twitch chat.</small></label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchPronouns" data-default="false"><span class="slider"></span></label>
-                                </div>
-                                <div class="config">
-                                    <label>Statistics<br><small>Shows Twitch Viewers.</small></label>
-                                    <label class="switch"><input type="checkbox" name="showTwitchViewers" checked data-default="true"><span class="slider"></span></label>
-                                </div>
-
-                        </div>
-
-
-                    </div>
-
-
-
-
-
-
-
-                    <div class="platform" id="youtube">
-
                         <div class="config">
-                            <h2><img src="js/modules/youtube/images/logo-youtube.svg">YouTube</h2>
-
-                            <div class="platform-enable">
-                                <label><small>Enable</small></label>
-                                <label class="switch">
-                                    <input type="checkbox" name="showYoutube" data-default="false"><span class="slider"></span>
-                                </label>
-                            </div>
+                            <label>
+                                <span data-i18n="general.size">Size</span><br>
+                                <small data-i18n="general.size_hint">Changes ChatRD's size</small>
+                            </label>
+                            <label>
+                                <input type="range" id="font-slider" name="chatFontSize" min="0.1" max="3" step="0.1" value="1">
+                                <br><em id="font-value" class="slider-value">100%</em>
+                            </label>
                         </div>
-
-                        <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
-
-                            <div class="config">
-                                <label>Chat<br><small>Reads YouTube chat.</small></label>
-                                <label class="switch"><input type="checkbox" name="showYouTubeMessages" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>SuperChat</label>
-                                <label class="switch"><input type="checkbox" name="showYouTubeSuperChats" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Super Sticker</label>
-                                <label class="switch"><input type="checkbox" name="showYouTubeSuperStickers" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label><i class="fa-solid fa-arrow-turn-up"></i> Shows Super Sticker GIF</label>
-                                <label class="switch"><input type="checkbox" name="showYouTubeSuperStickerGif" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Membership<br><small>Shows Membership events. <u><strong>Disabling this disables all member events</strong></u>.</small></label>
-                                <label class="switch"><input type="checkbox" name="showYouTubeMemberships" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label><i class="fa-solid fa-arrow-turn-up"></i> Gifted Membership<br><small>Shows the person gifting members.</small></label>
-                                <label class="switch"><input type="checkbox" name="showYouTubeGiftMemberships" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label><i class="fa-solid fa-arrow-turn-up"></i> Gifted Membership Train<br><small>Shows all users that were gifted a membership on a massive gifting membership.</small></label>
-                                <label class="switch"><input type="checkbox" name="showYouTubeMembershipsTrain" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Statistics<br><small>Shows YouTube Viewers and Likes.</small></label>
-                                <label class="switch"><input type="checkbox" name="showYouTubeStatistics" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-
-                            <div class="config">
-                                <label>
-                                    Members Only Emotes
-                                    <br>
-                                    <small>
-                                        You have to add member emotes manually because YouTube's API doesn't relay them to Streamer.bot.
-                                    </small>
-                                </label>
-                            </div>
-
-                            <div class="config">
-                                <div class="emote-list">
-
-                                    <span class="emote-item">
-                                        <button id="addEmoteButton" class="add" title="Add Emote"><i class="fa-solid fa-plus"></i></button>
-                                    </span>
-                                </div>
-                                
-                                <!-- Textarea for debugging purposes -->
-                                <textarea name="youTubeCustomEmotes" style="display: none;">"{}"</textarea>
-                            </div>
-
-
-                        </div>
-
-
-                    </div>
-
-
-
-
-
-
-
-                    <div class="platform" id="tiktok">
-
                         <div class="config">
-                            <h2><img src="js/modules/tiktok/images/logo-tiktok.svg">TikTok</h2>
-
-                            <div class="platform-enable">
-                                <label><small>Enable</small></label>
-                                <label class="switch">
-                                    <input type="checkbox" name="showTiktok" data-default="false"><span class="slider"></span>
-                                </label>
-                            </div>
+                            <label>
+                                <span data-i18n="general.font_family">Font Family</span><br>
+                                <small data-i18n="general.font_family_hint">Changes ChatRD's Font</small>
+                            </label>
+                            <label>
+                                <input type="text" name="chatFontFamily" value="DM Sans">
+                            </label>
                         </div>
-
-                        <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
-
-                            <div class="config">
-                                <label>Chat<br><small>Reads TikTok chat.</small></label>
-                                <label class="switch"><input type="checkbox" name="showTikTokMessages" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Followers</label><label class="switch"><input type="checkbox" name="showTikTokFollows" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Likes<br><small>Shows likes in <strong>15</strong> increments. Why? <em>Blame TikFinity!</em> 🤣</small></label>
-                                <label class="switch"><input type="checkbox" name="showTikTokLikes" data-default="false"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Joins<br><small>Shows who joined chat at the bottom of the widget.</small></label>
-                                <label class="switch"><input type="checkbox" name="showTikTokJoins" data-default="false"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Shares<br><small>Shows who shared -or clicks the "Share" button- to the stream.</small></label>
-                                <label class="switch"><input type="checkbox" name="showTikTokShares" data-default="false"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Gifts<br><small>Shows TikTok Gifts, such as roses, galaxies, etc.</small></label><label class="switch"><input type="checkbox" name="showTikTokGifts" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label><i class="fa-solid fa-arrow-turn-up"></i> Small Gift Images<br><small>Shrinks the size of the gift image to 28px.</small></label>
-                                <label class="switch"><input type="checkbox" name="showSmallTikTokGifts" data-default="false"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>SuperFans/Subscribers</label><label class="switch"><input type="checkbox" name="showTikTokSubs" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <!--<div class="config">
-                                <label><i class="fa-solid fa-arrow-turn-up"></i> SuperFan Box<br><small>Shows when you get a SuperFan Box (Gifted Sub).</small></label>
-                                <label class="switch"><input type="checkbox" name="showTikTokGiftedSub"><span class="slider"></span></label>
-                            </div>-->
-                            <div class="config">
-                                <label>Statistics<br><small>Shows TikTok Viewers and Likes.</small></label>
-                                <label class="switch"><input type="checkbox" name="showTikTokStatistics" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <hr>
-                            <div class="config">
-                                <small class="warning">
-                                    <i class="fa-solid fa-circle-info"></i> If you have <strong>Chat Field</strong> enabled, you need to <strong><a target="_blank" href="https://github.com/vortisrd/chatrd/?tab=readme-ov-file#-sending-messages-to-tiktok">follow the instructions</a></strong> to send messages to TikTok.
-                                </small>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-
-
-
-
-
-
-                    <div class="platform" id="kick">
-
                         <div class="config">
-                            <h2><img src="js/modules/kick/images/logo-kick.svg">Kick</h2>
-
-                            <div class="platform-enable">
-                                <label><small>Enable</small></label>
-                                <label class="switch">
-                                    <input type="checkbox" name="showKick" data-default="false"><span class="slider"></span>
-                                </label>
-                            </div>
+                            <label>
+                                <span data-i18n="general.background_color">Background Color</span><br>
+                                <small data-i18n="general.background_color_hint">Changes ChatRD's background color</small>
+                            </label>
+                            <label>
+                                <input type="color" name="chatBackground" value="#121212">
+                            </label>
                         </div>
-
-                        <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
-
-                            <div class="config">
-                                <small class="warning">
-                                    <i class="fa-solid fa-triangle-exclamation"></i> During peak usage, <strong>Kick's API becomes unstable</strong> and takes longer to relay events. This is not an issue with Streamer.bot or ChatRD. Kick has <em>"infinite money glitch"</em>, so I hope it gets better in the future. 😣
-                                </small>
-                            </div>
-
-                            <hr>
-
-                            <!--<div class="config">
-                                <label>Your Kick Username<br><small>Your user handle. It's on kick.com/<strong><u>username</u></strong></small></label>
-                                <input type="text" name="kickUserName" value="" placeholder="username">
-                            </div>-->
-                            <div class="config">
-                                <label>Chat<br><small>Reads Kick chat.</small></label>
-                                <label class="switch"><input type="checkbox" name="showKickMessages" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Followers</label><label class="switch"><input type="checkbox" name="showKickFollows" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Kicks Gift<br><small>Shows Kicks Gift events.</small></label>
-                                <label class="switch"><input type="checkbox" name="showKickKicks" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label><i class="fa-solid fa-arrow-turn-up"></i> Small Kicks Images<br><small>Shrinks the size of the gift image to 28px.</small></label>
-                                <label class="switch"><input type="checkbox" name="showSmallKicksGifts" data-default="false"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Subscriptions<br><small>Shows Subscription events. <u><strong>Disabling this disables all sub events</strong></u>.</small></label>
-                                <label class="switch"><input type="checkbox" name="showKickSubs" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label><i class="fa-solid fa-arrow-turn-up"></i> Gifted Subs<br><small>When a user gifts another user a sub.</small></label>
-                                <label class="switch"><input type="checkbox" name="showKickGiftedSubs" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label><i class="fa-solid fa-arrow-turn-up"></i> Gifted Bomb<br><small>When a user gifts subs massively.</small></label>
-                                <label class="switch"><input type="checkbox" name="showKickMassGiftedSubs" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label><i class="fa-solid fa-arrow-turn-up"></i> Gifted Bomb Users Train<br><small>Shows all users that were gifted a  sub on a Gifted Bomb.</small></label>
-                                <label class="switch"><input type="checkbox" name="showKickGiftedSubsUserTrain" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Channel Point Rewards</label>
-                                <label class="switch"><input type="checkbox" name="showKickRewardRedemptions" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Host<br><small>It's like "raid" but on Kick.</small></label><label class="switch"><input type="checkbox" name="showKickRaids" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Statistics<br><small>Shows Kick Viewers. <strong>Self-updates each 15 seconds.</strong></small></label>
-                                <label class="switch"><input type="checkbox" name="showKickViewers" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            
-                        </div>
-
-
-                    </div>
-
-
-
-
-
-
-
-                    <div class="platform" id="streamelements">
-
                         <div class="config">
-                            <h2><img src="js/modules/streamelements/images/logo-streamelements.svg">StreamElements</h2>
-
-                            <div class="platform-enable">
-                                <label><small>Enable</small></label>
-                                <label class="switch">
-                                    <input type="checkbox" name="showStreamelements" data-default="false"><span class="slider"></span>
-                                </label>
-                            </div>
+                            <label>
+                                <span data-i18n-html="general.background_opacity"><i class="fa-solid fa-arrow-turn-up"></i> Background Opacity</span><br>
+                                <small data-i18n="general.background_opacity_hint">Changes ChatRD's background color opacity</small>
+                            </label>
+                            <label>
+                                <input type="range" id="bg-opacity-slider" name="chatBackgroundOpacity" min="0.0" max="1" step="0.1" value="1">
+                                <br><em id="bg-opacity-value" class="slider-value">1</em>
+                            </label>
                         </div>
-
-                        <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
-                            <div class="config">
-                                <small class="warning">
-                                    <i class="fa-solid fa-circle-exclamation"></i> You need to connect StreamElements to Streamer.Bot.
-                                    <strong><a target="_blank" href="https://docs.streamer.bot/guide/integrations/streamelements">Follow the tutorial</a>.</strong>
-                                </small>
-                            </div>
-					        <div class="config">
-                                <label>Tips</label>
-                                <label class="switch"><input type="checkbox" name="showStreamElementsTips" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-
-
-
-
-
-
-                    <div class="platform" id="streamlabs">
-
+                        <hr>
                         <div class="config">
-                            <h2><img src="js/modules/streamlabs/images/logo-streamlabs.svg">Streamlabs</h2>
-
-                            <div class="platform-enable">
-                                <label><small>Enable</small></label>
-                                <label class="switch">
-                                    <input type="checkbox" name="showStreamlabs" data-default="false"><span class="slider"></span>
-                                </label>
-                            </div>
+                            <label>
+                                <span data-i18n="general.skin">ChatRD Skin</span><br>
+                                <small data-i18n="general.skin_hint">Changes ChatRD visuals using "SKINS".</small>
+                            </label>
+                            <label>
+                                <select name="chatrdSkin" id="chatrdskins">
+                                    <option value="default" selected data-i18n="general.skin_options.default">Default</option>
+                                    <option value="nutting" data-i18n="general.skin_options.nutting">Nutting</option>
+                                    <option value="kimballs" data-i18n="general.skin_options.kimballs">Kimballs</option>
+                                    <option value="bubbles" data-i18n="general.skin_options.bubbles">Bubbles</option>
+                                </select>
+                            </label>
                         </div>
-
-                        <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
-                            <div class="config">
-                                <small class="warning">
-                                    <i class="fa-solid fa-circle-exclamation"></i> You need to connect Streamlabs to Streamer.Bot.
-                                    <strong><a target="_blank" href="https://docs.streamer.bot/guide/integrations/streamlabs">Follow the tutorial</a>.</strong>
-                                </small>
-                            </div>
-					        <div class="config">
-                                <label>Donations</label>
-                                <label class="switch"><input type="checkbox" name="showStreamlabsDonations" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-
-
-
-
-
-
-                    <div class="platform" id="patreon">
-
                         <div class="config">
-                            <h2><img src="js/modules/patreon/images/logo-patreon.svg">Patreon</h2>
-
-                            <div class="platform-enable">
-                                <label><small>Enable</small></label>
-                                <label class="switch">
-                                    <input type="checkbox" name="showPatreon" data-default="false"><span class="slider"></span>
-                                </label>
-                            </div>
+                            <small class="warning" data-i18n-html="general.skin_beta_warning">
+                                <i class="fa-solid fa-circle-info"></i> ChatRD Skin is in <strong>BETA</strong>.
+                            </small>
                         </div>
-
-                        <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
-                            <div class="config">
-                                <small class="warning">
-                                    <i class="fa-solid fa-circle-exclamation"></i> You need to connect Patreon to Streamer.Bot.
-                                    <strong><a target="_blank" href="https://docs.streamer.bot/guide/integrations/patreon">Follow the tutorial</a>.</strong>
-                                </small>
-                            </div>
-					        <div class="config">
-                                <label>Memberships</label>
-                                <label class="switch"><input type="checkbox" name="showPatreonMemberships" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-
-
-
-
-
-
-                    <div class="platform" id="tipeee">
-
+                        <hr>
                         <div class="config">
-                            <h2><img src="js/modules/tipeeestream/images/logo-tipeeestream.svg">TipeeeStream</h2>
-
-                            <div class="platform-enable">
-                                <label><small>Enable</small></label>
-                                <label class="switch">
-                                    <input type="checkbox" name="showTipeee" data-default="false"><span class="slider"></span>
-                                </label>
-                            </div>
+                            <label>
+                                <span data-i18n="general.one_line">One Line</span><br>
+                                <small data-i18n="general.one_line_hint">One line chat instead of two in Vertical Chat.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="chatOneLine" data-default="false"><span class="slider"></span></label>
                         </div>
-
-                        <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
-
-                            <div class="config">
-                                <small class="warning">
-                                    <i class="fa-solid fa-circle-exclamation"></i> You need to connect TipeeeStream to Streamer.Bot.
-                                    <strong><a target="_blank" href="https://docs.streamer.bot/guide/integrations/tipeee-stream">Follow the tutorial</a>.</strong>
-                                </small>
-                            </div>
-					        <div class="config">
-                                <label>Donations</label>
-                                <label class="switch"><input type="checkbox" name="showTipeeeDonations" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            
-                        </div>
-
-
-                    </div>
-
-
-
-
-
-
-
-                    <div class="platform" id="kofi">
-
                         <div class="config">
-                            <h2><img src="js/modules/kofi/images/logo-kofi.svg">Ko-fi</h2>
-
-                            <div class="platform-enable">
-                                <label><small>Enable</small></label>
-                                <label class="switch">
-                                    <input type="checkbox" name="showKofi" data-default="false"><span class="slider"></span>
-                                </label>
-                            </div>
+                            <label>
+                                <span data-i18n="general.horizontal">Horizontal Direction</span><br>
+                                <small data-i18n-html="general.horizontal_hint">Chat/Events will be horizontal.<br><strong><u>If enabled, it disables "One Line" option above.</u></strong></small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="chatHorizontal" data-default="false"><span class="slider"></span></label>
                         </div>
-
-                        <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
-                            <div class="config">
-                                <small class="warning">
-                                    <i class="fa-solid fa-circle-exclamation"></i> You need to connect Ko-Fi to Streamer.Bot.
-                                    <strong><a target="_blank" href="https://docs.streamer.bot/guide/integrations/ko-fi">Follow the tutorial</a>.</strong>
-                                </small>
-                            </div>
-                            <div class="config">
-                                <label>Donations</label><label class="switch"><input type="checkbox" name="showKofiDonations" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Subscriptions</label><label class="switch"><input type="checkbox" name="showKofiSubscriptions" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Orders</label><label class="switch"><input type="checkbox" name="showKofiOrders" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-
-
-
-
-
-
-                    <div class="platform" id="fourthwall">
-
                         <div class="config">
-                            <h2><img src="js/modules/fourthwall/images/logo-fourthwall.svg">Fourthwall</h2>
-
-                            <div class="platform-enable">
-                                <label><small>Enable</small></label>
-                                <label class="switch">
-                                    <input type="checkbox" name="showFourthwall" data-default="false"><span class="slider"></span>
-                                </label>
-                            </div>
+                            <label>
+                                <span data-i18n="general.group_messages">Group Chat Messages</span><br>
+                                <small data-i18n="general.group_messages_hint">Consecutive messages from the same user will be grouped.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="chatMessageGroup" data-default="false"><span class="slider"></span></label>
                         </div>
-
-                        <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
-                            <div class="config">
-                                <small class="warning">
-                                    <i class="fa-solid fa-circle-exclamation"></i> You need to connect Fourthwall to Streamer.Bot.
-                                    <strong><a target="_blank" href="https://docs.streamer.bot/guide/integrations/fourthwall">Follow the tutorial</a>.</strong>
-                                </small>
-                            </div>
-                            <div class="config">
-                                <label>Donations</label>
-                                <label class="switch"><input type="checkbox" name="showFourthwallDonations" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Subscriptions</label>
-                                <label class="switch"><input type="checkbox" name="showFourthwallSubscriptions" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Orders</label>
-                                <label class="switch"><input type="checkbox" name="showFourthwallOrders" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label><i class="fa-solid fa-arrow-turn-up"></i> Shows Order Image</small>
-                                </label>
-                                <label class="switch"><input type="checkbox" name="showFourthwallShowImage" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Gift Purchase</label>
-                                <label class="switch"><input type="checkbox" name="showFourthwallGiftPurchase" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label><i class="fa-solid fa-arrow-turn-up"></i> Shows Gift Image</label>
-                                <label class="switch"><input type="checkbox" name="showFourthwallShowGiftImage" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Gift Draw</label>
-                                <label class="switch"><input type="checkbox" name="showFourthwallGiftDraw" checked data-default="true"><span class="slider"></span></label>
-                            </div>
-                            <div class="config">
-                                <label>Gift Command<br><small>Command used to join the Gift Draw. </small></label>
-                                <input type="text" name="fourthWallGiftDrawCommand" value="!enter">
-                            </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="general.platforms">Platforms</span><br>
+                                <small data-i18n="general.platforms_hint">Shows the platforms logos.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showPlatform" checked data-default="true"><span class="slider"></span></label>
                         </div>
-
-
+                        <div class="config">
+                            <label data-i18n="general.avatars">Avatars</label>
+                            <label class="switch"><input type="checkbox" name="showAvatar" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="general.timestamps">Timestamps</label>
+                            <label class="switch"><input type="checkbox" name="showTimestamps" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n-html="general.ampm"><i class="fa-solid fa-arrow-turn-up"></i> AM/PM</label>
+                            <label class="switch"><input type="checkbox" name="ampmTimeStamps" data-default="false"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="general.badges">Badges</label>
+                            <label class="switch"><input type="checkbox" name="showBadges" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="general.platform_statistics">Platform Statistics</span><br>
+                                <small data-i18n="general.platform_statistics_hint">Shows all platform statistics.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showPlatformStatistics" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="general.ignore_commands">Ignore Commands</span><br>
+                                <small data-i18n="general.ignore_commands_hint">Ignores texts starting with "!".</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="excludeCommands" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="general.ignore_chatters">Ignore Chatters</span><br>
+                                <small data-i18n="general.ignore_chatters_hint">Separate their names by commas. eg.: StreamLabs,StreamElements</small>
+                            </label>
+                            <input type="text" name="ignoreChatters" value="Streamlabs,Streamelements">
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="general.hide_after">Hide Chat Msg</span><br>
+                                <small data-i18n="general.hide_after_hint">Hides a message after X seconds. (0 disables it)</small>
+                            </label>
+                            <input type="number" name="hideAfter" value="0">
+                        </div>
+                        <hr>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="general.multi_streamer_mode">Multi-Streamer Mode</span><br>
+                                <small data-i18n-html="general.multi_streamer_mode_hint">Changes <strong>Twitch</strong> to <em class="msm-platform purple">Purple Platform</em>, <strong>YouTube</strong> to <em class="msm-platform red">Red Platform</em>,<br><strong>Kick</strong> to <em class="msm-platform green">Green Platform</em> and <strong>TikTok</strong> to <em class="msm-platform vertical">Short Video App</em><br>on all chat messages.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="multiStreamerMode" data-default="false"><span class="slider"></span></label>
+                        </div>
+                        <hr>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="general.chat_field">Chat Field</span><br>
+                                <small data-i18n="general.chat_field_hint">Adds a chat field for you to type in your chat.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="chatField" data-default="false"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="general.moderation_buttons">Moderation Buttons</span><br>
+                                <small data-i18n="general.moderation_buttons_hint">Adds buttons for moderator actions.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="chatModeration" data-default="false"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <small class="warning" data-i18n-html="general.chat_field_warning">
+                                <i class="fa-solid fa-circle-info"></i> The Chat Field also accepts <strong>/commands</strong>. <strong><a target="_blank" href="https://github.com/vortisrd/chatrd#-commands-supported-by-the-chat-field">Commands Supported</a>.</strong>
+                            </small>
+                        </div>
                     </div>
+                </div>
 
+                <!-- ── Twitch ─────────────────────────────────────────────── -->
+                <div class="platform" id="twitch">
+                    <div class="config">
+                        <h2><img src="js/modules/twitch/images/logo-twitch.svg"><span data-i18n="twitch.title">Twitch</span></h2>
+                        <div class="platform-enable">
+                            <label><small data-i18n="twitch.enable">Enable</small></label>
+                            <label class="switch">
+                                <input type="checkbox" name="showTwitch" data-default="false"><span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
+                        <div class="config">
+                            <label>
+                                <span data-i18n="twitch.chat">Chat</span><br>
+                                <small data-i18n="twitch.chat_hint">Reads Twitch chat.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showTwitchMessages" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="twitch.followers">Followers</label>
+                            <label class="switch"><input type="checkbox" name="showTwitchFollows" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="twitch.bits">Bits</label>
+                            <label class="switch"><input type="checkbox" name="showTwitchBits" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="twitch.announcements">Announcements</label>
+                            <label class="switch"><input type="checkbox" name="showTwitchAnnouncements" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="twitch.watch_streaks">Watch Streaks</span><br>
+                                <small data-i18n="twitch.watch_streaks_hint">Shows Watch Streaks in chat.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showTwitchWatchStreak" data-default="false"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="twitch.subscriptions">Subscriptions</span><br>
+                                <small data-i18n-html="twitch.subscriptions_hint">Shows Sub events. <u><strong>Disabling this disables all sub events</strong></u>.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showTwitchSubs" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n-html="twitch.gifted_subs"><i class="fa-solid fa-arrow-turn-up"></i> Gifted Subs</span><br>
+                                <small data-i18n="twitch.gifted_subs_hint">When a user gifts another user a sub.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showTwitchGiftedSubs" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n-html="twitch.gifted_bomb"><i class="fa-solid fa-arrow-turn-up"></i> Gifted Bomb</span><br>
+                                <small data-i18n="twitch.gifted_bomb_hint">When a user gifts subs massively.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showTwitchMassGiftedSubs" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n-html="twitch.gifted_bomb_train"><i class="fa-solid fa-arrow-turn-up"></i> Gifted Bomb Users Train</span><br>
+                                <small data-i18n-html="twitch.gifted_bomb_train_hint">Shows all users that were gifted a sub on a Gifted Bomb.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showTwitchGiftedSubsUserTrain" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="twitch.channel_points">Channel Point Rewards</label>
+                            <label class="switch"><input type="checkbox" name="showTwitchRewardRedemptions" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="twitch.raids">Raids</label>
+                            <label class="switch"><input type="checkbox" name="showTwitchRaids" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="twitch.shared_chat">Shared Chat</label>
+                            <label class="switch"><input type="checkbox" name="showTwitchSharedChat" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <hr>
+                        <div class="config">
+                            <label data-i18n="twitch.hype_train_section">Hype Train</label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n-html="twitch.hype_train_event"><i class="fa-solid fa-arrow-turn-up"></i> Hype Train Event</span><br>
+                                <small data-i18n="twitch.hype_train_event_hint">Shows when a Hype Train event starts, levels up and ends.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showTwitchHypeTrain" data-default="false"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n-html="twitch.hype_train_bar"><i class="fa-solid fa-arrow-turn-up"></i> Hype Train Bar</span><br>
+                                <small data-i18n="twitch.hype_train_bar_hint">Show the Hype Train Bar under the Statistics.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showTwitchHypeTrainBar" data-default="false"><span class="slider"></span></label>
+                        </div>
+                        <hr>
+                        <div class="config">
+                            <label data-i18n="twitch.goals_section">Goals</label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n-html="twitch.goal_event"><i class="fa-solid fa-arrow-turn-up"></i> Goal Event</span><br>
+                                <small data-i18n="twitch.goal_event_hint">Shows when a Goal event starts, progress and completes.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showTwitchGoals" data-default="false"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n-html="twitch.goal_bars"><i class="fa-solid fa-arrow-turn-up"></i> Goal Bars</span><br>
+                                <small data-i18n="twitch.goal_bars_hint">Show a Goal Bar for each goal under the Statistics.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showTwitchGoalsBars" data-default="false"><span class="slider"></span></label>
+                        </div>
+                        <hr>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="twitch.pronouns">Pronouns</span><br>
+                                <small data-i18n="twitch.pronouns_hint">Shows Pronouns to those whom enabled them on Twitch chat.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showTwitchPronouns" data-default="false"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="twitch.statistics">Statistics</span><br>
+                                <small data-i18n="twitch.statistics_hint">Shows Twitch Viewers.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showTwitchViewers" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- ── YouTube ───────────────────────────────────────────── -->
+                <div class="platform" id="youtube">
+                    <div class="config">
+                        <h2><img src="js/modules/youtube/images/logo-youtube.svg"><span data-i18n="youtube.title">YouTube</span></h2>
+                        <div class="platform-enable">
+                            <label><small data-i18n="youtube.enable">Enable</small></label>
+                            <label class="switch">
+                                <input type="checkbox" name="showYoutube" data-default="false"><span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
+                        <div class="config">
+                            <label>
+                                <span data-i18n="youtube.chat">Chat</span><br>
+                                <small data-i18n="youtube.chat_hint">Reads YouTube chat.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showYouTubeMessages" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="youtube.superchat">Super Chat</label>
+                            <label class="switch"><input type="checkbox" name="showYouTubeSuperChats" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="youtube.super_sticker">Super Sticker</label>
+                            <label class="switch"><input type="checkbox" name="showYouTubeSuperStickers" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n-html="youtube.super_sticker_gif"><i class="fa-solid fa-arrow-turn-up"></i> Shows Super Sticker GIF</label>
+                            <label class="switch"><input type="checkbox" name="showYouTubeSuperStickerGif" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="youtube.memberships">Membership</span><br>
+                                <small data-i18n-html="youtube.memberships_hint">Shows Membership events. <u><strong>Disabling this disables all member events</strong></u>.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showYouTubeMemberships" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n-html="youtube.gifted_membership"><i class="fa-solid fa-arrow-turn-up"></i> Gifted Membership</span><br>
+                                <small data-i18n="youtube.gifted_membership_hint">Shows the person gifting members.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showYouTubeGiftMemberships" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n-html="youtube.gifted_membership_train"><i class="fa-solid fa-arrow-turn-up"></i> Gifted Membership Train</span><br>
+                                <small data-i18n-html="youtube.gifted_membership_train_hint">Shows all users that were gifted a membership on a massive gifting membership.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showYouTubeMembershipsTrain" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="youtube.statistics">Statistics</span><br>
+                                <small data-i18n="youtube.statistics_hint">Shows YouTube Viewers and Likes.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showYouTubeStatistics" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="youtube.custom_emotes_label">Members Only Emotes</span><br>
+                                <small data-i18n="youtube.custom_emotes_hint">You have to add member emotes manually because YouTube's API doesn't relay them to Streamer.bot.</small>
+                            </label>
+                        </div>
+                        <div class="config">
+                            <div class="emote-list">
+                                <span class="emote-item">
+                                    <button id="addEmoteButton" class="add" title="Add Emote"><i class="fa-solid fa-plus"></i></button>
+                                </span>
+                            </div>
+                            <textarea name="youTubeCustomEmotes" style="display: none;">"{}"</textarea>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- ── TikTok ─────────────────────────────────────────────── -->
+                <div class="platform" id="tiktok">
+                    <div class="config">
+                        <h2><img src="js/modules/tiktok/images/logo-tiktok.svg"><span data-i18n="tiktok.title">TikTok</span></h2>
+                        <div class="platform-enable">
+                            <label><small data-i18n="tiktok.enable">Enable</small></label>
+                            <label class="switch">
+                                <input type="checkbox" name="showTiktok" data-default="false"><span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
+                        <div class="config">
+                            <label>
+                                <span data-i18n="tiktok.chat">Chat</span><br>
+                                <small data-i18n="tiktok.chat_hint">Reads TikTok chat.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showTikTokMessages" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="tiktok.followers">Followers</label>
+                            <label class="switch"><input type="checkbox" name="showTikTokFollows" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="tiktok.likes">Likes</span><br>
+                                <small data-i18n-html="tiktok.likes_hint">Shows likes in <strong>15</strong> increments. Why? <em>Blame TikFinity!</em> 🤣</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showTikTokLikes" data-default="false"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="tiktok.joins">Joins</span><br>
+                                <small data-i18n="tiktok.joins_hint">Shows who joined chat at the bottom of the widget.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showTikTokJoins" data-default="false"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="tiktok.shares">Shares</span><br>
+                                <small data-i18n="tiktok.shares_hint">Shows who shared -or clicks the "Share" button- to the stream.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showTikTokShares" data-default="false"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="tiktok.gifts">Gifts</span><br>
+                                <small data-i18n="tiktok.gifts_hint">Shows TikTok Gifts, such as roses, galaxies, etc.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showTikTokGifts" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n-html="tiktok.small_gifts"><i class="fa-solid fa-arrow-turn-up"></i> Small Gift Images</span><br>
+                                <small data-i18n="tiktok.small_gifts_hint">Shrinks the size of the gift image to 28px.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showSmallTikTokGifts" data-default="false"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="tiktok.superfans">SuperFans/Subscribers</label>
+                            <label class="switch"><input type="checkbox" name="showTikTokSubs" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="tiktok.statistics">Statistics</span><br>
+                                <small data-i18n="tiktok.statistics_hint">Shows TikTok Viewers and Likes.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showTikTokStatistics" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <hr>
+                        <div class="config">
+                            <small class="warning" data-i18n-html="tiktok.chat_field_warning">
+                                <i class="fa-solid fa-circle-info"></i> If you have <strong>Chat Field</strong> enabled, you need to <strong><a target="_blank" href="https://github.com/vortisrd/chatrd/?tab=readme-ov-file#-sending-messages-to-tiktok">follow the instructions</a></strong> to send messages to TikTok.
+                            </small>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- ── Kick ──────────────────────────────────────────────── -->
+                <div class="platform" id="kick">
+                    <div class="config">
+                        <h2><img src="js/modules/kick/images/logo-kick.svg"><span data-i18n="kick.title">Kick</span></h2>
+                        <div class="platform-enable">
+                            <label><small data-i18n="kick.enable">Enable</small></label>
+                            <label class="switch">
+                                <input type="checkbox" name="showKick" data-default="false"><span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
+                        <div class="config">
+                            <small class="warning" data-i18n-html="kick.api_warning">
+                                <i class="fa-solid fa-triangle-exclamation"></i> During peak usage, <strong>Kick's API becomes unstable</strong> and takes longer to relay events. This is not an issue with Streamer.bot or ChatRD. Kick has <em>"infinite money glitch"</em>, so I hope it gets better in the future. 😣
+                            </small>
+                        </div>
+                        <hr>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="kick.chat">Chat</span><br>
+                                <small data-i18n="kick.chat_hint">Reads Kick chat.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showKickMessages" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="kick.followers">Followers</label>
+                            <label class="switch"><input type="checkbox" name="showKickFollows" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="kick.kicks_gift">Kicks Gift</span><br>
+                                <small data-i18n="kick.kicks_gift_hint">Shows Kicks Gift events.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showKickKicks" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n-html="kick.small_kicks_images"><i class="fa-solid fa-arrow-turn-up"></i> Small Kicks Images</span><br>
+                                <small data-i18n="kick.small_kicks_images_hint">Shrinks the size of the gift image to 28px.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showSmallKicksGifts" data-default="false"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="kick.subscriptions">Subscriptions</span><br>
+                                <small data-i18n-html="kick.subscriptions_hint">Shows Subscription events. <u><strong>Disabling this disables all sub events</strong></u>.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showKickSubs" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n-html="kick.gifted_subs"><i class="fa-solid fa-arrow-turn-up"></i> Gifted Subs</span><br>
+                                <small data-i18n="kick.gifted_subs_hint">When a user gifts another user a sub.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showKickGiftedSubs" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n-html="kick.gifted_bomb"><i class="fa-solid fa-arrow-turn-up"></i> Gifted Bomb</span><br>
+                                <small data-i18n-html="kick.gifted_bomb_hint">When a user gifts subs massively.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showKickMassGiftedSubs" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n-html="kick.gifted_bomb_train"><i class="fa-solid fa-arrow-turn-up"></i> Gifted Bomb Users Train</span><br>
+                                <small data-i18n-html="kick.gifted_bomb_train_hint">Shows all users that were gifted a sub on a Gifted Bomb.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showKickGiftedSubsUserTrain" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="kick.channel_points">Channel Point Rewards</label>
+                            <label class="switch"><input type="checkbox" name="showKickRewardRedemptions" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="kick.raids">Host</span><br>
+                                <small data-i18n="kick.raids_hint">It's like "raid" but on Kick.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showKickRaids" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="kick.statistics">Statistics</span><br>
+                                <small data-i18n-html="kick.statistics_hint">Shows Kick Viewers.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showKickViewers" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- ── StreamElements ─────────────────────────────────────── -->
+                <div class="platform" id="streamelements">
+                    <div class="config">
+                        <h2><img src="js/modules/streamelements/images/logo-streamelements.svg"><span data-i18n="streamelements.title">StreamElements</span></h2>
+                        <div class="platform-enable">
+                            <label><small data-i18n="streamelements.enable">Enable</small></label>
+                            <label class="switch">
+                                <input type="checkbox" name="showStreamelements" data-default="false"><span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
+                        <div class="config">
+                            <small class="warning" data-i18n-html="streamelements.setup_warning">
+                                <i class="fa-solid fa-circle-exclamation"></i> You need to connect StreamElements to Streamer.Bot. <strong><a target="_blank" href="https://docs.streamer.bot/guide/integrations/streamelements">Follow the tutorial</a>.</strong>
+                            </small>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="streamelements.tips">Tips</label>
+                            <label class="switch"><input type="checkbox" name="showStreamElementsTips" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- ── Streamlabs ─────────────────────────────────────────── -->
+                <div class="platform" id="streamlabs">
+                    <div class="config">
+                        <h2><img src="js/modules/streamlabs/images/logo-streamlabs.svg"><span data-i18n="streamlabs.title">Streamlabs</span></h2>
+                        <div class="platform-enable">
+                            <label><small data-i18n="streamlabs.enable">Enable</small></label>
+                            <label class="switch">
+                                <input type="checkbox" name="showStreamlabs" data-default="false"><span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
+                        <div class="config">
+                            <small class="warning" data-i18n-html="streamlabs.setup_warning">
+                                <i class="fa-solid fa-circle-exclamation"></i> You need to connect Streamlabs to Streamer.Bot. <strong><a target="_blank" href="https://docs.streamer.bot/guide/integrations/streamlabs">Follow the tutorial</a>.</strong>
+                            </small>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="streamlabs.donations">Donations</label>
+                            <label class="switch"><input type="checkbox" name="showStreamlabsDonations" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                    </div>
+                </div>
 
-                </form>
+                <!-- ── Patreon ────────────────────────────────────────────── -->
+                <div class="platform" id="patreon">
+                    <div class="config">
+                        <h2><img src="js/modules/patreon/images/logo-patreon.svg"><span data-i18n="patreon.title">Patreon</span></h2>
+                        <div class="platform-enable">
+                            <label><small data-i18n="patreon.enable">Enable</small></label>
+                            <label class="switch">
+                                <input type="checkbox" name="showPatreon" data-default="false"><span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
+                        <div class="config">
+                            <small class="warning" data-i18n-html="patreon.setup_warning">
+                                <i class="fa-solid fa-circle-exclamation"></i> You need to connect Patreon to Streamer.Bot. <strong><a target="_blank" href="https://docs.streamer.bot/guide/integrations/patreon">Follow the tutorial</a>.</strong>
+                            </small>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="patreon.memberships">Memberships</label>
+                            <label class="switch"><input type="checkbox" name="showPatreonMemberships" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- ── TipeeeStream ───────────────────────────────────────── -->
+                <div class="platform" id="tipeee">
+                    <div class="config">
+                        <h2><img src="js/modules/tipeeestream/images/logo-tipeeestream.svg"><span data-i18n="tipeee.title">TipeeeStream</span></h2>
+                        <div class="platform-enable">
+                            <label><small data-i18n="tipeee.enable">Enable</small></label>
+                            <label class="switch">
+                                <input type="checkbox" name="showTipeee" data-default="false"><span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
+                        <div class="config">
+                            <small class="warning" data-i18n-html="tipeee.setup_warning">
+                                <i class="fa-solid fa-circle-exclamation"></i> You need to connect TipeeeStream to Streamer.Bot. <strong><a target="_blank" href="https://docs.streamer.bot/guide/integrations/tipeee-stream">Follow the tutorial</a>.</strong>
+                            </small>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="tipeee.donations">Donations</label>
+                            <label class="switch"><input type="checkbox" name="showTipeeeDonations" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                    </div>
+                </div>
 
-            </div>
-            <div id="preview">
-                <iframe id="chatrdpreview" src="" frameborder="0"></iframe>
-            </div>
+                <!-- ── Ko-fi ─────────────────────────────────────────────── -->
+                <div class="platform" id="kofi">
+                    <div class="config">
+                        <h2><img src="js/modules/kofi/images/logo-kofi.svg"><span data-i18n="kofi.title">Ko-fi</span></h2>
+                        <div class="platform-enable">
+                            <label><small data-i18n="kofi.enable">Enable</small></label>
+                            <label class="switch">
+                                <input type="checkbox" name="showKofi" data-default="false"><span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
+                        <div class="config">
+                            <small class="warning" data-i18n-html="kofi.setup_warning">
+                                <i class="fa-solid fa-circle-exclamation"></i> You need to connect Ko-Fi to Streamer.Bot. <strong><a target="_blank" href="https://docs.streamer.bot/guide/integrations/ko-fi">Follow the tutorial</a>.</strong>
+                            </small>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="kofi.donations">Donations</label>
+                            <label class="switch"><input type="checkbox" name="showKofiDonations" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="kofi.subscriptions">Subscriptions</label>
+                            <label class="switch"><input type="checkbox" name="showKofiSubscriptions" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="kofi.orders">Orders</label>
+                            <label class="switch"><input type="checkbox" name="showKofiOrders" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── Fourthwall ─────────────────────────────────────────── -->
+                <div class="platform" id="fourthwall">
+                    <div class="config">
+                        <h2><img src="js/modules/fourthwall/images/logo-fourthwall.svg"><span data-i18n="fourthwall.title">Fourthwall</span></h2>
+                        <div class="platform-enable">
+                            <label><small data-i18n="fourthwall.enable">Enable</small></label>
+                            <label class="switch">
+                                <input type="checkbox" name="showFourthwall" data-default="false"><span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
+                        <div class="config">
+                            <small class="warning" data-i18n-html="fourthwall.setup_warning">
+                                <i class="fa-solid fa-circle-exclamation"></i> You need to connect Fourthwall to Streamer.Bot. <strong><a target="_blank" href="https://docs.streamer.bot/guide/integrations/fourthwall">Follow the tutorial</a>.</strong>
+                            </small>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="fourthwall.donations">Donations</label>
+                            <label class="switch"><input type="checkbox" name="showFourthwallDonations" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="fourthwall.subscriptions">Subscriptions</label>
+                            <label class="switch"><input type="checkbox" name="showFourthwallSubscriptions" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="fourthwall.orders">Orders</label>
+                            <label class="switch"><input type="checkbox" name="showFourthwallOrders" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n-html="fourthwall.show_order_image"><i class="fa-solid fa-arrow-turn-up"></i> Shows Order Image</label>
+                            <label class="switch"><input type="checkbox" name="showFourthwallShowImage" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="fourthwall.gift_purchase">Gift Purchase</label>
+                            <label class="switch"><input type="checkbox" name="showFourthwallGiftPurchase" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n-html="fourthwall.show_gift_image"><i class="fa-solid fa-arrow-turn-up"></i> Shows Gift Image</label>
+                            <label class="switch"><input type="checkbox" name="showFourthwallShowGiftImage" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n="fourthwall.gift_draw">Gift Draw</label>
+                            <label class="switch"><input type="checkbox" name="showFourthwallGiftDraw" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="fourthwall.gift_draw_command">Gift Command</span><br>
+                                <small data-i18n="fourthwall.gift_draw_command_hint">Command used to join the Gift Draw.</small>
+                            </label>
+                            <input type="text" name="fourthWallGiftDrawCommand" value="!enter">
+                        </div>
+                    </div>
+                </div>
+
+            </form>
         </div>
-        
 
-                
-
-    
-        
-        <footer>
-            <div class="nav-bar">
-                <a title="Streamer.bot" href="#streamerbot" class="active"><img src="images/logo-streamerbot.png"></a>
-                <a title="Speaker.bot" href="#speakerbot" class="active"><img src="images/logo-speakerbot.png"></a>
-                <a title="Setup" href="#general"><i class="fa-solid fa-wrench"></i></a>
-                <a title="Twitch" href="#twitch"><img src="js/modules/twitch/images/logo-twitch.svg"></a>
-                <a title="YouTube" href="#youtube"><img src="js/modules/youtube/images/logo-youtube.svg"></a>
-                <a title="TikTok" href="#tiktok"><img src="js/modules/tiktok/images/logo-tiktok.svg"></a>
-                <a title="Kick" href="#kick"><img src="js/modules/kick/images/logo-kick.svg"></a>
-                <a title="StreamElements" href="#streamelements"><img src="js/modules/streamelements/images/logo-streamelements.svg"></a>
-                <a title="Streamlabs" href="#streamlabs"><img src="js/modules/streamlabs/images/logo-streamlabs.svg"></a>
-                <a title="Patreon" href="#patreon"><img src="js/modules/patreon/images/logo-patreon.svg"></a>
-                <a title="TipeeeStream" href="#tipeee"><img src="js/modules/tipeeestream/images/logo-tipeeestream.svg"></a>
-                <a title="Ko-Fi" href="#kofi"><img src="js/modules/kofi/images/logo-kofi.svg"></a>
-                <a title="FourthWall" href="#fourthwall"><img src="js/modules/fourthwall/images/logo-fourthwall.svg"></a>					
-            </div>
-
-            <div class="url-bar">
-                <input type="text" id="outputUrl" placeholder="URL Here..." readonly="">
-                <button onclick="copyUrl()">Copy URL</button>
-                <button id="openImportModal">Import Settings</button>
-            </div>
-
-            <p>Made with ❤️ by <strong>VortisRD</strong></p>
-            <p>
-                <a target="_blank" href="https://twitch.com/vortisrd"><i class="fa-brands fa-twitch"></i></a>
-                <a target="_blank" href="https://youtube.com/@vortisrd"><i class="fa-brands fa-youtube"></i></a>
-                <a target="_blank" href="https://tiktok.com/@vortisrd"><i class="fa-brands fa-tiktok"></i></a>
-                <a target="_blank" href="https://kick.com/vortisrd">
-                    <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 800 800">
-                        <polygon class="st0" points="336 111 336 239 401 239 401 175 465 175 465 111 657 111 657 303 593 303 593 367 529 367 529 432 593 432 593 496 657 496 657 689 465 689 465 624 401 624 401 560 336 560 336 689 143 689 143 111 336 111"/>
-                    </svg>
-                </a>
-                <a target="_blank" href="https://x.com/vortisrd"><i class="fa-brands fa-x-twitter"></i></a>
-                <a target="_blank" href="https://github.com/vortisrd"><i class="fa-brands fa-github"></i></a>
-            </p>
-        </footer>
+        <div id="preview">
+            <iframe id="chatrdpreview" src="" frameborder="0"></iframe>
+        </div>
     </div>
 
-    
+    <!-- ── Footer ────────────────────────────────────────────────────────── -->
+    <footer>
+        <div class="nav-bar">
+            <a title="Streamer.bot" href="#streamerbot" class="active"><img src="images/logo-streamerbot.png"></a>
+            <a title="Speaker.bot" href="#speakerbot" class="active"><img src="images/logo-speakerbot.png"></a>
+            <a title="Setup" href="#general"><i class="fa-solid fa-wrench"></i></a>
+            <a title="Twitch" href="#twitch"><img src="js/modules/twitch/images/logo-twitch.svg"></a>
+            <a title="YouTube" href="#youtube"><img src="js/modules/youtube/images/logo-youtube.svg"></a>
+            <a title="TikTok" href="#tiktok"><img src="js/modules/tiktok/images/logo-tiktok.svg"></a>
+            <a title="Kick" href="#kick"><img src="js/modules/kick/images/logo-kick.svg"></a>
+            <a title="StreamElements" href="#streamelements"><img src="js/modules/streamelements/images/logo-streamelements.svg"></a>
+            <a title="Streamlabs" href="#streamlabs"><img src="js/modules/streamlabs/images/logo-streamlabs.svg"></a>
+            <a title="Patreon" href="#patreon"><img src="js/modules/patreon/images/logo-patreon.svg"></a>
+            <a title="TipeeeStream" href="#tipeee"><img src="js/modules/tipeeestream/images/logo-tipeeestream.svg"></a>
+            <a title="Ko-Fi" href="#kofi"><img src="js/modules/kofi/images/logo-kofi.svg"></a>
+            <a title="FourthWall" href="#fourthwall"><img src="js/modules/fourthwall/images/logo-fourthwall.svg"></a>
+        </div>
 
-	<div id="addEmoteModal" class="modal hidden">
-		<div class="modal-content">
-			<h3>Add YouTube Member Emote</h3>
-			<label>
-				Emote Name
-				<input type="text" id="newEmoteName" placeholder="Use &quot;EmoteName&quot;, don't use &quot;:EmoteName:&quot;" class="avoid">
-			</label>
-			<label>
-				Image URL<br>
-                <small>Don't use temporary image domains. Neither Discord linked images.</small>
-				<input type="text" id="newEmoteURL" placeholder="https://example.com/emote.png" class="avoid">
-			</label>
-			<div class="modal-buttons">
-				<button id="confirmAddEmote" class="confirm">Add</button>
-				<button id="cancelAddEmote" class="cancel">Cancel</button>
-			</div>
-		</div>
-	</div>
+        <div class="url-bar">
+            <input type="text" id="outputUrl" placeholder="URL Here..." readonly="">
+            <button id="copyUrlButton" onclick="copyUrl()" data-i18n="footer.copy_url">Copy URL</button>
+            <button id="openImportModal" data-i18n="footer.import_settings">Import Settings</button>
+        </div>
 
-    <div id="importUrlModal" class="modal hidden">
-		<div class="modal-content">
-			<h3>Import Settings</h3>
-			<label>
-				Paste your existing ChatRD URL
-				<input type="text" id="importUrlString" placeholder="https://vortisrd.github.io/chatrd/chat.html?..." class="avoid">
-			</label>
-			<div class="modal-buttons">
-				<button id="confirmImportUrl" class="confirm">Import</button>
-				<button id="cancelImportUrl" class="cancel">Cancel</button>
-			</div>
-		</div>
-	</div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/simple-notify@1.0.4/dist/simple-notify.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@streamerbot/client@1.12.1/dist/streamerbot-client.min.js"></script>
+        <p data-i18n-html="footer.made_by">Made with ❤️ by <strong>VortisRD</strong></p>
+        <p>
+            <a target="_blank" href="https://twitch.com/vortisrd"><i class="fa-brands fa-twitch"></i></a>
+            <a target="_blank" href="https://youtube.com/@vortisrd"><i class="fa-brands fa-youtube"></i></a>
+            <a target="_blank" href="https://tiktok.com/@vortisrd"><i class="fa-brands fa-tiktok"></i></a>
+            <a target="_blank" href="https://kick.com/vortisrd">
+                <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 800 800">
+                    <polygon class="st0" points="336 111 336 239 401 239 401 175 465 175 465 111 657 111 657 303 593 303 593 367 529 367 529 432 593 432 593 496 657 496 657 689 465 689 465 624 401 624 401 560 336 560 336 689 143 689 143 111 336 111"/>
+                </svg>
+            </a>
+            <a target="_blank" href="https://x.com/vortisrd"><i class="fa-brands fa-x-twitter"></i></a>
+            <a target="_blank" href="https://github.com/vortisrd"><i class="fa-brands fa-github"></i></a>
+        </p>
+    </footer>
+</div>
 
-    
-    <script src="js/speakerbot.js"></script>
-    <script src="js/settings.js"></script>
+<!-- ── Modal: Add YouTube Emote ──────────────────────────────────────────── -->
+<div id="addEmoteModal" class="modal hidden">
+    <div class="modal-content">
+        <h3 data-i18n="modal_add_emote.title">Add YouTube Member Emote</h3>
+        <label>
+            <span data-i18n="modal_add_emote.emote_name">Emote Name</span>
+            <input type="text" id="newEmoteName"
+                data-i18n-placeholder="modal_add_emote.emote_name_placeholder"
+                placeholder='Use "EmoteName", don&apos;t use ":EmoteName:"'
+                class="avoid">
+        </label>
+        <label>
+            <span data-i18n="modal_add_emote.image_url">Image URL</span><br>
+            <small data-i18n="modal_add_emote.image_url_hint">Don't use temporary image domains. Neither Discord linked images.</small>
+            <input type="text" id="newEmoteURL"
+                data-i18n-placeholder="modal_add_emote.image_url_placeholder"
+                placeholder="https://example.com/emote.png"
+                class="avoid">
+        </label>
+        <div class="modal-buttons">
+            <button id="confirmAddEmote" class="confirm" data-i18n="modal_add_emote.confirm">Add</button>
+            <button id="cancelAddEmote" class="cancel" data-i18n="modal_add_emote.cancel">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- ── Modal: Import Settings ────────────────────────────────────────────── -->
+<div id="importUrlModal" class="modal hidden">
+    <div class="modal-content">
+        <h3 data-i18n="modal_import.title">Import Settings</h3>
+        <label>
+            <span data-i18n="modal_import.label">Paste your existing ChatRD URL</span>
+            <input type="text" id="importUrlString"
+                data-i18n-placeholder="modal_import.placeholder"
+                placeholder="https://vortisrd.github.io/chatrd/chat.html?..."
+                class="avoid">
+        </label>
+        <div class="modal-buttons">
+            <button id="confirmImportUrl" class="confirm" data-i18n="modal_import.confirm">Import</button>
+            <button id="cancelImportUrl" class="cancel" data-i18n="modal_import.cancel">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/simple-notify@1.0.4/dist/simple-notify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@streamerbot/client@1.12.1/dist/streamerbot-client.min.js"></script>
+
+<!-- i18n deve ser carregado ANTES do settings.js -->
+<script src="js/i18n-settings.js?nocache=27"></script>
+<script src="js/speakerbot.js?nocache=27"></script>
+<script src="js/settings.js?nocache=27"></script>
 </body>
 </html>

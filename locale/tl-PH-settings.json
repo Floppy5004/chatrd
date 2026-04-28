@@ -1,0 +1,261 @@
+{
+  "readme": {
+    "text": "Mahahanap mo ang dokumentasyon at kung paano i-setup ang ChatRD <a target=\"_blank\" href=\"https://github.com/vortisrd/chatrd/blob/main/README.md\">dito</a>."
+  },
+
+  "streamerbot": {
+    "title": "Streamer.bot",
+    "server": "Server",
+    "port": "Port"
+  },
+
+  "speakerbot": {
+    "title": "Speaker.bot",
+    "enable": "I-aktibo",
+    "status_label": "Katayuan ng Speaker.bot",
+    "server": "Server",
+    "port": "Port",
+    "chat_read": "I-aktibo ang Pagbabasa ng Chat",
+    "event_read": "I-aktibo ang Pagbabasa ng Mga Event",
+    "voice_alias": "Voice Alias",
+    "voice_alias_hint": "Itakda sa <strong><em>Settings -> Voice Alias</em></strong> sa Speaker.bot.",
+    "chat_template": "Template ng Mensahe sa Chat",
+    "chat_template_hint": "Ang mga variable ay <strong><em>{user}</em></strong> at <strong><em>{message}</em></strong>.",
+    "warning_engine": "<i class=\"fa-solid fa-triangle-exclamation\"></i> Kailangan mong magtakda ng Speech Engine at Voice Alias sa Speaker.bot. <strong><a target=\"_blank\" href=\"https://speaker.bot/get-started/speech-engines\">Sundan ang tutorial</a>.</strong>",
+    "warning_websocket": "<i class=\"fa-solid fa-triangle-exclamation\"></i> Ang WebSocket ng Speaker.bot ay kailangang i-aktibo at patakbuhin. <strong><a target=\"_blank\" href=\"https://speaker.bot/api/websocket\">Sundan ang tutorial</a>.</strong>"
+  },
+
+  "general": {
+    "title": "Mga Setting",
+    "language": "Wika",
+    "language_hint": "Binabago ang wika ng ChatRD",
+    "scroll_bar": "Scroll Bar",
+    "scroll_bar_hint": "Nagdaragdag ng scrollbar.",
+    "size": "Laki",
+    "size_hint": "Binabago ang laki ng ChatRD",
+    "font_family": "Font",
+    "font_family_hint": "Binabago ang font ng ChatRD",
+    "background_color": "Kulay ng Background",
+    "background_color_hint": "Binabago ang kulay ng background ng ChatRD",
+    "background_opacity": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Opacity ng Background",
+    "background_opacity_hint": "Binabago ang opacity ng kulay ng background ng ChatRD",
+    "skin": "Skin ng ChatRD",
+    "skin_hint": "Binabago ang hitsura ng ChatRD gamit ang \"SKINS\".",
+    "skin_beta_warning": "<i class=\"fa-solid fa-circle-info\"></i> Ang Skin ng ChatRD ay nasa <strong>BETA</strong>.",
+    "skin_options": {
+      "default": "Default",
+      "nutting": "Nutting",
+      "kimballs": "Kimballs",
+      "bubbles": "Bubbles"
+    },
+    "one_line": "Isang Linya",
+    "one_line_hint": "Isang linya ng chat sa halip na dalawa sa Vertical Chat.",
+    "horizontal": "Pahalang na Direksyon",
+    "horizontal_hint": "Ang Chat/Mga Event ay magiging pahalang.<br><strong><u>Kung naka-aktibo, dina-disable ang opsyong \"Isang Linya\" sa itaas.</u></strong>",
+    "group_messages": "Pagsamahin ang Mga Mensahe sa Chat",
+    "group_messages_hint": "Ang magkakasunod na mensahe mula sa parehong user ay isasama.",
+    "platforms": "Mga Platform",
+    "platforms_hint": "Ipinapakita ang mga logo ng platform.",
+    "avatars": "Mga Avatar",
+    "timestamps": "Mga Oras",
+    "ampm": "<i class=\"fa-solid fa-arrow-turn-up\"></i> AM/PM",
+    "badges": "Mga Badge",
+    "platform_statistics": "Mga Istatistika ng Platform",
+    "platform_statistics_hint": "Ipinapakita ang lahat ng istatistika ng platform.",
+    "ignore_commands": "Huwag Pansinin ang Mga Utos",
+    "ignore_commands_hint": "Hindi pinapansin ang mga tekstong nagsisimula sa \"!\".",
+    "ignore_chatters": "Huwag Pansinin ang Mga User",
+    "ignore_chatters_hint": "Paghiwalayin ang kanilang mga pangalan ng kuwit. hal.: StreamLabs,StreamElements",
+    "hide_after": "Itago ang Msg sa Chat",
+    "hide_after_hint": "Itinatago ang mensahe pagkatapos ng X segundo. (0 para i-disable)",
+    "multi_streamer_mode": "Multi-Streamer Mode",
+    "multi_streamer_mode_hint": "Binabago ang <strong>Twitch</strong> sa <em class=\"msm-platform purple\">Lilang Platform</em>, <strong>YouTube</strong> sa <em class=\"msm-platform red\">Pulang Platform</em>,<br><strong>Kick</strong> sa <em class=\"msm-platform green\">Berdeng Platform</em> at <strong>TikTok</strong> sa <em class=\"msm-platform vertical\">Short Video App</em><br>sa lahat ng mensahe sa chat.",
+    "chat_field": "Chat Field",
+    "chat_field_hint": "Nagdaragdag ng chat field para mag-type sa iyong chat.",
+    "moderation_buttons": "Mga Pindutan ng Moderasyon",
+    "moderation_buttons_hint": "Nagdaragdag ng mga pindutan para sa mga aksyon ng moderator.",
+    "chat_field_warning": "<i class=\"fa-solid fa-circle-info\"></i> Tinatanggap din ng Chat Field ang mga <strong>/utos</strong>. <strong><a target=\"_blank\" href=\"https://github.com/vortisrd/chatrd#-commands-supported-by-the-chat-field\">Mga Sinusuportahang Utos</a>.</strong>"
+  },
+
+  "twitch": {
+    "title": "Twitch",
+    "enable": "I-aktibo",
+    "chat": "Chat",
+    "chat_hint": "Binabasa ang chat ng Twitch.",
+    "followers": "Mga Follower",
+    "bits": "Bits",
+    "announcements": "Mga Anunsyo",
+    "watch_streaks": "Watch Streaks",
+    "watch_streaks_hint": "Ipinapakita ang mga Watch Streak sa chat.",
+    "subscriptions": "Mga Subscription",
+    "subscriptions_hint": "Ipinapakita ang mga event ng sub. <u><strong>Ang pag-disable nito ay dina-disable ang lahat ng sub events</strong></u>.",
+    "gifted_subs": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Mga Gifted Sub",
+    "gifted_subs_hint": "Kapag nagbigay ang isang user ng sub sa ibang user.",
+    "gifted_bomb": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Gifted Bomb",
+    "gifted_bomb_hint": "Kapag nagbigay ang isang user ng maraming sub nang sabay-sabay.",
+    "gifted_bomb_train": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Tren ng Mga User ng Gifted Bomb",
+    "gifted_bomb_train_hint": "Ipinapakita ang lahat ng user na nakatanggap ng sub sa isang Gifted Bomb.",
+    "channel_points": "Mga Reward ng Channel Points",
+    "raids": "Mga Raid",
+    "shared_chat": "Shared Chat",
+    "hype_train_section": "Hype Train",
+    "hype_train_event": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Event ng Hype Train",
+    "hype_train_event_hint": "Ipinapakita kung kailan nagsisimula, nag-le-level up, at nagtatapos ang Hype Train.",
+    "hype_train_bar": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Bar ng Hype Train",
+    "hype_train_bar_hint": "Ipinapakita ang Bar ng Hype Train sa ilalim ng Mga Istatistika.",
+    "goals_section": "Mga Layunin",
+    "goal_event": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Event ng Layunin",
+    "goal_event_hint": "Ipinapakita kung kailan nagsisimula, umuusad, at nakukumpleto ang isang Layunin.",
+    "goal_bars": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Mga Bar ng Layunin",
+    "goal_bars_hint": "Ipinapakita ang Bar ng Layunin para sa bawat layunin sa ilalim ng Mga Istatistika.",
+    "pronouns": "Mga Panghalip",
+    "pronouns_hint": "Ipinapakita ang mga Panghalip ng mga nag-enable nito sa chat ng Twitch.",
+    "statistics": "Mga Istatistika",
+    "statistics_hint": "Ipinapakita ang mga Manonood sa Twitch."
+  },
+
+  "youtube": {
+    "title": "YouTube",
+    "enable": "I-aktibo",
+    "chat": "Chat",
+    "chat_hint": "Binabasa ang chat ng YouTube.",
+    "superchat": "SuperChat",
+    "super_sticker": "Super Sticker",
+    "super_sticker_gif": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Ipakita ang GIF ng Super Sticker",
+    "memberships": "Membership",
+    "memberships_hint": "Ipinapakita ang mga event ng membership. <u><strong>Ang pag-disable nito ay dina-disable ang lahat ng member events</strong></u>.",
+    "gifted_membership": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Gifted Membership",
+    "gifted_membership_hint": "Ipinapakita ang taong nagbibigay ng membership.",
+    "gifted_membership_train": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Tren ng Mga Gifted Membership",
+    "gifted_membership_train_hint": "Ipinapakita ang lahat ng user na nakatanggap ng membership sa isang malaking gifting.",
+    "statistics": "Mga Istatistika",
+    "statistics_hint": "Ipinapakita ang mga Manonood at Like sa YouTube.",
+    "custom_emotes_label": "Mga Emote para sa Miyembro Lamang",
+    "custom_emotes_hint": "Kailangan mong mano-manong idagdag ang mga emote ng miyembro dahil hindi sila ipinaabot ng API ng YouTube sa Streamer.bot."
+  },
+
+  "tiktok": {
+    "title": "TikTok",
+    "enable": "I-aktibo",
+    "chat": "Chat",
+    "chat_hint": "Binabasa ang chat ng TikTok.",
+    "followers": "Mga Follower",
+    "likes": "Mga Like",
+    "likes_hint": "Ipinapakita ang mga like sa bawat <strong>15</strong>. Bakit? <em>Sisihin si TikFinity!</em> 🤣",
+    "joins": "Mga Sumali",
+    "joins_hint": "Ipinapakita kung sino ang sumali sa chat sa ibaba ng widget.",
+    "shares": "Mga Share",
+    "shares_hint": "Ipinapakita kung sino ang nagbahagi —o nag-click sa pindutang \"Share\"— ng stream.",
+    "gifts": "Mga Regalo",
+    "gifts_hint": "Ipinapakita ang mga Regalo sa TikTok, tulad ng rosas, galaxies, atbp.",
+    "small_gifts": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Maliliit na Larawan ng Regalo",
+    "small_gifts_hint": "Pinaliit ang sukat ng larawan ng regalo sa 28px.",
+    "superfans": "SuperFans/Subscribers",
+    "statistics": "Mga Istatistika",
+    "statistics_hint": "Ipinapakita ang mga Manonood at Like sa TikTok.",
+    "chat_field_warning": "<i class=\"fa-solid fa-circle-info\"></i> Kung naka-aktibo ang <strong>Chat Field</strong>, kailangan mong <strong><a target=\"_blank\" href=\"https://github.com/vortisrd/chatrd/?tab=readme-ov-file#-sending-messages-to-tiktok\">sundan ang mga tagubilin</a></strong> para magpadala ng mensahe sa TikTok."
+  },
+
+  "kick": {
+    "title": "Kick",
+    "enable": "I-aktibo",
+    "api_warning": "<i class=\"fa-solid fa-triangle-exclamation\"></i> Sa panahon ng mataas na paggamit, <strong>nagiging hindi maaasahan ang API ng Kick</strong> at mas matagal itong mag-relay ng mga event. Hindi ito problema ng Streamer.bot o ChatRD. Mayroon ang Kick ng <em>\"infinite money glitch\"</em>, kaya umaasa akong mapabuti pa ito sa hinaharap. 😣",
+    "chat": "Chat",
+    "chat_hint": "Binabasa ang chat ng Kick.",
+    "followers": "Mga Follower",
+    "kicks_gift": "Kicks Gift",
+    "kicks_gift_hint": "Ipinapakita ang mga event ng Kicks Gift.",
+    "small_kicks_images": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Maliliit na Larawan ng Kicks",
+    "small_kicks_images_hint": "Pinaliit ang sukat ng larawan ng regalo sa 28px.",
+    "subscriptions": "Mga Subscription",
+    "subscriptions_hint": "Ipinapakita ang mga event ng subscription. <u><strong>Ang pag-disable nito ay dina-disable ang lahat ng sub events</strong></u>.",
+    "gifted_subs": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Mga Gifted Sub",
+    "gifted_subs_hint": "Kapag nagbigay ang isang user ng sub sa ibang user.",
+    "gifted_bomb": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Gifted Bomb",
+    "gifted_bomb_hint": "Kapag nagbigay ang isang user ng maraming sub nang sabay-sabay.",
+    "gifted_bomb_train": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Tren ng Mga User ng Gifted Bomb",
+    "gifted_bomb_train_hint": "Ipinapakita ang lahat ng user na nakatanggap ng sub sa isang Gifted Bomb.",
+    "channel_points": "Mga Reward ng Channel Points",
+    "raids": "Host",
+    "raids_hint": "Katulad ng \"raid\" ngunit sa Kick.",
+    "statistics": "Mga Istatistika",
+    "statistics_hint": "Ipinapakita ang mga Manonood sa Kick. <strong>Awtomatikong ina-update tuwing 15 segundo.</strong>"
+  },
+
+  "streamelements": {
+    "title": "StreamElements",
+    "enable": "I-aktibo",
+    "setup_warning": "<i class=\"fa-solid fa-circle-exclamation\"></i> Kailangan mong ikonekta ang StreamElements sa Streamer.Bot. <strong><a target=\"_blank\" href=\"https://docs.streamer.bot/guide/integrations/streamelements\">Sundan ang tutorial</a>.</strong>",
+    "tips": "Mga Donasyon"
+  },
+
+  "streamlabs": {
+    "title": "Streamlabs",
+    "enable": "I-aktibo",
+    "setup_warning": "<i class=\"fa-solid fa-circle-exclamation\"></i> Kailangan mong ikonekta ang Streamlabs sa Streamer.Bot. <strong><a target=\"_blank\" href=\"https://docs.streamer.bot/guide/integrations/streamlabs\">Sundan ang tutorial</a>.</strong>",
+    "donations": "Mga Donasyon"
+  },
+
+  "patreon": {
+    "title": "Patreon",
+    "enable": "I-aktibo",
+    "setup_warning": "<i class=\"fa-solid fa-circle-exclamation\"></i> Kailangan mong ikonekta ang Patreon sa Streamer.Bot. <strong><a target=\"_blank\" href=\"https://docs.streamer.bot/guide/integrations/patreon\">Sundan ang tutorial</a>.</strong>",
+    "memberships": "Mga Membership"
+  },
+
+  "tipeee": {
+    "title": "TipeeeStream",
+    "enable": "I-aktibo",
+    "setup_warning": "<i class=\"fa-solid fa-circle-exclamation\"></i> Kailangan mong ikonekta ang TipeeeStream sa Streamer.Bot. <strong><a target=\"_blank\" href=\"https://docs.streamer.bot/guide/integrations/tipeee-stream\">Sundan ang tutorial</a>.</strong>",
+    "donations": "Mga Donasyon"
+  },
+
+  "kofi": {
+    "title": "Ko-fi",
+    "enable": "I-aktibo",
+    "setup_warning": "<i class=\"fa-solid fa-circle-exclamation\"></i> Kailangan mong ikonekta ang Ko-Fi sa Streamer.Bot. <strong><a target=\"_blank\" href=\"https://docs.streamer.bot/guide/integrations/ko-fi\">Sundan ang tutorial</a>.</strong>",
+    "donations": "Mga Donasyon",
+    "subscriptions": "Mga Subscription",
+    "orders": "Mga Order"
+  },
+
+  "fourthwall": {
+    "title": "Fourthwall",
+    "enable": "I-aktibo",
+    "setup_warning": "<i class=\"fa-solid fa-circle-exclamation\"></i> Kailangan mong ikonekta ang Fourthwall sa Streamer.Bot. <strong><a target=\"_blank\" href=\"https://docs.streamer.bot/guide/integrations/fourthwall\">Sundan ang tutorial</a>.</strong>",
+    "donations": "Mga Donasyon",
+    "subscriptions": "Mga Subscription",
+    "orders": "Mga Order",
+    "show_order_image": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Ipakita ang Larawan ng Order",
+    "gift_purchase": "Pagbili ng Regalo",
+    "show_gift_image": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Ipakita ang Larawan ng Regalo",
+    "gift_draw": "Palabunutan ng Regalo",
+    "gift_draw_command": "Utos ng Palabunutan",
+    "gift_draw_command_hint": "Utos na ginagamit para sumali sa Palabunutan ng Regalo."
+  },
+
+  "footer": {
+    "copy_url": "Kopyahin ang URL",
+    "import_settings": "I-import ang Mga Setting",
+    "made_by": "Ginawa nang may ❤️ ni <strong>VortisRD</strong>"
+  },
+
+  "modal_add_emote": {
+    "title": "Magdagdag ng YouTube Member Emote",
+    "emote_name": "Pangalan ng Emote",
+    "emote_name_placeholder": "Gamitin ang \"EmoteName\", huwag gamitin ang \":EmoteName:\"",
+    "image_url": "URL ng Larawan",
+    "image_url_hint": "Huwag gumamit ng mga pansamantalang domain ng larawan. Pati na rin ang mga larawang naka-link sa Discord.",
+    "image_url_placeholder": "https://example.com/emote.png",
+    "confirm": "Idagdag",
+    "cancel": "Kanselahin"
+  },
+
+  "modal_import": {
+    "title": "I-import ang Mga Setting",
+    "label": "I-paste ang iyong kasalukuyang URL ng ChatRD",
+    "placeholder": "https://vortisrd.github.io/chatrd/chat.html?...",
+    "confirm": "I-import",
+    "cancel": "Kanselahin"
+  }
+}
