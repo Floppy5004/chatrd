@@ -244,6 +244,7 @@ async function twitchChatMessage(data) {
     userLinkElement.target = '_blank';
     userLinkElement.style = `--user-color: ${data.user.color}`;
     userLinkElement.textContent = data.user.name;
+    userLinkElement.title = `${data.user.name} @ ${userLink}`;
 
 
 
@@ -475,6 +476,7 @@ async function twitchAnnouncementMessage(data) {
     userLinkElement.target = '_blank';
     userLinkElement.style = `--user-color: ${data.user.color}`;
     userLinkElement.textContent = data.user.name;
+    userLinkElement.title = `${data.user.name} @ ${userLink}`;
 
 
 
@@ -592,6 +594,7 @@ async function twitchAutomaticRewardRedemption(data) {
     userLinkElement.href = userLink;
     userLinkElement.target = '_blank';
     userLinkElement.textContent = data.user_name;
+    userLinkElement.title = `${data.user_name} @ ${userLink}`;
 
 
 

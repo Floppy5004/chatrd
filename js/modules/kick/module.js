@@ -313,6 +313,7 @@ async function kickChatMessage(data) {
     userLinkElement.target = '_blank';
     userLinkElement.style = `--user-color: ${data.sender.identity.color}`;
     userLinkElement.textContent = data.sender.username;
+    userLinkElement.title = `${data.sender.username} @ ${userLink}`;
 
     message.innerHTML = messageHTML;
 

@@ -220,6 +220,7 @@ async function tiktokChatMessage(data) {
     userLinkElement.target = '_blank';
     userLinkElement.style = `--user-color: ${color}`;
     userLinkElement.textContent = data.nickname;
+    userLinkElement.title = `${data.nickname} @ ${userLink}`;
 
     
     message.textContent = data.comment;

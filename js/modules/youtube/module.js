@@ -160,6 +160,7 @@ async function youTubeChatMessage(data) {
     userLinkElement.target = '_blank';
     userLinkElement.style = `--user-color: ${color}`;
     userLinkElement.textContent = data.user.name;
+    userLinkElement.title = `${data.user.name} @ ${userLink}`;
 
 
 
