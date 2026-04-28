@@ -4,7 +4,6 @@
 
 const showKick                      = getURLParam("showKick", false);
 
-//const kickUserName                  = getURLParam("kickUserName", "");
 let kickUserName = null;
 
 const showKickMessages              = getURLParam("showKickMessages", true);
@@ -72,6 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         registerPlatformHandlersToStreamerBot(kickMessageHandlers, '[Kick][SB1]');
+
+        kickConnection();
+        
     }
     
 });
@@ -85,8 +87,13 @@ document.addEventListener('DOMContentLoaded', () => {
 // KICK CONNECT HANDLER
 
 async function kickConnection() {
+
+    if (!streamerBotStatus.connected) {
+        setTimeout(kickConnection, 1000);
+        return;
+    }
+
     if (!showKick) return;
-    
 
     const kickMaxTries = 20;
     const kickReconnectDelay = 5000;

@@ -2,6 +2,8 @@
 /* TWITCH MODULE VARIABLES */
 /* ----------------------- */
 
+const twitchModule = true;
+
 const showTwitch                    = getURLParam("showTwitch", false);
 
 const showTwitchMessages            = getURLParam("showTwitchMessages", true);
@@ -170,8 +172,9 @@ if (showTwitch) {
         document.querySelector('#statistics').insertAdjacentHTML('beforeend', twitchStatistics);
         document.querySelector('#twitch').style.display = '';
     }
-
+    
     registerPlatformHandlersToStreamerBot(twitchMessageHandlers, '[Twitch]');
+    twitchGoalsFetch();
 }
 
 
@@ -1607,8 +1610,13 @@ async function twitchGoalEnd(data) {
 }
 
 
-
 async function twitchGoalsFetch() {
+
+    if (!streamerBotStatus.connected) {
+        setTimeout(twitchGoalsFetch, 1000);
+        return;
+    }
+
     if (showTwitchGoalsBars) {
         console.debug('[ChatRD][Twitch] Fetching Twitch Goals...');    
         streamerBotClient.doAction(

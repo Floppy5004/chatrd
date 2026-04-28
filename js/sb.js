@@ -4,6 +4,7 @@
 
 let speakerBotClient = null;
 
+const streamerBotStatus = {};
 const streamerBotServerAddress      = getURLParam("streamerBotServerAddress", "127.0.0.1");
 const streamerBotServerPort         = getURLParam("streamerBotServerPort", "8080");
 const showSpeakerbot                = getURLParam("showSpeakerbot", true);
@@ -40,6 +41,7 @@ function streamerBotConnect() {
             console.debug("[ChatRD][Settings] Closing previous Streamer.bot connection...");
             streamerBotClientActive.disconnect?.(); // usa se existir na lib
             streamerBotClientActive = null;
+            streamerBotStatus.connected = false;
         } catch (err) {
             console.error("[ChatRD][Settings] Error closing previous client:", err);
         }
@@ -50,14 +52,16 @@ function streamerBotConnect() {
         port: streamerBotServerPort,
         //autoReconnect: false, // evita reconectar sozinho
         onConnect: () => {
+            streamerBotStatus.connected = true;
+
             notifySuccess({
                 title: 'ChatRD 🤝 Streamer.bot',
                 text: ``
             });
-            twitchGoalsFetch();
-            kickConnection();
+            
         },
         onDisconnect: () => {
+            streamerBotStatus.connected = false;
             console.debug("[ChatRD][Settings] Streamer.bot disconnected.");
         }
     });
