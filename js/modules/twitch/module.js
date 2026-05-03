@@ -29,6 +29,7 @@ const twitchStreamer = {};
 
 const twitchAvatars = new Map();
 const twitchPronouns = new Map();
+const twitchGoals = new Map();
 
 const bitsGifAnimations = [
     { min: 1, max: 99, gifId: 1 },
@@ -1395,6 +1396,12 @@ async function twitchGoalBegin(data) {
         target_amount
     } = data;
 
+    twitchGoals.set(id, {
+        "current_amount": current_amount,
+        "target_amount": target_amount,
+        "complete" : false
+    });
+
     const goalMap = {
         follow:                     { type: tRD('twitch.goal.types.follow'),                 item: tRD('twitch.goal.items.follow') },
         subscription:               { type: tRD('twitch.goal.types.subscription'),           item: tRD('twitch.goal.items.subscription') },
@@ -1499,6 +1506,11 @@ async function twitchGoalProgress(data) {
         target_amount
     } = data;
 
+    twitchGoals.set(id, {
+        "current_amount": current_amount,
+        "target_amount": target_amount,
+        "complete" : false
+    });
 
     /* GOAL BAR */
 
@@ -1539,6 +1551,10 @@ async function twitchGoalEnd(data) {
         target_amount
     } = data;
 
+    const getTwitchGoalMap = twitchGoals.get(id);
+
+    if (getTwitchGoalMap.complete == true) return;
+
     const goalMap = {
         follow:                     { type: tRD('twitch.goal.types.follow'),                 item: tRD('twitch.goal.items.follow') },
         subscription:               { type: tRD('twitch.goal.types.subscription'),           item: tRD('twitch.goal.items.subscription') },
@@ -1570,9 +1586,15 @@ async function twitchGoalEnd(data) {
 
     header.remove();
 
-    const goalStatus = current_amount == target_amount ? tRD('twitch.goal.completed') : tRD('twitch.goal.ended');
+    const goalStatus = current_amount >= target_amount ? tRD('twitch.goal.completed') : tRD('twitch.goal.ended');
 
-    if (current_amount > target_amount) return;
+    if (current_amount >= target_amount) {
+        twitchGoals.set(id, {
+            "current_amount": current_amount,
+            "target_amount": target_amount,
+            "complete" : true
+        });
+    }
 
     if (showTwitchGoals == true) {
 
