@@ -60,7 +60,7 @@
   },
 
   "twitch": {
-    "follow_action":           " hat dir gefolgt",
+    "follow_action":           " folgt jetzt dem Kanal",
     "watch_streak_action":     " hat ",
     "watch_streak_value":      "{count} Streams in Folge geschaut",
     "announcement_header":     "Ankündigung",
@@ -143,7 +143,7 @@
   },
 
   "tiktok": {
-    "follow_action":    " hat dir gefolgt",
+    "follow_action":    " folgt jetzt dem Kanal",
     "share_action":     " hat den Stream geteilt ↪️",
     "join_action":      " ist dem Chat beigetreten",
     "likes_action":     " hat dir ",
@@ -154,7 +154,7 @@
   },
 
   "kick": {
-    "follow_action":          " hat dir gefolgt",
+    "follow_action":          " folgt jetzt dem Kanal",
     "kicksgift_action":       " hat ein {name} gesendet ",
     "kicks_singular":         "Kick",
     "kicks_plural":           "Kicks",

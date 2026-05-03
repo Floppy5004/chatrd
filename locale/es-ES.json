@@ -60,7 +60,7 @@
   },
 
   "twitch": {
-    "follow_action":           " te siguió",
+    "follow_action":           " ha seguido el canal",
     "watch_streak_action":     " vio ",
     "watch_streak_value":      "{count} directos consecutivos",
     "announcement_header":     "Anuncio",
@@ -143,7 +143,7 @@
   },
 
   "tiktok": {
-    "follow_action":    " te siguió",
+    "follow_action":    " ha seguido el canal",
     "share_action":     " compartió el directo ↪️",
     "join_action":      " entró al chat",
     "likes_action":     " envió ",
@@ -154,7 +154,7 @@
   },
 
   "kick": {
-    "follow_action":          " te siguió",
+    "follow_action":          " ha seguido el canal",
     "kicksgift_action":       " envió un {name} ",
     "kicks_singular":         "Kick",
     "kicks_plural":           "Kicks",

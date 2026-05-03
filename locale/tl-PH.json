@@ -60,7 +60,7 @@
   },
 
   "twitch": {
-    "follow_action":           " nag-follow sa iyo",
+    "follow_action":           " ay nag-follow",
     "watch_streak_action":     " nanood ng ",
     "watch_streak_value":      "{count} magkakasunod na stream",
     "announcement_header":     "Anunsyo",
@@ -143,7 +143,7 @@
   },
 
   "tiktok": {
-    "follow_action":    " nag-follow sa iyo",
+    "follow_action":    " ay nag-follow",
     "share_action":     " nagbahagi ng stream ↪️",
     "join_action":      " sumali sa chat",
     "likes_action":     " nagpadala sa iyo ng ",
@@ -154,7 +154,7 @@
   },
 
   "kick": {
-    "follow_action":          " nag-follow sa iyo",
+    "follow_action":          " ay nag-follow",
     "kicksgift_action":       " nagpadala ng {name} ",
     "kicks_singular":         "Kick",
     "kicks_plural":           "Kicks",

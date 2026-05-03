@@ -155,6 +155,7 @@ const twitchMessageHandlers = {
         if (response.data?.data?.eventName === 'Twitch.GoalFetch' && response.data.data.event) {
             twitchGoalsRenderer(response.data.data.event);
         }
+
     }
 };
 
@@ -1550,28 +1551,30 @@ async function twitchGoalEnd(data) {
 
     const { type: goalType, item: goalItem } = goalMap[type] ?? { type: '', item: '' };
 
+    const template = eventTemplate;
+    const clone = template.content.cloneNode(true);
+    const messageId = createRandomString(40);
+    const userId = createRandomString(40);
+
+    const {
+        header,
+        platform,
+        user,
+        action,
+        value,
+        'actual-message': message
+    } = Object.fromEntries(
+        [...clone.querySelectorAll('[class]')]
+            .map(el => [el.className, el])
+    );
+
+    header.remove();
+
+    const goalStatus = current_amount == target_amount ? tRD('twitch.goal.completed') : tRD('twitch.goal.ended');
+
+    if (current_amount > target_amount) return;
+
     if (showTwitchGoals == true) {
-
-        const template = eventTemplate;
-        const clone = template.content.cloneNode(true);
-        const messageId = createRandomString(40);
-        const userId = createRandomString(40);
-
-        const {
-            header,
-            platform,
-            user,
-            action,
-            value,
-            'actual-message': message
-        } = Object.fromEntries(
-            [...clone.querySelectorAll('[class]')]
-                .map(el => [el.className, el])
-        );
-
-        header.remove();
-
-        const goalStatus = current_amount >= target_amount ? tRD('twitch.goal.completed') : tRD('twitch.goal.ended');
 
         user.textContent = `${goalType} ${goalStatus}`;
         action.textContent = description ? ` - ${description} ` : ``;
