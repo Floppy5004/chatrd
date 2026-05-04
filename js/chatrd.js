@@ -42,10 +42,10 @@ const userColors = new Map();
 
 /* ✅ Explicit whitelist */
 const SKINS = {
-    default: "skin-default.css?nocache=30",
-    nutting: "skin-nutting.css?nocache=30",
-    kimballs: "skin-kimballs.css?nocache=30",
-    bubbles: "skin-bubbles.css?nocache=30"
+    default: "skin-default.css?nocache=31",
+    nutting: "skin-nutting.css?nocache=31",
+    kimballs: "skin-kimballs.css?nocache=31",
+    bubbles: "skin-bubbles.css?nocache=31"
 };
 
 const skinFile = SKINS[chatrdSkin] || SKINS.default;
@@ -1146,8 +1146,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     await loadLang();
 
     chatcommands = tRD('chatrd.commands');
-    
-    console.log('Twitch commands', chatcommands);
 
     pushChatInputSettings();
     loadChatInputSettingFromLocalStorage();

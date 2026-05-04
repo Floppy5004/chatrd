@@ -1660,29 +1660,103 @@ async function twitchGoalsFetch() {
 // ---------------------------
 // TWITCH UTILITY FUNCTIONS
 
-async function getTwitchAvatar(user) {
+/*async function getTwitchAvatar(user) {
+    const DEFAULT_AVATAR = 'https://static-cdn.jtvnw.net/user-default-pictures-uv/cdd517fe-def4-11e9-948e-784f43822e80-profile_image-300x300.png';
+
     if (twitchAvatars.has(user)) {
-        console.debug(`Twitch avatar found for ${user}!`);
+        console.debug(`[ChatRD] Twitch avatar found in cache for ${user}!`);
         return twitchAvatars.get(user);
     }
 
-    console.debug(`Twitch avatar not found for ${user}! Getting it from DECAPI!`);
+    console.debug(`[ChatRD] Twitch avatar not found for ${user}! Fetching from DECAPI...`);
     
     try {
         const response = await fetch(`https://decapi.me/twitch/avatar/${user}`);
-        let avatar = await response.text();
-        
-        if (!avatar) {
-            avatar = 'https://static-cdn.jtvnw.net/user-default-pictures-uv/cdd517fe-def4-11e9-948e-784f43822e80-profile_image-300x300.png';
+
+        if (!response.ok) {
+            console.warn(`[ChatRD] DECAPI returned ${response.status} for ${user}. Using default avatar.`);
+            twitchAvatars.set(user, DEFAULT_AVATAR);
+            return DEFAULT_AVATAR;
         }
+
+        const avatar = (await response.text()).trim() || DEFAULT_AVATAR;
 
         twitchAvatars.set(user, avatar);
         return avatar;
     }
     catch (err) {
-        console.error(`Failed to fetch avatar for ${user}:`, err);
-        return 'https://static-cdn.jtvnw.net/user-default-pictures-uv/cdd517fe-def4-11e9-948e-784f43822e80-profile_image-300x300.png';
+        console.error(`[ChatRD] Failed to fetch avatar for ${user}:`, err);
+        return DEFAULT_AVATAR; 
     }
+}*/
+
+
+
+async function getTwitchAvatar(user) {
+    const DEFAULT_AVATAR = 'https://static-cdn.jtvnw.net/user-default-pictures-uv/cdd517fe-def4-11e9-948e-784f43822e80-profile_image-300x300.png';
+
+    if (twitchAvatars.has(user)) {
+        console.debug(`[ChatRD] Twitch avatar found in cache for ${user}!`);
+        return twitchAvatars.get(user);
+    }
+
+    console.debug(`[ChatRD] Fetching Twitch avatar for ${user} from DECAPI...`);
+
+    try {
+        const response = await fetch(`https://decapi.me/twitch/avatar/${user}`);
+        const text = (await response.text()).trim();
+        const isInvalid = !response.ok || /user not found|invalid/i.test(text);
+
+        if (!isInvalid) {
+            console.debug(`[ChatRD] Twitch avatar found on DECAPI for ${user}!`);
+            twitchAvatars.set(user, text);
+            return text;
+        }
+
+        console.warn(`[ChatRD] DECAPI failed for ${user} (${response.status}: "${text}"). Trying Twitch GQL...`);
+    }
+    catch (err) {
+        console.warn(`[ChatRD] DECAPI request failed for ${user}:`, err, `Trying Twitch GQL...`);
+    }
+
+    // Twitch GraphQL - Thanks Claude! ❤️
+
+    try {
+        const gqlResponse = await fetch("https://gql.twitch.tv/gql", {
+            method: "POST",
+            headers: {
+                "Client-ID": "kimne78kx3ncx6brgo4mv6wki5h1ko",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify([{
+                operationName: "StreamMetadata",
+                variables: { channelLogin: user },
+                extensions: {
+                    persistedQuery: {
+                        version: 1,
+                        sha256Hash: "059c4653b788f5bdb2f5a2d2a24b0ddc3831a15079001a3d927556a96fb0517f"
+                    }
+                }
+            }])
+        });
+
+        const data = await gqlResponse.json();
+        const avatar = data?.[0]?.data?.user?.profileImageURL;
+
+        if (avatar) {
+            console.debug(`[ChatRD] Avatar found on Twitch GQL for ${user}!`);
+            twitchAvatars.set(user, avatar);
+            return avatar;
+        }
+
+        console.warn(`[ChatRD] Twitch GQL returned no avatar for ${user}. Using default.`);
+    }
+    catch (err) {
+        console.error(`[ChatRD] Twitch GQL request failed for ${user}:`, err);
+    }
+
+    twitchAvatars.set(user, DEFAULT_AVATAR);
+    return DEFAULT_AVATAR;
 }
 
 
