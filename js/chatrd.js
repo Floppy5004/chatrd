@@ -199,7 +199,7 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
     	setTimeout(function () {
     		item.style[dimensionProp.toLowerCase()] = '';
             item.style.opacity = '';
-    	}, 1000);
+    	}, 1300);
     }, 10);
 
     // Hides it after a while
