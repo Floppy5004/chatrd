@@ -162,15 +162,16 @@ async function youTubeChatMessage(data) {
     userLinkElement.textContent = data.user.name;
     userLinkElement.title = `${data.user.name} @ ${userLink}`;
 
-
-
     message.textContent = data.message;
     await getYouTubeEmotes(data, message);
 
     if (showAvatar) avatar.innerHTML = `<img src="${data.user.profileImageUrl}">`; else avatar.remove();
     if (showBadges) badges.innerHTML = badgeList; else badges.remove();
 
-    if (data.user.isOwner) { classes.push('streamer'); }
+    if (data.user.isOwner) {
+        classes.push('streamer');
+        userLinkElement.style = `--user-color: #000000`;
+    }
 
     addMessageItem('youtube', clone, classes, userId, messageId);
 }
