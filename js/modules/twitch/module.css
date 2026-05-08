@@ -36,26 +36,9 @@
     display: none;
 }
 
-/*#chat:not(.horizontal) .item.announcement.twitch {
-    margin: 0 5px 5px 5px;
-}*/
-
-/*#chat:not(.horizontal) .item.chat.first-chatter.twitch {
-    margin: 0 10px;
-}*/
-
-#chat .item.twitch.highlighted .message {
-    background: rgba(145,70,255,0.75);
+#chat .item.twitch.highlighted .message::before {
+    content: 'highlighted' !important;
 }
-
-#chat.oneline .item.highlighted .message {
-    padding: 3px 13px 10px 10px;
-}
-
-/*#chat.oneline .item.announcement.twitch {
-    margin: 10px 10px 10px 10px;
-}*/
-
 
 #statistics .platform#twitch {
     order: 1;

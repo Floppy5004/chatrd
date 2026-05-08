@@ -268,6 +268,7 @@ async function twitchChatMessage(data) {
     else { firstMessage.remove(); }
 
     if (data.meta.isHighlighted) {
+        classes.push('streamer-mentioned');
         classes.push('highlighted');
     }
     
@@ -1620,14 +1621,21 @@ async function twitchGoalEnd(data) {
         const goalBarId = `goal-${id}`;
         const goalBarElement = goalElement.querySelector(`#${goalBarId}`);
 
-        goalBarElement.classList.add('animate__fadeOut');
+        twitchConfettiBurst(goalBarElement);
+        
+        goalBarElement.classList.add('animate__pulse');
+
+        setTimeout(() => {
+            goalBarElement.classList.remove('animate__pulse');
+            goalBarElement.classList.add('animate__fadeOut');
+        }, 1000);
 
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
 
                 setTimeout(() => {
                     goalBarElement.remove();
-                }, 1000);
+                }, 2000);
 
             });
         });
@@ -1827,7 +1835,7 @@ function twitchConfettiBurst(el) {
 
   myConfetti({
     particleCount: 100,
-    spread: 100,
+    spread: 135,
     startVelocity: 20,
     gravity: 1.5,
     ticks: 80,

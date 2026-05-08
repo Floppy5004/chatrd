@@ -238,8 +238,7 @@ body {
 }
 
 #chat .item.first-chatter .message,
-#chat .item.announcement .message,
-#chat .item.highlighted .message {
+#chat .item.announcement .message {
     display: inline-block;
     background: rgba(255,255,255,0.2);
     outline: 1px solid rgba(255,255,255,0.1);
@@ -575,8 +574,7 @@ body {
 }
 
 #chat.horizontal .item.first-chatter .message,
-#chat.horizontal .item.announcement .message,
-#chat.horizontal .item.highlighted .message {
+#chat.horizontal .item.announcement .message {
     margin: 0;
 }
 
@@ -691,8 +689,7 @@ body {
 
 
 #chat.oneline .item.first-chatter .message,
-#chat.oneline .item.announcement .message,
-#chat.oneline .item.highlighted .message {
+#chat.oneline .item.announcement .message {
     margin: 0;
 }
 
