@@ -1001,7 +1001,7 @@ async function twitchHypeTrainStart(data) {
         const goalElement = document.querySelector('#goals');
         const hypeTrainTemplate = document.querySelector('#hypetrain-template');
         const hypeTrainClone = hypeTrainTemplate.content.cloneNode(true);
-        const hypeTrainElement = hypeTrainClone.firstElementChild;
+        const hypetrainElement = hypeTrainClone.firstElementChild;
 
         const {
             'progressbar-fill': progressBarFill,
@@ -1017,14 +1017,14 @@ async function twitchHypeTrainStart(data) {
         );
 
         if (is_golden_kappa_train == true) {
-            hypeTrainElement.classList.add('golden-kappa-train');
+            hypetrainElement.classList.add('golden-kappa-train');
             logo.querySelector('img').src = 'js/modules/twitch/images/golden-kappa-emote.png';
             icon.querySelector('span').textContent = tRD('twitch.hypetrain.bar_golden_kappa');
         }
 
         if (is_treasure_train == true) {
-            hypeTrainElement.classList.add('treasure-train');
-            logo.querySelector('img').src = 'js/modules/twitch/images/icon-treasure.svg';
+            hypetrainElement.classList.add('treasure-train');
+            logo.querySelector('img').src = 'js/modules/twitch/images/icon-treasure-train.png';
             icon.querySelector('i').remove();
             icon.querySelector('span').textContent = tRD('twitch.hypetrain.bar_treasure');
         }
@@ -1036,9 +1036,10 @@ async function twitchHypeTrainStart(data) {
         info.textContent = hypetrainInfo;
         info.classList.add('animate__animated');
 
-        hypeTrainElement.classList.add('animate__fadeInDown');
+        hypetrainElement.classList.add('animate__fadeInDown');
+        hypetrainElement.querySelector('.info').classList.add('animate__fadeIn');
 
-        goalElement.insertAdjacentElement('beforeend', hypeTrainElement);
+        goalElement.insertAdjacentElement('beforeend', hypetrainElement);
 
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
@@ -1147,6 +1148,7 @@ async function twitchHypeTrainLevelUp(data) {
     if (showTwitchHypeTrainBar == true) {
 
         const hypetrainElement = document.querySelector('#hypetrain');
+        twitchConfettiBurst(hypetrainElement);
 
         hypetrainElement.querySelector('.level').textContent = `LVL ${level}`;
         hypetrainElement.querySelector('.progressbar-fill').style.width = `${htProgress}%`;
@@ -1818,4 +1820,20 @@ async function getTwitchUserPronouns(username) {
         console.error(`Couldn't retrieve pronouns for ${username}:`, err);
         return '';
     }
+}
+
+function twitchConfettiBurst(el) {
+  const rect = el.getBoundingClientRect();
+
+  myConfetti({
+    particleCount: 100,
+    spread: 100,
+    startVelocity: 20,
+    gravity: 1.5,
+    ticks: 80,
+    origin: {
+      x: (rect.left + rect.width / 2) / window.innerWidth,
+      y: (rect.top + rect.height / 2) / window.innerHeight,
+    },
+  });
 }

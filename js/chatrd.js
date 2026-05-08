@@ -4,6 +4,8 @@
 
 const isOBS = typeof window.obsstudio !== 'undefined';
 
+let myConfetti;
+
 const showPlatform                  = getURLParam("showPlatform", true);
 const showPlatformDot               = getURLParam("showPlatformDot", false);
 const showAvatar                    = getURLParam("showAvatar", true);
@@ -247,7 +249,7 @@ function addEventItem(platform, clone, classes, userid, messageid) {
                 platformContent = `<img src="js/modules/twitch/images/golden-kappa-emote.png">`;
             }
             else if (isTwitch && root.classList.contains("treasure-train")) {
-                platformContent = `<img src="js/modules/twitch/images/icon-treasure.svg">`;
+                platformContent = `<img src="js/modules/twitch/images/icon-treasure-train.png">`;
             }
             else {
                 platformContent = `<img src="js/modules/${platform}/images/logo-${platform}.svg">`;
@@ -1140,6 +1142,23 @@ function initFakeScrollbar(scrollEl, thumbEl) {
 
 
 
+function createConfettiCanvas() {
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    zoom: reset; /* cancela o zoom herdado */
+  `;
+  document.body.appendChild(canvas);
+  return canvas;
+}
+
+
 document.addEventListener("DOMContentLoaded", async function () {
     console.debug(`[ChatRD] Initializing ...`);
     
@@ -1149,6 +1168,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     pushChatInputSettings();
     loadChatInputSettingFromLocalStorage();
+    myConfetti = confetti.create(createConfettiCanvas(), { resize: true });
 
     if (document.querySelector('#chat:not(.noscrollbar)')) {
         const scroll = useAutoScroll(document.querySelector('#chat:not(.noscrollbar)'), {

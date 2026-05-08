@@ -227,8 +227,6 @@
     transform: translateY(-50%);
 
     background: #a970ff;
-    outline: 1px solid rgba(255,255,255,0.25);
-    outline-offset: -1px;
     font-size: 16px;
     
     z-index: 111;
@@ -243,8 +241,10 @@
 
 #hypetrain.treasure-train .info,
 #hypetrain.treasure-train .progressbar-fill {
-    background: #ff9721;
+    background: linear-gradient(to right, #2346b5, #a970ff);
 }
 
 #chat .event.twitch.hypetrain.golden-kappa-train .message { background: #ffb521; }
-#chat .event.twitch.hypetrain.treasure-train .message { background: #ff9721; }
+#chat .event.twitch.hypetrain.treasure-train .message {
+    background: linear-gradient(to right, #2346b5, #a970ff);
+}
