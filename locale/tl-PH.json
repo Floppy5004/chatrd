@@ -149,13 +149,13 @@
     "likes_action":     " nagpadala sa iyo ng ",
     "likes_singular":   "like",
     "likes_plural":     "mga like",
-    "gift_action":      " nagbigay sa iyo ng {count} {name}",
+    "gift_action":      " nagbigay sa iyo ng <strong>{count} {name}</strong>",
     "sub_action":       " nag-subscribe sa channel."
   },
 
   "kick": {
     "follow_action":          " ay nag-follow",
-    "kicksgift_action":       " nagpadala ng {name} ",
+    "kicksgift_action":       " nagpadala ng <strong>{name}</strong> ",
     "kicks_singular":         "Kick",
     "kicks_plural":           "Kicks",
     "sub_action":             " nag-subscribe ng ",

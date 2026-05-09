@@ -149,13 +149,13 @@
     "likes_action":     " enviou ",
     "likes_singular":   "curtida",
     "likes_plural":     "curtidas",
-    "gift_action":      " presenteou você com {count} {name}",
+    "gift_action":      " presenteou você com <strong>{count} {name}</strong>",
     "sub_action":       " acabou de se inscrever no canal."
   },
 
   "kick": {
     "follow_action":          " seguiu o canal",
-    "kicksgift_action":       " enviou um {name} ",
+    "kicksgift_action":       " enviou um <strong>{name}</strong> ",
     "kicks_singular":         "Kick",
     "kicks_plural":           "Kicks",
     "sub_action":             " se inscreveu por ",

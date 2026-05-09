@@ -149,13 +149,13 @@
     "likes_action":     " envió ",
     "likes_singular":   "me gusta",
     "likes_plural":     "me gustas",
-    "gift_action":      " te regaló {count} {name}",
+    "gift_action":      " te regaló <strong>{count} {name}</strong>",
     "sub_action":       " acaba de suscribirse al canal."
   },
 
   "kick": {
     "follow_action":          " ha seguido el canal",
-    "kicksgift_action":       " envió un {name} ",
+    "kicksgift_action":       " envió un <strong>{name}</strong> ",
     "kicks_singular":         "Kick",
     "kicks_plural":           "Kicks",
     "sub_action":             " se suscribió por ",

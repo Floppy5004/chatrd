@@ -149,13 +149,13 @@
     "likes_action":     " hat dir ",
     "likes_singular":   "Like gesendet",
     "likes_plural":     "Likes gesendet",
-    "gift_action":      " hat dir {count} {name} geschenkt",
+    "gift_action":      " hat dir <strong>{count} {name}</strong> geschenkt",
     "sub_action":       " hat gerade den Kanal abonniert."
   },
 
   "kick": {
     "follow_action":          " folgt jetzt dem Kanal",
-    "kicksgift_action":       " hat ein {name} gesendet ",
+    "kicksgift_action":       " hat ein <strong>{name}</strong> gesendet ",
     "kicks_singular":         "Kick",
     "kicks_plural":           "Kicks",
     "sub_action":             " hat für ",

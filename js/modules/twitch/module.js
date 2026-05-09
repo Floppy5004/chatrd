@@ -28,8 +28,11 @@ const showTwitchViewers             = getURLParam("showTwitchViewers", true);
 const twitchStreamer = {};
 
 const twitchAvatars = new Map();
-const twitchPronouns = new Map();
+
 const twitchGoals = new Map();
+
+let supportedPronouns = null; 
+const twitchPronouns = new Map();
 
 const bitsGifAnimations = [
     { min: 1, max: 99, gifId: 1 },
@@ -1805,7 +1808,7 @@ async function getTwitchMessageFromParts(parts) {
 }
 
 
-async function getTwitchUserPronouns(username) {
+/*async function getTwitchUserPronouns(username) {
     if (twitchPronouns.has(username)) {
         console.debug(`Pronouns found for ${username}. Getting it from Map...`);
         return twitchPronouns.get(username);
@@ -1828,20 +1831,78 @@ async function getTwitchUserPronouns(username) {
         console.error(`Couldn't retrieve pronouns for ${username}:`, err);
         return '';
     }
+}*/
+
+
+
+async function getTwitchUserPronouns(username) {
+
+    if (!supportedPronouns) {
+        try {
+            console.debug('[ChatRD] Trying to fetch supported pronouns...');
+            const res = await fetch('https://pronouns.alejo.io/api/pronouns');
+            supportedPronouns = await res.json();
+        }
+        catch (err) {
+            console.error('[ChatRD] Could not fetch supported pronouns:', err);
+            return '';
+        }
+    }
+
+    if (twitchPronouns.has(username)) {
+        console.debug(`[ChatRD] Pronouns found for ${username}. Getting it from Map...`);
+        return twitchPronouns.get(username);
+    }
+
+    console.debug(`[ChatRD] Pronouns not found for ${username} in the Map! Retrieving...`);
+
+    try {
+        const res = await fetch(`https://api.pronouns.alejo.io/v1/users/${username}`);
+        const data = await res.json();
+
+        if (data === 'not_found') {
+            console.debug(`[ChatRD] No pronouns found for ${username}. Setting it to empty...`);
+            twitchPronouns.set(username, '');
+            return '';
+        }
+
+        console.debug(`[ChatRD] Got pronouns for ${username}:`, data);
+
+        const pronounId    = data?.pronoun_id     ?? null;
+        const altPronounId = data?.alt_pronoun_id ?? null;
+
+        const mainMatch = pronounId ? supportedPronouns.find(p => p.name === pronounId) : null;
+
+        let pronoun = mainMatch ? mainMatch.display : '';
+
+        if (altPronounId !== null) {
+            const altDisplay = altPronounId === 'any' ? 'Any' : supportedPronouns.find(p => p.name === altPronounId)?.display ?? null;
+            if (altDisplay) pronoun += `/${altDisplay}`;
+        }
+
+        const formatted = pronoun ? `<em>${pronoun}</em>` : '';
+
+        twitchPronouns.set(username, formatted);
+        return formatted;
+    }
+    catch (err) {
+        console.error(`[ChatRD] Couldn't retrieve pronouns for ${username}:`, err);
+        return '';
+    }
 }
 
 function twitchConfettiBurst(el) {
-  const rect = el.getBoundingClientRect();
-
-  myConfetti({
-    particleCount: 100,
-    spread: 135,
-    startVelocity: 20,
-    gravity: 1.5,
-    ticks: 80,
-    origin: {
-      x: (rect.left + rect.width / 2) / window.innerWidth,
-      y: (rect.top + rect.height / 2) / window.innerHeight,
-    },
-  });
+    const rect = el.getBoundingClientRect();
+    
+    myConfetti({
+        particleCount: 100,
+        spread: 135,
+        startVelocity: 20,
+        gravity: 1.5,
+        ticks: 80,
+        origin: {
+            x: (rect.left + rect.width / 2) / window.innerWidth,
+            y: (rect.top + rect.height / 2) / window.innerHeight,
+        },
+    });
 }
