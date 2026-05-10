@@ -1834,7 +1834,6 @@ async function getTwitchMessageFromParts(parts) {
 }*/
 
 
-
 async function getTwitchUserPronouns(username) {
 
     if (!supportedPronouns) {
@@ -1873,11 +1872,22 @@ async function getTwitchUserPronouns(username) {
 
         const mainMatch = pronounId ? supportedPronouns.find(p => p.name === pronounId) : null;
 
-        let pronoun = mainMatch ? mainMatch.display : '';
+        let pronoun = '';
 
-        if (altPronounId !== null) {
-            const altDisplay = altPronounId === 'any' ? 'Any' : supportedPronouns.find(p => p.name === altPronounId)?.display ?? null;
-            if (altDisplay) pronoun += `/${altDisplay}`;
+        if (mainMatch) {
+            if (altPronounId !== null) {
+                const altDisplay = altPronounId === 'any'
+                    ? 'Any'
+                    : supportedPronouns.find(p => p.name === altPronounId)?.display.split('/')[0] ?? null;
+
+                pronoun = altDisplay
+                    ? `${mainMatch.display.split('/')[0]}/${altDisplay}`
+                    : mainMatch.display;
+            }
+            
+            else {
+                pronoun = mainMatch.display;
+            }
         }
 
         const formatted = pronoun ? `<em>${pronoun}</em>` : '';
