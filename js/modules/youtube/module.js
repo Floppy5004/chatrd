@@ -311,7 +311,7 @@ async function youTubeNewSponsorMessage(data) {
     action.innerHTML = tRD('youtube.sponsor_action');
 
     //var months = data.months > 1 ? 'months' : 'month';
-    var months = formatSubMonthDuration(data.months);
+    var months = formatSubMonthDuration( (data.months ?? 1) );
     value.innerHTML = `<strong>${months}</strong>`;
 
     if (data.message) {
@@ -322,6 +322,8 @@ async function youTubeNewSponsorMessage(data) {
 
     addEventItem('youtube', clone, classes, userId, messageId);
 }
+
+
 
 
 
@@ -672,3 +674,4 @@ async function getYouTubeBadges(data) {
 
     return badgesHTML;
 }
+
