@@ -385,8 +385,14 @@ async function twitchWatchStreakMessage(data) {
     action.innerHTML = tRD('twitch.watch_streak_action');
     value.innerHTML = `<strong>${tRD('twitch.watch_streak_value', { count: data.watchStreak })}</strong>!`;
 
+    /* 
+    --- Maybe it's because Watch Streak doesn't have emotess ---
     let messageFromParts = await getTwitchMessageFromParts(data.parts);
     message.innerHTML = DOMPurify.sanitize(messageFromParts);
+    */
+
+    let messageFromParts = data.text;
+    message.textContent = messageFromParts;
 
     addEventItem('twitch', clone, classes, userId, messageId);
 }
