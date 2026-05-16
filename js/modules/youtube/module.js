@@ -154,7 +154,8 @@ async function youTubeChatMessage(data) {
     
 
     const userLinkElement = user.querySelector('a');
-    const userLink = `https://youtube.com/channel/${userId}`;
+    //const userLink = `https://youtube.com/channel/${userId}`;
+    const userLink = `${data.user.url}`;
 
     userLinkElement.href = userLink;
     userLinkElement.target = '_blank';
