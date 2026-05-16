@@ -578,6 +578,13 @@ body {
     margin: 0;
 }
 
+#chat.horizontal:not(:has(.timestamp)):has(.pronouns) .item.grouped .message {
+    transform: translateY(2px);
+}
+
+#chat.horizontal:has(.timestamp):has(.pronouns) .item.grouped .message {
+    transform: translateY(2px);
+}
 
 /* --------------------------- */
 /* ----- ONE LINE LAYOUT ----- */

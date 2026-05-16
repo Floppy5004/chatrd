@@ -283,6 +283,7 @@ async function twitchChatMessage(data) {
 
         reply.insertAdjacentHTML('beforeend', ` <strong>${tRD('twitch.reply_label', { user: escapeHTML(data.reply.userName) })}</strong> ${escapeHTML(replyMessage)}`);
     }
+    
     else { reply.remove(); }
 
     if (data.isFromSharedChatGuest) {
