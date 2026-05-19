@@ -49,9 +49,9 @@
       "bubbles": "Bubbles"
     },
     "one_line": "Linha Única",
-    "one_line_hint": "Chat em uma linha ao invés de duas no Chat Vertical.",
+    "one_line_hint": "Uma linha de chat em vez de duas no Chat Vertical.<br><strong><u>Se ativado, desativa a opção abaixo.</u></strong>",
     "horizontal": "Direção Horizontal",
-    "horizontal_hint": "Chat/Eventos serão exibidos na horizontal.<br><strong><u>Se ativado, desativa a opção \"Linha Única\" acima.</u></strong>",
+    "horizontal_hint": "O Chat/Eventos será horizontal.<br><strong><u>Se ativado, desativa a opção acima.</u></strong>",
     "group_messages": "Agrupar Mensagens do Chat",
     "group_messages_hint": "Mensagens consecutivas do mesmo usuário serão agrupadas.",
     "platforms": "Plataformas",

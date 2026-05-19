@@ -578,11 +578,7 @@ body {
     margin: 0;
 }
 
-#chat.horizontal:not(:has(.timestamp)):has(.pronouns) .item.grouped .message {
-    transform: translateY(2px);
-}
-
-#chat.horizontal:has(.timestamp):has(.pronouns) .item.grouped .message {
+#chat.horizontal .item.grouped .message {
     transform: translateY(2px);
 }
 
@@ -700,7 +696,9 @@ body {
     margin: 0;
 }
 
-
+#chat.oneline .item.first-chatter .message {
+    padding-bottom: 5px;
+}
 
 
 #chat .item .actual-message,

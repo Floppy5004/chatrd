@@ -244,6 +244,17 @@ function pushChangeEvents() {
     const selects = document.querySelectorAll("select:not(.avoid)");
     const ranges = document.querySelectorAll("input[type=range]:not(.avoid)");
 
+    const oneLineCheckBox = document.querySelector('input[type=checkbox][name=chatOneLine]');
+    const horizontalCheckBox = document.querySelector('input[type=checkbox][name=chatHorizontal]');
+
+    oneLineCheckBox.addEventListener('change', (e) => {
+        if (e.target.checked) { horizontalCheckBox.checked = false; }
+    });
+
+    horizontalCheckBox.addEventListener('change', (e) => {
+        if (e.target.checked) { oneLineCheckBox.checked = false; }
+    });
+
     [...checkboxes, ...textfields, ...numberfields, ...colorfields, ...selects, ...ranges].forEach(el => {
         el.addEventListener('change', saveSettingsToLocalStorage);
         el.addEventListener('input', saveSettingsToLocalStorage);

@@ -49,9 +49,9 @@
       "bubbles": "Bubbles"
     },
     "one_line": "Einzeilig",
-    "one_line_hint": "Einzeiliger Chat statt zweizeilig im vertikalen Chat.",
+    "one_line_hint": "Eine Chat-Zeile statt zwei im vertikalen Chat.<br><strong><u>Falls aktiviert, deaktiviert dies die untenstehende Option.</u></strong>",
     "horizontal": "Horizontale Richtung",
-    "horizontal_hint": "Chat/Ereignisse werden horizontal angezeigt.<br><strong><u>Wenn aktiviert, wird die Option \"Einzeilig\" oben deaktiviert.</u></strong>",
+    "horizontal_hint": "Chat/Ereignisse werden horizontal angezeigt.<br><strong><u>Falls aktiviert, deaktiviert dies die obenstehende Option.</u></strong>",
     "group_messages": "Chat-Nachrichten gruppieren",
     "group_messages_hint": "Aufeinanderfolgende Nachrichten desselben Nutzers werden gruppiert.",
     "platforms": "Plattformen",

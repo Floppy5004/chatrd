@@ -49,9 +49,9 @@
       "bubbles": "Bubbles"
     },
     "one_line": "Isang Linya",
-    "one_line_hint": "Isang linya ng chat sa halip na dalawa sa Vertical Chat.",
+    "one_line_hint": "Isang linya ng chat sa halip na dalawa sa Vertical Chat.<br><strong><u>Kung pinagana, nide-disable ang opsyon sa ibaba.</u></strong>",
     "horizontal": "Pahalang na Direksyon",
-    "horizontal_hint": "Ang Chat/Mga Event ay magiging pahalang.<br><strong><u>Kung naka-aktibo, dina-disable ang opsyong \"Isang Linya\" sa itaas.</u></strong>",
+    "horizontal_hint": "Ang Chat/Mga Kaganapan ay magiging pahalang.<br><strong><u>Kung pinagana, nide-disable ang opsyon sa itaas.</u></strong>",
     "group_messages": "Pagsamahin ang Mga Mensahe sa Chat",
     "group_messages_hint": "Ang magkakasunod na mensahe mula sa parehong user ay isasama.",
     "platforms": "Mga Platform",

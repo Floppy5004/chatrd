@@ -49,9 +49,9 @@
       "bubbles": "Bubbles"
     },
     "one_line": "One Line",
-    "one_line_hint": "One line chat instead of two in Vertical Chat.",
+    "one_line_hint": "One line chat instead of two in Vertical Chat.<br><strong><u>If enabled, it disables the option below.</u></strong>",
     "horizontal": "Horizontal Direction",
-    "horizontal_hint": "Chat/Events will be horizontal.<br><strong><u>If enabled, it disables \"One Line\" option above.</u></strong>",
+    "horizontal_hint": "Chat/Events will be horizontal.<br><strong><u>If enabled, it disables the option above.</u></strong>",
     "group_messages": "Group Chat Messages",
     "group_messages_hint": "Consecutive messages from the same user will be grouped.",
     "platforms": "Platforms",

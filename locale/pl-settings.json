@@ -49,9 +49,9 @@
       "bubbles": "Bąbelki"
     },
     "one_line": "Jedna linia",
-    "one_line_hint": "Czat w jednej linii zamiast dwóch w widoku pionowym.",
-    "horizontal": "Kierunek poziomy",
-    "horizontal_hint": "Czat/wydarzenia będą wyświetlane poziomo.<br><strong><u>Jeśli włączone, dezaktywuje opcję \"Jedna linia\" powyżej.</u></strong>",
+    "one_line_hint": "Jedna linia czatu zamiast dwóch w Pionowym Czacie.<br><strong><u>Jeśli włączone, wyłącza poniższą opcję.</u></strong>",
+    "horizontal": "Kierunek Poziomy",
+    "horizontal_hint": "Czat/Zdarzenia będą wyświetlane poziomo.<br><strong><u>Jeśli włączone, wyłącza powyższą opcję.</u></strong>",
     "group_messages": "Grupuj wiadomości czatu",
     "group_messages_hint": "Kolejne wiadomości od tego samego użytkownika będą grupowane.",
     "platforms": "Platformy",
