@@ -1,0 +1,20 @@
+/* --------------------------- */
+/* -------- STATISTICS ------- */
+/* --------------------------- */
+
+#statistics .platform#kick {
+    order: 4;
+    background: #48d415;
+}
+
+/* -------------------------------------- */
+/* -------- CHAT - NORMAL LAYOUT -------- */
+/* -------------------------------------- */
+
+#chat .item.kick .info .avatar { position: relative; }
+#chat .item.kick .info .avatar img {
+    width: var(--avatarSize);
+    height: var(--avatarSize);
+}
+
+#chat .event.kick .message { background: rgba(72,212,21,0.75); }

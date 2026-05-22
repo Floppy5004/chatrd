@@ -1,0 +1,167 @@
+/* --------------------------- */
+/* -------- STATISTICS ------- */
+/* --------------------------- */
+
+#statistics .platform#twitch {
+    order: 1;
+    background: #a970ff;
+}
+
+/* -------------------------- */
+/* -------- BARS ------------ */
+/* -------------------------- */
+
+.goal-bar {
+    min-width: unset;
+    width: fit-content;
+    gap: 20px;
+}
+
+#hypetrain div:not(.progressbar-fill):not(.info),
+.goal-bar div:not(.progressbar-fill):not(.info) {
+    position: relative;
+    z-index: 111;
+}
+
+#hypetrain .logo img,
+.goal-bar .logo img {
+    width: 18px;
+    filter: drop-shadow(0px 0px 5px rgba(0,0,0,1));
+    transform: translateY(2px);
+}
+
+#hypetrain .progressbar-fill,
+.goal-bar .progressbar-fill {
+    background: #a970ff;
+}
+
+#hypetrain .level,
+#hypetrain .timeremaining {
+    font-size: 12px;
+    background: rgba(0,0,0,0.2);
+    padding: 3px 9px;
+    border-radius: 5px;
+}
+
+#hypetrain .level {
+    min-width: 64px;
+    text-align: center;
+}
+
+#hypetrain .timeremaining {
+    min-width: 56px;
+    text-align: center;
+}
+
+#hypetrain .percentage,
+.goal-bar .percentage {
+    min-width: 58px;
+    text-align: right;
+    font-size: 20px;
+}
+
+.goal-bar .percentage { font-size: 16px; line-height: 100%; }
+.goal-bar .percentage small { font-size: 16px; }
+
+#hypetrain .info,
+.goal-bar .info {
+    position: absolute;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+
+    background: #a970ff;
+    font-size: 16px;
+    
+    z-index: 111;
+}
+
+.goal-bar .info { opacity: 0; }
+
+#hypetrain.golden-kappa-train .info,
+#hypetrain.golden-kappa-train .progressbar-fill {
+    background: #ffb521;
+}
+
+#hypetrain.treasure-train .info,
+#hypetrain.treasure-train .progressbar-fill {
+    background: linear-gradient(to right, #2346b5, #a970ff);
+}
+
+
+
+/* -------------------------------------------------------------- */
+/* -------- BITS CUSTOMIZATION FOR BIG STREAMERS LOL ------------ */
+/* -------------------------------------------------------------- */
+
+#chat .event.twitch.bits[class*="bigger-than-"] .message {
+    animation: bigStreamerBGAnimate 1s ease infinite;
+    background-size: 100% 200%;
+}
+
+#chat .event.twitch.bits.bigger-than-1000 .message {
+    background-image: linear-gradient(
+      180deg,
+      rgba(145, 70, 255, 0.75),
+      rgba(0, 255, 155, 0.75)
+    );
+}
+
+#chat .event.twitch.bits.bigger-than-5000 .message {
+    background-image: linear-gradient(
+      180deg,
+      rgba(145, 70, 255, 0.75),
+      rgba(0, 247, 219, 0.75)
+    );
+}
+
+#chat .event.twitch.bits.bigger-than-10000 .message {
+    background-image: linear-gradient(
+      180deg,
+      rgba(145, 70, 255, 0.75),
+      rgba(255, 25, 25, 0.75)
+    );
+}
+
+#chat .event.twitch.bits.bigger-than-100000 .message {
+    background-image: linear-gradient(
+      180deg,
+      rgba(145, 70, 255, 0.75),
+      rgba(255, 255, 0, 0.75)
+    );
+}
+
+
+
+
+
+/* -------------------------------------- */
+/* -------- CHAT - NORMAL LAYOUT -------- */
+/* -------------------------------------- */
+
+
+#chat .item.announcement.twitch .message { background: rgba(145,70,255,0.75); }
+#chat .item.announcement.twitch.green .message { background: linear-gradient(to bottom, rgba(0,219,132,0.75),rgba(87,190,230,0.75)); }
+#chat .item.announcement.twitch.purple .message { background: linear-gradient(to bottom, rgba(145,70,255,0.75),rgba(255,117,230,0.75)); }
+#chat .item.announcement.twitch.orange .message { background: linear-gradient(to bottom, rgba(255, 179, 26,0.75),rgba(224,224,0,0.75)); }
+#chat .item.announcement.twitch.blue .message { background: linear-gradient(to bottom, rgba(0,214,214,0.75),rgba(145,70,255,0.75)); }
+#chat .item.announcement.twitch .chatmoderation { display: none; }
+
+#chat .item img.gigantified {
+    display: block;
+    height: 96px;
+    margin-top: 5px;
+}
+
+#chat .event.twitch .message { background: rgba(145,70,255,0.75); }
+
+#chat .event.twitch.hypetrain.golden-kappa-train .message { background: #ffb521; }
+#chat .event.twitch.hypetrain.treasure-train .message { background: linear-gradient(to right, #2346b5, #a970ff); }
