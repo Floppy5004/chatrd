@@ -7,13 +7,15 @@
     background: #242424;
 }
 
+
+#chat .item.tiktok.streamer-mentioned .message {
+    background: rgba(36,36,36,0.15);
+}
+
 /* -------------------------------------- */
 /* -------- CHAT - NORMAL LAYOUT -------- */
 /* -------------------------------------- */
 
-#chat .event.tiktok .message {
-    background: rgba(36,36,36,0.75);
-}
 
 #chat .item.tiktok span.badge {
     display: inline-flex;
@@ -28,21 +30,6 @@
     border-radius: 3px;
     margin: 0 1px;
     transform: translateY(3px);
-}
-
-
-#chat .event.tiktok.join .message {
-    background: none;
-}
-
-#chat .event.tiktok.join .message i {
-    font-size: 14px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 100px;
-    margin: 0 3px 0 1px;
-    text-shadow: none;
 }
 
 #chat .item.tiktok span.badge.top-gifter,
@@ -85,6 +72,26 @@
     outline-offset: -1px;
 }
 
+
+
+
+#chat .event.tiktok .message {
+    background: rgba(36,36,36,0.75);
+}
+
+#chat .event.tiktok.join .message {
+    background: none;
+}
+
+#chat .event.tiktok.join .message i {
+    font-size: 14px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    margin: 0 3px 0 1px;
+    text-shadow: none;
+}
 
 /* GIFT CUSTOMIZATION FOR BIG STREAMERS LOL */
 

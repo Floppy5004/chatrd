@@ -11,6 +11,11 @@
 /* -------- CHAT - NORMAL LAYOUT -------- */
 /* -------------------------------------- */
 
+
+#chat .item.kick.streamer-mentioned .message {
+    background: rgba(72,212,21,0.15);
+}
+
 #chat .item.kick .info .avatar { position: relative; }
 #chat .item.kick .info .avatar img {
     width: var(--avatarSize);

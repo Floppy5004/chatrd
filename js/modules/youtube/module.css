@@ -34,23 +34,16 @@
 
 #statistics .platform.youtube#youtube .title {
     display: none;
-} 
+}
+
+#chat .item.youtube.streamer-mentioned .message {
+    background: rgba(255,0,0,0.1);
+}
+
 
 /* -------------------------------------- */
 /* -------- CHAT - NORMAL LAYOUT -------- */
 /* -------------------------------------- */
-
-#chat .event.youtube .message {
-    background: rgba(238,0,0,0.75);
-}
-
-#chat .event.youtube.sticker .header {
-    padding: 5px 0;
-    text-align: center;
-}
-#chat .event.youtube.sticker .header img {
-    height: 128px;
-}
 
 #chat .item.youtube span.badge {
     display: inline-flex;
@@ -85,4 +78,18 @@
     box-shadow: 2px 2px 5px rgba(0,0,0,0.25);
     padding: 0 5px;
     border-radius: 5px;
+}
+
+
+
+#chat .event.youtube .message {
+    background: rgba(238,0,0,0.75);
+}
+
+#chat .event.youtube.sticker .header {
+    padding: 5px 0;
+    text-align: center;
+}
+#chat .event.youtube.sticker .header img {
+    height: 128px;
 }

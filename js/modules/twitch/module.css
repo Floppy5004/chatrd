@@ -141,25 +141,116 @@
 
 
 
+#chat .item.announcement.twitch .message {
+    background: rgba(145,70,255,0.75);
+    padding: 10px;
+}
 
+#chat .item.announcement.twitch.green .message { background: linear-gradient(to bottom, rgba(0,219,132,0.75),rgba(87,190,230,0.75)); }
+#chat .item.announcement.twitch.purple .message { background: linear-gradient(to bottom, rgba(145,70,255,0.75),rgba(255,117,230,0.75)); }
+#chat .item.announcement.twitch.orange .message { background: linear-gradient(to bottom, rgba(255, 179, 26,0.75),rgba(224,224,0,0.75)); }
+#chat .item.announcement.twitch.blue .message { background: linear-gradient(to bottom, rgba(0,214,214,0.75),rgba(145,70,255,0.75)); }
+
+#chat .item.announcement.twitch .chatmoderation { display: none; }
+
+#chat .item.twitch img.gigantified {
+    display: block;
+    height: 96px;
+    margin-top: 5px;
+}
+
+#chat .item.twitch.streamer-mentioned .message {
+    background: rgba(145,70,255,0.15);
+}
 
 /* -------------------------------------- */
 /* -------- CHAT - NORMAL LAYOUT -------- */
 /* -------------------------------------- */
 
-
-#chat .item.announcement.twitch .message { background: rgba(145,70,255,0.75); }
-#chat .item.announcement.twitch.green .message { background: linear-gradient(to bottom, rgba(0,219,132,0.75),rgba(87,190,230,0.75)); }
-#chat .item.announcement.twitch.purple .message { background: linear-gradient(to bottom, rgba(145,70,255,0.75),rgba(255,117,230,0.75)); }
-#chat .item.announcement.twitch.orange .message { background: linear-gradient(to bottom, rgba(255, 179, 26,0.75),rgba(224,224,0,0.75)); }
-#chat .item.announcement.twitch.blue .message { background: linear-gradient(to bottom, rgba(0,214,214,0.75),rgba(145,70,255,0.75)); }
-#chat .item.announcement.twitch .chatmoderation { display: none; }
-
-#chat .item img.gigantified {
-    display: block;
-    height: 96px;
-    margin-top: 5px;
+#chat.vertical .item.twitch .info .shared-chat {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
+
+#chat.vertical .item.twitch .info .shared-chat .origin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 5px;
+    height: 28px;
+    padding: 0 2px;
+    font-size: 12px;
+    background: rgba(145, 70, 255, 0.5);
+}
+
+#chat.vertical .item.twitch .info .shared-chat .origin strong {
+    display: none;
+    font-weight: normal;
+}
+
+#chat.vertical .item.twitch .info .shared-chat .origin img {
+    border-radius: 5px;
+}
+
+
+/* ------------------------------------------- */
+/* --------- CHAT - ONE LINE LAYOUT ---------- */
+/* ------------------------------------------- */
+
+
+#chat.oneline .item.twitch .info .shared-chat .origin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 5px;
+    height: 28px;
+    padding: 0 2px;
+    font-size: 12px;
+    background: rgba(145, 70, 255, 0.5);
+    transform: translateY(6px);
+}
+
+#chat.oneline .item.twitch .info .shared-chat .origin strong {
+    display: none;
+    font-weight: normal;
+}
+
+#chat.oneline .item.twitch .info .shared-chat .origin img {
+    border-radius: 5px;
+}
+
+
+/* ------------------------------------------- */
+/* --------- CHAT - HORIZONTAL LAYOUT -------- */
+/* ------------------------------------------- */
+
+
+#chat.horizontal .item.twitch .info .shared-chat .origin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 5px;
+    height: 28px;
+    padding: 0 2px;
+    font-size: 12px;
+    background: rgba(145, 70, 255, 0.5);
+    transform: translateY(6px);
+}
+
+#chat.horizontal .item.twitch .info .shared-chat .origin strong {
+    display: none;
+    font-weight: normal;
+}
+
+#chat.horizontal .item.twitch .info .shared-chat .origin img {
+    border-radius: 5px;
+}
+
+
 
 #chat .event.twitch .message { background: rgba(145,70,255,0.75); }
 

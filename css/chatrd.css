@@ -631,6 +631,33 @@ body {
     border: 1px inset rgba(255,255,255,0.1);
 }
 
+#chat.vertical .item.first-chatter .message {
+    background: rgba(255,255,255,0.1);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px inset rgba(255,255,255,0.1);
+}
+
+#chat.vertical .item.first-chatter .first-message {
+    font-size: 14px;
+}
+
+#chat.vertical .item .reply {
+    max-width: 100%;
+    flex-basis: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    font-size: 14px;
+    color: #999;
+}
+
+#chat.vertical .item.streamer-mentioned .message {
+    background: rgba(255,255,255,0.1);
+}
+
+
 /* ------------------------------------------- */
 /* --------- CHAT - ONE LINE LAYOUT ---------- */
 /* ------------------------------------------- */
@@ -745,11 +772,26 @@ body {
     text-shadow: 0 0 10px #FFF;
 }
 
-#chat.oneline .item.streamer-mentioned {
+#chat.oneline .item.streamer-mentioned .message {
     background: rgba(255,255,255,0.1);
     padding: 10px 12px;
     border-radius: 5px;
     border: 1px inset rgba(255,255,255,0.1);
+}
+
+#chat.oneline .item.first-chatter .message {
+    background: rgba(255,255,255,0.1);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px inset rgba(255,255,255,0.1);
+}
+
+#chat.oneline .item.first-chatter .first-message {
+    font-size: 14px;
+}
+
+#chat.oneline .item.streamer-mentioned .message {
+    background: rgba(255,255,255,0.1);
 }
 
 /* ------------------------------------------- */
@@ -871,11 +913,26 @@ body {
     text-shadow: 0 0 10px #FFF;
 }
 
-#chat.horizontal .item.streamer-mentioned {
+#chat.horizontal .item.streamer-mentioned .message {
     background: rgba(255,255,255,0.1);
     padding: 10px 12px;
     border-radius: 5px;
     border: 1px inset rgba(255,255,255,0.1);
+}
+
+#chat.horizontal .item.first-chatter .message {
+    background: rgba(255,255,255,0.1);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px inset rgba(255,255,255,0.1);
+}
+
+#chat.horizontal .item.first-chatter .first-message {
+    font-size: 14px;
+}
+
+#chat .item.streamer-mentioned .message {
+    background: rgba(255,0,0,0.1);
 }
 
 /* --------------------------------------------- */
@@ -885,7 +942,6 @@ body {
 #chat:not(.noscrollbar):not(.horizontal) {
   padding: 0 25px 0 10px;
 }
-
 
 /* ---------------------------------------- */
 /* ------------ CHAT - EVENTS ------------- */
