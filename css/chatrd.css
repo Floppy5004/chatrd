@@ -826,7 +826,7 @@ body {
     transition: var(--transition);
 }
 
-#chat.horizontal .item.grouped { transform: translateY(2px);}
+#chat.horizontal .item.grouped { transform: translateY(1px);}
 
 #chat.horizontal .item .info { display: inline; }
 
