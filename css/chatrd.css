@@ -790,6 +790,17 @@ body {
     font-size: 14px;
 }
 
+#chat.oneline .item .reply {
+    max-width: 100%;
+    flex-basis: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    font-size: 14px;
+    color: #999;
+}
+
 #chat.oneline .item.streamer-mentioned .message {
     background: rgba(255,255,255,0.1);
 }
@@ -929,6 +940,17 @@ body {
 
 #chat.horizontal .item.first-chatter .first-message {
     font-size: 14px;
+}
+
+#chat.horizontal .item .reply {
+    max-width: 100%;
+    flex-basis: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    font-size: 14px;
+    color: #999;
 }
 
 #chat .item.streamer-mentioned .message {
