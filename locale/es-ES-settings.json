@@ -68,8 +68,6 @@
     "ignore_chatters_hint": "Separa los nombres por coma. ej.: StreamLabs,StreamElements",
     "hide_after": "Ocultar Msg del Chat",
     "hide_after_hint": "Oculta un mensaje tras X segundos. (0 desactiva)",
-    "multi_streamer_mode": "Modo Multi-Streamer",
-    "multi_streamer_mode_hint": "Cambia <strong>Twitch</strong> a <em class=\"msm-platform purple\">Plataforma Morada</em>, <strong>YouTube</strong> a <em class=\"msm-platform red\">Plataforma Roja</em>,<br><strong>Kick</strong> a <em class=\"msm-platform green\">Plataforma Verde</em> y <strong>TikTok</strong> a <em class=\"msm-platform vertical\">App de Videos Cortos</em><br>en todos los mensajes del chat.",
     "chat_field": "Campo de Chat",
     "chat_field_hint": "Añade un campo para que escribas en tu chat.",
     "moderation_buttons": "Botones de Moderación",
@@ -131,7 +129,8 @@
     "statistics": "Estadísticas",
     "statistics_hint": "Muestra Espectadores y Me Gustas de YouTube.",
     "custom_emotes_label": "Emotes Exclusivos de Miembros",
-    "custom_emotes_hint": "Necesitas añadir los emotes de miembros manualmente porque la API de YouTube no los transfiere a Streamer.bot."
+    "custom_emotes_hint": "Necesitas añadir los emotes de miembros manualmente porque la API de YouTube no los transfiere a Streamer.bot.",
+    "custom_emote_information" : "<i class=\"fa-solid fa-circle-info\"></i> <strong>No</strong> uses Discord, Imgur ni ninguna plataforma temporal de alojamiento de imágenes para alojar tus emotes. Puedes hacer clic derecho en la imagen del emote en YouTube y copiar la URL de la imagen 😊"
   },
 
   "tiktok": {

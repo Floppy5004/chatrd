@@ -1,82 +1,138 @@
+/* ----------------------------------------- */
+/* --------- CHAT - NORMAL LAYOUT ---------- */
+/* ----------------------------------------- */
 
-#chat .item .message { border: 2px solid #fff; border-radius: 10px; }
-#chat .item .info .avatar { border: 2px solid #fff; }
-
-#chat .item .message { padding-left: 10px; }
-#chat .item:has(.avatar) .message { padding-left: 65px; }
-
-/* Two-lined Vertical Chat */
-
-#chat:not(.horizontal):not(.oneline) .item .info .avatar { position: absolute !important; top: 5px; left: 10px; width: 50px; height: 50px; }
-#chat:not(.horizontal):not(.oneline) .item .info .avatar img { height: 50px; }
-#chat:not(.horizontal):not(.oneline) .item.chat.grouped .message { padding: 5px 10px; }
-#chat:not(.oneline):not(.horizontal) .item.chat.streamer-mentioned { margin: 0; }
-
-#chat:not(.horizontal):not(.oneline) .item.streamer-mentioned .info .avatar {
-    top: 2px;
-    left: -60px;
+#chat:is(:not([class]), .noscrollbar) .item .message {
+    border: 1px solid #fff;
+    background: rgba(0,0,0,0.25);
+    padding: 10px;
 }
 
-#chat:not(.horizontal):not(.oneline) .item.streamer-mentioned .message:has(.avatar) {
-    padding-left: 70px !important;
+#chat:is(:not([class]), .noscrollbar):has(.avatar) .item .message {
+    padding-left: 80px;
 }
 
-/* One-lined Vertical Chat */
-#chat.oneline .item .info .avatar { position: absolute !important; top: -5px; left: -33px; }
-#chat.oneline .item:not(.grouped) .message { padding: 10px; }
-#chat.oneline .item:not(.grouped):has(.avatar) .message { padding: 10px 10px 0px 38px; }
-#chat.oneline .item.grouped .message { padding: 10px 10px 0 10px; }
-#chat.oneline:not(.horizontal) .item.chat.streamer-mentioned { margin: 0; }
-
-#chat:not(.horizontal).oneline .item.streamer-mentioned .message:has(.avatar) {
-    padding-left: 48px !important;
+#chat:is(:not([class]), .noscrollbar) .item .info {
+    position: relative;
 }
 
-#chat:not(.horizontal).oneline .item.streamer-mentioned .info .avatar {
-    top: -6px;
-    left: -40px;
+#chat:is(:not([class]), .noscrollbar) .item .info .avatar {
+    position: absolute;
+    top: 0;
+    left: -70px;
+    width: 60px;
+    height: 60px;
+    border-radius: 100px;
+    box-shadow: var(--dropShadow);
+    border: 1px solid #fff;
 }
 
-#chat.oneline .item .avatar {
-    transform: translateY(0);
+#chat:is(:not([class]), .noscrollbar) .item .info .avatar img {
+    width: 60px;
+    height: 60px;
 }
 
-#chat.oneline .item.chat .info, #chat.oneline .item.chat .actual-message { top: -5px; }
+#chat:is(:not([class]), .noscrollbar) .item.kick .info .avatar { position: absolute; }
+#chat:is(:not([class]), .noscrollbar) .item.kick .info .avatar img {
+    width: 60px;
+    height: 60px;
+}
+
+/* ------------------------------------------- */
+/* --------- CHAT - ONE LINE LAYOUT ---------- */
+/* ------------------------------------------- */
+
+#chat.oneline .item .message {
+    border: 1px solid #fff;
+    padding: 10px;
+}
+
+#chat.oneline:has(.avatar) .item .message {
+    padding-left: 44px;
+}
+
+#chat.oneline .item .info {
+    position: relative;
+}
+
+#chat.oneline .item .info .avatar {
+    border: 1px solid #fff;
+    position: absolute;
+    top: -10px;
+    left: -34px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+    box-shadow: var(--dropShadow);
+}
+
+#chat.oneline .item .info .avatar img {
+    width: 28px;
+    height: 28px;
+}
+
+#chat.oneline .item.kick .info .avatar { position: absolute; }
+#chat.oneline .item.kick .info .avatar img {
+    width: 28px;
+    height: 28px;
+}
+
+/* ------------------------------------------- */
+/* --------- CHAT - HORIZONTAL LAYOUT -------- */
+/* ------------------------------------------- */
+
+#chat.horizontal .item .message {
+    border: 1px solid #fff;
+    padding: 10px;
+}
+
+#chat.horizontal:has(.avatar) .item .message {
+    padding-left: 44px;
+}
+
+#chat.horizontal .item .info {
+    position: relative;
+}
+
+#chat.horizontal .item .info .avatar {
+    border: 1px solid #fff;
+    position: absolute;
+    top: -10px;
+    left: -34px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100px;
+    box-shadow: var(--dropShadow);
+}
+
+#chat.horizontal .item .info .avatar img {
+    width: 28px;
+    height: 28px;
+}
+
+#chat.horizontal .item.kick .info .avatar { position: absolute; }
+#chat.horizontal .item.kick .info .avatar img {
+    width: 28px;
+    height: 28px;
+}
+
+/* --------------------------------------------- */
+/* --------- CHAT - CASO HAJA SCROLLBAR -------- */
+/* --------------------------------------------- */
+
+#chat:not(.noscrollbar):not(.horizontal) {
+  padding: 0 25px 0 10px;
+}
 
 
-#chat.oneline .item:not(.grouped):has(.avatar).streamer-mentioned .message { padding: 10px 10px 10px 38px; }
-
-#chat.oneline .item.chat .info:has(.avatar),
-#chat.oneline .item.chat .info:has(.avatar) .actual-message { top: -5px; }
-
-#chat.oneline .item.chat.streamer-mentioned:has(.avatar) .first-message,
-#chat.oneline .item.chat.streamer-mentioned:has(.avatar) .info,
-#chat.oneline .item.chat.streamer-mentioned:has(.avatar) .actual-message { top: 0 !important; }
-
-#chat.oneline .item.chat.streamer-mentioned:has(.avatar) .first-message,
-#chat.oneline .item.chat.streamer-mentioned:has(.avatar) .info,
-#chat.oneline .item.chat.streamer-mentioned:has(.avatar) .actual-message { top: 0px; }
-
-/* One-lined Horizontal Chat */
-#chat.horizontal .item .info .avatar { position: absolute !important; top: -10px; left: -38px; }
-#chat.horizontal .item:not(.grouped) .message { padding: 10px !important; }
-#chat.horizontal .item:not(.grouped):has(.avatar) .message { padding: 10px 10px 10px 48px !important; }
-#chat.horizontal .item.grouped .message { padding: 13px !important; }
-
-#chat.horizontal .item:not(.grouped) .first-message,
-#chat.horizontal .item:not(.grouped) .shared-chat,
-#chat.horizontal .item:not(.grouped) .header,
-#chat.horizontal .item:not(.grouped) .info,
-#chat.horizontal .item:not(.grouped) .actual-message { transform: translateY(0px) !important; }
-
-#chat.horizontal .item.grouped .actual-message { transform: translateY(-1px) !important; }
-#chat.horizontal .item.grouped .message .actual-message:has(.emote) { transform: translateY(-1px) !important; }
- 
 #chat .item.twitch .info .avatar,
 #chat .item.twitch .message { border-color: rgba(145,70,255,1); }
+
 #chat .item.youtube.info .avatar,
 #chat .item.youtube .message { border-color: rgba(255,0,0,1); }
+
 #chat .item.tiktok .info .avatar,
 #chat .item.tiktok .message { border-color: rgba(241,32,74,1); }
+
 #chat .item.kick .info .avatar,
 #chat .item.kick .message { border-color: rgba(72,212,21,1); }

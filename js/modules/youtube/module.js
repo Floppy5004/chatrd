@@ -571,6 +571,9 @@ async function getYouTubeEmotes(data, messageElement) {
     // monta um mapa de emotes (nome → URL)
     const emoteMap = new Map();
 
+    // O ":awesome:" nunca aparecia. Isso remedia isso.
+    emoteMap.set(':awesome:', 'https://yt3.ggpht.com/xqqFxk7nC5nYnjy0oiSPpeWX4yu4I-ysb3QJMOuVml8dHWz82FvF8bhGVjlosZRIG_XxHA=w48-h48-c-k-nd');
+
     // BTTV emotes
     for (const emote of youTubeBTTVEmotes) {
         emoteMap.set(emote.code, `https://cdn.betterttv.net/emote/${emote.id}/1x`);
@@ -669,10 +672,9 @@ async function getYouTubeBadges(data) {
     let badgesHTML = [
         isVerified && '<span class="badge verified"><i class="fa-solid fa-check"></i></span>',
         isSponsor && '<span class="badge member"><i class="fa-solid fa-star"></i></span>',
-        isModerator && '<span class="badge mod"><i class="fa-solid fa-wrench"></i></span>',
+        isModerator && '<span class="badge mod"><i class="fa-solid fa-shield"></i></span>',
         isOwner && '<span class="badge owner"><i class="fa-solid fa-video"></i></span>',
     ].filter(Boolean).join('');
 
     return badgesHTML;
 }
-

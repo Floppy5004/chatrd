@@ -68,8 +68,6 @@
     "ignore_chatters_hint": "Paghiwalayin ang kanilang mga pangalan ng kuwit. hal.: StreamLabs,StreamElements",
     "hide_after": "Itago ang Msg sa Chat",
     "hide_after_hint": "Itinatago ang mensahe pagkatapos ng X segundo. (0 para i-disable)",
-    "multi_streamer_mode": "Multi-Streamer Mode",
-    "multi_streamer_mode_hint": "Binabago ang <strong>Twitch</strong> sa <em class=\"msm-platform purple\">Lilang Platform</em>, <strong>YouTube</strong> sa <em class=\"msm-platform red\">Pulang Platform</em>,<br><strong>Kick</strong> sa <em class=\"msm-platform green\">Berdeng Platform</em> at <strong>TikTok</strong> sa <em class=\"msm-platform vertical\">Short Video App</em><br>sa lahat ng mensahe sa chat.",
     "chat_field": "Chat Field",
     "chat_field_hint": "Nagdaragdag ng chat field para mag-type sa iyong chat.",
     "moderation_buttons": "Mga Pindutan ng Moderasyon",
@@ -131,7 +129,8 @@
     "statistics": "Mga Istatistika",
     "statistics_hint": "Ipinapakita ang mga Manonood at Like sa YouTube.",
     "custom_emotes_label": "Mga Emote para sa Miyembro Lamang",
-    "custom_emotes_hint": "Kailangan mong mano-manong idagdag ang mga emote ng miyembro dahil hindi sila ipinaabot ng API ng YouTube sa Streamer.bot."
+    "custom_emotes_hint": "Kailangan mong mano-manong idagdag ang mga emote ng miyembro dahil hindi sila ipinaabot ng API ng YouTube sa Streamer.bot.",
+    "custom_emote_information" : "<i class=\"fa-solid fa-circle-info\"></i> <strong>Huwag</strong> gumamit ng Discord, Imgur o anumang pansamantalang platform sa pag-host ng larawan para i-host ang iyong mga emote. Maaari kang mag-right click sa larawan ng emote sa YouTube at kopyahin ang URL ng larawan 😊"
   },
 
   "tiktok": {

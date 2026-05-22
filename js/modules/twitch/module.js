@@ -1798,9 +1798,15 @@ async function getTwitchMessageFromParts(parts) {
             if (part.source == "Twemoji") {
                 return escapeHTML(part.text);
             }
-            else {
-                return `<img src="${part.imageUrl}" alt="${escapeHTML(part.text)}" title="${escapeHTML(part.text)}" class="emote">`;
+
+            let url = part.imageUrl;
+            switch (part.source) {
+                case '7TVChannel':      url = url.replace('/4x', '/1x'); break;
+                case 'FrankerFaceZ':    url = url.replace('/4', '/1'); break;
+                case 'BetterTTV':       url = url.replace('/3x', '/1x'); break;
             }
+
+            return `<img src="${url}" alt="${escapeHTML(part.text)}" title="${escapeHTML(part.text)}" class="emote">`;
         }
 
         if (part.type === 'cheer') {
@@ -1813,32 +1819,6 @@ async function getTwitchMessageFromParts(parts) {
     
     return html;
 }
-
-
-/*async function getTwitchUserPronouns(username) {
-    if (twitchPronouns.has(username)) {
-        console.debug(`Pronouns found for ${username}. Getting it from Map...`);
-        return twitchPronouns.get(username);
-    }
-
-    console.debug(`Pronouns not found for ${username} in the Map! Retrieving...`);
-    
-    try {
-        const response = await streamerBotClient.getUserPronouns('twitch', username);
-
-        const pronoun = response?.pronoun?.userFound
-            ? `<em>${response.pronoun.pronounSubject}/${response.pronoun.pronounObject}</em>`
-            : '';
-
-        twitchPronouns.set(username, pronoun);
-        return pronoun;
-    }
-    
-    catch (err) {
-        console.error(`Couldn't retrieve pronouns for ${username}:`, err);
-        return '';
-    }
-}*/
 
 
 async function getTwitchUserPronouns(username) {

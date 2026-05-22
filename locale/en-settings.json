@@ -68,8 +68,6 @@
     "ignore_chatters_hint": "Separate their names by commas. eg.: StreamLabs,StreamElements",
     "hide_after": "Hide Chat Msg",
     "hide_after_hint": "Hides a message after X seconds. (0 disables it)",
-    "multi_streamer_mode": "Multi-Streamer Mode",
-    "multi_streamer_mode_hint": "Changes <strong>Twitch</strong> to <em class=\"msm-platform purple\">Purple Platform</em>, <strong>YouTube</strong> to <em class=\"msm-platform red\">Red Platform</em>,<br><strong>Kick</strong> to <em class=\"msm-platform green\">Green Platform</em> and <strong>TikTok</strong> to <em class=\"msm-platform vertical\">Short Video App</em><br>on all chat messages.",
     "chat_field": "Chat Field",
     "chat_field_hint": "Adds a chat field for you to type in your chat.",
     "moderation_buttons": "Moderation Buttons",
@@ -131,7 +129,8 @@
     "statistics": "Statistics",
     "statistics_hint": "Shows YouTube Viewers and Likes.",
     "custom_emotes_label": "Members Only Emotes",
-    "custom_emotes_hint": "You have to add member emotes manually because YouTube's API doesn't relay them to Streamer.bot."
+    "custom_emotes_hint": "You have to add member emotes manually because YouTube's API doesn't relay them to Streamer.bot.",
+    "custom_emote_information" : "<i class=\"fa-solid fa-circle-info\"></i> <strong>Don't</strong> use Discord, Imgur or any temporary image hosting platforms to host your emotes. You could right click on the emote image on YouTube and copy the image URL 😊"
   },
 
   "tiktok": {

@@ -1,10 +1,18 @@
-#chat .event.tiktok .message {
-    background: rgba(36,36,36,0.75);
-    outline: 1px solid rgba(255,255,255,0.05);
+/* --------------------------- */
+/* -------- STATISTICS ------- */
+/* --------------------------- */
+
+#statistics .platform#tiktok {
+    order: 3;
+    background: #242424;
 }
 
-#chat .item.tiktok .platform .hidden-platform {
-    background: rgba(36,36,36,1);
+/* -------------------------------------- */
+/* -------- CHAT - NORMAL LAYOUT -------- */
+/* -------------------------------------- */
+
+#chat .event.tiktok .message {
+    background: rgba(36,36,36,0.75);
 }
 
 #chat .item.tiktok span.badge {
@@ -14,35 +22,19 @@
     vertical-align: top;
     color: #FFF;
     background: #242424;
-    width: 22px;
-    height: 22px;
+    width: 24px;
+    height: 24px;
     font-size: 12px;
     border-radius: 3px;
     margin: 0 1px;
+    transform: translateY(3px);
 }
 
-
-
-#chat.oneline .event.tiktok.gift .info {
-    display: inline-flex !important;
-}
-
-#chat .event.tiktok.gift .value img { vertical-align: sub; }
-
-#chat.horizontal .item.tiktok .info .badges {
-    transform: translateY(2px);
-}
-
-#statistics .platform#tiktok {
-    order: 3;
-    background: #242424;
-    outline: 1px solid rgba(255,255,255,0.05);
-}
 
 #chat .event.tiktok.join .message {
     background: none;
-    outline: none;
 }
+
 #chat .event.tiktok.join .message i {
     font-size: 14px;
     display: inline-flex;
@@ -65,11 +57,7 @@
     filter: saturate(0%);
 }
 
-#chat.oneline .item.tiktok span.badge.top-gifter,
-#chat.oneline .item.tiktok span.badge.sceneEight,
-#chat.oneline .item.tiktok span.badge.sceneTen {
-    transform: translateY(-3px);
-} 
+#chat:not([class]) .item.tiktok .badges { transform: translateY(-3px); }
 
 #chat .item.tiktok span.badge.top-gifter img,
 #chat .item.tiktok span.badge.sceneEight img,
@@ -95,45 +83,6 @@
 #chat .item.tiktok.sub span.badge.sceneTen {
     outline: 1px solid rgba(255,255,255,1);
     outline-offset: -1px;
-}
-
-#chat .event.tiktok.gift .value .gift-info {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-#chat .event.tiktok.gift .value span.gift-image,
-#chat .event.tiktok.gift .value span.gift-value {
-    display: inline-block;
-}
-
-#chat .event.tiktok.gift .value span.gift-image img {
-    /*width: 48px;
-    height: auto;*/
-    height: 48px;
-    width: auto;
-    filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.5));
-}
-
-#chat .event.tiktok.gift.small-gift .value span.gift-image img {
-    height: 28px;
-}
-
-#chat .event.tiktok.gift .value span.gift-value {
-    background: rgba(0,0,0,0.2);
-    padding: 3px 9px;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-#chat .event.tiktok.gift .value span.gift-value img {
-    width: 16px;
-    transform: translateY(2px);
-}
-
-#chat .event.tiktok.gift .info {
-    margin: -5px 0 -5px 0;
 }
 
 
@@ -165,5 +114,3 @@
 
 
 
-
-.msm-platform.vertical { background: rgba(36,36,36,0.75); }

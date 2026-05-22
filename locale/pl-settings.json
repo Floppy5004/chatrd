@@ -68,8 +68,6 @@
     "ignore_chatters_hint": "Oddziel ich nazwy przecinkami. np.: StreamLabs,StreamElements",
     "hide_after": "Ukryj wiadomość czatu",
     "hide_after_hint": "Ukrywa wiadomość po X sekundach. (0 wyłącza tę opcję)",
-    "multi_streamer_mode": "Tryb wielu streamerów",
-    "multi_streamer_mode_hint": "Zmienia <strong>Twitch</strong> na <em class=\"msm-platform purple\">Fioletową platformę</em>, <strong>YouTube</strong> na <em class=\"msm-platform red\">Czerwoną platformę</em>,<br><strong>Kick</strong> na <em class=\"msm-platform green\">Zieloną platformę</em> i <strong>TikTok</strong> na <em class=\"msm-platform vertical\">Aplikację krótkich wideo</em><br>we wszystkich wiadomościach czatu.",
     "chat_field": "Pole czatu",
     "chat_field_hint": "Dodaje pole czatu, w którym możesz pisać wiadomości.",
     "moderation_buttons": "Przyciski moderacji",
@@ -131,7 +129,8 @@
     "statistics": "Statystyki",
     "statistics_hint": "Pokazuje liczbę widzów i polubień na YouTube.",
     "custom_emotes_label": "Emotki tylko dla członków",
-    "custom_emotes_hint": "Musisz ręcznie dodać emotki dla członków, ponieważ API YouTube nie przekazuje ich do Streamer.bot."
+    "custom_emotes_hint": "Musisz ręcznie dodać emotki dla członków, ponieważ API YouTube nie przekazuje ich do Streamer.bot.",
+    "custom_emote_information" : "<i class=\"fa-solid fa-circle-info\"></i> <strong>Nie</strong> używaj Discorda, Imgura ani żadnych tymczasowych platform do hostowania obrazów, aby hostować swoje emotki. Możesz kliknąć prawym przyciskiem myszy na obraz emotki na YouTube i skopiować adres URL obrazu 😊"
   },
 
   "tiktok": {

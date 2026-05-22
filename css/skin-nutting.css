@@ -1,62 +1,90 @@
+/* ----------------------------------------- */
+/* --------- CHAT - NORMAL LAYOUT ---------- */
+/* ----------------------------------------- */
 
-#chat .item:has(.avatar) .message { padding-left: 60px; }
-
-/* Two-lined Vertical Chat */
-#chat:not(.horizontal):not(.oneline) .item .actual-message { margin-top: 0 !important; }
-
-#chat:not(.horizontal):not(.oneline) .item .info .avatar { position: absolute !important; top: 3px; left: 0px; width: 50px; height: 50px; }
-#chat:not(.horizontal):not(.oneline) .item .info .avatar img { height: 50px; }
-#chat:not(.horizontal):not(.oneline) .item.chat.grouped .message { padding: 3px 0px; }
-#chat:not(.oneline):not(.horizontal) .item.chat.streamer-mentioned { margin: 0; }
-
-#chat:not(.horizontal):not(.oneline) .item.streamer-mentioned .info .avatar {
-    top: 3px;
-    left: -60px;
+#chat:is(:not([class]), .noscrollbar):has(.avatar) .item .message {
+    padding-left: 70px;
 }
 
-#chat:not(.horizontal):not(.oneline) .item.streamer-mentioned .message:has(.avatar) {
-    padding-left: 70px !important;
+#chat:is(:not([class]), .noscrollbar) .item .info {
+    position: relative;
 }
 
-/* One-lined Vertical Chat */
-#chat.oneline .item .info .avatar { position: absolute !important; top: -5px; left: -33px; }
-#chat.oneline .item:not(.grouped) .message { padding: 10px; }
-#chat.oneline .item:not(.grouped):has(.avatar) .message { padding: 10px 10px 0px 38px; }
-#chat.oneline .item.grouped .message { padding: 10px 10px 0 10px; }
-#chat.oneline:not(.horizontal) .item.chat.streamer-mentioned { margin: 0; }
-
-#chat:not(.horizontal).oneline .item.streamer-mentioned .message:has(.avatar) {
-    padding-left: 48px !important;
+#chat:is(:not([class]), .noscrollbar) .item .info .avatar {
+    position: absolute;
+    top: 0;
+    left: -70px;
+    width: 62px;
+    height: 62px;
+    border-radius: 100px;
+    box-shadow: var(--dropShadow);
 }
 
-#chat:not(.horizontal).oneline .item.streamer-mentioned .info .avatar {
-    top: -6px;
-    left: -40px;
+#chat:is(:not([class]), .noscrollbar) .item .info .avatar img {
+    width: 62px;
+    height: 62px;
 }
 
-#chat.oneline .item .avatar {
-    transform: translateY(0);
+
+
+/* ------------------------------------------- */
+/* --------- CHAT - ONE LINE LAYOUT ---------- */
+/* ------------------------------------------- */
+
+#chat.oneline:has(.avatar) .item .message {
+    padding-left: 34px;
 }
 
-#chat.oneline .item:not(.grouped):has(.avatar).streamer-mentioned .message { padding: 10px 10px 10px 38px; }
-#chat.oneline .item.chat:has(.avatar) .info,
-#chat.oneline .item.chat:has(.avatar) .actual-message { top: -5px; }
+#chat.oneline .item .info {
+    position: relative;
+}
 
-#chat.oneline .item.chat.streamer-mentioned:has(.avatar) .first-message,
-#chat.oneline .item.chat.streamer-mentioned:has(.avatar) .info,
-#chat.oneline .item.chat.streamer-mentioned:has(.avatar) .actual-message { top: 0px; }
+#chat.oneline .item .info .avatar {
+    position: absolute;
+    top: -10px;
+    left: -34px;
+    width: 28px;
+    height: 28px;
+    border-radius: 100px;
+    box-shadow: var(--dropShadow);
+}
 
-/* One-lined Horizontal Chat */
-#chat.horizontal .item .info .avatar { position: absolute !important; top: -10px; left: -38px; }
-#chat.horizontal .item:not(.grouped) .message { padding: 15px 10px 10px 10px !important; }
-#chat.horizontal .item:not(.grouped):has(.avatar) .message { padding: 15px 10px 10px 48px !important; }
-#chat.horizontal .item.grouped .message { padding: 11px !important; }
+#chat.oneline .item .info .avatar img {
+    width: 28px;
+    height: 28px;
+}
 
-#chat.horizontal .item:not(.grouped) .first-message,
-#chat.horizontal .item:not(.grouped) .shared-chat,
-#chat.horizontal .item:not(.grouped) .header,
-#chat.horizontal .item:not(.grouped) .info,
-#chat.horizontal .item:not(.grouped) .actual-message { transform: translateY(0px) !important; }
+/* ------------------------------------------- */
+/* --------- CHAT - HORIZONTAL LAYOUT -------- */
+/* ------------------------------------------- */
 
-#chat.horizontal .item.grouped .actual-message { transform: translateY(-1px) !important; }
-#chat.horizontal .item.grouped .message .actual-message:has(.emote) { transform: translateY(-1px) !important; }
+#chat.horizontal:has(.avatar) .item .message {
+    padding-left: 34px;
+}
+
+#chat.horizontal .item .info {
+    position: relative;
+}
+
+#chat.horizontal .item .info .avatar {
+    position: absolute;
+    top: -10px;
+    left: -34px;
+    width: 28px;
+    height: 28px;
+    border-radius: 100px;
+    box-shadow: var(--dropShadow);
+}
+
+#chat.horizontal .item .info .avatar img {
+    width: 28px;
+    height: 28px;
+}
+
+/* --------------------------------------------- */
+/* --------- CHAT - CASO HAJA SCROLLBAR -------- */
+/* --------------------------------------------- */
+
+#chat:not(.noscrollbar):not(.horizontal) {
+  padding: 0 25px 0 10px;
+}

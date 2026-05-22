@@ -28,7 +28,7 @@ const chatModeration                = getURLParam("chatModeration", false);
 
 const chatrdSkin                    = getURLParam("chatrdSkin", "default");
 
-const multiStreamerMode             = getURLParam("multiStreamerMode", false);
+//const multiStreamerMode             = getURLParam("multiStreamerMode", false);
 
 const excludeCommands               = getURLParam("excludeCommands", true);
 const ignoreChatters                = getURLParam("ignoreChatters", "");
@@ -42,12 +42,14 @@ const eventTemplate                 = document.querySelector('#event-message');
 
 const userColors = new Map();
 
+const loadedEmotes = new Set();
+
 /* ✅ Explicit whitelist */
 const SKINS = {
-    default: "skin-default.css?nocache=31",
-    nutting: "skin-nutting.css?nocache=31",
-    kimballs: "skin-kimballs.css?nocache=31",
-    bubbles: "skin-bubbles.css?nocache=31"
+    default: "skin-default.css?nocache=04",
+    nutting: "skin-nutting.css?nocache=04",
+    kimballs: "skin-kimballs.css?nocache=04",
+    bubbles: "skin-bubbles.css?nocache=04"
 };
 
 const skinFile = SKINS[chatrdSkin] || SKINS.default;
@@ -112,7 +114,7 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
     const infoEl = clone.querySelector('.info');
     
     getAndReplaceLinks(messageEl).then(() => {
-        multiStreamChat(messageEl);
+        //multiStreamChat(messageEl);
     });
 
     const platformElement = clone.querySelector('.platform');
@@ -146,11 +148,6 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
             timestamp.remove();
         }
     }
-
-    const dimensionProp = chatHorizontal ? 'Width' : 'Height';
-
-    // Starts it collapsed
-    root.style[dimensionProp.toLowerCase()] = '0px';
     
     //if (chatModeration == true) {
     if ((chatModeration == true) && (!root.classList.contains('streamer'))) {    
@@ -189,21 +186,48 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
             root.classList.add('grouped');
         }
     }
+
+    let marginPropValue = "-5px";
+
+    if (chatHorizontal) { marginPropValue = "-15px"; }
+    if (chatOneLine) { marginPropValue = "-10px"; }
+
+    const dimensionProp = chatHorizontal ? 'Width' : 'Height';
+    const marginProp = chatHorizontal ? 'margin-left' : 'margin-top';
+
+    // Starts it collapsed
+    root.style = `${dimensionProp.toLowerCase()}: 0px; opacity: 0; ${marginProp}: ${marginPropValue};`;
    
     chatContainer.prepend(clone);
 
     const item = document.getElementById(messageid);
-    const itemDimension = item.querySelector('.message')?.[`offset${dimensionProp}`] || 0;
+    const images = [...item.querySelectorAll('img')];   
 
-    setTimeout(function () {
-    	item.style[dimensionProp.toLowerCase()] = itemDimension + 'px';
-        item.style.opacity = '1';
-    	setTimeout(function () {
-    		item.style[dimensionProp.toLowerCase()] = '';
-            item.style.opacity = '';
-    	}, 1300);
-    }, 10);
+    (async () => {
 
+        await Promise.all(images.map(img => {
+            if (img.complete) return Promise.resolve()
+            return Promise.race([
+                new Promise(resolve => {
+                    img.addEventListener('load', resolve)
+                    img.addEventListener('error', resolve)
+                }),
+                new Promise(resolve => setTimeout(resolve, 500))
+            ])
+        }));
+        
+        const itemBoundClientRect = chatHorizontal ? item.querySelector('.message')?.getBoundingClientRect().width : item.querySelector('.message')?.getBoundingClientRect().height;
+        const itemDimension = itemBoundClientRect || 0;
+
+        setTimeout(function () {
+            root.style = `${dimensionProp.toLowerCase()}: ${itemDimension}px; opacity: 1; ${marginProp}: 0px;`;
+            setTimeout(function () {
+                item.removeAttribute('style');
+            }, 1300);
+
+        }, 10);
+    })();
+    
     // Hides it after a while
     if (hideAfter > 0) {
         setTimeout(() => {
@@ -275,37 +299,46 @@ function addEventItem(platform, clone, classes, userid, messageid) {
         }
     }
 
-    const dimensionProp = chatHorizontal ? 'Width' : 'Height';
+    let marginPropValue = "-5px";
 
+    if (chatHorizontal) { marginPropValue = "-15px"; }
+    if (chatOneLine) { marginPropValue = "-10px"; }
+
+    const dimensionProp = chatHorizontal ? 'Width' : 'Height';
+    const marginProp = chatHorizontal ? 'margin-left' : 'margin-top';
+    
     // Starts it collapsed
-    root.style[dimensionProp.toLowerCase()] = '0px';
+    root.style = `${dimensionProp.toLowerCase()}: 0px; opacity: 0; ${marginProp}: ${marginPropValue};`;
 
     chatContainer.prepend(clone);
 
     const item = document.getElementById(messageid);
-    const itemDimension = item.querySelector('.message')?.[`offset${dimensionProp}`] || 0;
+    const images = [...item.querySelectorAll('img')];
 
-    /*
-    // Animates the item
-    requestAnimationFrame(() => {
-        item.style[dimensionProp.toLowerCase()] = itemDimension + 'px';
-        item.style.opacity = '1';
-    });
+    (async () => {
 
-    item.addEventListener('transitionend', () => {
-        item.style[dimensionProp.toLowerCase()] = '';
-        item.style.opacity = '';
-    }, { once: true });
-    */
+        await Promise.all(images.map(img => {
+            if (img.complete) return Promise.resolve()
+            return Promise.race([
+                new Promise(resolve => {
+                    img.addEventListener('load', resolve)
+                    img.addEventListener('error', resolve)
+                }),
+                new Promise(resolve => setTimeout(resolve, 500))
+            ])
+        }));
+        
+        const itemBoundClientRect = chatHorizontal ? item.querySelector('.message')?.getBoundingClientRect().width : item.querySelector('.message')?.getBoundingClientRect().height;
+        const itemDimension = itemBoundClientRect || 0;
 
-    setTimeout(function () {
-    	item.style[dimensionProp.toLowerCase()] = itemDimension + 'px';
-        item.style.opacity = '1';
-    	setTimeout(function () {
-    		item.style[dimensionProp.toLowerCase()] = '';
-            item.style.opacity = '';
-    	}, 1000);
-    }, 10);
+        setTimeout(function () {
+            root.style = `${dimensionProp.toLowerCase()}: ${itemDimension}px; opacity: 1; ${marginProp}: 0px;`;
+            setTimeout(function () {
+                item.removeAttribute('style');
+            }, 1300);
+
+        }, 10);
+    })();
 
     // Hides it after a while
     if (hideAfter > 0) {
@@ -740,8 +773,23 @@ chatInputSend.addEventListener("click", function () {
 });
 
 chatInputSettings.addEventListener("click", function () {
-    document.querySelector("#chat-settings").classList.toggle("active");
+    const chatSettingsToggles = document.querySelector("#chat-settings");
+    const isOpen = chatSettingsToggles.classList.contains("active");
+
     chatInputSettings.classList.toggle("active");
+
+    if (isOpen) {
+        chatSettingsToggles.classList.replace("animate__fadeInUp", "animate__fadeOutDown");
+
+        chatSettingsToggles.addEventListener("animationend", function handler() {
+            chatSettingsToggles.classList.remove("active");
+            chatSettingsToggles.removeEventListener("animationend", handler);
+        });
+    } 
+    else {
+        chatSettingsToggles.classList.remove("animate__fadeOutDown");
+        chatSettingsToggles.classList.add("active", "animate__fadeInUp");
+    }
 });
 
 document.addEventListener('click', function (e) {
@@ -894,6 +942,7 @@ function escapeHTML(str) {
     return _escapeDiv.innerHTML;
 }
 
+/*
 async function multiStreamChat(element) {
     if (multiStreamerMode == true) {
 
@@ -952,7 +1001,7 @@ async function multiStreamChat(element) {
         traverse(element);
     }
 }
-
+*/
 
 
 

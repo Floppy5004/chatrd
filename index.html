@@ -133,6 +133,28 @@
                                 </select>
                             </label>
                         </div>
+
+                        <hr>
+
+                        <div class="config">
+                            <label>
+                                <span data-i18n="general.skin">ChatRD Skin</span><br>
+                                <small data-i18n="general.skin_hint">Changes ChatRD visuals using "SKINS".</small>
+                            </label>
+                            <label>
+                                <select name="chatrdSkin" id="chatrdskins">
+                                    <option value="default" selected data-i18n="general.skin_options.default">Default</option>
+                                    <option value="nutting" data-i18n="general.skin_options.nutting">Nutting</option>
+                                    <option value="kimballs" data-i18n="general.skin_options.kimballs">Kimballs</option>
+                                    <option value="bubbles" data-i18n="general.skin_options.bubbles">Bubbles</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="config">
+                            <small class="warning" data-i18n-html="general.skin_beta_warning">
+                                <i class="fa-solid fa-circle-info"></i> ChatRD Skin is in <strong>BETA</strong>.
+                            </small>
+                        </div>
                         
                         <hr>
 
@@ -184,26 +206,6 @@
                         <hr>
                         <div class="config">
                             <label>
-                                <span data-i18n="general.skin">ChatRD Skin</span><br>
-                                <small data-i18n="general.skin_hint">Changes ChatRD visuals using "SKINS".</small>
-                            </label>
-                            <label>
-                                <select name="chatrdSkin" id="chatrdskins">
-                                    <option value="default" selected data-i18n="general.skin_options.default">Default</option>
-                                    <option value="nutting" data-i18n="general.skin_options.nutting">Nutting</option>
-                                    <option value="kimballs" data-i18n="general.skin_options.kimballs">Kimballs</option>
-                                    <option value="bubbles" data-i18n="general.skin_options.bubbles">Bubbles</option>
-                                </select>
-                            </label>
-                        </div>
-                        <div class="config">
-                            <small class="warning" data-i18n-html="general.skin_beta_warning">
-                                <i class="fa-solid fa-circle-info"></i> ChatRD Skin is in <strong>BETA</strong>.
-                            </small>
-                        </div>
-                        <hr>
-                        <div class="config">
-                            <label>
                                 <span data-i18n="general.one_line">One Line</span><br>
                                 <small data-i18n-html="general.one_line_hint">One line chat instead of two in Vertical Chat.<br><strong><u>If enabled, it disables the option below.</u></strong></small>
                             </label>
@@ -216,7 +218,6 @@
                             </label>
                             <label class="switch"><input type="checkbox" name="chatHorizontal" data-default="false"><span class="slider"></span></label>
                         </div>
-                        <hr>
                         <div class="config">
                             <label>
                                 <span data-i18n="general.group_messages">Group Chat Messages</span><br>
@@ -224,13 +225,7 @@
                             </label>
                             <label class="switch"><input type="checkbox" name="chatMessageGroup" data-default="false"><span class="slider"></span></label>
                         </div>
-                        <div class="config">
-                            <label>
-                                <span data-i18n="general.platforms">Platforms</span><br>
-                                <small data-i18n="general.platforms_hint">Shows the platforms logos.</small>
-                            </label>
-                            <label class="switch"><input type="checkbox" name="showPlatform" checked data-default="true"><span class="slider"></span></label>
-                        </div>
+                        <hr>
                         <div class="config">
                             <label data-i18n="general.avatars">Avatars</label>
                             <label class="switch"><input type="checkbox" name="showAvatar" checked data-default="true"><span class="slider"></span></label>
@@ -246,13 +241,6 @@
                         <div class="config">
                             <label data-i18n="general.badges">Badges</label>
                             <label class="switch"><input type="checkbox" name="showBadges" checked data-default="true"><span class="slider"></span></label>
-                        </div>
-                        <div class="config">
-                            <label>
-                                <span data-i18n="general.platform_statistics">Platform Statistics</span><br>
-                                <small data-i18n="general.platform_statistics_hint">Shows all platform statistics.</small>
-                            </label>
-                            <label class="switch"><input type="checkbox" name="showPlatformStatistics" checked data-default="true"><span class="slider"></span></label>
                         </div>
                         <div class="config">
                             <label>
@@ -278,10 +266,17 @@
                         <hr>
                         <div class="config">
                             <label>
-                                <span data-i18n="general.multi_streamer_mode">Multi-Streamer Mode</span><br>
-                                <small data-i18n-html="general.multi_streamer_mode_hint">Changes <strong>Twitch</strong> to <em class="msm-platform purple">Purple Platform</em>, <strong>YouTube</strong> to <em class="msm-platform red">Red Platform</em>,<br><strong>Kick</strong> to <em class="msm-platform green">Green Platform</em> and <strong>TikTok</strong> to <em class="msm-platform vertical">Short Video App</em><br>on all chat messages.</small>
+                                <span data-i18n="general.platforms">Platforms</span><br>
+                                <small data-i18n="general.platforms_hint">Shows the platforms logos.</small>
                             </label>
-                            <label class="switch"><input type="checkbox" name="multiStreamerMode" data-default="false"><span class="slider"></span></label>
+                            <label class="switch"><input type="checkbox" name="showPlatform" checked data-default="true"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label>
+                                <span data-i18n="general.platform_statistics">Platform Statistics</span><br>
+                                <small data-i18n="general.platform_statistics_hint">Shows all platform statistics.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showPlatformStatistics" checked data-default="true"><span class="slider"></span></label>
                         </div>
                         <hr>
                         <div class="config">
@@ -503,6 +498,7 @@
                                 <small data-i18n="youtube.custom_emotes_hint">You have to add member emotes manually because YouTube's API doesn't relay them to Streamer.bot.</small>
                             </label>
                         </div>
+
                         <div class="config">
                             <div class="emote-list">
                                 <span class="emote-item">
@@ -510,6 +506,12 @@
                                 </span>
                             </div>
                             <textarea name="youTubeCustomEmotes" style="display: none;">"{}"</textarea>
+                        </div>
+                        
+                        <div class="config">
+                            <small class="warning" data-i18n-html="youtube.custom_emote_information">
+                                <i class="fa-solid fa-circle-info"></i> <strong>Don't</strong> use Discord, Imgur or any temporary image hosting platforms to host your emotes. You could right click on the emote image on YouTube and copy the image URL 😊
+                            </small>
                         </div>
                     </div>
                 </div>
@@ -582,8 +584,7 @@
                                 <small data-i18n="tiktok.statistics_hint">Shows TikTok Viewers and Likes.</small>
                             </label>
                             <label class="switch"><input type="checkbox" name="showTikTokStatistics" checked data-default="true"><span class="slider"></span></label>
-                        </div>
-                        <hr>
+                        </div> 
                         <div class="config">
                             <small class="warning" data-i18n-html="tiktok.chat_field_warning">
                                 <i class="fa-solid fa-circle-info"></i> If you have <strong>Chat Field</strong> enabled, you need to <strong><a target="_blank" href="https://github.com/vortisrd/chatrd/?tab=readme-ov-file#-sending-messages-to-tiktok">follow the instructions</a></strong> to send messages to TikTok.
@@ -964,8 +965,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@streamerbot/client@1.12.1/dist/streamerbot-client.min.js"></script>
 
 <!-- i18n deve ser carregado ANTES do settings.js -->
-<script src="js/i18n-settings.js?nocache=27"></script>
-<script src="js/speakerbot.js?nocache=27"></script>
-<script src="js/settings.js?nocache=27"></script>
+<script src="js/i18n-settings.js?nocache=04"></script>
+<script src="js/speakerbot.js?nocache=04"></script>
+<script src="js/settings.js?nocache=04"></script>
 </body>
 </html>
