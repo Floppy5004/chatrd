@@ -524,7 +524,7 @@ body {
     display: flex;
     flex-direction: column-reverse;
     padding: 0px 10px;
-    gap: 5px;
+    gap: 10px;
     overflow-y: auto;
     scroll-behavior: smooth;
     scrollbar-width: none;
