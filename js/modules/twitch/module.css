@@ -142,8 +142,14 @@
 
 
 #chat .item.announcement.twitch .message {
+    text-shadow: var(--dropShadow);
     background: rgba(145,70,255,0.75);
     padding: 10px;
+    max-width: fit-content;
+}
+
+#chat .item.announcement.twitch .message img {
+    filter: drop-shadow(var(--dropShadow));
 }
 
 #chat .item.announcement.twitch.green .message { background: linear-gradient(to bottom, rgba(0,219,132,0.75),rgba(87,190,230,0.75)); }

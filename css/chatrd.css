@@ -642,6 +642,10 @@ body {
     font-size: 14px;
 }
 
+#chat.vertical .item .header {
+    font-size: 14px;
+}
+
 #chat.vertical .item .reply {
     max-width: 100%;
     flex-basis: 100%;
