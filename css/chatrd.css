@@ -943,7 +943,7 @@ body {
 }
 
 #chat.horizontal .item .reply {
-    max-width: 100%;
+    max-width: 300px;
     flex-basis: 100%;
     overflow: hidden;
     white-space: nowrap;
