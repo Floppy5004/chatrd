@@ -17,5 +17,4 @@
 ## YouTube
 
 - Changed the Moderator icon from Wrench to Shield.
-- The badges for Sub, Mod, Streamer and Verified are now circular.
 - The mysterious ":awesome:" emote, which were not showing before due to how the YouTube Payload is, is now forcibly shown. 😁

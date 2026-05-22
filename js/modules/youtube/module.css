@@ -55,7 +55,7 @@
     width: 22px;
     height: 22px;
     font-size: 12px;
-    border-radius: 100px;
+    border-radius: 5px;
     margin: 0 1px;
 }
 
@@ -79,7 +79,6 @@
     padding: 0 5px;
     border-radius: 5px;
 }
-
 
 
 #chat .event.youtube .message {
