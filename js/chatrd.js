@@ -46,10 +46,10 @@ const loadedEmotes = new Set();
 
 /* ✅ Explicit whitelist */
 const SKINS = {
-    default: "skin-default.css?nocache=41",
-    nutting: "skin-nutting.css?nocache=41",
-    kimballs: "skin-kimballs.css?nocache=41",
-    bubbles: "skin-bubbles.css?nocache=41"
+    default: "skin-default.css?nocache=43",
+    nutting: "skin-nutting.css?nocache=43",
+    kimballs: "skin-kimballs.css?nocache=43",
+    bubbles: "skin-bubbles.css?nocache=43"
 };
 
 const skinFile = SKINS[chatrdSkin] || SKINS.default;
@@ -71,6 +71,8 @@ if (chatHorizontal == true) {
     chatContainer.classList.remove('oneline');
     chatContainer.classList.add('horizontal');
 }
+
+if (!chatHorizontal && !chatOneLine) { chatContainer.classList.add('vertical'); }
 
 let backgroundColor = hexToRGBA(chatBackground,chatBackgroundOpacity);
 chatContainer.parentElement.style.backgroundColor = backgroundColor;
