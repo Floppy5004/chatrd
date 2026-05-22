@@ -898,7 +898,7 @@ body {
 }
 
 #chat.horizontal .item .actual-message img.emote {
-    vertical-align: sub;
+    vertical-align: middle;
     height: var(--emoteSize);
     margin: 1px;
 }
