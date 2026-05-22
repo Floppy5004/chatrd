@@ -159,12 +159,6 @@
 
 #chat .item.announcement.twitch .chatmoderation { display: none; }
 
-#chat .item.twitch img.gigantified {
-    display: block;
-    height: 96px;
-    margin-top: 5px;
-}
-
 #chat .item.twitch.streamer-mentioned .message {
     background: rgba(145,70,255,0.15);
 }
@@ -257,6 +251,11 @@
 }
 
 
+#chat .item.twitch .actual-message img.gigantified {
+    display: block;
+    height: 96px;
+    margin-top: 5px;
+}
 
 #chat .event.twitch .message { background: rgba(145,70,255,0.75); }
 
