@@ -519,7 +519,7 @@ body {
 /* ----------------------------------------- */
 
 
-#chat:is(:not([class]), .noscrollbar) {
+#chat.vertical {
     flex: 1;
     display: flex;
     flex-direction: column-reverse;
@@ -531,7 +531,7 @@ body {
     -ms-overflow-style: none;
 }
 
-#chat:is(:not([class]), .noscrollbar) .item {
+#chat.vertical .item {
     position: relative;
     color: #FFF;
     font-size: 18px;
@@ -539,36 +539,36 @@ body {
     transition: var(--transition);
 }
 
-#chat:is(:not([class]), .noscrollbar) .item .message {
+#chat.vertical .item .message {
     border-radius: 5px;
     transition: var(--transition);
 }
 
-#chat:is(:not([class]), .noscrollbar) .item .info {
+#chat.vertical .item .info {
     display: inline-flex;
     align-items: center;
     flex-wrap: wrap;
     gap: 5px;
 }
 
-#chat:is(:not([class]), .noscrollbar) .item .user { font-weight: bold; }
-#chat:is(:not([class]), .noscrollbar) .item .user a {
+#chat.vertical .item .user { font-weight: bold; }
+#chat.vertical .item .user a {
     display: inline-block;
     text-decoration: none;
     transition: var(--transition);
     color: var(--user-color);
 }
 
-#chat:is(:not([class]), .noscrollbar) .item .user a:hover { text-shadow: 0 0 10px var(--user-color); }
+#chat.vertical .item .user a:hover { text-shadow: 0 0 10px var(--user-color); }
 
-#chat:is(:not([class]), .noscrollbar) .item img { height: var(--emoteSize); }
+#chat.vertical .item img { height: var(--emoteSize); }
 
-#chat:is(:not([class]), .noscrollbar) .item .platform { height: var(--emoteSize); }
+#chat.vertical .item .platform { height: var(--emoteSize); }
 
-#chat:is(:not([class]), .noscrollbar) .item .badges { height: var(--emoteSize); }
-#chat:is(:not([class]), .noscrollbar) .item .badges img { margin: 0 1px; }
+#chat.vertical .item .badges { height: var(--emoteSize); }
+#chat.vertical .item .badges img { margin: 0 1px; }
 
-#chat:is(:not([class]), .noscrollbar) .item .info .avatar {
+#chat.vertical .item .info .avatar {
     display: block;
     width: var(--avatarSize);
     height: var(--avatarSize);
@@ -577,9 +577,9 @@ body {
     box-shadow: var(--dropShadow);
 }
 
-#chat:is(:not([class]), .noscrollbar) .item .info .avatar img { height: var(--avatarSize); }
+#chat.vertical .item .info .avatar img { height: var(--avatarSize); }
 
-#chat:is(:not([class]), .noscrollbar) .item .info .timestamp {
+#chat.vertical .item .info .timestamp {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -590,11 +590,11 @@ body {
     background: var(--blackOpaque);
 }
 
-#chat:is(:not([class]), .noscrollbar) .item:has(.timestamp) .info {
+#chat.vertical .item:has(.timestamp) .info {
     height: 35px;
 }
  
-#chat:is(:not([class]), .noscrollbar) .item .info .pronouns {
+#chat.vertical .item .info .pronouns {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -604,27 +604,27 @@ body {
     font-size: 12px;
     background: var(--blackOpaque);
 }
-#chat:is(:not([class]), .noscrollbar) .item .info .pronouns:empty { display: none; }
+#chat.vertical .item .info .pronouns:empty { display: none; }
 
-#chat:is(:not([class]), .noscrollbar) .item .actual-message { font-weight: 500; }
+#chat.vertical .item .actual-message { font-weight: 500; }
 
-#chat:is(:not([class]), .noscrollbar) .item .actual-message img.emote {
+#chat.vertical .item .actual-message img.emote {
     vertical-align: middle;
     height: var(--emoteSize);
     margin: 1px;
 }
 
-#chat:is(:not([class]), .noscrollbar) .item .actual-message a {
+#chat.vertical .item .actual-message a {
     color: #FFF;
     font-weight: bold;
     transition: var(--transition);
 }
 
-#chat:is(:not([class]), .noscrollbar) .item .actual-message a:hover {
+#chat.vertical .item .actual-message a:hover {
     text-shadow: 0 0 10px #FFF;
 }
 
-#chat:is(:not([class]), .noscrollbar) .item.streamer-mentioned .message {
+#chat.vertical .item.streamer-mentioned .message {
     background: rgba(255,255,255,0.1);
     padding: 10px;
     border-radius: 5px;
