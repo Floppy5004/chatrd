@@ -1,8 +1,0 @@
-{
-    "general" : {
-        "no_participants" : "Es gibt keine Teilnehmer."
-    },
-    "winner" : {
-        "label" : "🏆 Der Gewinner ist"
-    }
-}
