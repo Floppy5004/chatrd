@@ -46,10 +46,10 @@ const loadedEmotes = new Set();
 
 /* ✅ Explicit whitelist */
 const SKINS = {
-    default: "skin-default.css?nocache=14",
-    nutting: "skin-nutting.css?nocache=14",
-    kimballs: "skin-kimballs.css?nocache=14",
-    bubbles: "skin-bubbles.css?nocache=14"
+    default: "skin-default.css?nocache=15",
+    nutting: "skin-nutting.css?nocache=15",
+    kimballs: "skin-kimballs.css?nocache=15",
+    bubbles: "skin-bubbles.css?nocache=15"
 };
 
 const skinFile = SKINS[chatrdSkin] || SKINS.default;
@@ -82,6 +82,53 @@ chatContainer.style.zoom = chatFontSize;
 if (chatField) {
     const chatfieldelement = document.getElementById("chat-input");
     chatfieldelement.style.display = '';
+}
+
+async function animateItemEntry(root, messageid) {
+    const zoomRaw = parseFloat(getComputedStyle(chatContainer).zoom) || 1;
+
+    let marginPropValue = parseFloat(getComputedStyle(chatContainer).gap);
+    marginPropValue = marginPropValue / zoomRaw;
+
+    const dimensionProp = chatHorizontal ? 'Width' : 'Height';
+    const marginProp = chatHorizontal ? 'margin-left' : 'margin-top';
+
+    root.style = `${dimensionProp.toLowerCase()}: 0px; opacity: 0; ${marginProp}: -${marginPropValue}px;`;
+
+    chatContainer.prepend(root.parentNode ?? root);
+
+    const item = document.getElementById(messageid);
+    const images = [...item.querySelectorAll('img')];
+
+    await Promise.all(images.map(img => {
+        if (img.complete) return Promise.resolve();
+        return Promise.race([
+            new Promise(resolve => {
+                img.addEventListener('load', resolve);
+                img.addEventListener('error', resolve);
+            }),
+            new Promise(resolve => setTimeout(resolve, 500))
+        ]);
+    }));
+
+    const rect = item.querySelector('.message')?.getBoundingClientRect();
+    const itemDimension = chatHorizontal ? (rect?.width || 0) : (rect?.height || 0);
+
+    setTimeout(function () {
+        root.style = `${dimensionProp.toLowerCase()}: ${itemDimension}px; opacity: 1; ${marginProp}: 0px;`;
+        setTimeout(function () {
+            item.removeAttribute('style');
+        }, 1300);
+    }, 10);
+
+    if (hideAfter > 0) {
+        setTimeout(() => {
+            item.style.opacity = '0';
+            setTimeout(() => {
+                item.remove();
+            }, 1000);
+        }, Math.floor(hideAfter * 1000));
+    }
 }
 
 
@@ -151,23 +198,17 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
         }
     }
     
-    //if (chatModeration == true) {
     if ((chatModeration == true) && (!root.classList.contains('streamer'))) {    
         switch (platform) {
             case "twitch":
                 root.insertAdjacentHTML("beforeend", chatmodtwitch);
                 break;
-
             case "youtube":
                 root.insertAdjacentHTML("beforeend", chatmodyoutube);
                 break;
-
             case "kick":
                 root.insertAdjacentHTML("beforeend", chatmodkick);
                 break;
-
-            default:
-                //console.warn(`Plataforma desconhecida: ${platform}`);
         }
     }
 
@@ -180,73 +221,15 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
         lastClasses = lastClasses.filter(c => c !== 'streamer-mentioned');
         lastClasses = lastClasses.join(' ');
 
-        let currentClasses = Array.from(classes)
-        .join(' ');
+        let currentClasses = Array.from(classes).join(' ');
 
         if (lastUserId == userid && lastClasses == currentClasses) {
             infoEl.remove();
             root.classList.add('grouped');
         }
     }
-    
-    // Calculates the zoom computed style
-    const zoom = parseFloat(getComputedStyle(chatContainer).zoom) || 1;
 
-    let marginPropValue = 10;
-
-    if (chatHorizontal) { marginPropValue = 15; }
-    if (chatOneLine) { marginPropValue = 10; }
-
-    marginPropValue = marginPropValue / zoom;
-
-    const dimensionProp = chatHorizontal ? 'Width' : 'Height';
-    const marginProp = chatHorizontal ? 'margin-left' : 'margin-top';
-    
-    // Starts it collapsed
-    root.style = `${dimensionProp.toLowerCase()}: 0px; opacity: 0; ${marginProp}: -${marginPropValue}px;`;
-
-    chatContainer.prepend(clone);
-
-    const item = document.getElementById(messageid);
-    const images = [...item.querySelectorAll('img')];
-
-    (async () => {
-
-        await Promise.all(images.map(img => {
-            if (img.complete) return Promise.resolve()
-            return Promise.race([
-                new Promise(resolve => {
-                    img.addEventListener('load', resolve)
-                    img.addEventListener('error', resolve)
-                }),
-                new Promise(resolve => setTimeout(resolve, 500))
-            ])
-        }));
-        
-        const itemBoundClientRect = chatHorizontal 
-        ? item.querySelector('.message')?.getBoundingClientRect().width 
-        : item.querySelector('.message')?.getBoundingClientRect().height;
-
-        const itemDimension = (itemBoundClientRect || 0) / zoom;
-
-        setTimeout(function () {
-            root.style = `${dimensionProp.toLowerCase()}: ${itemDimension}px; opacity: 1; ${marginProp}: 0px;`;
-            setTimeout(function () {
-                item.removeAttribute('style');
-            }, 1300);
-
-        }, 10);
-    })();
-    
-    // Hides it after a while
-    if (hideAfter > 0) {
-        setTimeout(() => {
-            item.style.opacity = '0';
-            setTimeout(() => {
-                item.remove();
-            }, 1000);
-        }, Math.floor(hideAfter * 1000));
-    }
+    animateItemEntry(root, messageid);
 }
 
 
@@ -272,8 +255,6 @@ function addEventItem(platform, clone, classes, userid, messageid) {
         }
 
         else {
-            
-        
             const isTwitch = platform === "twitch";
 
             if (root.classList.contains("youtube-vertical")) {
@@ -288,8 +269,6 @@ function addEventItem(platform, clone, classes, userid, messageid) {
             else {
                 platformContent = `<img src="js/modules/${platform}/images/logo-${platform}.svg">`;
             }
-
-
         }        
         
         platformElement.innerHTML = platformContent;
@@ -308,68 +287,9 @@ function addEventItem(platform, clone, classes, userid, messageid) {
             timestamp.remove();
         }
     }
-    
-    // Calculates the zoom computed style
-    const zoom = parseFloat(getComputedStyle(chatContainer).zoom) || 1;
 
-    let marginPropValue = 10;
-
-    if (chatHorizontal) { marginPropValue = 15; }
-    if (chatOneLine) { marginPropValue = 10; }
-
-    marginPropValue = marginPropValue / zoom;
-
-    const dimensionProp = chatHorizontal ? 'Width' : 'Height';
-    const marginProp = chatHorizontal ? 'margin-left' : 'margin-top';
-    
-    // Starts it collapsed
-    root.style = `${dimensionProp.toLowerCase()}: 0px; opacity: 0; ${marginProp}: -${marginPropValue}px;`;
-
-    chatContainer.prepend(clone);
-
-    const item = document.getElementById(messageid);
-    const images = [...item.querySelectorAll('img')];
-
-    (async () => {
-
-        await Promise.all(images.map(img => {
-            if (img.complete) return Promise.resolve()
-            return Promise.race([
-                new Promise(resolve => {
-                    img.addEventListener('load', resolve)
-                    img.addEventListener('error', resolve)
-                }),
-                new Promise(resolve => setTimeout(resolve, 500))
-            ])
-        }));
-        
-        const itemBoundClientRect = chatHorizontal 
-        ? item.querySelector('.message')?.getBoundingClientRect().width 
-        : item.querySelector('.message')?.getBoundingClientRect().height;
-
-        const itemDimension = (itemBoundClientRect || 0) / zoom;
-
-        setTimeout(function () {
-            root.style = `${dimensionProp.toLowerCase()}: ${itemDimension}px; opacity: 1; ${marginProp}: 0px;`;
-            setTimeout(function () {
-                item.removeAttribute('style');
-            }, 1300);
-
-        }, 10);
-    })();
-
-    // Hides it after a while
-    if (hideAfter > 0) {
-        setTimeout(() => {
-            item.style.opacity = '0';
-            setTimeout(() => {
-                item.remove();
-            }, 1000);
-        }, Math.floor(hideAfter * 1000));
-    }
+    animateItemEntry(root, messageid);
 }
-
-
 async function preloadAndPrepend(container, fragment) {
     const tempDiv = document.createElement('div');
     tempDiv.appendChild(fragment.cloneNode(true));
