@@ -1,5 +1,5 @@
 /**
- * ChatRD — Settings i18n
+ * RouletteRD — Settings i18n
  *
  * Atributos suportados no HTML:
  *   data-i18n="section.key"           → substitui textContent
@@ -18,12 +18,12 @@ class SettingsI18n {
    * @param {object}  options
    * @param {string}  options.localesPath   - Caminho para a pasta locale (padrão: './locale')
    * @param {string}  options.fallbackLocale - Idioma de fallback          (padrão: 'en')
-   * @param {string}  options.storageKey     - Chave no localStorage        (padrão: 'chatrd_locale')
+   * @param {string}  options.storageKey     - Chave no localStorage        (padrão: 'RouletteRD_locale')
    */
   constructor(options = {}) {
     this.localesPath    = options.localesPath    ?? './locale';
     this.fallbackLocale = options.fallbackLocale ?? 'en';
-    this.storageKey     = options.storageKey     ?? 'chatrd_locale';
+    this.storageKey     = options.storageKey     ?? 'RouletteRD_locale';
 
     this._strings  = {};   // strings do idioma ativo
     this._fallback = {};   // strings do idioma de fallback (sempre carregadas)

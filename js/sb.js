@@ -2,67 +2,49 @@
 /* STREAMER.BOT CONNECTION */
 /* ----------------------- */
 
-let speakerBotClient = null;
-
-const streamerBotStatus = {};
 const streamerBotServerAddress      = getURLParam("streamerBotServerAddress", "127.0.0.1");
 const streamerBotServerPort         = getURLParam("streamerBotServerPort", "8080");
-const showSpeakerbot                = getURLParam("showSpeakerbot", true);
-const speakerBotServerAddress       = getURLParam("speakerBotServerAddress", "127.0.0.1");
-const speakerBotServerPort          = getURLParam("speakerBotServerPort", "7580");
-const speakerBotChatRead            = getURLParam("speakerBotChatRead", false);
-const speakerBotEventRead           = getURLParam("speakerBotEventRead", false);
-const speakerBotVoiceAlias          = getURLParam("speakerBotVoiceAlias", "Maria");
-const speakerBotChatTemplate        = getURLParam("speakerBotChatTemplate", "{user} said {message}");
 
-function getSpeakerBotInstance() {
-    if (!speakerBotClient && showSpeakerbot) {
-        speakerBotClient = new SpeakerBotClient({
-            host: speakerBotServerAddress,
-            port: speakerBotServerPort,
-            voiceAlias: speakerBotVoiceAlias,
-            onConnect: () => {
-                notifySuccess({
-                    title: 'ChatRD 🤝 Speaker.bot',
-                    text: ''
-                });
-            },
-        });
-    }
-    return speakerBotClient;
-}
+const rouletteConfig = {};
 
 let streamerBotClientActive = null;
 
 function streamerBotConnect() {
-    // 🔎 Se já existe um cliente, encerra a tentativa anterior
+    
     if (streamerBotClientActive) {
         try {
-            console.debug("[ChatRD][Settings] Closing previous Streamer.bot connection...");
-            streamerBotClientActive.disconnect?.(); // usa se existir na lib
+            console.debug("[RouletteRD][Settings] Closing previous Streamer.bot connection...");
+            streamerBotClientActive.disconnect?.();
             streamerBotClientActive = null;
-            streamerBotStatus.connected = false;
         } catch (err) {
-            console.error("[ChatRD][Settings] Error closing previous client:", err);
+            console.error("[RouletteRD][Settings] Error closing previous client:", err);
         }
     }
 
     streamerBotClientActive = new StreamerbotClient({
         host: streamerBotServerAddress,
         port: streamerBotServerPort,
-        //autoReconnect: false, // evita reconectar sozinho
+        
         onConnect: () => {
-            streamerBotStatus.connected = true;
-
             notifySuccess({
-                title: 'ChatRD 🤝 Streamer.bot',
+                title: 'RouletteRD 🤝 Streamer.bot',
                 text: ``
             });
             
+            (async () => {
+                await loadSettingsFromStreamerBot();
+                
+                twitchConnection();
+                youtubeConnection();
+                tiktokConnection();
+                kickConnection();
+
+                generateRoulette();
+            })();
+            
         },
         onDisconnect: () => {
-            streamerBotStatus.connected = false;
-            console.debug("[ChatRD][Settings] Streamer.bot disconnected.");
+            console.debug("[RouletteRD][Settings] Streamer.bot disconnected.");
         }
     });
 
@@ -72,6 +54,30 @@ function streamerBotConnect() {
 // mantém o const fixo apontando para a primeira conexão
 const streamerBotClient = streamerBotConnect();
 
+async function loadSettingsFromStreamerBot() {
+    if (!streamerBotClientActive) return Promise.resolve(null);
+
+    const saved = await streamerBotClient.getGlobals().then((globals) => {
+        console.debug('[RouletteRD][Settings][Front] Loading Global Vars...');
+        const rouletterdglobal = globals.variables?.rouletterd;
+
+        if (!rouletterdglobal) {
+            return null;
+        }
+        try {
+            return JSON.parse(rouletterdglobal.value);
+        }
+        catch (e) {
+            return null;
+        }
+    });
+
+    if (!saved) return;
+
+    const settings = JSON.parse(saved);
+
+    Object.assign(rouletteConfig, settings);
+}
 
 async function getStreamerInfo() {
     const requestForStreamer = await streamerBotClient.getBroadcaster();
@@ -99,7 +105,6 @@ function registerPlatformHandlersToStreamerBot(handlers, logPrefix = '') {
         });
     }
 }
-
 
 const pushNotify = (data) => {
 

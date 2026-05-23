@@ -1,8 +1,8 @@
-# ![ChatRD](https://i.imgur.com/Ifpd7Ay.png)
+# ![RouletteRD](https://i.imgur.com/vBBI7bE.png)
 
-ChatRD is a chat tool and/or overlay widget that unifies messages and events from **Twitch**, **YouTube**, **TikTok**, **Kick**, **Streamlabs**, **StreamElements**, **Patreon**, **TipeeeStream**, **Ko-Fi** and **Fourthwall**.
+RouletteRD is Counter-Strike like roulette made for you to run raffles with your chat. Available for **Twitch**, **YouTube**, **TikTok** and **Kick**.
 
-![ChatRD Config UI](https://i.imgur.com/ezrWaI2.png)
+![RouletteRD Settings UI](https://i.imgur.com/NuxIO8V.png)
 
 ## 🛠️ Setting it up
 
@@ -10,29 +10,19 @@ Make sure your **Twitch**, **YouTube** and **Kick** accounts are connected on **
 
 If you have both of these ready, follow these steps:
 
-1. On **Streamer.bot**, import the file [chatrd.sb](https://github.com/vortisrd/chatrd/blob/main/chatrd.sb) to your **Streamer.bot**.
+1. On **Streamer.bot**, import the file [rouletterd.sb](https://github.com/vortisrd/rouletterd/blob/main/rouletterd.sb) to your **Streamer.bot**.
 2. Go to **Server/Clients → WebSocket Server** and make sure it is running.
-5. Open the [Settings Page](https://vortisrd.github.io/chatrd) in your browser.
+5. Open the [Settings Page](https://vortisrd.github.io/rouletterd) in your browser.
 6. Choose your desired options.
 7. Click **"Copy URL"**.
-8. Add the copied URL as a Browser Source in OBS. Or use it in your browser to read chat. 😊
-9. For **Streamlabs**, **StreamElements**, **Patreon**, **TipeeeStream**, **Ko-Fi** and **Fourthwall**, you need to connect them to your Streamer.Bot account to their website. Follow the tutorial links in each section presented in the [Settings Page](https://vortisrd.github.io/chatrd).
+8. Add the copied URL as a Browser Source in OBS or open in your browser of choice. 😊
+
+It runs globally, so whatever changes you make over the [Settings Page](https://vortisrd.github.io/rouletterd) will be reflected on the Overlay/Browser Window, as well spinning the roulette or resetting it.
 
 ---
 
-## 🔊 Setting TTS with Speaker.Bot
-
-1. Go to **Settings → WebSocket Server**, click on *Start Server*. Make sure to also tick the *Auto-Start* checkbox.
-2. Copy the IP and Port to ChatRD Speaker.bot fields.
-3. Go  to **Settings → Speech Engine** and add the TTS Service of your preference. (Sapi5 is the Windows default).
-4. Go to **Settings → Voice Aliases**, give it a name and click **Add** right next to it.
-5. In the Left Column, click on the **SpeakerBot** you just added and on the **Speak!** section, select the voice you want to use and click **Add**. (If you're using Sapi5, I recommend using *Microsoft Zira Desktop* as a voice).
-6. Add the Alias name under the *Voice Alias* field on ChatRD.
-
----
-
-## 💬 Sending Messages to TikTok
-To send messages to **TikTok** using the *Chat Field*, you need to the following on **TikFinity**:
+## 💬 Announcing the Winner over TikTok Chat
+You need to the following on **TikFinity**:
 
 1. Make sure you're connected to your TikTok Account on **TikFinity**. If you're not, go to **Setup → TikTok Login** and click on *Login to TikTok*.
 2. Go to **Setup → Streamer.Bot Connection** and type the IP and the PORT you're using on your **Streamer.Bot** and then click on *Test Connection*.
@@ -45,80 +35,21 @@ To send messages to **TikTok** using the *Chat Field*, you need to the following
 
 ---
 
-## 💻 Commands supported by the Chat Field
-
-**Commands for Twitch**
-- /me (message)
-- /clip
-- /announce (message)
-- /announceblue (message)
-- /announcegreen (message)
-- /announceorange (message)
-- /announcepurple (message)
-- /clear
-- /slow (duration in seconds)
-- /slowoff
-- /emoteonly
-- /emoteonlyoff
-- /subscribers
-- /subscribersoff
-- /commercial (duration in seconds)
-- /timeout (user) (duration) (reason)
-- /untimeout (user)
-- /ban (user) (reason)
-- /unban (user)
-- /mod (user)
-- /unmod (user)
-- /vip (user)
-- /unvip (user)
-- /shoutout (user)
-- /raid (user)
-- /unraid
-- /settitle (stream title)
-- /setgame (game name)
-
-**Commands for YouTube**
-- /yt/title (stream title)
-- /yt/timeout (userID) (duration in seconds)
-- /yt/ban (userID)
-
-**Commands for Kick**
-- /kick/title (stream title)
-- /kick/category (stream category title)
-- /kick/timeout (user) (duration in seconds)
-- /kick/untimeout (user)
-- /kick/ban (user) (reason)
-- /kick/unban (user)
-
-**TikTok**
-- TikTok commands are not supported.
-
-
----
-
 ## ❓ Frequently Asked Questions
-**- Can I use it to read my chat?**
-R: Yes you can. You can open it on your browser, use it as a chat overlay and/or use it as a dock in OBS.
 
-**- What about YouTube Members Emotes?**
-R: YouTube doesn't expose their Membership/Partner Emojis to Streamer.bot. You would have to add them manually on ChatRD's Members Only Emotes section.
+**- Can you add the option the participants need to be Following or being a Paid Sub to the channel?**
+R: Requiring a paid subscription to enter giveaways violates the Terms of Service across all major platforms, and doing so could get your account penalized. While restricting entries to followers is permitted on Twitch, Kick, and TikTok (provided it doesn't violate spam policies), it is strictly prohibited on YouTube. Additionally, hosting giveaways for social engagement is illegal in certain countries. I highly recommend checking your specific platform's guidelines and your local laws before hosting any giveaway.
 
-What Casterlabs Caffeinated, Social Stream Ninja and Onecomme do to scrape the emotes won't work with the current way Streamer.Bot and my code works, so I had to choose between **making the user add them manually** or build a **server-sided executable (using NodeJS, Python or whatever) to read the chat as it's going or scrape the HTML code**. I don't want to add another executable on top of the user's flow, so it would be easier to use what it's currently available. **And no, I won't do any research based on what other tools do.**
+That being said, this widget is designed to keep entries open and compliant for everyone.
 
-**- Can I set TTS to read only the events I want to read?**
-R: No. ChatRD sends either chats, events or both to Speaker.bot.
+**- Can I customize it? Like, change colors, font, etc?**
+R: You can add your own using the *Custom CSS* field in OBS's Browser Source Properties Window. You can use your browser Dev Tools to inspect the elements you want to change. **I won't provide support if you're planning to customize codes that could break RouletteRD**.
 
-**- TikTok events are not working anymore, what should I do?**
-R: Make sure your TikFinity is connected to your account and you are live.
+**- Can you add support for other platforms?**
+R: Yes... if they are supported by Streamer.bot or are as easy to setup as TikFinity for TikTok. Other than that, no. 🙂‍↔️
 
-**- Kick events are not working or are taking too much time to show, what should I do?**
-R: Kick's API is notoriously slow on their peak usage. It's been reported on [Streamer.bot](https://discord.streamer.bot/) Discord (check html-css-js section) that sometimes it could take up to 60 seconds for the responses to be relayed. I hope in the future they throw more money into their servers.
-
-**- Can you add other streaming/payment platforms?**
-R: ChatRD uses Streamer.Bot to 95% of all platform iterations. *TikFinity* is perfectly integrated via WebSockets. So if the platform has any integration with Streamer.bot or has a decent WebSocket API (not WebHooks), feel free to suggest it. Other than that, there are no plans to add more platforms.
-
-**- Can I customize it?**
-R: If you mean visual styles, you can add your own using the *Custom CSS* field in OBS's Browser Source Properties Window. You can use your browser Dev Tools to inspect the elements you want to change. **I won't provide support if you're planning to customize codes that could break ChatRD**.
+**- Does it have TTS support to read the result?**
+R: Not for now, no.
 
 ---
 
@@ -126,8 +57,4 @@ R: If you mean visual styles, you can add your own using the *Custom CSS* field 
 
 Made with ❤️ by **VortisRD**  
 
-🔗 [GitHub](https://github.com/vortisrd) • [Twitch](https://twitch.tv/vortisrd) • [YouTube](https://youtube.com/@vortisrd) • [Kick](https://kick.com/vortisrd) • [TikTok](https://tiktok.com/@vortisrd) • [Twitter / X](https://twitter.com/vortisrd)  
-
-Heavily inspired by [Nutty](https://nutty.gg). *Seriously, go give him some money!*
-
-🔗 [GitHub](https://github.com/nuttylmao) • [Twitch](https://twitch.tv/nutty) • [YouTube](https://youtube.com/@nuttylmao) • [Kick](https://kick.com/nutty) • [TikTok](https://tiktok.com/@nuttylmao) • [Twitter / X](https://x.com/nuttylmao)
+🔗 [GitHub](https://github.com/vortisrd) • [Twitch](https://twitch.tv/vortisrd) • [YouTube](https://youtube.com/@vortisrd) • [Kick](https://kick.com/vortisrd) • [TikTok](https://tiktok.com/@vortisrd) • [Twitter / X](https://twitter.com/vortisrd)
