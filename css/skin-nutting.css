@@ -2,15 +2,15 @@
 /* --------- CHAT - NORMAL LAYOUT ---------- */
 /* ----------------------------------------- */
 
-#chat:is(:not([class]), .noscrollbar):has(.avatar) .item .message {
+.chat.vertical:has(.avatar) .item .message {
     padding-left: 70px;
 }
 
-#chat:is(:not([class]), .noscrollbar) .item .info {
+.chat.vertical .item .info {
     position: relative;
 }
 
-#chat:is(:not([class]), .noscrollbar) .item .info .avatar {
+.chat.vertical .item .info .avatar {
     position: absolute;
     top: 0;
     left: -70px;
@@ -20,7 +20,7 @@
     box-shadow: var(--dropShadow);
 }
 
-#chat:is(:not([class]), .noscrollbar) .item .info .avatar img {
+.chat.vertical .item .info .avatar img {
     width: 62px;
     height: 62px;
 }
@@ -31,15 +31,15 @@
 /* --------- CHAT - ONE LINE LAYOUT ---------- */
 /* ------------------------------------------- */
 
-#chat.oneline:has(.avatar) .item .message {
+.chat.oneline:has(.avatar) .item .message {
     padding-left: 34px;
 }
 
-#chat.oneline .item .info {
+.chat.oneline .item .info {
     position: relative;
 }
 
-#chat.oneline .item .info .avatar {
+.chat.oneline .item .info .avatar {
     position: absolute;
     top: -10px;
     left: -34px;
@@ -49,7 +49,7 @@
     box-shadow: var(--dropShadow);
 }
 
-#chat.oneline .item .info .avatar img {
+.chat.oneline .item .info .avatar img {
     width: 28px;
     height: 28px;
 }
@@ -58,15 +58,15 @@
 /* --------- CHAT - HORIZONTAL LAYOUT -------- */
 /* ------------------------------------------- */
 
-#chat.horizontal:has(.avatar) .item .message {
+.chat.horizontal:has(.avatar) .item .message {
     padding-left: 34px;
 }
 
-#chat.horizontal .item .info {
+.chat.horizontal .item .info {
     position: relative;
 }
 
-#chat.horizontal .item .info .avatar {
+.chat.horizontal .item .info .avatar {
     position: absolute;
     top: -10px;
     left: -34px;
@@ -76,7 +76,7 @@
     box-shadow: var(--dropShadow);
 }
 
-#chat.horizontal .item .info .avatar img {
+.chat.horizontal .item .info .avatar img {
     width: 28px;
     height: 28px;
 }
@@ -85,6 +85,6 @@
 /* --------- CHAT - CASO HAJA SCROLLBAR -------- */
 /* --------------------------------------------- */
 
-#chat:not(.noscrollbar):not(.horizontal) {
+.chat:not(.noscrollbar):not(.horizontal) {
   padding: 0 25px 0 10px;
 }

@@ -2,21 +2,21 @@
 /* --------- CHAT - NORMAL LAYOUT ---------- */
 /* ----------------------------------------- */
 
-#chat:is(:not([class]), .noscrollbar) .item .message {
+.chat.vertical .item .message {
     border: 1px solid #fff;
     background: rgba(0,0,0,0.25);
     padding: 10px;
 }
 
-#chat:is(:not([class]), .noscrollbar):has(.avatar) .item .message {
+.chat.vertical:has(.avatar) .item .message {
     padding-left: 80px;
 }
 
-#chat:is(:not([class]), .noscrollbar) .item .info {
+.chat.vertical .item .info {
     position: relative;
 }
 
-#chat:is(:not([class]), .noscrollbar) .item .info .avatar {
+.chat.vertical .item .info .avatar {
     position: absolute;
     top: 0;
     left: -70px;
@@ -27,13 +27,13 @@
     border: 1px solid #fff;
 }
 
-#chat:is(:not([class]), .noscrollbar) .item .info .avatar img {
+.chat.vertical .item .info .avatar img {
     width: 60px;
     height: 60px;
 }
 
-#chat:is(:not([class]), .noscrollbar) .item.kick .info .avatar { position: absolute; }
-#chat:is(:not([class]), .noscrollbar) .item.kick .info .avatar img {
+.chat.vertical .item.kick .info .avatar { position: absolute; }
+.chat.vertical .item.kick .info .avatar img {
     width: 60px;
     height: 60px;
 }
@@ -42,20 +42,20 @@
 /* --------- CHAT - ONE LINE LAYOUT ---------- */
 /* ------------------------------------------- */
 
-#chat.oneline .item .message {
+.chat.oneline .item .message {
     border: 1px solid #fff;
     padding: 10px;
 }
 
-#chat.oneline:has(.avatar) .item .message {
+.chat.oneline:has(.avatar) .item .message {
     padding-left: 44px;
 }
 
-#chat.oneline .item .info {
+.chat.oneline .item .info {
     position: relative;
 }
 
-#chat.oneline .item .info .avatar {
+.chat.oneline .item .info .avatar {
     border: 1px solid #fff;
     position: absolute;
     top: -10px;
@@ -66,13 +66,13 @@
     box-shadow: var(--dropShadow);
 }
 
-#chat.oneline .item .info .avatar img {
+.chat.oneline .item .info .avatar img {
     width: 28px;
     height: 28px;
 }
 
-#chat.oneline .item.kick .info .avatar { position: absolute; }
-#chat.oneline .item.kick .info .avatar img {
+.chat.oneline .item.kick .info .avatar { position: absolute; }
+.chat.oneline .item.kick .info .avatar img {
     width: 28px;
     height: 28px;
 }
@@ -81,20 +81,20 @@
 /* --------- CHAT - HORIZONTAL LAYOUT -------- */
 /* ------------------------------------------- */
 
-#chat.horizontal .item .message {
+.chat.horizontal .item .message {
     border: 1px solid #fff;
     padding: 10px;
 }
 
-#chat.horizontal:has(.avatar) .item .message {
+.chat.horizontal:has(.avatar) .item .message {
     padding-left: 44px;
 }
 
-#chat.horizontal .item .info {
+.chat.horizontal .item .info {
     position: relative;
 }
 
-#chat.horizontal .item .info .avatar {
+.chat.horizontal .item .info .avatar {
     border: 1px solid #fff;
     position: absolute;
     top: -10px;
@@ -105,13 +105,13 @@
     box-shadow: var(--dropShadow);
 }
 
-#chat.horizontal .item .info .avatar img {
+.chat.horizontal .item .info .avatar img {
     width: 28px;
     height: 28px;
 }
 
-#chat.horizontal .item.kick .info .avatar { position: absolute; }
-#chat.horizontal .item.kick .info .avatar img {
+.chat.horizontal .item.kick .info .avatar { position: absolute; }
+.chat.horizontal .item.kick .info .avatar img {
     width: 28px;
     height: 28px;
 }
@@ -120,19 +120,19 @@
 /* --------- CHAT - CASO HAJA SCROLLBAR -------- */
 /* --------------------------------------------- */
 
-#chat:not(.noscrollbar):not(.horizontal) {
+.chat:not(.noscrollbar):not(.horizontal) {
   padding: 0 25px 0 10px;
 }
 
 
-#chat .item.twitch .info .avatar,
-#chat .item.twitch .message { border-color: rgba(145,70,255,1); }
+.chat .item.twitch .info .avatar,
+.chat .item.twitch .message { border-color: rgba(145,70,255,1); }
 
-#chat .item.youtube.info .avatar,
-#chat .item.youtube .message { border-color: rgba(255,0,0,1); }
+.chat .item.youtube.info .avatar,
+.chat .item.youtube .message { border-color: rgba(255,0,0,1); }
 
-#chat .item.tiktok .info .avatar,
-#chat .item.tiktok .message { border-color: rgba(241,32,74,1); }
+.chat .item.tiktok .info .avatar,
+.chat .item.tiktok .message { border-color: rgba(241,32,74,1); }
 
-#chat .item.kick .info .avatar,
-#chat .item.kick .message { border-color: rgba(72,212,21,1); }
+.chat .item.kick .info .avatar,
+.chat .item.kick .message { border-color: rgba(72,212,21,1); }

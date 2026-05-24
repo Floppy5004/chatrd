@@ -2,7 +2,7 @@
 /* --------- CHAT - NORMAL LAYOUT ---------- */
 /* ----------------------------------------- */
 
-#chat:is(:not([class]), .noscrollbar) .item .message {
+.chat.vertical .item .message {
     background: rgba(0,0,0,0.25);
     padding: 10px;
 }
@@ -13,7 +13,7 @@
 /* --------- CHAT - ONE LINE LAYOUT ---------- */
 /* ------------------------------------------- */
 
-#chat.oneline .item .message {
+.chat.oneline .item .message {
     background: rgba(0,0,0,0.25);
     padding: 10px;
 }
@@ -22,7 +22,7 @@
 /* --------- CHAT - HORIZONTAL LAYOUT -------- */
 /* ------------------------------------------- */
 
-#chat.horizontal .item .message {
+.chat.horizontal .item .message {
     background: rgba(0,0,0,0.25);
     padding: 10px;
 }
