@@ -185,7 +185,7 @@ async function tiktokChatMessage(data) {
             .map(el => [el.className, el])
     );
 
-    const classes = ['tiktok', 'chat'];
+    const classes = ['tiktok', 'msg'];
 
     if (data.isModerator) classes.push('mod');
     if (data.isSubscriber) classes.push('sub');

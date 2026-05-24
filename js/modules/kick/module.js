@@ -283,7 +283,7 @@ async function kickChatMessage(data) {
             .map(el => [el.className, el])
     );
 
-    const classes = ['kick', 'chat'];
+    const classes = ['kick', 'msg'];
 
     if (userSlug == kickUserName) classes.push('streamer');
 
@@ -296,19 +296,14 @@ async function kickChatMessage(data) {
     header.remove();
     firstMessage.remove();
 
-
+        
+    if (!kickStreamer.broadcasterUserName) {
+        const streamerInfo = await getStreamerInfo();
+        kickStreamer.broadcasterUserName = streamerInfo.platforms.kick.broadcasterUserName;
+    }
     
-
-    if (isOBS == false) {
-        
-        if (!kickStreamer.broadcasterUserName) {
-            const streamerInfo = await getStreamerInfo();
-            kickStreamer.broadcasterUserName = streamerInfo.platforms.kick.broadcasterUserName;
-        }
-        
-        if (data.content.toLowerCase().includes( kickStreamer.broadcasterUserName.toLowerCase() )) {
-            classes.push('streamer-mentioned');
-        }
+    if (data.content.toLowerCase().includes( kickStreamer.broadcasterUserName.toLowerCase() )) {
+        classes.push('streamer-mentioned');
     }
 
 

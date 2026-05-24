@@ -36,7 +36,7 @@
     display: none;
 }
 
-#chat .item.youtube.streamer-mentioned .message {
+.chat .item.youtube.streamer-mentioned .message {
     background: rgba(255,0,0,0.1);
 }
 
@@ -45,7 +45,7 @@
 /* -------- CHAT - NORMAL LAYOUT -------- */
 /* -------------------------------------- */
 
-#chat .item.youtube span.badge {
+.chat .item.youtube span.badge {
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -59,19 +59,19 @@
     margin: 0 1px;
 }
 
-#chat .item.youtube span.badge.owner { background: #EE0000; }
+.chat .item.youtube span.badge.owner { background: #EE0000; }
 
-#chat .item.youtube span.mod {
+.chat .item.youtube span.mod {
     background: none;
     color: #3ea6ff;
     font-size: 16px;
 }
 
-#chat .item.youtube.mod .user { color: #3ea6ff !important; }
-#chat .item.youtube span.member { background: #2ba640; }
-#chat .item.youtube.sub .user { color: #2ba640 !important; }
-#chat .item.youtube span.verified { background: #aaa; }
-#chat .item.youtube.streamer .user {
+.chat .item.youtube.mod .user { color: #3ea6ff !important; }
+.chat .item.youtube span.member { background: #2ba640; }
+.chat .item.youtube.sub .user { color: #2ba640 !important; }
+.chat .item.youtube span.verified { background: #aaa; }
+.chat .item.youtube.streamer .user {
     background: #ffd600;
     color: #121212 !important;
     text-shadow: none;
@@ -81,14 +81,14 @@
 }
 
 
-#chat .event.youtube .message {
+.chat .event.youtube .message {
     background: rgba(238,0,0,0.75);
 }
 
-#chat .event.youtube.sticker .header {
+.chat .event.youtube.sticker .header {
     padding: 5px 0;
     text-align: center;
 }
-#chat .event.youtube.sticker .header img {
+.chat .event.youtube.sticker .header img {
     height: 128px;
 }

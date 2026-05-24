@@ -2,8 +2,6 @@
 /*         OPTIONS         */
 /* ----------------------- */
 
-const isOBS = typeof window.obsstudio !== 'undefined';
-
 let myConfetti;
 
 const showPlatform                  = getURLParam("showPlatform", true);
@@ -37,6 +35,7 @@ const ignoreUserList                = ignoreChatters.split(',').map(item => item
 const hideAfter                     = getURLParam("hideAfter", 0);
 
 const chatContainer                 = document.querySelector('#chat');
+const chatGhostContainer            = document.querySelector('#chat-ghost');
 const chatTemplate                  = document.querySelector('#chat-message');
 const eventTemplate                 = document.querySelector('#event-message');
 
@@ -46,10 +45,10 @@ const loadedEmotes = new Set();
 
 /* ✅ Explicit whitelist */
 const SKINS = {
-    default: "skin-default.css?nocache=15",
-    nutting: "skin-nutting.css?nocache=15",
-    kimballs: "skin-kimballs.css?nocache=15",
-    bubbles: "skin-bubbles.css?nocache=15"
+    default: "skin-default.css?nocache=16",
+    nutting: "skin-nutting.css?nocache=16",
+    kimballs: "skin-kimballs.css?nocache=16",
+    bubbles: "skin-bubbles.css?nocache=16"
 };
 
 const skinFile = SKINS[chatrdSkin] || SKINS.default;
@@ -66,13 +65,22 @@ if (showPlatformStatistics == true) {
 document.querySelector('#bars').style.zoom = chatFontSize;
 
 if (chatScrollBar == false) { chatContainer.classList.add('noscrollbar'); }
-if (chatOneLine == true && !chatHorizontal) { chatContainer.classList.add('oneline'); }
+if (chatOneLine == true && !chatHorizontal) {
+    chatContainer.classList.add('oneline');
+    chatGhostContainer.classList.add('oneline');
+}
+
 if (chatHorizontal == true) {
     chatContainer.classList.remove('oneline');
     chatContainer.classList.add('horizontal');
+    chatGhostContainer.classList.remove('oneline');
+    chatGhostContainer.classList.add('horizontal');
 }
 
-if (!chatHorizontal && !chatOneLine) { chatContainer.classList.add('vertical'); }
+if (!chatHorizontal && !chatOneLine) {
+    chatContainer.classList.add('vertical');
+    chatGhostContainer.classList.add('vertical');
+}
 
 let backgroundColor = hexToRGBA(chatBackground,chatBackgroundOpacity);
 chatContainer.parentElement.style.backgroundColor = backgroundColor;
@@ -85,22 +93,14 @@ if (chatField) {
 }
 
 async function animateItemEntry(root, messageid) {
-    const zoomRaw = parseFloat(getComputedStyle(chatContainer).zoom) || 1;
-
-    let marginPropValue = parseFloat(getComputedStyle(chatContainer).gap);
-    marginPropValue = marginPropValue / zoomRaw;
-
     const dimensionProp = chatHorizontal ? 'Width' : 'Height';
     const marginProp = chatHorizontal ? 'margin-left' : 'margin-top';
 
-    root.style = `${dimensionProp.toLowerCase()}: 0px; opacity: 0; ${marginProp}: -${marginPropValue}px;`;
+    const ghostClone = root.cloneNode(true);
+    chatGhostContainer.prepend(ghostClone);
 
-    chatContainer.prepend(root.parentNode ?? root);
-
-    const item = document.getElementById(messageid);
-    const images = [...item.querySelectorAll('img')];
-
-    await Promise.all(images.map(img => {
+    const ghostImages = [...ghostClone.querySelectorAll('img')];
+    await Promise.all(ghostImages.map(img => {
         if (img.complete) return Promise.resolve();
         return Promise.race([
             new Promise(resolve => {
@@ -111,23 +111,34 @@ async function animateItemEntry(root, messageid) {
         ]);
     }));
 
-    const rect = item.querySelector('.message')?.getBoundingClientRect();
-    const itemDimension = chatHorizontal ? (rect?.width || 0) : (rect?.height || 0);
+    const ghostRect = ghostClone?.getBoundingClientRect();
+    const itemDimension = chatHorizontal ? (ghostRect?.width || 0) : (ghostRect?.height || 0);
+    
+    ghostClone.remove();
+    
+    const marginPropValue = parseFloat(getComputedStyle(chatGhostContainer).gap);
+
+    root.style = `${dimensionProp.toLowerCase()}: 0px; opacity: 0; ${marginProp}: -${marginPropValue}px;`;
+    chatContainer.prepend(root.parentNode ?? root);
 
     setTimeout(function () {
         root.style = `${dimensionProp.toLowerCase()}: ${itemDimension}px; opacity: 1; ${marginProp}: 0px;`;
         setTimeout(function () {
-            item.removeAttribute('style');
+            const item = document.getElementById(messageid);
+            if (item) item.removeAttribute('style');
         }, 1300);
     }, 10);
 
     if (hideAfter > 0) {
-        setTimeout(() => {
-            item.style.opacity = '0';
+        const item = document.getElementById(messageid);
+        if (item) {
             setTimeout(() => {
-                item.remove();
-            }, 1000);
-        }, Math.floor(hideAfter * 1000));
+                item.style.opacity = '0';
+                setTimeout(() => {
+                    item.remove();
+                }, 1000);
+            }, Math.floor(hideAfter * 1000));
+        }
     }
 }
 

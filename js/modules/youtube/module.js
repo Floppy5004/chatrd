@@ -135,16 +135,14 @@ async function youTubeChatMessage(data) {
 
     
 
-    if (isOBS == false) {
         
-        if (!youtubeStreamer.broadcastUserName) {
-            const streamerInfo = await getStreamerInfo();
-            youtubeStreamer.broadcastUserName = streamerInfo.platforms.youtube.broadcastUserName;
-        }
-        
-        if (data.message.toLowerCase().includes( youtubeStreamer.broadcastUserName.toLowerCase() )) {
-            classes.push('streamer-mentioned');
-        }
+    if (!youtubeStreamer.broadcastUserName) {
+        const streamerInfo = await getStreamerInfo();
+        youtubeStreamer.broadcastUserName = streamerInfo.platforms.youtube.broadcastUserName;
+    }
+    
+    if (data.message.toLowerCase().includes( youtubeStreamer.broadcastUserName.toLowerCase() )) {
+        classes.push('streamer-mentioned');
     }
 
 

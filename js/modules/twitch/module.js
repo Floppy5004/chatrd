@@ -220,7 +220,7 @@ async function twitchChatMessage(data) {
             .map(el => [el.className, el])
     );
 
-    const classes = ['twitch', 'chat'];
+    const classes = ['twitch', 'msg'];
 
     const [avatarImage, badgeList] = await Promise.all([
         //getTwitchAvatar(data.message.username),
@@ -232,15 +232,13 @@ async function twitchChatMessage(data) {
 
     //let streamData = data;
 
-    if (isOBS == false) {
-        if (!twitchStreamer.broadcastUser) {
-            const streamerInfo = await getStreamerInfo();
-            twitchStreamer.broadcastUser = streamerInfo.platforms.twitch.broadcastUser;
-        }
-        
-        if (data.text.toLowerCase().includes( twitchStreamer.broadcastUser.toLowerCase() )) {
-            classes.push('streamer-mentioned');
-        }
+    if (!twitchStreamer.broadcastUser) {
+        const streamerInfo = await getStreamerInfo();
+        twitchStreamer.broadcastUser = streamerInfo.platforms.twitch.broadcastUser;
+    }
+    
+    if (data.text.toLowerCase().includes( twitchStreamer.broadcastUser.toLowerCase() )) {
+        classes.push('streamer-mentioned');
     }
 
     
