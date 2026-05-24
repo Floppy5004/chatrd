@@ -332,24 +332,33 @@ async function twitchChatMessage(data) {
 
 
 async function twitchChatMessageGiantEmote(data) {
-    
     if (showTwitchMessages == false) return;
-    
-    const userMessages = chatContainer.querySelectorAll(`.msg.twitch[data-user="${data.user_login}"]`);
 
-    if (userMessages.length === 0) return;
+    const tryGigantify = (attempts = 0) => {
+        const userMessages = chatContainer.querySelectorAll(`.msg.twitch[data-user="${data.user_login}"]`);
 
-    const firstMessage = userMessages[0];
-    const emoteImages = firstMessage.querySelectorAll(`img.emote[alt="${data.gigantified_emote.name}"]`);
-
-    if (emoteImages.length === 0) return;
-
-    emoteImages.forEach(img => {
-        img.classList.add("gigantified");
-        if (img.src.endsWith("2.0")) {
-            img.src = img.src.replace("2.0", "3.0");
+        if (userMessages.length === 0) {
+            if (attempts < 10) setTimeout(() => tryGigantify(attempts + 1), 100);
+            return;
         }
-    });
+
+        const firstMessage = userMessages[0];
+        const emoteImages = firstMessage.querySelectorAll(`img.emote[alt="${data.gigantified_emote.name}"]`);
+
+        if (emoteImages.length === 0) {
+            if (attempts < 10) setTimeout(() => tryGigantify(attempts + 1), 100);
+            return;
+        }
+
+        emoteImages.forEach(img => {
+            img.classList.add("gigantified");
+            if (img.src.endsWith("2.0")) {
+                img.src = img.src.replace("2.0", "3.0");
+            }
+        });
+    };
+
+    tryGigantify();
 }
 
 
