@@ -91,6 +91,14 @@
     text-shadow: none;
 }
 
+.chat.vertical .item .badges {
+    height: auto;
+}
+
+
+
+
+
 /* GIFT CUSTOMIZATION FOR BIG STREAMERS LOL */
 
 .chat .event.tiktok.gift[class*="bigger-than-"] .message {

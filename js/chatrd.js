@@ -45,10 +45,10 @@ const loadedEmotes = new Set();
 
 /* ✅ Explicit whitelist */
 const SKINS = {
-    default: "skin-default.css?nocache=16",
-    nutting: "skin-nutting.css?nocache=16",
-    kimballs: "skin-kimballs.css?nocache=16",
-    bubbles: "skin-bubbles.css?nocache=16"
+    default: "skin-default.css?nocache=17",
+    nutting: "skin-nutting.css?nocache=17",
+    kimballs: "skin-kimballs.css?nocache=17",
+    bubbles: "skin-bubbles.css?nocache=17"
 };
 
 const skinFile = SKINS[chatrdSkin] || SKINS.default;
@@ -111,8 +111,7 @@ async function animateItemEntry(root, messageid) {
         ]);
     }));
 
-    const ghostRect = ghostClone?.getBoundingClientRect();
-    const itemDimension = chatHorizontal ? (ghostRect?.width || 0) : (ghostRect?.height || 0);
+    const itemDimension = chatHorizontal ? ghostClone.offsetWidth || 0 : ghostClone.offsetHeight || 0;
     
     ghostClone.remove();
     

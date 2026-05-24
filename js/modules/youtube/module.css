@@ -59,6 +59,11 @@
     margin: 0 1px;
 }
 
+.chat.oneline .item.youtube span.badge,
+.chat.horizontal .item.youtube span.badge {
+    vertical-align: middle;
+}
+
 .chat .item.youtube span.badge.owner { background: #EE0000; }
 
 .chat .item.youtube span.mod {

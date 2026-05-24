@@ -114,7 +114,7 @@ async function youTubeChatMessage(data) {
             .map(el => [el.className, el])
     );
 
-    const classes = ['youtube', 'chat'];
+    const classes = ['youtube', 'msg'];
 
     const verticalTags = ["vertical", "shorts"];
     const isVertical = data.broadcast.tags.some(item =>

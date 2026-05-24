@@ -335,7 +335,7 @@ async function twitchChatMessageGiantEmote(data) {
     
     if (showTwitchMessages == false) return;
     
-    const userMessages = chatContainer.querySelectorAll(`.chat.twitch[data-user="${data.user_login}"]`);
+    const userMessages = chatContainer.querySelectorAll(`.msg.twitch[data-user="${data.user_login}"]`);
 
     if (userMessages.length === 0) return;
 
