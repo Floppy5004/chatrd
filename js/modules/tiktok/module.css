@@ -91,7 +91,7 @@
     text-shadow: none;
 }
 
-.chat.vertical .item .badges {
+.chat.vertical .item.tiktok .badges {
     height: auto;
 }
 
