@@ -61,8 +61,7 @@
 
   "twitch": {
     "follow_action":           " seguiu o canal",
-    "watch_streak_action":     " assistiu ",
-    "watch_streak_value":      "{count} lives consecutivas",
+    "watch_streak_action":     " está em uma sequência de <strong>{count} streams seguidos</strong>",
     "announcement_header":     "Anúncio",
     "reward_action":           " resgatou ",
     "reward_auto": {

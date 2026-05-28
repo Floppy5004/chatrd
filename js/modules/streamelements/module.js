@@ -13,7 +13,7 @@ const streamElementsHandlers = {
 };
 
 if (showStreamelements) {
-    registerPlatformHandlersToStreamerBot(streamElementsHandlers, '[Streamelements]');
+    registerPlatformHandlersToStreamerBot(streamElementsHandlers, '[ChatRD][Streamelements]');
 }
 
 

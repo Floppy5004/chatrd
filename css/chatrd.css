@@ -213,7 +213,7 @@ body {
 /* --------------------------- */
 
 #chat-input {
-    padding: 15px 10px;
+    padding: 10px;
     position: relative;
 }
 
@@ -225,7 +225,7 @@ body {
 #chat-input input[type=text] {
     font-family: inherit;
     border: none;
-    background: #222;
+    background: rgba(0,0,0,0.4);
     color: #FFF;
     padding: 10px 75px 10px 15px;
     border-radius: 5px;
@@ -233,6 +233,12 @@ body {
     font-size: 16px;
     width: 100%;
     transition: var(--transition);
+    outline: 1px solid transparent;
+    outline-offset: -1px;
+}
+
+#chat-input input[type=text]:focus {
+    outline-color: rgba(255,255,255,0.1);
 }
 
 #chat-input button {
@@ -502,9 +508,10 @@ body {
    visibility: hidden;
    opacity: 0;
 }
-#container .wrapper:has(#chat-input[style*="display: none;"]) #chat-scroll-bottom {
-   bottom: 20px;
-}
+
+#container .wrapper:has(#chat-input[style*="display: none;"]):has(#little-events.active) #chat-scroll-bottom { bottom: 60px; }
+#container .wrapper:has(#chat-input[style*="display: none;"]):has(#little-events:not(.active)) #chat-scroll-bottom { bottom: 20px; }
+#container .wrapper:has(#chat-input[style=""]):has(#little-events.active) #chat-scroll-bottom { bottom: 130px; }
 
 #chat-scroll-bottom:hover {
    background-color: #242424;
@@ -1040,4 +1047,52 @@ body {
     0%      { background-position: 50% 0%; }
     50%     { background-position: 50% 100%; }
     100%    { background-position: 50% 0%; }
+}
+
+
+
+
+/* ---------------------------------------------- */
+/* --------- CHAT - EVENTS LITTLE DOCK ---------- */
+/* ---------- (inspired by RexBordz) ------------ */
+/* ---------------------------------------------- */
+
+#container:has(#little-events.active) #chat-scroll-bottom .chat { padding-bottom: 0px; }
+#container:has(#little-events.active) #chat-input input[type="text"] { border-radius: 0 0 5px 5px; }
+
+#little-events {
+    position: relative;
+    height: 47px;
+    width: calc(100% - 20px);
+    padding: 10px 10px 10px 40px;
+    margin: 10px 0 0 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    flex: none;
+    display: none;
+    background: rgba(0,0,0,0.2);
+}
+
+#container:has(#chat-input[style=""]) #little-events {
+    margin: 10px 0 -10px 10px;
+    border-radius: 5px 5px 0 0;
+}
+
+#little-events::after {
+    position: absolute;
+    top: 16px;
+    left: 14px;
+    content: "\f519";
+    color: rgba(255,255,255,0.3);
+    font-family: "Font Awesome 7 Free";
+    font-weight: 900;
+}
+
+#little-events.active {
+    display: flex;
+}
+
+#little-events .event .message {
+    padding: 0;
+    background: none;
 }

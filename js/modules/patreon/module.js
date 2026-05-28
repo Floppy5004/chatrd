@@ -15,7 +15,7 @@ const patreonHandlers = {
 };
 
 if (showPatreon) {
-    registerPlatformHandlersToStreamerBot(patreonHandlers, '[Patreon]');
+    registerPlatformHandlersToStreamerBot(patreonHandlers, '[ChatRD][Patreon]');
 }
 
 

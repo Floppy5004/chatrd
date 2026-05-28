@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('#statistics #kick').style.display = '';        
         }
 
-        registerPlatformHandlersToStreamerBot(kickMessageHandlers, '[Kick][SB1]');
+        registerPlatformHandlersToStreamerBot(kickMessageHandlers, '[ChatRD][Kick][SB1]');
 
         kickConnection();
         
@@ -105,7 +105,7 @@ async function kickConnection() {
         
         try {
             if (kickUserName == null) {
-                console.debug('[Kick] Kick username is null. Trying to get it...');
+                console.debug('[ChatRD][Pusher][Kick] Kick username is null. Trying to get it...');
 
                 let streamerInfo = await getStreamerInfo();
                 let kickUserLogin = streamerInfo.platforms.kick.broadcasterLogin;
@@ -132,7 +132,7 @@ async function kickConnection() {
                     }
                 }
                 catch (error) {
-                    console.error("[Kick] Failed to fetch user based on Streamer.bot's login: ", error.message);
+                    console.error("[ChatRD][Pusher][Kick] Failed to fetch user based on Streamer.bot's login: ", error.message);
                     return null;
                 }
 
@@ -144,17 +144,17 @@ async function kickConnection() {
                 throw new Error('Chatroom ID not found');
             }
 
-            console.debug(`[Kick] User info for ${kickUserName}!`, kickUserInfo);
+            console.debug(`[ChatRD][Pusher][Kick] User info for ${kickUserName}!`, kickUserInfo);
 
             const kickChatRoomId = kickUserInfo.chatroom.id;
             const kickChannelId = kickUserInfo.chatroom.channel_id;
 
             if (!kickChatRoomId) {
-                console.error(`[Kick] Could not find chatroom id for ${kickUserName}!`);
+                console.error(`[ChatRD][Pusher][Kick] Could not find chatroom id for ${kickUserName}!`);
                 return;
             }
             
-            console.debug(`[Kick] Chatroom for ${kickUserName} Found! (ID: ${kickChatRoomId})`);
+            console.debug(`[ChatRD][Pusher][Kick] Chatroom for ${kickUserName} Found! (ID: ${kickChatRoomId})`);
             
             kickSubBadges.push(...kickUserInfo.subscriber_badges);
 
@@ -164,7 +164,7 @@ async function kickConnection() {
                 kickConnectionState = true;
                 retryCount = 0;
 
-                console.debug(`[Kick] Connected to Kick!`);
+                console.debug(`[ChatRD][Pusher][Kick] Connected to Kick!`);
                 notifySuccess({
                     title: 'ChatRD 🤝 Kick'
                 });
@@ -185,11 +185,11 @@ async function kickConnection() {
                 const kickData = JSON.parse(data.data);
                 const kickEvent = data.event.split('\\').pop();
 
-                console.debug(`[Kick] ${kickEvent}`, kickData);
+                console.debug(`[ChatRD][Pusher][Kick] ${kickEvent}`, kickData);
 
                 if (data.event === 'pusher:connection_established') {
                     
-                    console.debug(`[Kick][Pusher] Connection established! (ID:${kickData.socket_id})`);
+                    console.debug(`[ChatRD][Pusher][Kick] Connection established! (ID:${kickData.socket_id})`);
 
                     const channels = [
                         `chatroom_${kickChatRoomId}`,
@@ -232,7 +232,7 @@ async function kickConnection() {
             };
 
             kickWebSocket.onerror = (error) => {
-                console.error('[Kick] WebSocket error:', error);
+                console.error('[ChatRD][Pusher][Kick] WebSocket error:', error);
                 kickWebSocket.close();
             };
 
@@ -671,7 +671,7 @@ async function kickGetUserInfo(user) {
     const response = await fetch(`https://kick.com/api/v2/channels/${user}`);
     
     if (!response.ok) {
-        console.error(`[Kick] Error trying to find the user: ${response.status}`);
+        console.error(`[ChatRD][Kick] Error trying to find the user: ${response.status}`);
         return null;
     }
 
@@ -685,17 +685,17 @@ async function getKickAvatar(user) {
     const DEFAULT_AVATAR = 'https://kick.com/img/default-profile-pictures/default-avatar-2.webp';
 
     if (kickAvatars.has(user)) {
-        console.debug(`[Kick] Kick avatar found for ${user}!`);
+        console.debug(`[ChatRD][Kick] Kick avatar found for ${user}!`);
         return kickAvatars.get(user);
     }
 
-    console.debug(`[Kick] Kick avatar not found for ${user}! Trying to get it...`);
+    console.debug(`[ChatRD][Kick] Kick avatar not found for ${user}! Trying to get it...`);
 
     try {
         const response = await kickGetUserInfo(user);
         
         if (response == null) {
-            console.debug(`[Kick] Kick avatar couldn't be found for ${user}. Using default...`);
+            console.debug(`[ChatRD][Kick] Kick avatar couldn't be found for ${user}. Using default...`);
             kickAvatars.set(user, DEFAULT_AVATAR);
             return DEFAULT_AVATAR;
         }
@@ -711,7 +711,7 @@ async function getKickAvatar(user) {
     }
     
     catch (error) {
-        console.warn(`[Kick] Error getting Kick avatar for ${user}:`, error);
+        console.warn(`[ChatRD][Kick] Error getting Kick avatar for ${user}:`, error);
         return DEFAULT_AVATAR;
     }
 }
@@ -751,7 +751,7 @@ async function getKick7TVEmotes(userId) {
     const userSet = await fetch(`https://7tv.io/v3/users/kick/${userId}`);
 
     if (userSet.status === 404) {
-        console.debug("[Kick] 7TV Profile based on this Kick user was not found");
+        console.debug("[ChatRD][Kick] 7TV Profile based on this Kick user was not found");
         return null;
     }
 
@@ -775,7 +775,7 @@ async function getKick7TVEmotes(userId) {
     const SevenTVEmotesFusion = [...gettingAllKick7TVEmotes, ...gettingAllGlobal7TVEmotes];
     
     if (SevenTVEmotesFusion != null) {
-        console.debug("[Kick] Getting all Kick's user 7TV Emojis + Globals", SevenTVEmotesFusion);
+        console.debug("[ChatRD][Kick] Getting all Kick's user 7TV Emojis + Globals", SevenTVEmotesFusion);
 
         SevenTVEmotesFusion.forEach(emote => {
             kick7TVEmojis.set(emote.name, emote.url);

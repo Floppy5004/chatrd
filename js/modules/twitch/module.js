@@ -178,7 +178,7 @@ if (showTwitch) {
         document.querySelector('#twitch').style.display = '';
     }
     
-    registerPlatformHandlersToStreamerBot(twitchMessageHandlers, '[Twitch]');
+    registerPlatformHandlersToStreamerBot(twitchMessageHandlers, '[ChatRD][Twitch]');
     twitchGoalsFetch();
 }
 
@@ -332,13 +332,16 @@ async function twitchChatMessage(data) {
 
 
 async function twitchChatMessageGiantEmote(data) {
+
     if (showTwitchMessages == false) return;
+    
+    const numberAttempts = 1000;
 
     const tryGigantify = (attempts = 0) => {
-        const userMessages = chatContainer.querySelectorAll(`.msg.twitch[data-user="${data.user_login}"]`);
+        const userMessages = chatContainer.querySelectorAll(`.msg.twitch[data-user="${data.user_login}"]:not([style])`);
 
         if (userMessages.length === 0) {
-            if (attempts < 10) setTimeout(() => tryGigantify(attempts + 1), 100);
+            if (attempts < numberAttempts) setTimeout(() => tryGigantify(attempts + 1), 100);
             return;
         }
 
@@ -346,7 +349,7 @@ async function twitchChatMessageGiantEmote(data) {
         const emoteImages = firstMessage.querySelectorAll(`img.emote[alt="${data.gigantified_emote.name}"]`);
 
         if (emoteImages.length === 0) {
-            if (attempts < 10) setTimeout(() => tryGigantify(attempts + 1), 100);
+            if (attempts < numberAttempts) setTimeout(() => tryGigantify(attempts + 1), 100);
             return;
         }
 
@@ -388,19 +391,27 @@ async function twitchWatchStreakMessage(data) {
 
     header.remove();
 
-    user.textContent = data.displayName;
+    const displayName = data.displayName ?? data.user.name;
+	const watchStreak = data.watchStreak ?? data.streak_count;
 
-    action.innerHTML = tRD('twitch.watch_streak_action');
-    value.innerHTML = `<strong>${tRD('twitch.watch_streak_value', { count: data.watchStreak })}</strong>!`;
+    user.textContent = displayName;
+    action.innerHTML = tRD('twitch.watch_streak_action', { count: watchStreak });
+    value.remove();
 
     /* 
-    --- Maybe it's because Watch Streak doesn't have emotess ---
+    --- Maybe it's because Watch Streak doesn't have emotes ---
     let messageFromParts = await getTwitchMessageFromParts(data.parts);
     message.innerHTML = DOMPurify.sanitize(messageFromParts);
     */
 
-    let messageFromParts = data.text;
-    message.textContent = messageFromParts;
+    const hasParts = Array.isArray(data.parts) && data.parts.some(p => p.text || p.emote);
+    const messageContent = hasParts
+    ? await getTwitchMessageFromParts(data.parts)
+    : data.message
+        ? escapeHTML(data.message)
+        : escapeHTML(data.text);
+
+    message.textContent = messageContent;
 
     addEventItem('twitch', clone, classes, userId, messageId);
 }
@@ -974,43 +985,9 @@ async function twitchHypeTrainStart(data) {
         hypetrainInfo = tRD('twitch.hypetrain.started_treasure');
         classes.push('treasure-train');
     }
+
+
     
-    
-
-    if (showTwitchHypeTrain == true) {
-
-        const template = eventTemplate;
-        const clone = template.content.cloneNode(true);
-        const messageId = createRandomString(40);
-        const userId = createRandomString(40);
-
-        const {
-            header,
-            platform,
-            user,
-            action,
-            value,
-            'actual-message': message
-        } = Object.fromEntries(
-            [...clone.querySelectorAll('[class]')]
-                .map(el => [el.className, el])
-        );
-
-        header.remove();
-
-        user.textContent = hypetrainInfo;
-        action.textContent = ``;
-        value.innerHTML = `
-            <div class="gift-info">
-                <span class="gift-value"><strong>LVL ${level}</strong> @ <strong>${htProgress}%</strong></span>
-            </div>
-        `;
-
-        message.remove();
-
-        addEventItem('twitch', clone, classes, userId, messageId);
-
-    }
 
 
     /* HYPE TRAIN BAR */
@@ -1077,6 +1054,49 @@ async function twitchHypeTrainStart(data) {
         
     }
 
+
+
+
+    if (showTwitchHypeTrain == true) {
+
+        const template = eventTemplate;
+        const clone = template.content.cloneNode(true);
+        const messageId = createRandomString(40);
+        const userId = createRandomString(40);
+
+        const {
+            header,
+            platform,
+            user,
+            action,
+            value,
+            'actual-message': message
+        } = Object.fromEntries(
+            [...clone.querySelectorAll('[class]')]
+                .map(el => [el.className, el])
+        );
+
+        header.remove();
+
+        user.textContent = hypetrainInfo;
+        action.textContent = ``;
+        value.innerHTML = `
+            <div class="gift-info">
+                <span class="gift-value"><strong>LVL ${level}</strong> @ <strong>${htProgress}%</strong></span>
+            </div>
+        `;
+
+        message.remove();
+
+        if (eventsDock == true) {
+            addLittleEventItem('twitch', clone, classes, userId, messageId);
+            return;
+        }
+
+        addEventItem('twitch', clone, classes, userId, messageId);
+
+    }
+
 }
 
 
@@ -1126,39 +1146,9 @@ async function twitchHypeTrainLevelUp(data) {
         hypetrainInfo = tRD('twitch.hypetrain.levelup_treasure');
         classes.push('treasure-train');
     }
-   
-    if (showTwitchHypeTrain == true) {    
-        const template = eventTemplate;
-        const clone = template.content.cloneNode(true);
-        const messageId = createRandomString(40);
-        const userId = createRandomString(40);
 
-        const {
-            header,
-            platform,
-            user,
-            action,
-            value,
-            'actual-message': message
-        } = Object.fromEntries(
-            [...clone.querySelectorAll('[class]')]
-                .map(el => [el.className, el])
-        );
 
-        header.remove();
-
-        user.textContent = hypetrainInfo;
-        action.textContent = ``;
-        value.innerHTML = `
-            <div class="gift-info">
-                <span class="gift-value"><strong>LVL ${level}</strong> @ <strong>${htProgress}%</strong></span>
-            </div>
-        `;
-
-        message.remove();
-
-        addEventItem('twitch', clone, classes, userId, messageId);
-    }
+    
 
 
     /* HYPE TRAIN BAR */
@@ -1192,6 +1182,48 @@ async function twitchHypeTrainLevelUp(data) {
         }, 3000);
 
     }
+
+
+
+
+   
+    if (showTwitchHypeTrain == true) {    
+        const template = eventTemplate;
+        const clone = template.content.cloneNode(true);
+        const messageId = createRandomString(40);
+        const userId = createRandomString(40);
+
+        const {
+            header,
+            platform,
+            user,
+            action,
+            value,
+            'actual-message': message
+        } = Object.fromEntries(
+            [...clone.querySelectorAll('[class]')]
+                .map(el => [el.className, el])
+        );
+
+        header.remove();
+
+        user.textContent = hypetrainInfo;
+        action.textContent = ``;
+        value.innerHTML = `
+            <div class="gift-info">
+                <span class="gift-value"><strong>LVL ${level}</strong> @ <strong>${htProgress}%</strong></span>
+            </div>
+        `;
+
+        message.remove();
+
+        if (eventsDock == true) {
+            addLittleEventItem('twitch', clone, classes, userId, messageId);
+            return;
+        }
+
+        addEventItem('twitch', clone, classes, userId, messageId);
+    }
     
 
 }
@@ -1218,6 +1250,40 @@ async function twitchHypeTrainEnd(data) {
         hypetrainInfo = tRD('twitch.hypetrain.ended_treasure');
         classes.push('treasure-train');
     }
+
+
+    
+    
+
+
+    /* HYPE TRAIN BAR */
+
+    if (showTwitchHypeTrainBar == true) {
+
+        const hypetrainElement = document.querySelector('#hypetrain');
+
+        if (is_golden_kappa_train == true) hypetrainElement.classList.add('golden-kappa-train');
+        if (is_treasure_train == true) hypetrainElement.classList.add('treasure-train');
+
+        hypetrainElement.querySelector('.info').textContent = `${hypetrainInfo} @ LVL ${level} 👏👏👏`;
+
+        hypeTrainStopCountdown();
+        
+        hypetrainElement.querySelector('.info').classList.remove('animate__fadeOut');
+        hypetrainElement.querySelector('.info').classList.add('animate__fadeIn');
+
+        setTimeout(() => {
+            hypetrainElement.classList.add('animate__fadeOut');
+            setTimeout(() => {
+                hypetrainElement.remove();
+            }, 1000);
+        }, 6000);
+
+    }
+
+
+
+
     
     if (showTwitchHypeTrain == true) {    
 
@@ -1250,34 +1316,12 @@ async function twitchHypeTrainEnd(data) {
 
         message.remove();
 
+        if (eventsDock == true) {
+            addLittleEventItem('twitch', clone, classes, userId, messageId);
+            return;
+        }
+
         addEventItem('twitch', clone, classes, userId, messageId);
-
-    }
-    
-
-
-    /* HYPE TRAIN BAR */
-
-    if (showTwitchHypeTrainBar == true) {
-
-        const hypetrainElement = document.querySelector('#hypetrain');
-
-        if (is_golden_kappa_train == true) hypetrainElement.classList.add('golden-kappa-train');
-        if (is_treasure_train == true) hypetrainElement.classList.add('treasure-train');
-
-        hypetrainElement.querySelector('.info').textContent = `${hypetrainInfo} @ LVL ${level} 👏👏👏`;
-
-        hypeTrainStopCountdown();
-        
-        hypetrainElement.querySelector('.info').classList.remove('animate__fadeOut');
-        hypetrainElement.querySelector('.info').classList.add('animate__fadeIn');
-
-        setTimeout(() => {
-            hypetrainElement.classList.add('animate__fadeOut');
-            setTimeout(() => {
-                hypetrainElement.remove();
-            }, 1000);
-        }, 6000);
 
     }
 
@@ -1434,38 +1478,7 @@ async function twitchGoalBegin(data) {
 
     const { type: goalType, item: goalItem } = goalMap[type] ?? { type: '', item: '' };
 
-    if (showTwitchGoals == true) {
-
-        const template = eventTemplate;
-        const clone = template.content.cloneNode(true);
-        const messageId = createRandomString(40);
-        const userId = createRandomString(40);
-
-        const {
-            header,
-            platform,
-            user,
-            action,
-            value,
-            'actual-message': message
-        } = Object.fromEntries(
-            [...clone.querySelectorAll('[class]')]
-                .map(el => [el.className, el])
-        );
-
-        header.remove();
-
-        user.textContent = tRD('twitch.goal.new', { type: goalType });
-        action.textContent = description ? ` - ${description} ` : ``;
-        value.innerHTML = `
-            <div class="gift-info">
-                <span class="gift-value">${current_amount}/${target_amount} ${goalItem}</span>
-            </div>
-        `;
-
-        addEventItem('twitch', clone, classes, userId, messageId);
-
-    }
+    
 
 
     /* GOAL BAR */
@@ -1510,6 +1523,46 @@ async function twitchGoalBegin(data) {
             });
         });
         
+    }
+
+
+
+    if (showTwitchGoals == true) {
+
+        const template = eventTemplate;
+        const clone = template.content.cloneNode(true);
+        const messageId = createRandomString(40);
+        const userId = createRandomString(40);
+
+        const {
+            header,
+            platform,
+            user,
+            action,
+            value,
+            'actual-message': message
+        } = Object.fromEntries(
+            [...clone.querySelectorAll('[class]')]
+                .map(el => [el.className, el])
+        );
+
+        header.remove();
+
+        user.textContent = tRD('twitch.goal.new', { type: goalType });
+        action.textContent = description ? ` - ${description} ` : ``;
+        value.innerHTML = `
+            <div class="gift-info">
+                <span class="gift-value">${current_amount}/${target_amount} ${goalItem}</span>
+            </div>
+        `;
+
+        if (eventsDock == true) {
+            addLittleEventItem('twitch', clone, classes, userId, messageId);
+            return;
+        }
+
+        addEventItem('twitch', clone, classes, userId, messageId);
+
     }
 
 }
@@ -1573,7 +1626,7 @@ async function twitchGoalEnd(data) {
 
     const getTwitchGoalMap = twitchGoals.get(id);
 
-    if (getTwitchGoalMap.complete == true) return;
+    if (getTwitchGoalMap?.complete === true) return;
 
     const goalMap = {
         follow:                     { type: tRD('twitch.goal.types.follow'),                 item: tRD('twitch.goal.items.follow') },
@@ -1616,20 +1669,6 @@ async function twitchGoalEnd(data) {
         });
     }
 
-    if (showTwitchGoals == true) {
-
-        user.textContent = `${goalType} ${goalStatus}`;
-        action.textContent = description ? ` - ${description} ` : ``;
-        value.innerHTML = `
-            <div class="gift-info">
-                <span class="gift-value">${current_amount}/${target_amount} ${goalItem}</span>
-            </div>
-        `;
-
-        addEventItem('twitch', clone, classes, userId, messageId);
-
-    }
-
 
     /* GOAL BAR */
 
@@ -1657,6 +1696,25 @@ async function twitchGoalEnd(data) {
             });
         });
         
+    }
+
+    if (showTwitchGoals == true) {
+
+        user.textContent = `${goalType} ${goalStatus}`;
+        action.textContent = description ? ` - ${description} ` : ``;
+        value.innerHTML = `
+            <div class="gift-info">
+                <span class="gift-value">${current_amount}/${target_amount} ${goalItem}</span>
+            </div>
+        `;
+
+        if (eventsDock == true) {
+            addLittleEventItem('twitch', clone, classes, userId, messageId);
+            return;
+        }
+
+        addEventItem('twitch', clone, classes, userId, messageId);
+
     }
 
 }
@@ -1687,47 +1745,17 @@ async function twitchGoalsFetch() {
 // ---------------------------
 // TWITCH UTILITY FUNCTIONS
 
-/*async function getTwitchAvatar(user) {
-    const DEFAULT_AVATAR = 'https://static-cdn.jtvnw.net/user-default-pictures-uv/cdd517fe-def4-11e9-948e-784f43822e80-profile_image-300x300.png';
-
-    if (twitchAvatars.has(user)) {
-        console.debug(`[ChatRD] Twitch avatar found in cache for ${user}!`);
-        return twitchAvatars.get(user);
-    }
-
-    console.debug(`[ChatRD] Twitch avatar not found for ${user}! Fetching from DECAPI...`);
-    
-    try {
-        const response = await fetch(`https://decapi.me/twitch/avatar/${user}`);
-
-        if (!response.ok) {
-            console.warn(`[ChatRD] DECAPI returned ${response.status} for ${user}. Using default avatar.`);
-            twitchAvatars.set(user, DEFAULT_AVATAR);
-            return DEFAULT_AVATAR;
-        }
-
-        const avatar = (await response.text()).trim() || DEFAULT_AVATAR;
-
-        twitchAvatars.set(user, avatar);
-        return avatar;
-    }
-    catch (err) {
-        console.error(`[ChatRD] Failed to fetch avatar for ${user}:`, err);
-        return DEFAULT_AVATAR; 
-    }
-}*/
-
 
 
 async function getTwitchAvatar(user) {
     const DEFAULT_AVATAR = 'https://static-cdn.jtvnw.net/user-default-pictures-uv/cdd517fe-def4-11e9-948e-784f43822e80-profile_image-300x300.png';
 
     if (twitchAvatars.has(user)) {
-        console.debug(`[ChatRD] Twitch avatar found in cache for ${user}!`);
+        console.debug(`[ChatRD][Twitch] Twitch avatar found in cache for ${user}!`);
         return twitchAvatars.get(user);
     }
 
-    console.debug(`[ChatRD] Fetching Twitch avatar for ${user} from DECAPI...`);
+    console.debug(`[ChatRD][Twitch] Fetching Twitch avatar for ${user} from DECAPI...`);
 
     try {
         const response = await fetch(`https://decapi.me/twitch/avatar/${user}`);
@@ -1735,15 +1763,15 @@ async function getTwitchAvatar(user) {
         const isInvalid = !response.ok || /user not found|invalid/i.test(text);
 
         if (!isInvalid) {
-            console.debug(`[ChatRD] Twitch avatar found on DECAPI for ${user}!`);
+            console.debug(`[ChatRD][Twitch] Avatar found on DECAPI for ${user}!`);
             twitchAvatars.set(user, text);
             return text;
         }
 
-        console.warn(`[ChatRD] DECAPI failed for ${user} (${response.status}: "${text}"). Trying Twitch GQL...`);
+        console.warn(`[ChatRD][Twitch] DECAPI failed for ${user} (${response.status}: "${text}"). Trying Twitch GQL...`);
     }
     catch (err) {
-        console.warn(`[ChatRD] DECAPI request failed for ${user}:`, err, `Trying Twitch GQL...`);
+        console.warn(`[ChatRD][Twitch] DECAPI request failed for ${user}:`, err, `Trying Twitch GQL...`);
     }
 
     // Twitch GraphQL - Thanks Claude! ❤️
@@ -1771,15 +1799,15 @@ async function getTwitchAvatar(user) {
         const avatar = data?.[0]?.data?.user?.profileImageURL;
 
         if (avatar) {
-            console.debug(`[ChatRD] Avatar found on Twitch GQL for ${user}!`);
+            console.debug(`[ChatRD][Twitch] Avatar found on Twitch GQL for ${user}!`);
             twitchAvatars.set(user, avatar);
             return avatar;
         }
 
-        console.warn(`[ChatRD] Twitch GQL returned no avatar for ${user}. Using default.`);
+        console.warn(`[ChatRD][Twitch] Twitch GQL returned no avatar for ${user}. Using default.`);
     }
     catch (err) {
-        console.error(`[ChatRD] Twitch GQL request failed for ${user}:`, err);
+        console.error(`[ChatRD][Twitch] Twitch GQL request failed for ${user}:`, err);
     }
 
     twitchAvatars.set(user, DEFAULT_AVATAR);
@@ -1832,34 +1860,34 @@ async function getTwitchUserPronouns(username) {
 
     if (!supportedPronouns) {
         try {
-            console.debug('[ChatRD] Trying to fetch supported pronouns...');
+            console.debug('[ChatRD][Twitch] Trying to fetch supported pronouns...');
             const res = await fetch('https://pronouns.alejo.io/api/pronouns');
             supportedPronouns = await res.json();
         }
         catch (err) {
-            console.error('[ChatRD] Could not fetch supported pronouns:', err);
+            console.error('[ChatRD][Twitch] Could not fetch supported pronouns:', err);
             return '';
         }
     }
 
     if (twitchPronouns.has(username)) {
-        console.debug(`[ChatRD] Pronouns found for ${username}. Getting it from Map...`);
+        console.debug(`[ChatRD][Twitch] Pronouns found for ${username}. Getting it from Map...`);
         return twitchPronouns.get(username);
     }
 
-    console.debug(`[ChatRD] Pronouns not found for ${username} in the Map! Retrieving...`);
+    console.debug(`[ChatRD][Twitch] Pronouns not found for ${username} in the Map! Retrieving...`);
 
     try {
         const res = await fetch(`https://api.pronouns.alejo.io/v1/users/${username}`);
         const data = await res.json();
 
         if (data === 'not_found') {
-            console.debug(`[ChatRD] No pronouns found for ${username}. Setting it to empty...`);
+            console.debug(`[ChatRD][Twitch] No pronouns found for ${username}. Setting it to empty...`);
             twitchPronouns.set(username, '');
             return '';
         }
 
-        console.debug(`[ChatRD] Got pronouns for ${username}:`, data);
+        console.debug(`[ChatRD][Twitch] Got pronouns for ${username}:`, data);
 
         const pronounId    = data?.pronoun_id     ?? null;
         const altPronounId = data?.alt_pronoun_id ?? null;
@@ -1890,7 +1918,7 @@ async function getTwitchUserPronouns(username) {
         return formatted;
     }
     catch (err) {
-        console.error(`[ChatRD] Couldn't retrieve pronouns for ${username}:`, err);
+        console.error(`[ChatRD][Twitch] Couldn't retrieve pronouns for ${username}:`, err);
         return '';
     }
 }

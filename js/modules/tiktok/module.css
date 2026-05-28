@@ -77,7 +77,7 @@
     background: rgba(36,36,36,0.75);
 }
 
-.chat .event.tiktok.join .message {
+/*.chat .event.tiktok.join .message {
     background: none;
 }
 
@@ -89,6 +89,10 @@
     border-radius: 100px;
     margin: 0 3px 0 1px;
     text-shadow: none;
+}*/
+
+.chat .event.tiktok.join .message {
+    background: none;
 }
 
 .chat.vertical .item.tiktok .badges {

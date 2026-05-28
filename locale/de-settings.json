@@ -52,6 +52,8 @@
     "one_line_hint": "Eine Chat-Zeile statt zwei im vertikalen Chat.<br><strong><u>Falls aktiviert, deaktiviert dies die untenstehende Option.</u></strong>",
     "horizontal": "Horizontale Richtung",
     "horizontal_hint": "Chat/Ereignisse werden horizontal angezeigt.<br><strong><u>Falls aktiviert, deaktiviert dies die obenstehende Option.</u></strong>",
+    "events_dock" : "Ereignis-Dock",
+    "events_dock_hint" : "Aufeinanderfolgende Ereignisse, wie Twitchs Hype Trains, Goals<br>und TikTok-Beitritte werden einzeln nacheinander im Dock direkt unterhalb<br>des Chats angezeigt.",
     "group_messages": "Chat-Nachrichten gruppieren",
     "group_messages_hint": "Aufeinanderfolgende Nachrichten desselben Nutzers werden gruppiert.",
     "platforms": "Plattformen",

@@ -63,7 +63,7 @@ async function tiktokConnection() {
         const tikfinityWebSocket = new WebSocket(tikfinityWebSocketURL);
 
         tikfinityWebSocket.onopen = () => {
-            console.debug(`[TikFinity] Connected to TikFinity successfully!`);
+            console.debug(`[ChatRD][TikFinity] Connected to TikFinity successfully!`);
             retryCount = 0; // Reset retry count on success
 
             notifySuccess({
@@ -77,7 +77,7 @@ async function tiktokConnection() {
             const data = JSON.parse(response.data);
             const tiktokData = data.data;
 
-            console.debug(`[TikTok] ${data.event}`, data);
+            console.debug(`[ChatRD][TikFinity][TikTok] ${data.event}`, data);
 
             switch (data.event) {
                 case 'roomUser' : tiktokUpdateStatistics(tiktokData, 'viewers'); break;
@@ -98,33 +98,10 @@ async function tiktokConnection() {
                     connect();
                 }, reconnectDelay);
 
-
-            /*console.error(`[TikFinity] Disconnected (code: ${event.code})`);
-
-            if (retryCount < maxTries) {
-                retryCount++;
-                console.warn(`[TikFinity] Attempt ${retryCount}/${maxTries} - Reconnecting in ${reconnectDelay / 1000}s...`);
-
-                notifyError({
-                    title: 'TikFinity Disconnected',
-                    text: `Attempt ${retryCount}/${maxTries} - Reconnecting in ${reconnectDelay / 1000}...`
-                });
-
-                setTimeout(() => {
-                    connect();
-                }, reconnectDelay);
-            }
-            else {
-                notifyError({
-                    title: 'TikFinity Reconnect Failed',
-                    text: `Maximum retries (${maxTries}) reached. Reload ChatRD to try again.<br>(Check DevTools Debug for more info).`
-                });
-                console.error('[TikFinity] Max reconnect attempts reached. Giving up.');
-            }*/
         };
 
         tikfinityWebSocket.onerror = (error) => {
-            console.error(`[TikFinity] Connection error:`, error);
+            console.error(`[ChatRD][TikFinity] Connection error:`, error);
 
             // Force close to trigger onclose and centralize retry logic
             if (tikfinityWebSocket.readyState !== WebSocket.CLOSED) {
@@ -293,7 +270,6 @@ async function tiktokShareMessage(data) {
     header.remove();
     message.remove();
     value.remove();
-
     
     user.textContent = data.nickname;
 
@@ -307,74 +283,56 @@ async function tiktokJoinMessage(data) {
     
     if (showTikTokJoins == false) return;
 
-    function onIdle() {
-        container.style.paddingBottom = "0px";
-        if (container.lastElementChild) {
-            container.lastElementChild.remove();
-        }
-    }
-
+    const template = eventTemplate;
+	const clone = template.content.cloneNode(true);
     const messageId = data.msgId;
     const userId = data.userId;
-    const userMessageHTML = `${data.nickname}`;
-    const actionMessageHTML = tRD('tiktok.join_action');
 
-    const joinElement = container.querySelector(".event.tiktok.join");
+    const {
+        header,
+        platform,
+        user,
+        action,
+        value,
+        'actual-message': message
+    } = Object.fromEntries(
+        [...clone.querySelectorAll('[class]')]
+            .map(el => [el.className, el])
+    );
 
-    if (joinElement) {
-        const messageElement = joinElement.querySelector('.message');
-        
-        messageElement.classList.remove('animate__animated', 'animate__faster');
+    const classes = ['tiktok', 'join'];
 
-        if (chatHorizontal == true) {
-            messageElement.classList.remove('animate__fadeInRight');
-        }
-        else {
-            messageElement.classList.remove('animate__fadeInUp');
-        }
+    header.remove();
+    message.remove();
+    value.remove();
 
-        joinElement.querySelector('.user').innerHTML = userMessageHTML;
-        joinElement.querySelector('.action').innerHTML = actionMessageHTML;
+    user.textContent = data.nickname;
+    action.innerHTML = tRD('tiktok.join_action');
 
-        messageElement.classList.add('animate__animated', 'animate__faster');
-
-        if (chatHorizontal == true) {
-            messageElement.classList.add('animate__fadeInRight');
-        }
-        else {
-            messageElement.classList.add('animate__fadeInUp');
-        }
-        
-        chatContainer.prepend(joinElement);
+    if (eventsDock == true) {
+        addLittleEventItem('tiktok', clone, classes, userId, messageId);
+        return;
     }
-
-    else {
-        const template = eventTemplate;
-        const clone = template.content.cloneNode(true);
-
-        const {
-            header,
-            platform,
-            user,
-            action,
-            value,
-            'actual-message': message
-        } = Object.fromEntries(
-            [...clone.querySelectorAll('[class]')]
-                .map(el => [el.className, el])
-        );
-
-        const classes = ['tiktok', 'join'];
-
-        header.remove();
-        message.remove();
-        value.remove();
-
-        user.textContent = userMessageHTML;
-        action.innerHTML = actionMessageHTML;
-
+    
+    const joinElement = chatContainer.querySelector(".event.tiktok.join");
+    
+    if (!joinElement) {
         addEventItem('tiktok', clone, classes, userId, messageId);
-    }
+        return;
+    };
+
+    const messageElement = joinElement.querySelector('.message');
+    const animateClass = chatHorizontal == true ? 'animate__fadeInRight' : 'animate__fadeInUp';
+
+    messageElement.classList.remove('animate__animated', 'animate__faster', 'animate__fadeInRight', 'animate__fadeInUp');
+    
+    joinElement.querySelector('.user').innerHTML = `${data.nickname}`;
+    joinElement.querySelector('.action').innerHTML = tRD('tiktok.join_action');
+
+    messageElement.classList.add('animate__animated', 'animate__faster', animateClass);
+    
+    chatContainer.prepend(joinElement);
+
 
 }
 

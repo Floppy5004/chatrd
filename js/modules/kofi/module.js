@@ -27,7 +27,7 @@ const kofiMessageHandlers = {
 };
 
 if (showKofi) {
-    registerPlatformHandlersToStreamerBot(kofiMessageHandlers, '[Ko-Fi]');
+    registerPlatformHandlersToStreamerBot(kofiMessageHandlers, '[ChatRD][Ko-Fi]');
 }
 
 

@@ -52,6 +52,8 @@
     "one_line_hint": "Una línea de chat en lugar de dos en el Chat Vertical.<br><strong><u>Si está activado, desactiva la opción de abajo.</u></strong>",
     "horizontal": "Dirección Horizontal",
     "horizontal_hint": "El Chat/Eventos será horizontal.<br><strong><u>Si está activado, desactiva la opción de arriba.</u></strong>",
+    "events_dock" : "Muelle de Eventos",
+    "events_dock_hint" : "Los eventos consecutivos, como los Hype Trains, Goals de Twitch<br>y los TikTok Joins se presentarán, uno a la vez, en el muelle justo debajo<br>del chat.",
     "group_messages": "Agrupar Mensajes del Chat",
     "group_messages_hint": "Los mensajes consecutivos del mismo usuario se agruparán.",
     "platforms": "Plataformas",

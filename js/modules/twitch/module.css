@@ -250,11 +250,13 @@
     border-radius: 5px;
 }
 
+.chat .item.twitch .actual-message img {
+    transition: var(--transition);
+}
 
 .chat .item.twitch .actual-message img.gigantified {
     display: block;
     height: 96px;
-    margin-top: 5px;
 }
 
 .chat .event.twitch .message { background: rgba(145,70,255,0.75); }

@@ -61,8 +61,7 @@
 
   "twitch": {
     "follow_action":           " ha seguido el canal",
-    "watch_streak_action":     " vio ",
-    "watch_streak_value":      "{count} directos consecutivos",
+    "watch_streak_action":     " lleva una racha de <strong>{count} streams seguidos</strong>",
     "announcement_header":     "Anuncio",
     "reward_action":           " canjeó ",
     "reward_auto": {

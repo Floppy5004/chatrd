@@ -61,8 +61,7 @@
 
   "twitch": {
     "follow_action":           " obserwuje kanał",
-    "watch_streak_action":     " oglądał ",
-    "watch_streak_value":      "{count} kolejnych streamów",
+    "watch_streak_action":     " ma serię <strong>{count} kolejnych streamów</strong>",
     "announcement_header":     "Ogłoszenie",
     "reward_action":           " odebrał nagrodę ",
     "reward_auto": {

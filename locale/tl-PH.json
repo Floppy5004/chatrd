@@ -61,8 +61,7 @@
 
   "twitch": {
     "follow_action":           " ay nag-follow",
-    "watch_streak_action":     " nanood ng ",
-    "watch_streak_value":      "{count} magkakasunod na stream",
+    "watch_streak_action":     " ay nasa <strong>{count} sunud-sunod na stream</strong>",
     "announcement_header":     "Anunsyo",
     "reward_action":           " na-redeem ang ",
     "reward_auto": {

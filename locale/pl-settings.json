@@ -52,6 +52,8 @@
     "one_line_hint": "Jedna linia czatu zamiast dwóch w Pionowym Czacie.<br><strong><u>Jeśli włączone, wyłącza poniższą opcję.</u></strong>",
     "horizontal": "Kierunek Poziomy",
     "horizontal_hint": "Czat/Zdarzenia będą wyświetlane poziomo.<br><strong><u>Jeśli włączone, wyłącza powyższą opcję.</u></strong>",
+    "events_dock" : "Dok Wydarzeń",
+    "events_dock_hint" : "Kolejne zdarzenia, takie jak Hype Trains, Goals na Twitchu i TikTok Joins<br>będą wyświetlane jedno po drugim w doku tuż poniżej czatu.",
     "group_messages": "Grupuj wiadomości czatu",
     "group_messages_hint": "Kolejne wiadomości od tego samego użytkownika będą grupowane.",
     "platforms": "Platformy",

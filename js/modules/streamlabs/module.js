@@ -14,7 +14,7 @@ const streamlabsHandlers = {
 
 
 if (showStreamlabs) {
-    registerPlatformHandlersToStreamerBot(streamlabsHandlers, '[Streamlabs]');
+    registerPlatformHandlersToStreamerBot(streamlabsHandlers, '[ChatRD][Streamlabs]');
 }
 
 

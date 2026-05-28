@@ -16,6 +16,9 @@ const chatThreshold                 = 100;
 const chatOneLine                   = getURLParam("chatOneLine", false);
 const chatHorizontal                = getURLParam("chatHorizontal", false); 
 const chatMessageGroup              = getURLParam("chatMessageGroup", false); 
+
+const eventsDock                    = getURLParam("eventsDock", false);
+
 const chatFontSize                  = getURLParam("chatFontSize", 1);
 const chatFontFamily                = getURLParam("chatFontFamily", "DM Sans");
 const chatBackground                = getURLParam("chatBackground", "#121212"); 
@@ -26,8 +29,6 @@ const chatModeration                = getURLParam("chatModeration", false);
 
 const chatrdSkin                    = getURLParam("chatrdSkin", "default");
 
-//const multiStreamerMode             = getURLParam("multiStreamerMode", false);
-
 const excludeCommands               = getURLParam("excludeCommands", true);
 const ignoreChatters                = getURLParam("ignoreChatters", "");
 const ignoreUserList                = ignoreChatters.split(',').map(item => item.trim().toLowerCase()) || [];
@@ -36,6 +37,7 @@ const hideAfter                     = getURLParam("hideAfter", 0);
 
 const chatContainer                 = document.querySelector('#chat');
 const chatGhostContainer            = document.querySelector('#chat-ghost');
+const eventLittleContainer          = document.querySelector('#little-events');
 const chatTemplate                  = document.querySelector('#chat-message');
 const eventTemplate                 = document.querySelector('#event-message');
 
@@ -45,10 +47,10 @@ const loadedEmotes = new Set();
 
 /* ✅ Explicit whitelist */
 const SKINS = {
-    default: "skin-default.css?nocache=20",
-    nutting: "skin-nutting.css?nocache=20",
-    kimballs: "skin-kimballs.css?nocache=20",
-    bubbles: "skin-bubbles.css?nocache=20"
+    default: "skin-default.css?nocache=21",
+    nutting: "skin-nutting.css?nocache=21",
+    kimballs: "skin-kimballs.css?nocache=21",
+    bubbles: "skin-bubbles.css?nocache=21"
 };
 
 const skinFile = SKINS[chatrdSkin] || SKINS.default;
@@ -86,6 +88,8 @@ let backgroundColor = hexToRGBA(chatBackground,chatBackgroundOpacity);
 chatContainer.parentElement.style.backgroundColor = backgroundColor;
 
 chatContainer.style.zoom = chatFontSize;
+
+if (eventsDock == true) eventLittleContainer.classList.add('active');
 
 if (chatField) {
     const chatfieldelement = document.getElementById("chat-input");
@@ -167,14 +171,11 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
     root.classList.add(...classes);
     root.dataset.user = userid;
     root.id = messageid;
-    root.style.opacity = '0';
 
     const messageEl = clone.querySelector('.actual-message');
     const infoEl = clone.querySelector('.info');
     
-    getAndReplaceLinks(messageEl).then(() => {
-        //multiStreamChat(messageEl);
-    });
+    getAndReplaceLinks(messageEl);
 
     const platformElement = clone.querySelector('.platform');
     
@@ -252,7 +253,6 @@ function addEventItem(platform, clone, classes, userid, messageid) {
     root.classList.add(...classes);
     root.dataset.user = userid;
     root.id = messageid;
-    root.style.opacity = '0';
 
     const platformElement = clone.querySelector('.platform');
 
@@ -300,6 +300,63 @@ function addEventItem(platform, clone, classes, userid, messageid) {
 
     animateItemEntry(root, messageid);
 }
+
+
+
+
+function addLittleEventItem(platform, clone, classes, userid, messageid) {
+
+    eventLittleContainer.innerHTML = '';
+
+    if (showSpeakerbot == true && speakerBotEventRead == true) { speakerBotTTSRead(clone, 'event'); }
+    
+    const root = clone.firstElementChild;
+    root.classList.add(...classes);
+    root.dataset.user = userid;
+    root.id = messageid;
+
+    const platformElement = clone.querySelector('.platform');
+
+    if (showPlatform == true) {
+        let platformContent;
+
+        if (showPlatformDot == true) {
+            root.classList.add('no-platform');
+            platformElement.remove();
+        }
+
+        else {
+            const isTwitch = platform === "twitch";
+
+            if (root.classList.contains("youtube-vertical")) {
+                platformContent = `<img src="js/modules/youtube/images/logo-youtube-vertical.svg">`;
+            }
+            else if (isTwitch && root.classList.contains("golden-kappa-train")) {
+                platformContent = `<img src="js/modules/twitch/images/golden-kappa-emote.png">`;
+            }
+            else if (isTwitch && root.classList.contains("treasure-train")) {
+                platformContent = `<img src="js/modules/twitch/images/icon-treasure-train.png">`;
+            }
+            else {
+                platformContent = `<img src="js/modules/${platform}/images/logo-${platform}.svg">`;
+            }
+        }        
+        
+        platformElement.innerHTML = platformContent;
+    }
+    
+    else {
+        root.classList.add('no-platform');
+        platformElement.remove();
+    }
+
+    root.classList.add('animate__animated', 'animate__fadeInUp', 'animate__faster');
+
+    eventLittleContainer.prepend(root.parentNode ?? root);
+}
+
+
+
 async function preloadAndPrepend(container, fragment) {
     const tempDiv = document.createElement('div');
     tempDiv.appendChild(fragment.cloneNode(true));
@@ -443,11 +500,9 @@ function stripStringFromHtml(html) {
 
 
 async function cleanStringOfHTMLButEmotes(string) {
-    // Cria um elemento DOM temporário
     const container = document.createElement('div');
     container.innerHTML = string;
 
-    // Substitui <img class="emote" alt="..."> por texto do alt
     const emotes = container.querySelectorAll('img.emote[alt]');
     emotes.forEach(img => {
         const altText = img.getAttribute('alt');
@@ -455,7 +510,6 @@ async function cleanStringOfHTMLButEmotes(string) {
         img.replaceWith(textNode);
     });
 
-    // Remove todo o restante do HTML
     return container.textContent || "";
 }
 
@@ -498,54 +552,6 @@ const chatInputForm = document.querySelector("#chat-input form");
 const chatInput = chatInputForm.querySelector("input[type=text]")
 
 let chatcommands;
-
-/*let chatcommands = {
-     "Twitch" : [
-       { "name" : "/me", "usage" : "Creates a colored message. <b>Usage: /me [message]</b>"  },
-        { "name" : "/clip", "usage" : "Creates a 30s clip. <b>Usage: /clip</b>"  },
-        { "name" : "/announce", "usage" : "Sends an announcement. <b>Usage: /announce [message]</b>"  },
-        { "name" : "/announceblue", "usage" : "Sends an announcement in blue. <b>Usage: /announceblue [message]</b>"  },
-        { "name" : "/announcegreen", "usage" : "Sends an announcement in green. <b>Usage: /announcegreen [message]</b>"  },
-        { "name" : "/announceorange", "usage" : "Sends an announcement in orange. <b>Usage: /announceorange [message]</b>"  },
-        { "name" : "/announcepurple", "usage" : "Sends an announcement in purple. <b>Usage: /announcepurple [message]</b>"  },
-        { "name" : "/clear", "usage" : "Clear Chat Messages. <b>Usage: /clear</b>"  },
-        { "name" : "/slow", "usage" : "Activates slow mode. <b>Usage: /slow [duration]</b>"  },
-        { "name" : "/slowoff", "usage" : "Deactivates slow mode. <b>Usage: /slowoff</b>"  },
-        { "name" : "/subscribers", "usage" : "Activates subscribers only mode. <b>Usage: /subscribers</b>"  },
-        { "name" : "/subscribersoff", "usage" : "Deactivates subscribers only mode. <b>Usage: /subscribersoff</b>"  },
-        { "name" : "/emoteonly", "usage" : "Activates emote only mode. <b>Usage: /emoteonly</b>"  },
-        { "name" : "/emoteonlyoff", "usage" : "Deactivates emote only mode. <b>Usage: /emoteonlyoff</b>"  },
-        { "name" : "/commercial", "usage" : "Add a commercial break. <b>Usage: /commercial [duration]</b>"  },
-        { "name" : "/timeout", "usage" : "Timeouts a user. <b>Usage: /timeout [user] [duration] [reason]</b>"  },
-        { "name" : "/untimeout", "usage" : "Removes timeout from a user. <b>Usage: /untimeout [user]</b>"  },
-        { "name" : "/ban", "usage" : "Bans a user. <b>Usage: /ban [user] [reason]</b>"  },
-        { "name" : "/unban", "usage" : "Unbans a user. <b>Usage: /unban [user]</b>"  },
-        { "name" : "/mod", "usage" : "Mod a user. <b>Usage: /mod [user]</b>"  },
-        { "name" : "/unmod", "usage" : "Removes mod from a user. <b>Usage: /unmod [user]</b>"  },
-        { "name" : "/vip", "usage" : "Adds user to VIP. <b>Usage: /vip [user]</b>"  },
-        { "name" : "/unvip", "usage" : "Removes user from VIP. <b>Usage: /unvip [user]</b>"  },
-        { "name" : "/shoutout", "usage" : "Shoutouts a user. <b>Usage: /shoutout [user]</b>"  },
-        { "name" : "/raid", "usage" : "Raids a user. <b>Usage: /raid [user]</b>"  },
-        { "name" : "/unraid", "usage" : "Removes the outcoming raid. <b>Usage: /unraid</b>"  },
-        { "name" : "/settitle", "usage" : "Sets the stream title. <b>Usage: /settitle [title]</b>"  },
-        { "name" : "/setgame", "usage" : "Sets the stream game. <b>Usage: /setgame [game]</b>"  },
-    ],
-    "YouTube" : [
-        { "name" : "/yt/title", "usage" : "Sets the stream title. <b>Usage: /yt/title [title]</b>"  },
-        { "name" : "/yt/timeout", "usage" : "Times out a user by ID. <b>Usage: /yt/timeout [user id] [duration]</b>"  },
-        { "name" : "/yt/timeout/name", "usage" : "Times out a user name. <b>Usage: /yt/timeout/name [user name] [duration]</b>"  },
-        { "name" : "/yt/ban", "usage" : "Bans a user by ID. <b>Usage: /yt/ban [user id]</b>"  },
-        { "name" : "/yt/ban/name", "usage" : "Bans a user by user name. <b>Usage: /yt/ban/name [user name]</b>"  }
-    ],
-    "Kick" : [
-        { "name" : "/kick/title", "usage" : "Sets the stream title. <b>Usage: /kick/title [title]</b>"  },
-        { "name" : "/kick/category", "usage" : "Sets the stream category. <b>Usage: /kick/category [category]</b>"  },
-        { "name" : "/kick/timeout", "usage" : "Times out a user. <b>Usage: /kick/timeout [user] [duration]</b>"  },
-        { "name" : "/kick/untimeout", "usage" : "Removes timeout from a user. <b>Usage: /kick/untimeout [user]</b>"  },
-        { "name" : "/kick/ban", "usage" : "Bans a user. <b>Usage: /kick/ban [user]</b>"  },
-        { "name" : "/kick/unban", "usage" : "Unbans a user. <b>Usage: /kick/unban [user]</b>"  }
-    ]
-};*/
 
 
 
@@ -805,15 +811,6 @@ async function speakerBotTTSRead(clone,type) {
     var speakerbotThisStuff = getSpeakerBotInstance();
     speakerbotThisStuff.speak(TTSMessage);
 
-    /*streamerBotClient.doAction({ name : "[Speakerbot] TTS" },
-    {
-        "message": TTSMessage,
-        "alias" : speakerBotVoiceAlias
-    }
-    ).then( (response) => {
-        console.debug('[ChatRD][Streamer.bot -> Speaker.bot] Sending TTS...', response);
-    });*/
-
 }
 
 
@@ -890,66 +887,6 @@ function escapeHTML(str) {
     return _escapeDiv.innerHTML;
 }
 
-/*
-async function multiStreamChat(element) {
-    if (multiStreamerMode == true) {
-
-        const platforms = {
-            twitch:  tRD('chatrd.multistreamer.twitch'),
-            youtube: tRD('chatrd.multistreamer.youtube'),
-            kick:    tRD('chatrd.multistreamer.kick'),
-            tiktok:  tRD('chatrd.multistreamer.tiktok'),
-        };
-
-        const platformClasses = {
-            twitch: 'purple',
-            youtube: 'red',
-            kick: 'green',
-            tiktok: 'vertical'
-        };
-
-        const regex = new RegExp(`\\b(${Object.keys(platforms).join('|')})\\b`, 'gi');
-
-        function replaceInTextNode(node) {
-            const text = node.textContent;
-            const parts = text.split(regex);
-
-            // If there are no matches, do nothing
-            if (parts.length === 1) return;
-
-            const fragment = document.createDocumentFragment();
-
-            for (const part of parts) {
-                const key = part.toLowerCase();
-                const replacement = platforms[key];
-                if (replacement) {
-                    const em = document.createElement('em');
-                    em.classList.add('msm-platform'); // base class
-                    if (platformClasses[key]) em.classList.add(platformClasses[key]); // add color class
-                    em.textContent = replacement;
-                    fragment.appendChild(em);
-                } else {
-                    fragment.appendChild(document.createTextNode(part));
-                }
-            }
-
-            node.replaceWith(fragment);
-        }
-
-        function traverse(node) {
-            // Ignore <a> elements and their children
-            if (node.nodeType === Node.ELEMENT_NODE) {
-                if (node.tagName === 'A') return;
-                for (const child of node.childNodes) traverse(child);
-            } else if (node.nodeType === Node.TEXT_NODE) {
-                replaceInTextNode(node);
-            }
-        }
-
-        traverse(element);
-    }
-}
-*/
 
 
 

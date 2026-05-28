@@ -54,6 +54,8 @@
     "horizontal_hint": "Chat/Events will be horizontal.<br><strong><u>If enabled, it disables the option above.</u></strong>",
     "group_messages": "Group Chat Messages",
     "group_messages_hint": "Consecutive messages from the same user will be grouped.",
+    "events_dock" : "Events Dock",
+    "events_dock_hint" : "Consecutive events, like Twitch's Hype Trains, Goals and TikTok Joins<br>will be presented, one at a time, in the dock just below the chat.",
     "platforms": "Platforms",
     "platforms_hint": "Shows the platforms logos.",
     "avatars": "Avatars",

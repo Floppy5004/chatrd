@@ -14,7 +14,7 @@ const tipeeeHandlers = {
 };
 
 if (showTipeee) {
-    registerPlatformHandlersToStreamerBot(tipeeeHandlers, '[Tipeeestream]');
+    registerPlatformHandlersToStreamerBot(tipeeeHandlers, '[ChatRD][Tipeeestream]');
 }
 
 

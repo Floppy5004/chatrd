@@ -71,7 +71,7 @@ if (showYoutube) {
         document.querySelector('#youtube').style.display = '';
     }
 
-    registerPlatformHandlersToStreamerBot(youtubeMessageHandlers, '[YouTube]');
+    registerPlatformHandlersToStreamerBot(youtubeMessageHandlers, '[ChatRD][YouTube]');
 }
 
 
@@ -529,7 +529,7 @@ async function getYouTubeEmotes(data, messageElement) {
     if (youTubeCustomEmotes.length == 0) {
         streamerBotClient.getGlobals().then((getglobals) => {
             youTubeCustomEmotes = JSON.parse(JSON.parse(getglobals.variables.chatrdytcustomemotes.value));
-            console.debug('[YouTube] Getting YouTube Emotes from Streamer.Bot', youTubeCustomEmotes);
+            console.debug('[ChatRD][YouTube] Getting YouTube Emotes from Streamer.Bot', youTubeCustomEmotes);
         });
     }
 
@@ -538,20 +538,20 @@ async function getYouTubeEmotes(data, messageElement) {
         try {
             const res = await fetch(`https://api.betterttv.net/3/cached/users/youtube/${channelId}`);
             const emoteData = await res.json();
-            console.debug('[YouTube] Getting BTTV Channel Emotes', `https://api.betterttv.net/3/cached/users/youtube/${channelId}`, emoteData);
+            console.debug('[ChatRD][YouTube] Getting BTTV Channel Emotes', `https://api.betterttv.net/3/cached/users/youtube/${channelId}`, emoteData);
             youTubeBTTVEmotes = [
                 ...(emoteData.sharedEmotes || []),
                 ...(emoteData.channelEmotes || [])
             ];
             if (youTubeBTTVEmotes.length === 0) {
-                console.debug('[YouTube] No BTTV Emotes found. Setting fake data so we avoid fetching the emotes again.');
+                console.debug('[ChatRD][YouTube] No BTTV Emotes found. Setting fake data so we avoid fetching the emotes again.');
                 youTubeBTTVEmotes = [
                     { code: 'fakeemote', id: 'fakeemote' }
                 ];
             }
         }
         catch (err) {
-            console.warn("[YouTube] Failed to load BTTV emotes:", err);
+            console.warn("[ChatRD][YouTube] Failed to load BTTV emotes:", err);
         }
     }
 
