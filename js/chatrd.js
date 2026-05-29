@@ -47,10 +47,10 @@ const loadedEmotes = new Set();
 
 /* ✅ Explicit whitelist */
 const SKINS = {
-    default: "skin-default.css?nocache=21",
-    nutting: "skin-nutting.css?nocache=21",
-    kimballs: "skin-kimballs.css?nocache=21",
-    bubbles: "skin-bubbles.css?nocache=21"
+    default: "skin-default.css?nocache=22",
+    nutting: "skin-nutting.css?nocache=22",
+    kimballs: "skin-kimballs.css?nocache=22",
+    bubbles: "skin-bubbles.css?nocache=22"
 };
 
 const skinFile = SKINS[chatrdSkin] || SKINS.default;
@@ -88,6 +88,7 @@ let backgroundColor = hexToRGBA(chatBackground,chatBackgroundOpacity);
 chatContainer.parentElement.style.backgroundColor = backgroundColor;
 
 chatContainer.style.zoom = chatFontSize;
+chatGhostContainer.style.zoom = chatFontSize;
 
 if (eventsDock == true) eventLittleContainer.classList.add('active');
 
@@ -1093,6 +1094,26 @@ function createConfettiCanvas() {
 }
 
 
+function chatGhostRezise() {
+    const chat = document.getElementById('chat');
+    const chatGhost = document.getElementById('chat-ghost');
+    const chatWidth = `${chat.offsetWidth}px`;
+    chatGhost.style.width = chat.offsetWidth + 'px';
+}
+
+function adjustScreenMediaQuery() {
+    const chat = document.getElementById('chat');
+    const zoom = parseFloat(getComputedStyle(chat).zoom) || 1;
+
+    const breakpoint = 480;
+    const adjustedBreakpoint = Math.ceil(breakpoint / zoom);
+}
+
+window.addEventListener('resize', () => {
+    chatGhostRezise();
+    adjustScreenMediaQuery();
+});
+
 document.addEventListener("DOMContentLoaded", async function () {
     console.debug(`[ChatRD] Initializing ...`);
     
@@ -1114,4 +1135,9 @@ document.addEventListener("DOMContentLoaded", async function () {
             document.querySelector('.fake-thumb')
         );
     }
+
+
+    /* Making sure #chat-ghost has the same width than #chat */
+    chatGhostRezise();
+    adjustScreenMediaQuery();
 });
