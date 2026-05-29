@@ -47,10 +47,10 @@ const loadedEmotes = new Set();
 
 /* ✅ Explicit whitelist */
 const SKINS = {
-    default: "skin-default.css?nocache=22",
-    nutting: "skin-nutting.css?nocache=22",
-    kimballs: "skin-kimballs.css?nocache=22",
-    bubbles: "skin-bubbles.css?nocache=22"
+    default: "skin-default.css?nocache=23",
+    nutting: "skin-nutting.css?nocache=23",
+    kimballs: "skin-kimballs.css?nocache=23",
+    bubbles: "skin-bubbles.css?nocache=23"
 };
 
 const skinFile = SKINS[chatrdSkin] || SKINS.default;
@@ -983,12 +983,23 @@ function initFakeScrollbar(scrollEl, thumbEl) {
 
     track.style.visibility = 'hidden';
 
-    function updateThumb() {
-        const scrollHeight = scrollEl.scrollHeight;
-        const clientHeight = scrollEl.clientHeight;
+    function getZoom(el) {
+        let zoom = 1;
+        while (el) {
+            const z = parseFloat(getComputedStyle(el).zoom) || 1;
+            zoom *= z;
+            el = el.parentElement;
+        }
+        return zoom;
+    }
 
-        //track.style.top = scrollEl.offsetTop + 'px';
-        track.style.height = scrollEl.offsetHeight + 'px';
+    function updateThumb() {
+        const zoom = getZoom(scrollEl);
+
+        const scrollHeight = scrollEl.scrollHeight * zoom;
+        const clientHeight = scrollEl.clientHeight * zoom;
+
+        track.style.height = (scrollEl.offsetHeight * zoom) + 'px';
         track.style.bottom = 'auto';
 
         const trackH = track.offsetHeight;
@@ -1002,7 +1013,7 @@ function initFakeScrollbar(scrollEl, thumbEl) {
         track.style.visibility = 'visible';
         thumbEl.style.display = 'block';
 
-        const scrollTop = Math.abs(scrollEl.scrollTop);
+        const scrollTop = Math.abs(scrollEl.scrollTop) * zoom;
         const maxScroll = scrollHeight - clientHeight;
         const ratio = 1 - Math.min(1, Math.max(0, scrollTop / maxScroll));
         const thumbH = Math.max(30, (clientHeight / scrollHeight) * trackH);
@@ -1025,10 +1036,11 @@ function initFakeScrollbar(scrollEl, thumbEl) {
     document.addEventListener('mousemove', (e) => {
         if (!isDragging) return;
 
+        const zoom = getZoom(scrollEl);
         const trackH = track.offsetHeight;
         const thumbH = thumbEl.offsetHeight;
-        const scrollHeight = scrollEl.scrollHeight;
-        const clientHeight = scrollEl.clientHeight;
+        const scrollHeight = scrollEl.scrollHeight * zoom;
+        const clientHeight = scrollEl.clientHeight * zoom;
         const maxScroll = scrollHeight - clientHeight;
 
         const deltaY = e.clientY - dragStartY;
@@ -1049,11 +1061,12 @@ function initFakeScrollbar(scrollEl, thumbEl) {
     track.addEventListener('click', (e) => {
         if (e.target === thumbEl) return;
 
+        const zoom = getZoom(scrollEl);
         const trackRect = track.getBoundingClientRect();
         const clickY = e.clientY - trackRect.top;
         const trackH = track.offsetHeight;
-        const scrollHeight = scrollEl.scrollHeight;
-        const clientHeight = scrollEl.clientHeight;
+        const scrollHeight = scrollEl.scrollHeight * zoom;
+        const clientHeight = scrollEl.clientHeight * zoom;
         const maxScroll = scrollHeight - clientHeight;
 
         const ratio = 1 - Math.min(1, Math.max(0, clickY / trackH));
