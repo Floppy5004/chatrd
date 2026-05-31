@@ -227,7 +227,7 @@ body {
     font-family: inherit;
     border: none;
     background: rgba(0,0,0,0.4);
-    color: #FFF;
+    color: #efeff1;
     padding: 10px 75px 10px 15px;
     border-radius: 5px;
     outline: none;
@@ -245,7 +245,7 @@ body {
 #chat-input button {
     background: none;
     border: none;
-    color: #FFF;
+    color: #efeff1;
     cursor: pointer;
     font-size: 14px;
     padding: 5px;
@@ -307,7 +307,7 @@ body {
     display: inline-flex;
     padding: 5px;
     gap: 5px;
-    color: #FFF;
+    color: #efeff1;
     font-size: 14px;
     align-items: center;
     color: #333;
@@ -321,7 +321,7 @@ body {
 }
 
 #chat-input .settings .hint {
-    color: #FFF;
+    color: #efeff1;
     font-size: 18px;
 } 
 
@@ -395,7 +395,7 @@ body {
     width: calc(100% - 40px);
     border-radius: 5px;
     background: #222;
-    color: #FFF;
+    color: #efeff1;
 
     max-height: 300px;
     overflow: hidden;
@@ -426,7 +426,7 @@ body {
 
 #chat-autocomplete-list div:not(.autocomplete-item) {
     background: #191919;
-    color: #FFF;
+    color: #efeff1;
     padding: 10px;
     margin: 10px;
 }
@@ -437,7 +437,7 @@ body {
 
 #chat-autocomplete-list .autocomplete-item:hover,
 #chat-autocomplete-list .autocomplete-item.active {
-    color: #FFF;
+    color: #efeff1;
     background: #292929;
 }
 
@@ -548,7 +548,7 @@ body {
 
 .chat.vertical .item {
     position: relative;
-    color: #FFF;
+    color: #efeff1;
     font-size: 18px;
     line-height: 150%;
     transition: var(--transition);
@@ -695,7 +695,7 @@ body {
 
 .chat.oneline .item {
     position: relative;
-    color: #FFF;
+    color: #efeff1;
     font-size: 18px;
     line-height: 150%;
     transition: var(--transition);
@@ -844,7 +844,7 @@ body {
 .chat.horizontal .item {
     display: inline-flex;
     position: relative;
-    color: #FFF;
+    color: #efeff1;
     font-size: 18px;
     line-height: 150%;
     transition: var(--transition);
