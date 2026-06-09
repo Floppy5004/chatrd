@@ -111,14 +111,20 @@ R: No. ChatRD sends either chats, events or both to Speaker.bot.
 **- TikTok events are not working anymore, what should I do?**
 R: Make sure your TikFinity is connected to your account and you are live.
 
+**- My Twitch views are not updating. What's happening?**
+R: Streamer.bot does that from time to time. It doesn't relay the view count update. Close Streamer.bot and open it again.
+
 **- Kick events are not working or are taking too much time to show, what should I do?**
-R: Kick's API is notoriously slow on their peak usage. It's been reported on [Streamer.bot](https://discord.streamer.bot/) Discord (check html-css-js section) that sometimes it could take up to 60 seconds for the responses to be relayed. I hope in the future they throw more money into their servers.
+R: Kick's API is notoriously slow on their peak usage. It's been reported on [Streamer.bot](https://discord.streamer.bot/) Discord (check the #html-css-js section) that sometimes it could take up to 60 seconds for the responses to be relayed. I hope in the future they throw more money into their servers.
 
 **- Can you add other streaming/payment platforms?**
 R: ChatRD uses Streamer.Bot to 95% of all platform iterations. *TikFinity* is perfectly integrated via WebSockets. So if the platform has any integration with Streamer.bot or has a decent WebSocket API (not WebHooks), feel free to suggest it. Other than that, there are no plans to add more platforms.
 
 **- Can I customize it?**
 R: If you mean visual styles, you can add your own using the *Custom CSS* field in OBS's Browser Source Properties Window. You can use your browser Dev Tools to inspect the elements you want to change. **I won't provide support if you're planning to customize codes that could break ChatRD**.
+
+**- I forked/downloaded ChatRD to change it to my liking, both on CSS and Javascript. Can you provide support in this situation?**
+R: I assume you know what you're doing if you forked/downloaded ChatRD to customize it. That being said, **no, I won't.**.
 
 ---
 

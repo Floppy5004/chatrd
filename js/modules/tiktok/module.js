@@ -321,18 +321,12 @@ async function tiktokJoinMessage(data) {
         return;
     };
 
-    const messageElement = joinElement.querySelector('.message');
-    const animateClass = chatHorizontal == true ? 'animate__fadeInRight' : 'animate__fadeInUp';
-
-    messageElement.classList.remove('animate__animated', 'animate__faster', 'animate__fadeInRight', 'animate__fadeInUp');
-    
-    joinElement.querySelector('.user').innerHTML = `${data.nickname}`;
-    joinElement.querySelector('.action').innerHTML = tRD('tiktok.join_action');
+    joinElement.dataset.user = userId;
+    joinElement.id = messageId;
 
     messageElement.classList.add('animate__animated', 'animate__faster', animateClass);
     
     chatContainer.prepend(joinElement);
-
 
 }
 

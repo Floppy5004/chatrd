@@ -682,7 +682,16 @@ async function kickGetUserInfo(user) {
 async function getKickAvatar(user) {
     if (!showAvatar) return;
 
-    const DEFAULT_AVATAR = 'https://kick.com/img/default-profile-pictures/default-avatar-2.webp';
+    const kickAvatarList = [
+        "https://kick.com/img/default-profile-pictures/default-avatar-1.webp",
+        "https://kick.com/img/default-profile-pictures/default-avatar-2.webp",
+        "https://kick.com/img/default-profile-pictures/default-avatar-3.webp",
+        "https://kick.com/img/default-profile-pictures/default-avatar-4.webp",
+        "https://kick.com/img/default-profile-pictures/default-avatar-5.webp",
+        "https://kick.com/img/default-profile-pictures/default-avatar-6.webp"
+    ];
+
+    const DEFAULT_AVATAR = kickAvatarList[Math.floor(Math.random() * kickAvatarList.length)];
 
     if (kickAvatars.has(user)) {
         console.debug(`[ChatRD][Kick] Kick avatar found for ${user}!`);
