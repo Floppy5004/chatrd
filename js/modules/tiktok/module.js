@@ -315,6 +315,7 @@ async function tiktokJoinMessage(data) {
     }
     
     const joinElement = chatContainer.querySelector(".event.tiktok.join");
+    const messageElement = joinElement.querySelector('.message');
     
     if (!joinElement) {
         addEventItem('tiktok', clone, classes, userId, messageId);
