@@ -314,16 +314,21 @@ async function tiktokJoinMessage(data) {
         return;
     }
     
-    const joinElement = chatContainer.querySelector(".event.tiktok.join");
-    const messageElement = joinElement.querySelector('.message');
+    //const joinElement = chatContainer.querySelector(".event.tiktok.join");
+    const joinElement = [...chatContainer.querySelectorAll(".event.tiktok.join")].at(-1);
     
     if (!joinElement) {
         addEventItem('tiktok', clone, classes, userId, messageId);
         return;
     };
 
+    const messageElement = joinElement.querySelector('.message');
+
+    var animateClass = (chatHorizontal == true) ? 'animate__fadeInRight' : 'animate__fadeInUp';
+
     joinElement.dataset.user = userId;
     joinElement.id = messageId;
+    joinElement.querySelector('span.user').textContent = data.nickname;
 
     messageElement.classList.add('animate__animated', 'animate__faster', animateClass);
     
