@@ -98,6 +98,8 @@
     "channel_points": "Kanalpunkt-Belohnungen",
     "raids": "Raids",
     "shared_chat": "Geteilter Chat",
+    "seventv_paint_label" : "Transformiert den Benutzernamen mit 7TV Paint.",
+    "seventv_paint_info" : "<i class=\"fa-solid fa-circle-info\"></i> Der Benutzer muss ein 7TV-Abonnement haben und Nametag Paint aktiviert haben.",
     "hype_train_section": "Hype Train",
     "hype_train_event": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Hype-Train-Ereignis",
     "hype_train_event_hint": "Zeigt an, wenn ein Hype Train beginnt, aufsteigt und endet.",

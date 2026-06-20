@@ -98,6 +98,8 @@
     "channel_points": "Mga Reward ng Channel Points",
     "raids": "Mga Raid",
     "shared_chat": "Shared Chat",
+    "seventv_paint_label" : "Binabago ang username gamit ang 7TV Paint.",
+    "seventv_paint_info" : "<i class=\"fa-solid fa-circle-info\"></i> Kailangang mayroong 7TV Sub ang user at nakabukas ang Nametag Paint.",
     "hype_train_section": "Hype Train",
     "hype_train_event": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Event ng Hype Train",
     "hype_train_event_hint": "Ipinapakita kung kailan nagsisimula, nag-le-level up, at nagtatapos ang Hype Train.",

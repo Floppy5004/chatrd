@@ -25,6 +25,8 @@ const showTwitchSharedChat          = getURLParam("showTwitchSharedChat", true);
 const showTwitchPronouns            = getURLParam("showTwitchPronouns", false);
 const showTwitchViewers             = getURLParam("showTwitchViewers", true);
 
+const showTwitchSevenTVPaint       = getURLParam("showTwitchSevenTVPaint", false);
+
 const twitchStreamer = {};
 
 const twitchAvatars = new Map();
@@ -101,26 +103,26 @@ const twitchMessageHandlers = {
 
 
     'Twitch.ChatMessageDeleted': (response) => {
-        twitchChatMessageDeleted(response.data);
+        setTimeout(() => { twitchChatMessageDeleted(response.data); }, 3000);
     },
     'Twitch.UserBanned': (response) => {
-        twitchUserBanned(response.data);
+        setTimeout(() => { twitchUserBanned(response.data); }, 3000);
     },
     'Twitch.UserTimedOut': (response) => {
-        twitchUserBanned(response.data);
+        setTimeout(() => { twitchUserBanned(response.data); }, 3000);
     },
     
 
     'Twitch.SharedChatMessageDeleted': (response) => {
-	    twitchChatMessageDeleted(response.data);
+	    setTimeout(() => { twitchChatMessageDeleted(response.data); }, 3000);
     },
 
     'Twitch.SharedChatUserBanned': (response) => {
-        twitchUserBanned(response.data);
+        setTimeout(() => { twitchUserBanned(response.data); }, 3000);
     },
 
     'Twitch.SharedChatUserTimedout': (response) => {
-        twitchUserBanned(response.data);
+        setTimeout(() => { twitchUserBanned(response.data); }, 3000);
     },
 
 
@@ -251,8 +253,8 @@ async function twitchChatMessage(data) {
     userLinkElement.style = `--user-color: ${data.user.color}`;
     userLinkElement.textContent = data.user.name;
     userLinkElement.title = `${data.user.name} @ ${userLink}`;
-
-
+    
+    if (showTwitchSevenTVPaint) applyUsernamePaint(userLinkElement, data.user.id);
 
     if (data.meta.isMe) {
         message.style.color = data.user.color;
@@ -324,6 +326,8 @@ async function twitchChatMessage(data) {
         messageFromParts = await getTwitchMessageFromParts(data.parts);
     }
 
+    const textIdentifier = await generateSHA256Identifier(data.text);
+    message.dataset.text = textIdentifier;
     message.innerHTML = DOMPurify.sanitize(messageFromParts);
 
     addMessageItem('twitch', clone, classes, userId, messageId);
@@ -334,10 +338,12 @@ async function twitchChatMessage(data) {
 async function twitchChatMessageGiantEmote(data) {
 
     if (showTwitchMessages == false) return;
-    
+
     const numberAttempts = 1000;
 
-    const tryGigantify = (attempts = 0) => {
+    const tryGigantify = async (attempts = 0) => {
+        if (!showTwitchMessages) return;
+
         const userMessages = chatContainer.querySelectorAll(`.msg.twitch[data-user="${data.user_login}"]:not([style])`);
 
         if (userMessages.length === 0) {
@@ -346,24 +352,31 @@ async function twitchChatMessageGiantEmote(data) {
         }
 
         const firstMessage = userMessages[0];
-        const emoteImages = firstMessage.querySelectorAll(`img.emote[alt="${data.gigantified_emote.name}"]`);
+        const textIdentifier = await generateSHA256Identifier(data.message_text);
+        const actualMessage = [...firstMessage.querySelectorAll('.actual-message')]
+            .find(el => el.dataset.text === textIdentifier);
 
-        if (emoteImages.length === 0) {
+        if (!actualMessage) {
             if (attempts < numberAttempts) setTimeout(() => tryGigantify(attempts + 1), 100);
             return;
         }
 
-        emoteImages.forEach(img => {
-            img.classList.add("gigantified");
-            if (img.src.endsWith("2.0")) {
-                img.src = img.src.replace("2.0", "3.0");
-            }
-        });
+        const emoteMatches = firstMessage.querySelectorAll(`img.emote[alt="${data.gigantified_emote.name}"]`);
+        const emoteImages = emoteMatches[emoteMatches.length - 1];
+
+        if (!emoteImages) {
+            if (attempts < numberAttempts) setTimeout(() => tryGigantify(attempts + 1), 100);
+            return;
+        }
+
+        emoteImages.classList.add('gigantified');
+        if (emoteImages.src.endsWith("2.0")) {
+            emoteImages.src = emoteImages.src.replace("2.0", "3.0");
+        }
     };
 
     tryGigantify();
 }
-
 
 
 async function twitchWatchStreakMessage(data) {

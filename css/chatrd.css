@@ -625,7 +625,8 @@ body {
 
 .chat.vertical .item .actual-message img.emote {
     vertical-align: middle;
-    height: var(--emoteSize);
+    /*height: var(--emoteSize);*/
+    height: 28px;
     margin: 1px;
 }
 
@@ -777,7 +778,8 @@ body {
 
 .chat.oneline .item .actual-message img.emote {
     vertical-align: middle;
-    height: var(--emoteSize);
+    /*height: var(--emoteSize);*/
+    height: 28px;
     margin: 1px;
 }
 
@@ -929,7 +931,8 @@ body {
 
 .chat.horizontal .item .actual-message img.emote {
     vertical-align: middle;
-    height: var(--emoteSize);
+    /*height: var(--emoteSize);*/
+    height: 28px;
     margin: 1px;
 }
 

@@ -26,7 +26,7 @@ const youtubeMessageHandlers = {
         youTubeChatMessage(response.data);
     },
     'YouTube.UserBanned': (response) => {
-        youTubeUserBanned(response.data);
+        setTimeout(() => { youTubeUserBanned(response.data); }, 3000);
     },
     'YouTube.SuperChat': (response) => {
         youTubeSuperChatMessage(response.data);

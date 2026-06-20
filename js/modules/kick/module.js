@@ -220,8 +220,8 @@ async function kickConnection() {
                     case 'GiftedSubscriptionsEvent': kickGiftMessage(kickData); break;
                     case 'RewardRedeemedEvent': kickRewardRedemption(kickData); break;
                     case 'StreamHostEvent': kickRaidMessage(kickData); break;
-                    case 'MessageDeletedEvent': kickChatMessageDeleted(kickData); break;
-                    case 'UserBannedEvent': kickUserBanned(kickData); break;
+                    case 'MessageDeletedEvent': setTimeout(() => { kickChatMessageDeleted(kickData);  }, 3000); break;
+                    case 'UserBannedEvent': setTimeout(() => { kickUserBanned(kickData); }, 3000); break;
                     case 'ChatroomClearEvent': kickChatClearMessages(); break;
                     case 'KicksGifted': kickKicksGiftedMessage(kickData); break;
                 }
