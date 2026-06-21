@@ -200,6 +200,7 @@ async function twitchChatMessage(data) {
 
 	const template = chatTemplate;
 	const clone = template.content.cloneNode(true);
+    const root = clone.firstElementChild;
     const messageId = data.messageId;
     const userId = data.user.login;
 
@@ -243,7 +244,7 @@ async function twitchChatMessage(data) {
         classes.push('streamer-mentioned');
     }
 
-    
+    root.dataset.streamer = twitchStreamer.broadcastUser.toLowerCase();
 
     const userLinkElement = user.querySelector('a');
     const userLink = `https://twitch.tv/${data.user.login}`;

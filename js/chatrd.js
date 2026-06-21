@@ -47,10 +47,10 @@ const loadedEmotes = new Set();
 
 /* ✅ Explicit whitelist */
 const SKINS = {
-    default: "skin-default.css?nocache=28",
-    nutting: "skin-nutting.css?nocache=28",
-    kimballs: "skin-kimballs.css?nocache=28",
-    bubbles: "skin-bubbles.css?nocache=28"
+    default: "skin-default.css?nocache=29",
+    nutting: "skin-nutting.css?nocache=29",
+    kimballs: "skin-kimballs.css?nocache=29",
+    bubbles: "skin-bubbles.css?nocache=29"
 };
 
 const skinFile = SKINS[chatrdSkin] || SKINS.default;
@@ -150,7 +150,15 @@ async function animateItemEntry(root, messageid) {
 function addMessageItem(platform, clone, classes, userid, messageid) {
     removeExtraChatMessages();
 
+    const root = clone.firstElementChild;
+    root.classList.add(...classes);
+    root.dataset.user = userid;
+    root.id = messageid;
+
+    const streamerOfOrigin = root.dataset.streamer;
+
     let chatmodtwitch = `<div class="chatmoderation">
+                <button onclick="window.open('https://twitch.tv/popout/${streamerOfOrigin}/viewercard/${userid}', '_blank', 'noopener')" title="Twitch User Card"><i class="fa-regular fa-address-card"></i></button>
                 <button onclick="executeModCommand(event, '/deletemessage ${messageid}')" title="Remove Message"><i class="fa-solid fa-trash-can"></i></button>
                 <button onclick="executeModCommand(event, '/timeout ${userid}')" title="Timeout User"><i class="fa-solid fa-stopwatch"></i></button>
                 <button onclick="executeModCommand(event, '/ban ${userid}')" title="Ban User"><i class="fa-solid fa-gavel"></i></button>
@@ -167,11 +175,6 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
             </div>`;
 
     if (showSpeakerbot == true && speakerBotChatRead == true) { speakerBotTTSRead(clone, 'chat'); }
-
-    const root = clone.firstElementChild;
-    root.classList.add(...classes);
-    root.dataset.user = userid;
-    root.id = messageid;
 
     const messageEl = clone.querySelector('.actual-message');
     const infoEl = clone.querySelector('.info');
