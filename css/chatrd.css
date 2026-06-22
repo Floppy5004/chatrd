@@ -533,6 +533,13 @@ body {
 /* --------- CHAT - NORMAL LAYOUT ---------- */
 /* ----------------------------------------- */
 
+.chat .item.msg {
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.25);
+}
+
+.chat .item.msg img {
+    filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.25));
+}
 
 .chat.vertical {
     flex: 1;
