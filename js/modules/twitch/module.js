@@ -1762,6 +1762,8 @@ async function twitchGoalsFetch() {
 
 
 async function getTwitchAvatar(user) {
+    if (showAvatar == false) return;
+    
     const DEFAULT_AVATAR = 'https://static-cdn.jtvnw.net/user-default-pictures-uv/cdd517fe-def4-11e9-948e-784f43822e80-profile_image-300x300.png';
 
     if (twitchAvatars.has(user)) {

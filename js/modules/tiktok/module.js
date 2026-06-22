@@ -538,6 +538,8 @@ async function getTikTokEmotes(data, messageElement) {
 
 
 async function getTikTokAvatar(data) {
+    if (showAvatar == false) return;
+    
     const {
         profilePictureUrl
     } = data;
