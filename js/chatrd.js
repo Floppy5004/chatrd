@@ -47,10 +47,10 @@ const loadedEmotes = new Set();
 
 /* ✅ Explicit whitelist */
 const SKINS = {
-    default: "skin-default.css?nocache=31",
-    nutting: "skin-nutting.css?nocache=31",
-    kimballs: "skin-kimballs.css?nocache=31",
-    bubbles: "skin-bubbles.css?nocache=31"
+    default: "skin-default.css?nocache=32",
+    nutting: "skin-nutting.css?nocache=32",
+    kimballs: "skin-kimballs.css?nocache=32",
+    bubbles: "skin-bubbles.css?nocache=32"
 };
 
 const skinFile = SKINS[chatrdSkin] || SKINS.default;
@@ -130,7 +130,7 @@ async function animateItemEntry(root, messageid) {
         setTimeout(function () {
             const item = document.getElementById(messageid);
             if (item) item.removeAttribute('style');
-        }, 1300);
+        }, 800);
     }, 10);
 
     if (hideAfter > 0) {
@@ -140,7 +140,7 @@ async function animateItemEntry(root, messageid) {
                 item.style.opacity = '0';
                 setTimeout(() => {
                     item.remove();
-                }, 1000);
+                }, 800);
             }, Math.floor(hideAfter * 1000));
         }
     }

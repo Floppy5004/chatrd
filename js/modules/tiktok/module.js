@@ -2,6 +2,9 @@
 /* TIKTOK MODULE VARIABLES */
 /* ----------------------- */
 
+
+const tikFinityStatus = {};
+
 const showTiktok                    = getURLParam("showTiktok", false);
 
 const showTikTokMessages            = getURLParam("showTikTokMessages", true);
@@ -70,6 +73,10 @@ async function tiktokConnection() {
                 title: 'ChatRD 🤝 TikFinity',
                 text: ``
             });
+
+            tikFinityStatus.connected = true;
+            tikFinityStatus.disconnected = false;
+            tikFinityStatus.error = false;
         };
 
         tikfinityWebSocket.onmessage = (response) => {
@@ -95,8 +102,19 @@ async function tiktokConnection() {
         tikfinityWebSocket.onclose = (event) => {
 
             setTimeout(() => {
-                    connect();
-                }, reconnectDelay);
+                connect();
+            }, reconnectDelay);
+
+            if (tikFinityStatus.disconnected == false) {
+                notifyError({
+                    title: 'ChatRD ❌ TikFinty',
+                    text: ``
+                });
+            }
+
+            tikFinityStatus.connected = false;
+            tikFinityStatus.disconnected = true;
+            tikFinityStatus.error = true;
 
         };
 
@@ -107,6 +125,17 @@ async function tiktokConnection() {
             if (tikfinityWebSocket.readyState !== WebSocket.CLOSED) {
                 tikfinityWebSocket.close();
             }
+
+            if (tikFinityStatus.error == false) {
+                notifyError({
+                    title: 'ChatRD ⚠️ TikFinty',
+                    text: ``
+                });
+            }
+
+            tikFinityStatus.connected = false;
+            tikFinityStatus.disconnected = true;
+            tikFinityStatus.error = true;
         };
 
         return tikfinityWebSocket;

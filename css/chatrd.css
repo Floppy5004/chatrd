@@ -8,7 +8,7 @@
     --avatarSize: 32px;
     --blackOpaque: rgba(0,0,0,0.4);
 
-    --transition: all ease-in-out 500ms, opacity ease-in-out 1000ms;
+    --transition: all ease-in-out 250ms, opacity ease-in-out 500ms;
 }
 
 

@@ -53,6 +53,8 @@ function streamerBotConnect() {
         //autoReconnect: false, // evita reconectar sozinho
         onConnect: () => {
             streamerBotStatus.connected = true;
+            streamerBotStatus.disconnected = false;
+            streamerBotStatus.error = false;
 
             notifySuccess({
                 title: 'ChatRD 🤝 Streamer.bot',
@@ -61,8 +63,32 @@ function streamerBotConnect() {
             
         },
         onDisconnect: () => {
-            streamerBotStatus.connected = false;
             console.debug("[ChatRD][Settings] Streamer.bot disconnected.");
+
+            if (streamerBotStatus.disconnected === true) return;
+            notifyError({
+                title: 'ChatRD ❌ Streamer.bot',
+                text: ``
+            });
+
+            streamerBotStatus.connected = false;
+            streamerBotStatus.disconnected = true;
+            streamerBotStatus.error = true;
+        },
+        onError: (err) => {
+            
+            if (streamerBotStatus.error === true) return;
+
+            console.debug("[ChatRD][Settings] Streamer.bot connection error.");
+
+            notifyError({
+                title: 'ChatRD ⚠️ Streamer.bot',
+                text: `Error connecting to Streamer.bot.`
+            });
+            
+            streamerBotStatus.connected = false;
+            streamerBotStatus.disconnected = true;
+            streamerBotStatus.error = true;
         }
     });
 

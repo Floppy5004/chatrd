@@ -2,6 +2,8 @@
 /* KICK MODULE VARIABLES */
 /* ---------------------- */
 
+const kickStatus = {};
+
 const showKick                      = getURLParam("showKick", false);
 
 let kickUserName = null;
@@ -161,6 +163,10 @@ async function kickConnection() {
             const kickWebSocket = new WebSocket(kickWebSocketURL);
 
             kickWebSocket.onopen = () => {
+                kickStatus.connected = true;
+                kickStatus.disconnected = false;
+                kickStatus.error = false;
+
                 kickConnectionState = true;
                 retryCount = 0;
 
@@ -229,11 +235,34 @@ async function kickConnection() {
 
             kickWebSocket.onclose = (event) => {
                 setTimeout(connect, kickReconnectDelay);
+
+                if (kickStatus.disconnected == false) {                
+                    notifyError({
+                        title: 'ChatRD ❌ Kick',
+                        text: ``
+                    });
+                }
+                
+                kickStatus.connected = false;
+                kickStatus.disconnected = true;
+                kickStatus.error = true;
             };
 
             kickWebSocket.onerror = (error) => {
                 console.error('[ChatRD][Pusher][Kick] WebSocket error:', error);
                 kickWebSocket.close();
+
+                if (kickStatus.error == false) {                
+                    notifyError({
+                        title: 'ChatRD ⚠️ Kick',
+                        text: ``
+                    });
+                }
+                
+                kickStatus.connected = false;
+                kickStatus.disconnected = true;
+                kickStatus.error = true;
+
             };
 
         }
