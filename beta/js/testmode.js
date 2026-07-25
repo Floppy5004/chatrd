@@ -157,12 +157,6 @@ const TestMode = (() => {
                 "info": ""
             },
             {
-                "name": "hornet",
-                "version": "1",
-                "imageUrl": "https://static-cdn.jtvnw.net/badges/v1/4dc7b047-8c59-4522-97f2-24fb63147f56/3",
-                "info": ""
-            },
-            {
                 "name": "gamer-duo",
                 "version": "1",
                 "imageUrl": "https://static-cdn.jtvnw.net/badges/v1/be750d4d-a3b9-4116-ae75-6ee4f3294a19/3",
