@@ -257,6 +257,23 @@ const TestMode = (() => {
         twitchRaidMessage({ from_broadcaster_user_name: name, viewers: randomInt(2, 300) });
     };
 
+    generators['twitch:custompowerup'] = () => {
+        if (typeof twitchCustomPowerUpRedemption !== 'function') return;
+        const name = randomFrom(fakeNames);
+        const powerUp = randomFrom([
+            { title: 'Confetti Bomb', backgroundColor: '#e14dff', bits: 100 },
+            { title: 'Air Horn', backgroundColor: '#ffd24d', bits: 250 },
+            { title: 'Screen Shake', backgroundColor: '#ff4d4d', bits: 500 },
+            { title: 'Rain Emotes', backgroundColor: '#4dc3ff', bits: 1000 }
+        ]);
+        twitchCustomPowerUpRedemption({
+            redemptionId: randomId(),
+            user: { login: name, name },
+            customPowerUp: powerUp,
+            userInput: Math.random() < 0.5 ? randomFrom(fakeMessages) : ''
+        });
+    };
+
     // ---------- YOUTUBE ----------
 
     generators['youtube:chat'] = () => {
@@ -298,6 +315,40 @@ const TestMode = (() => {
             eventId: randomId(),
             broadcast: { tags: [] },
             user: { id: randomId(), name, url: `https://youtube.com/@${name}` }
+        });
+    };
+
+    generators['youtube:jewels'] = () => {
+        if (typeof youTubeJewels !== 'function') return;
+        const name = randomFrom(fakeNames);
+        const jewel = randomFrom([
+            { name: 'Tamo junto', url: 'https://www.gstatic.com/youtube/img/pdg/gift/assets/tamo_junto.png', jewelsAmount: 10 },
+            { name: 'Oi!', url: 'https://www.gstatic.com/youtube/img/pdg/gift/assets/oi.png', jewelsAmount: 2 },
+            { name: 'Ha-i', url: 'https://www.gstatic.com/youtube/img/pdg/gift/assets/hi.png', jewelsAmount: 50 }
+        ]);
+        youTubeJewels({
+            jewelsAmount: jewel.jewelsAmount,
+            name: jewel.name,
+            url: jewel.url,
+            duration: { seconds: 3, nanos: 0 },
+            hasVisualEffect: false,
+            isCombo: true,
+            comboCount: randomInt(1, 5),
+            altText: jewel.name,
+            language: 'en_US',
+            broadcast: { tags: [] },
+            eventId: randomId(),
+            user: {
+                id: randomId(),
+                url: `https://youtube.com/@${name}`,
+                name,
+                profileImageUrl: 'images/youtube-default-user-pfp.jpg',
+                isOwner: false,
+                isModerator: false,
+                isSponsor: Math.random() < 0.2,
+                isVerified: false
+            },
+            publishedAt: new Date().toISOString()
         });
     };
 
@@ -536,10 +587,12 @@ const TestMode = (() => {
             'twitch:sub': typeof showTwitchSubs !== 'undefined' && showTwitchSubs,
             'twitch:cheer': typeof showTwitchBits !== 'undefined' && showTwitchBits,
             'twitch:raid': typeof showTwitchRaids !== 'undefined' && showTwitchRaids,
+            'twitch:custompowerup': typeof showTwitchPowerUpRedemption !== 'undefined' && showTwitchPowerUpRedemption,
 
             'youtube:chat': typeof showYouTubeMessages !== 'undefined' && showYouTubeMessages,
             'youtube:superchat': typeof showYouTubeSuperChats !== 'undefined' && showYouTubeSuperChats,
             'youtube:sponsor': typeof showYouTubeMemberships !== 'undefined' && showYouTubeMemberships,
+            'youtube:jewels': typeof showYouTubeJewels !== 'undefined' && showYouTubeJewels,
 
             'kick:chat': typeof showKickMessages !== 'undefined' && showKickMessages,
             'kick:follow': typeof showKickFollows !== 'undefined' && showKickFollows,
