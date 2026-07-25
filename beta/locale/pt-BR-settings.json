@@ -139,9 +139,9 @@
     "custom_emotes_hint": "Você precisa adicionar os emotes de membros manualmente porque a API do YouTube não os repassa ao Streamer.bot.",
     "custom_emote_information" : "<i class=\"fa-solid fa-circle-info\"></i> <strong>Não</strong> use Discord, Imgur ou qualquer plataforma temporária de hospedagem de imagens para hospedar seus emotes. Você pode clicar com o botão direito na imagem do emote no YouTube e copiar a URL da imagem 😊",
     "embed_images_label" : "Imagens Incorporadas do YouTube<br><small>Transforma links de imagens em imagens incorporadas no ChatRD.</small>",
-    "jewels": "Joias",
-    "small_jewels_images": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Imagens de joias pequenas",
-    "small_jewels_images_hint": "Reduz o tamanho da imagem da joia para 28px."
+    "jewels": "Jóias",
+    "small_jewels_images": "<i class=\"fa-solid fa-arrow-turn-up\"></i> Imagens de jóias pequenas",
+    "small_jewels_images_hint": "Reduz o tamanho da imagem da jóias para 28px."
   },
 
   "tiktok": {
