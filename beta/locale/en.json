@@ -60,6 +60,7 @@
   },
 
   "twitch": {
+    "first_time_chatter": "✨ First-time Chatter",
     "follow_action":           " followed the channel",
     "watch_streak_action":     " is on a <strong>{count} stream streak</strong>",
     "announcement_header":     "Announcement",
@@ -214,5 +215,13 @@
     "giftdrawend_action":  " Congratulations to: ",
     "winners_and":         "and",
     "winners_oxford":      ", and"
+  },
+
+  "general": {
+    "button_toggle_twitch": "Toggle Twitch\n(CTRL+ALT+1)",
+    "button_toggle_youtube": "Toggle YouTube\n(CTRL+ALT+2)",
+    "button_toggle_kick": "Toggle Kick\n(CTRL+ALT+3)",
+    "button_toggle_tiktok": "Toggle TikTok\n(CTRL+ALT+4)",
+    "chat_input_placeholder" : "Type a message..."
   }
 }

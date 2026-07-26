@@ -220,7 +220,12 @@ const TestMode = (() => {
     generators['twitch:follow'] = () => {
         if (typeof twitchFollowMessage !== 'function') return;
         const name = randomFrom(fakeNames);
-        twitchFollowMessage({ user_login: name, user_name: name });
+        twitchFollowMessage({
+            targetUser: {
+                login: name.toLowerCase(),
+                name: name
+            }
+        });
     };
 
     generators['twitch:sub'] = () => {

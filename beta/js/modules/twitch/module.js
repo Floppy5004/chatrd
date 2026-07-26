@@ -305,6 +305,7 @@ async function twitchChatMessage(data) {
 
     if (data.meta.firstMessage) {
         classes.push('first-chatter');
+        firstMessage.textContent = tRD('twitch.first_time_chatter');
     }
     else { firstMessage.remove(); }
 
