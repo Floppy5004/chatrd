@@ -222,8 +222,8 @@
     "button_toggle_youtube": "Przełącz YouTube\n({shortcut})",
     "button_toggle_kick": "Przełącz Kick\n({shortcut})",
     "button_toggle_tiktok": "Przełącz TikTok\n({shortcut})",
-    "button_send_message": "Wyślij do wybranych",
-    "button_send_message_all": "Wyślij do wszystkich",
+    "button_send_message": "Wyślij do wybranych\n({shortcut})",
+    "button_send_message_all": "Wyślij do wszystkich\n({shortcut})",
     "chat_input_placeholder" : "Napisz wiadomość..."
   }
 }

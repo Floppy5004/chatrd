@@ -222,8 +222,8 @@
     "button_toggle_youtube": "YouTube umschalten\n({shortcut})",
     "button_toggle_kick": "Kick umschalten\n({shortcut})",
     "button_toggle_tiktok": "TikTok umschalten\n({shortcut})",
-    "button_send_message": "An Ausgewählte senden",
-    "button_send_message_all": "An Alle senden",
+    "button_send_message": "An Ausgewählte senden\n({shortcut})",
+    "button_send_message_all": "An Alle senden\n({shortcut})",
     "chat_input_placeholder" : "Nachricht eingeben..."
   }
 }

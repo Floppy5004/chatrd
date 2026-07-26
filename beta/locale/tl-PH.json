@@ -222,8 +222,8 @@
     "button_toggle_youtube": "I-toggle ang YouTube\n({shortcut})",
     "button_toggle_kick": "I-toggle ang Kick\n({shortcut})",
     "button_toggle_tiktok": "I-toggle ang TikTok\n({shortcut})",
-    "button_send_message": "Ipadala sa Napili",
-    "button_send_message_all": "Ipadala sa Lahat",
+    "button_send_message": "Ipadala sa Napili\n({shortcut})",
+    "button_send_message_all": "Ipadala sa Lahat\n({shortcut})",
     "chat_input_placeholder" : "Mag-type ng mensahe..."
   }
 }
