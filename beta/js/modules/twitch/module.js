@@ -713,8 +713,6 @@ async function twitchPowerUpRedemption(data) {
     switch (data.type) {
         case "message_effect" :
             title = tRD('twitch.reward_auto.message_effect');
-            // https://d3aqoihi2n8ty8.cloudfront.net/power-ups/cosmic-abyss-tall.mp4
-            // simmer, cosmic-abyss, rainbow-eclipse
             twitchChatMessageEffect(data);
         break;
 
@@ -725,6 +723,7 @@ async function twitchPowerUpRedemption(data) {
 
         case "celebration" :
             title = tRD('twitch.reward_auto.celebration');
+            twitchChatOnScreenCelebration(data);
         break;
     }
     
@@ -854,8 +853,53 @@ async function twitchChatMessageEffect(data) {
 }
 
 
+async function twitchChatOnScreenCelebration(data) {
+    const emote = data.emote.imageUrl;
+    onScreenCelebration(emote);
+}
+/*
+twitchPowerUpRedemption({
+        "user": {
+            "id": "531089279",
+            "login": "chatrd",
+            "name": "ChatRD",
+            "type": "twitch"
+        },
+        "type": "celebration",
+        "bits": 10,
+        "counter": 1,
+        "tempCounter": 1,
+        "userCounter": 1,
+        "tempUserCounter": 1,
+        "text": "",
+        "parts": [
+            {
+                "type": "text",
+                "text": ""
+            }
+        ],
+        "emote": {
+            "source": "Twitch",
+            "imageUrl": "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_053c0455e3f2490294967f2391697e40/default/dark/3.0",
+            "zeroWidth": false,
+            "type": "emote",
+            "text": "vortisHeart"
+        },
+        "redeemed_at": "2026-07-26T07:03:27.2499445-03:00",
+        "broadcaster": {
+            "id": "128910378",
+            "login": "vortisrd",
+            "name": "VortisRD",
+            "type": "twitch"
+        },
+        "isInSharedChat": false,
+        "isSharedChatHost": false,
+        "isFromSharedChatGuest": false,
+        "createdAt": "2026-07-26T10:03:28.6552829Z",
+        "isTest": false
+    });
 
-
+*/
 
 async function twitchCustomPowerUpRedemption(data) {
 

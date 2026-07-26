@@ -71,10 +71,10 @@ const loadedEmotes = new Set();
 
 /* ✅ Explicit whitelist */
 const SKINS = {
-    default: "skin-default.css?nocache=53",
-    nutting: "skin-nutting.css?nocache=53",
-    kimballs: "skin-kimballs.css?nocache=53",
-    bubbles: "skin-bubbles.css?nocache=53"
+    default: "skin-default.css?nocache=54",
+    nutting: "skin-nutting.css?nocache=54",
+    kimballs: "skin-kimballs.css?nocache=54",
+    bubbles: "skin-bubbles.css?nocache=54"
 };
 
 const skinFile = SKINS[chatrdSkin] || SKINS.default;
@@ -1403,9 +1403,6 @@ function buildDynamicShortcuts() {
 
     const allButtons = Array.from(container.querySelectorAll('button'));
 
-    // Limpa o dataset de todos antes de reatribuir (evita "sobra" em botões que ficaram hidden)
-    allButtons.forEach(btn => delete btn.dataset.shortcut);
-
     const visibleButtons = allButtons.filter(btn => !btn.classList.contains('hidden'));
 
     let counter = 0;
@@ -1413,8 +1410,7 @@ function buildDynamicShortcuts() {
     dynamicShortcuts = visibleButtons.map(btn => {
         counter++;
         const shortcutString = 'CTRL+ALT+' + counter;
-
-        btn.dataset.shortcut = shortcutString;
+        btn.setAttribute('title', tRD(`general.button_toggle_${ btn.id }`, { shortcut: shortcutString }));
 
         return {
             shortcut: shortcutString,
