@@ -64,10 +64,10 @@ const loadedEmotes = new Set();
 
 /* ✅ Explicit whitelist */
 const SKINS = {
-    default: "skin-default.css?nocache=51",
-    nutting: "skin-nutting.css?nocache=51",
-    kimballs: "skin-kimballs.css?nocache=51",
-    bubbles: "skin-bubbles.css?nocache=51"
+    default: "skin-default.css?nocache=52",
+    nutting: "skin-nutting.css?nocache=52",
+    kimballs: "skin-kimballs.css?nocache=52",
+    bubbles: "skin-bubbles.css?nocache=52"
 };
 
 const skinFile = SKINS[chatrdSkin] || SKINS.default;
@@ -590,6 +590,7 @@ const chatcommandslist = document.getElementById('chat-autocomplete-list');
 let chatcurrentFocus = -1;
 
 const chatInputSend = document.getElementById("chat-input-send");
+const chatInputSendAll = document.getElementById("chat-input-send-all");
 //const chatInputSettings = document.getElementById("chat-input-settings");
 const chatInputForm = document.querySelector("#chat-input form");
 const chatInput = chatInputForm.querySelector("input[type=text]")
@@ -727,10 +728,10 @@ async function pushChatInputSettings() {
     const tiktokSwitch = chatInputPlatformButtons.querySelector('#tiktok');
     const kickSwitch = chatInputPlatformButtons.querySelector('#kick');
 
-    if (showTwitch == false) { twitchSwitch.style.display = 'none'; }
-    if (showYoutube == false) { youtubeSwitch.style.display = 'none'; }
-    if (showTiktok == false) { tiktokSwitch.style.display = 'none'; }
-    if (showKick == false) { kickSwitch.style.display = 'none'; }
+    if (showTwitch == false) { twitchSwitch.classList.add('hidden'); }
+    if (showYoutube == false) { youtubeSwitch.classList.add('hidden'); }
+    if (showTiktok == false) { tiktokSwitch.classList.add('hidden'); }
+    if (showKick == false) { kickSwitch.classList.add('hidden'); }
 
     pushChatInputButtonsToSettings();
 
@@ -794,6 +795,26 @@ chatInputForm.addEventListener("submit", function(event) {
 
 chatInputSend.addEventListener("click", function () {
     chatInputForm.requestSubmit();
+});
+
+chatInputSendAll.addEventListener("click", function () {
+    const container = document.querySelector('#chat-input-platorms-buttons');
+    const allButtons = Array.from(container.querySelectorAll('button:not(.hidden)'));
+
+    const buttonsInactives = [];
+
+    allButtons.forEach(btn => {
+        if (btn.classList.contains('inactive')) {
+            buttonsInactives.push(btn);
+            btn.click();
+        }
+    });
+
+    chatInputSend.click();
+
+    buttonsInactives.forEach(btn => {
+        btn.click();
+    });
 });
 
 /*chatInputSettings.addEventListener("click", function () {
@@ -1297,14 +1318,9 @@ function adjustScreenMediaQuery() {
 }
 
 function applyLanguageToItems() {
-    const chatInputPlatforms = document.querySelector('#chat-input-platorms-buttons');
-    if (chatInputPlatforms) {
-        chatInputPlatforms.querySelector('#twitch').setAttribute('title', tRD('general.button_toggle_twitch'));
-        chatInputPlatforms.querySelector('#youtube').setAttribute('title', tRD('general.button_toggle_youtube'));
-        chatInputPlatforms.querySelector('#tiktok').setAttribute('title', tRD('general.button_toggle_tiktok'));
-        chatInputPlatforms.querySelector('#kick').setAttribute('title', tRD('general.button_toggle_kick'));
-    }
     document.querySelector('#chat-input-text-field').setAttribute('placeholder', tRD('general.chat_input_placeholder'));
+    document.querySelector('#chat-input-send').setAttribute('title', tRD('general.button_send_message'));
+    document.querySelector('#chat-input-send-all').setAttribute('title', tRD('general.button_send_message_all'));
 }
 
 async function pushChatInputButtonsToSettings() {
@@ -1337,13 +1353,52 @@ async function pushChatInputButtonsToSettings() {
 /* ------ Yo RexBordz!😁 ------- */
 /* ----------------------------- */
 
-const keyboardShortCuts = [
-    { shortcut: 'CTRL+ALT+1', action: () => document.querySelector('#chat-input-platorms-buttons button#twitch').click() },
-    { shortcut: 'CTRL+ALT+2', action: () => document.querySelector('#chat-input-platorms-buttons button#youtube').click() },
-    { shortcut: 'CTRL+ALT+3', action: () => document.querySelector('#chat-input-platorms-buttons button#kick').click() },
-    { shortcut: 'CTRL+ALT+4', action: () => document.querySelector('#chat-input-platorms-buttons button#tiktok').click() },
-].map(s => ({ ...s, ...parseShortcut(s.shortcut) }));
+let dynamicShortcuts = [];
+let staticShortcuts = [];
 
+function addStaticShortcut(shortcutString, action) {
+    staticShortcuts.push({
+        shortcut: shortcutString,
+        action,
+        ...parseShortcut(shortcutString)
+    });
+}
+
+function getAllShortcuts() {
+    return [...staticShortcuts, ...dynamicShortcuts];
+}
+
+function buildDynamicShortcuts() {
+    const container = document.querySelector('#chat-input-platorms-buttons');
+
+    if (!container) {
+        console.warn('[ChatRD] Platform Buttons Container not found.');
+        dynamicShortcuts = [];
+        return;
+    }
+
+    const allButtons = Array.from(container.querySelectorAll('button'));
+
+    // Limpa o dataset de todos antes de reatribuir (evita "sobra" em botões que ficaram hidden)
+    allButtons.forEach(btn => delete btn.dataset.shortcut);
+
+    const visibleButtons = allButtons.filter(btn => !btn.classList.contains('hidden'));
+
+    let counter = 0;
+
+    dynamicShortcuts = visibleButtons.map(btn => {
+        counter++;
+        const shortcutString = 'CTRL+ALT+' + counter;
+
+        btn.dataset.shortcut = shortcutString;
+
+        return {
+            shortcut: shortcutString,
+            action: () => btn.click(),
+            ...parseShortcut(shortcutString)
+        };
+    });
+}
 
 function parseShortcut(shortcutString) {
     const validModifiers = ['CTRL', 'ALT', 'SHIFT', 'META', 'CMD', 'WIN'];
@@ -1352,7 +1407,7 @@ function parseShortcut(shortcutString) {
     const mainKeyParts = parts.filter(p => !validModifiers.includes(p));
 
     if (mainKeyParts.length !== 1) {
-        console.warn(`[ChatRD] Shorcut not formatted correctly: "${shortcutString}".`);
+        console.warn(`[ChatRD] Shortcut not formatted correctly: "${shortcutString}".`);
     }
 
     return {
@@ -1394,13 +1449,36 @@ function keyNameToCode(key) {
     return specialKeys[key] || key;
 }
 
+function observeShortcutButtons() {
+    const container = document.querySelector('#chat-input-platorms-buttons');
+    if (!container) {
+        console.warn('[ChatRD] Platform Buttons Container not found to apply the MutationObserver.');
+        return;
+    }
+
+    // Monta a lista inicial
+    buildDynamicShortcuts();
+
+    const observer = new MutationObserver(() => {
+        buildDynamicShortcuts();
+    });
+
+    observer.observe(container, {
+        attributes: true,
+        attributeFilter: ['class'],
+        subtree: true
+    });
+}
+
 function applyKeyboardShortcuts() {
+    observeShortcutButtons();
+
     document.addEventListener('keydown', function(event) {
         const isAltGr = event.getModifierState && event.getModifierState('AltGraph');
         const ctrlPressed = event.ctrlKey || isAltGr;
         const altPressed = event.altKey || isAltGr;
 
-        const shortcut = keyboardShortCuts.find(s => 
+        const shortcut = getAllShortcuts().find(s =>
             s.ctrl === ctrlPressed &&
             s.alt === altPressed &&
             s.shift === event.shiftKey &&
@@ -1409,6 +1487,7 @@ function applyKeyboardShortcuts() {
         );
 
         if (shortcut) {
+            event.preventDefault();
             shortcut.action();
         }
     });
@@ -1425,7 +1504,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     await loadLang();
 
     chatcommands = tRD('chatrd.commands');
-    applyLanguageToItems();
 
     pushChatInputSettings();
     loadChatInputSettingFromLocalStorage();
@@ -1446,10 +1524,22 @@ document.addEventListener("DOMContentLoaded", async function () {
     chatGhostResize();
     adjustScreenMediaQuery();
 
-    
     console.debug(`[ChatRD] Applying keyboard shortcuts ...`);
+
+    addStaticShortcut('SHIFT+ENTER', () => {
+        if (document.activeElement?.matches('#chat-input-text-field')) {
+            chatInputSendAll.click();
+        }
+    });
+
+    addStaticShortcut('ENTER', () => {
+        if (document.activeElement?.matches('#chat-input-text-field')) {
+            chatInputSend.click();
+        }
+    });
+
     applyKeyboardShortcuts();
 
+    applyLanguageToItems();
 
 });
-

@@ -218,10 +218,12 @@
   },
 
   "general": {
-    "button_toggle_twitch": "Alternar Twitch\n(CTRL+ALT+1)",
-    "button_toggle_youtube": "Alternar YouTube\n(CTRL+ALT+2)",
-    "button_toggle_kick": "Alternar Kick\n(CTRL+ALT+3)",
-    "button_toggle_tiktok": "Alternar TikTok\n(CTRL+ALT+4)",
+    "button_toggle_twitch": "Alternar Twitch\n({shortcut})",
+    "button_toggle_youtube": "Alternar YouTube\n({shortcut})",
+    "button_toggle_kick": "Alternar Kick\n({shortcut})",
+    "button_toggle_tiktok": "Alternar TikTok\n({shortcut})",
+    "button_send_message": "Enviar a seleccionados",
+    "button_send_message_all": "Enviar a todos",
     "chat_input_placeholder" : "Escribe un mensaje..."
   }
 }

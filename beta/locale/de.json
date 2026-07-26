@@ -218,10 +218,12 @@
   },
 
   "general": {
-    "button_toggle_twitch": "Twitch umschalten\n(CTRL+ALT+1)",
-    "button_toggle_youtube": "YouTube umschalten\n(CTRL+ALT+2)",
-    "button_toggle_kick": "Kick umschalten\n(CTRL+ALT+3)",
-    "button_toggle_tiktok": "TikTok umschalten\n(CTRL+ALT+4)",
+    "button_toggle_twitch": "Twitch umschalten\n({shortcut})",
+    "button_toggle_youtube": "YouTube umschalten\n({shortcut})",
+    "button_toggle_kick": "Kick umschalten\n({shortcut})",
+    "button_toggle_tiktok": "TikTok umschalten\n({shortcut})",
+    "button_send_message": "An Ausgewählte senden",
+    "button_send_message_all": "An Alle senden",
     "chat_input_placeholder" : "Nachricht eingeben..."
   }
 }

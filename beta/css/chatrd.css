@@ -245,6 +245,10 @@ body {
     padding: 0 2px;
 }
 
+#chat-input #chat-input-platorms-buttons button.hidden {
+    display: none;
+}
+
 #chat-input #chat-input-platorms-buttons button img {
     width: 18px;
     transition: var(--transition);

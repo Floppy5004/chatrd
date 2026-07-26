@@ -218,10 +218,12 @@
   },
 
   "general": {
-    "button_toggle_twitch": "I-toggle ang Twitch\n(CTRL+ALT+1)",
-    "button_toggle_youtube": "I-toggle ang YouTube\n(CTRL+ALT+2)",
-    "button_toggle_kick": "I-toggle ang Kick\n(CTRL+ALT+3)",
-    "button_toggle_tiktok": "I-toggle ang TikTok\n(CTRL+ALT+4)",
+    "button_toggle_twitch": "I-toggle ang Twitch\n({shortcut})",
+    "button_toggle_youtube": "I-toggle ang YouTube\n({shortcut})",
+    "button_toggle_kick": "I-toggle ang Kick\n({shortcut})",
+    "button_toggle_tiktok": "I-toggle ang TikTok\n({shortcut})",
+    "button_send_message": "Ipadala sa Napili",
+    "button_send_message_all": "Ipadala sa Lahat",
     "chat_input_placeholder" : "Mag-type ng mensahe..."
   }
 }
