@@ -256,13 +256,13 @@
   },
 
   "modal_add_emote": {
-    "title": "Dodaj emotkę członka YouTube",
+    "title": "Emoji dla członków kanału na YouTube",
     "emote_name": "Nazwa emotki",
     "emote_name_placeholder": "Użyj \"NazwaEmotki\", nie używaj \":NazwaEmotki:\"",
     "image_url": "URL obrazu",
     "image_url_hint": "Nie używaj tymczasowych domen obrazów ani obrazów z Discorda.",
     "image_url_placeholder": "https://example.com/emotka.png",
-    "confirm": "Dodaj",
+    "confirm": "Zapisz",
     "cancel": "Anuluj"
   },
 

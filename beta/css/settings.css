@@ -244,13 +244,19 @@ hr {
     
     border-radius: 10px;
 
-    transition: .4s;
+    transition: var(--transition);
 
     text-align: center;
     background: none;
     border: none;
     cursor: pointer;
 }
+
+#settings .config .emote-list .emote-item button.edit {
+    right: unset;
+    left: 0;
+}
+
 
 #settings .config .emote-list .emote-item button.add {
     top: 50%;

@@ -544,6 +544,8 @@ function setupAddEmoteModal() {
     cancelBtn.onclick = (e) => {
         e.preventDefault();
         modal.classList.add("hidden");
+        const emoteIndexElement = document.querySelector('#emoteIndexHidden');
+        if (emoteIndexElement) emoteIndexElement.remove();
     };
 
     confirmBtn.onclick = (e) => {
@@ -566,12 +568,24 @@ function setupAddEmoteModal() {
             return;
         }
 
-        if (emotes[name]) {
-            alert(`Emote "${name}" already exists.`);
-            return;
+        const emoteIndexElement = document.querySelector('#emoteIndexHidden');
+        if (emoteIndexElement) {
+            emotes = replaceEmoteAtIndex(emotes, emoteIndexElement.value, name, url);
+            console.log(`[ChatRD][Settings] Emote "${name}" (${url}) replaced at index "${emoteIndexElement.value}".`);
+            emoteIndexElement.remove();
         }
-
-        emotes[name] = url;
+        else {
+            if (emotes[name]) {
+                alert(`Emote "${name}" already exists.`);
+                return;
+            }
+            else {
+                emotes[name] = url;
+                console.log(`[ChatRD][Settings] Emote "${name}" (${url}) added.`);
+            }
+            
+        }
+        
         textarea.value = JSON.stringify(JSON.stringify(emotes));
         saveYouTubeCustomEmotes();
         modal.classList.add("hidden");
@@ -601,21 +615,28 @@ function populateEmoteList() {
     let emotes;
     try {
         emotes = JSON.parse(JSON.parse(textarea.value));
-    } catch (e) {
+    }
+    catch (e) {
         console.error("[ChatRD][Settings] Invalid JSON in YouTube Emotes textarea", e);
         return;
     }
 
     const addButtonSpan = emoteList.querySelector("#addEmoteButton")?.parentElement;
 
+    let emoteIndex = 0;
+
     for (const [emoteName, emoteUrl] of Object.entries(emotes)) {
+        
         const span = document.createElement("span");
         span.classList.add("emote-item");
         span.innerHTML = `
             <img data-emote="${emoteName}" src="${emoteUrl}" alt="">
             <em>${emoteName}</em>
+            <button class="edit" data-emote-index="${emoteIndex}"><i class="fa-regular fa-pen-to-square"></i></button>
             <button class="delete"><i class="fa-solid fa-trash-can"></i></button>
         `;
+
+        emoteIndex++
 
         span.querySelector(".delete").addEventListener("click", (event) => {
             event.preventDefault();
@@ -627,9 +648,45 @@ function populateEmoteList() {
             }
         });
 
+        
+
+        span.querySelector(".edit").addEventListener("click", (event) => {
+            event.preventDefault();
+            
+            document.querySelector("#addEmoteButton").click();
+
+            const emoteTarget = event.currentTarget.dataset.emoteIndex;
+
+            const nameInput = document.getElementById("newEmoteName");
+            const urlInput = document.getElementById("newEmoteURL");
+
+            document.querySelector('#addEmoteModal').insertAdjacentHTML('beforeend', `<input id="emoteIndexHidden" type="hidden" value="${emoteTarget}">`);
+
+            nameInput.value = emoteName;
+            urlInput.value = emotes[emoteName];
+            
+        });
+
         emoteList.insertBefore(span, addButtonSpan || null);
+
+        
     }
 }
+
+
+function replaceEmoteAtIndex(emotes, index, newName, newUrl) {
+    const entries = Object.entries(emotes);
+
+    if (index < 0 || index >= entries.length) {
+        return emotes;
+    }
+
+    entries[index] = [newName, newUrl];
+
+    // reconstrói o objeto preservando a ordem original
+    return Object.fromEntries(entries);
+}
+
 
 /* -------------------------
    Funções YouTube <-> Streamer.bot

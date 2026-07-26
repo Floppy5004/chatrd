@@ -255,13 +255,13 @@
   },
 
   "modal_add_emote": {
-    "title": "Adicionar Emote de Membro do YouTube",
+    "title": "Emote de Membro do YouTube",
     "emote_name": "Nome do Emote",
     "emote_name_placeholder": "Use \"NomeDoEmote\", não use \":NomeDoEmote:\"",
     "image_url": "URL da Imagem",
     "image_url_hint": "Não use domínios de imagem temporários. Nem imagens vinculadas ao Discord.",
     "image_url_placeholder": "https://example.com/emote.png",
-    "confirm": "Adicionar",
+    "confirm": "Salvar",
     "cancel": "Cancelar"
   },
 
