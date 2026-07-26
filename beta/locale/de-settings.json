@@ -117,7 +117,9 @@
     "pronouns_hint": "Zeigt Pronomen für Nutzer an, die sie im Twitch-Chat aktiviert haben.",
     "statistics": "Statistiken",
     "statistics_hint": "Zeigt Twitch-Zuschauer an.",
-    "embed_images_label" : "Twitch Eingebettete Bilder<br><small>Wandelt Bildlinks in ChatRD in eingebettete Bilder um.</small>"
+    "embed_images_label" : "Twitch Eingebettete Bilder<br><small>Wandelt Bildlinks in ChatRD in eingebettete Bilder um.</small>",
+    "powerups" : "Power-up-Einlösungen",
+    "powerups_enable" : "<i class=\"fa-solid fa-arrow-turn-up\"></i> Power-up-Effekte aktivieren<br><small>Aktiviert alle regulären Power-up-Effekte, die auf ChatRD angezeigt werden.</small>"
   },
 
   "youtube": {

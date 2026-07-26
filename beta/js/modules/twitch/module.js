@@ -17,6 +17,7 @@ const showTwitchGiftedSubsUserTrain     = getURLParam("showTwitchGiftedSubsUserT
 const showTwitchMassGiftedSubs          = getURLParam("showTwitchMassGiftedSubs", true);
 const showTwitchRewardRedemptions       = getURLParam("showTwitchRewardRedemptions", true);
 const showTwitchPowerUpRedemption       = getURLParam("showTwitchPowerUpRedemptions", true);
+const enableTwitchPowerUpEffects        = getURLParam("enableTwitchPowerUpEffects", false);
 const showTwitchRaids                   = getURLParam("showTwitchRaids", true);
 const showTwitchHypeTrain               = getURLParam("showTwitchHypeTrain", false);
 const showTwitchHypeTrainBar            = getURLParam("showTwitchHypeTrainBar", false);
@@ -713,7 +714,7 @@ async function twitchPowerUpRedemption(data) {
     switch (data.type) {
         case "message_effect" :
             title = tRD('twitch.reward_auto.message_effect');
-            twitchChatMessageEffect(data);
+            if (enableTwitchPowerUpEffects) twitchChatMessageEffect(data);
         break;
 
         case "gigantify_an_emote" :
@@ -723,7 +724,7 @@ async function twitchPowerUpRedemption(data) {
 
         case "celebration" :
             title = tRD('twitch.reward_auto.celebration');
-            twitchChatOnScreenCelebration(data);
+            if (enableTwitchPowerUpEffects) twitchChatOnScreenCelebration(data);
         break;
     }
     

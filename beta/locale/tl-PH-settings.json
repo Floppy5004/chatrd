@@ -117,7 +117,9 @@
     "pronouns_hint": "Ipinapakita ang mga Panghalip ng mga nag-enable nito sa chat ng Twitch.",
     "statistics": "Mga Istatistika",
     "statistics_hint": "Ipinapakita ang mga Manonood sa Twitch.",
-    "embed_images_label" : "Twitch Embedded Images<br><small>Ginagawang embedded na larawan ang mga image link sa ChatRD.</small>"
+    "embed_images_label" : "Twitch Embedded Images<br><small>Ginagawang embedded na larawan ang mga image link sa ChatRD.</small>",
+    "powerups" : "Mga Pag-redeem ng Power-up",
+    "powerups_enable" : "<i class=\"fa-solid fa-arrow-turn-up\"></i> I-enable ang mga Epekto ng Power-up<br><small>Ina-enable ang lahat ng regular na epekto ng power-up na ipinapakita sa ChatRD.</small>"
   },
 
   "youtube": {

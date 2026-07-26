@@ -117,7 +117,9 @@
     "pronouns_hint": "Shows Pronouns to those whom enabled them on Twitch chat.",
     "statistics": "Statistics",
     "statistics_hint": "Shows Twitch Viewers.",
-    "embed_images_label" : "Twitch Embedded Images<br><small>Turn image links into embedded images in ChatRD.</small>"
+    "embed_images_label" : "Twitch Embedded Images<br><small>Turn image links into embedded images in ChatRD.</small>",
+    "powerups" : "Power-up Redemptions",
+    "powerups_enable" : "<i class=\"fa-solid fa-arrow-turn-up\"></i> Enable Power-up Effects<br><small>Enables all regular power-up effects rendered on ChatRD.</small>"
   },
 
   "youtube": {

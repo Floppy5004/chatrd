@@ -117,7 +117,9 @@
     "pronouns_hint": "Pokazuje zaimki użytkownikom, którzy je włączyli na czacie Twitcha.",
     "statistics": "Statystyki",
     "statistics_hint": "Pokazuje liczbę widzów na Twitchu.",
-    "embed_images_label" : "Osadzone Obrazy Twitcha<br><small>Zamienia linki do obrazów na osadzone obrazy w ChatRD.</small>"
+    "embed_images_label" : "Osadzone Obrazy Twitcha<br><small>Zamienia linki do obrazów na osadzone obrazy w ChatRD.</small>",
+    "powerups" : "Wykorzystane Power-upy",
+    "powerups_enable" : "<i class=\"fa-solid fa-arrow-turn-up\"></i> Włącz efekty Power-up<br><small>Włącza wszystkie standardowe efekty power-up wyświetlane na ChatRD.</small>"
   },
 
   "youtube": {

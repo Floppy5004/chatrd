@@ -116,7 +116,9 @@
     "pronouns_hint": "Exibe os Pronomes de quem os ativou no chat da Twitch.",
     "statistics": "Estatísticas",
     "statistics_hint": "Exibe os Espectadores da Twitch.",
-    "embed_images_label" : "Imagens Incorporadas da Twitch<br><small>Transforma links de imagens em imagens incorporadas no ChatRD.</small>"
+    "embed_images_label" : "Imagens Incorporadas da Twitch<br><small>Transforma links de imagens em imagens incorporadas no ChatRD.</small>",
+    "powerups" : "Resgates de Power-up",
+    "powerups_enable" : "<i class=\"fa-solid fa-arrow-turn-up\"></i> Ativar Efeitos de Power-up<br><small>Ativa todos os efeitos de power-up padrão exibidos no ChatRD.</small>"
   },
 
   "youtube": {
