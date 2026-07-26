@@ -710,6 +710,7 @@ async function twitchPowerUpRedemption(data) {
     
 
     let title;
+    let image;
 
     switch (data.type) {
         case "message_effect" :
@@ -724,6 +725,8 @@ async function twitchPowerUpRedemption(data) {
 
         case "celebration" :
             title = tRD('twitch.reward_auto.celebration');
+            image = ` <img src="${data.emote.imageUrl}">`;
+            classes.push('small-gift')
             if (enableTwitchPowerUpEffects) twitchChatOnScreenCelebration(data);
         break;
     }
@@ -736,11 +739,11 @@ async function twitchPowerUpRedemption(data) {
     userLinkElement.textContent = data.user.name;
     userLinkElement.title = `${data.user.name} @ ${userLink}`;
 
-    action.innerHTML = tRD('twitch.reward_action');
+    action.innerHTML = tRD('twitch.reward_action') + `<strong>${title}</strong>`;
 
     value.innerHTML = `
         <div class="gift-info">
-            <span class="gift-image"><strong>${title}</strong></span>
+            <span class="gift-image">${image}</span>
             <span class="gift-value"><img src="js/modules/twitch/images/icon-powerups-bits.svg" alt="${title}"> ${data.bits}</span>
         </div>
     `;
@@ -856,9 +859,14 @@ async function twitchChatMessageEffect(data) {
 
 async function twitchChatOnScreenCelebration(data) {
     const emote = data.emote.imageUrl;
-    onScreenCelebration(emote);
+    onScreenCelebration(emote, {
+        intensity: 0.5
+    });
 }
-/*
+
+/*setTimeout(() => {
+    
+
 twitchPowerUpRedemption({
         "user": {
             "id": "531089279",
@@ -899,8 +907,9 @@ twitchPowerUpRedemption({
         "createdAt": "2026-07-26T10:03:28.6552829Z",
         "isTest": false
     });
-
+}, 5000)
 */
+
 
 async function twitchCustomPowerUpRedemption(data) {
 

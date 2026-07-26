@@ -19,6 +19,10 @@
  *     direction: "down"
  *   });
  *
+ * Para controlar a quantidade de emotes de forma simples, use "intensity"
+ * (1 = padrão, 2 = dobro de emotes, 0.5 = metade):
+ *   onScreenCelebration(emoteUrl, { intensity: 2.5 });
+ *
  * Retorna um objeto controlador: { stop() } — chame .stop() para
  * interromper novos spawns e deixar as cópias já em tela terminarem.
  * -----------------------------------------------------------------------
@@ -69,6 +73,12 @@ function onScreenCelebration(emoteUrl, options = {}) {
     // quantos emotes nascem por "tick" do intervalo acima
     spawnCount = 1,
 
+    // atalho para controlar a quantidade total de emotes de forma simples:
+    // 1 = padrão, 2 = o dobro de emotes, 0.5 = metade, etc.
+    // Multiplica o spawnCount e divide o spawnInterval proporcionalmente,
+    // então não precisa mexer nos dois parâmetros manualmente.
+    intensity = 1,
+
     // "up" = sobe como balão de hélio | "down" = cai como confete
     direction = "up",
 
@@ -87,6 +97,11 @@ function onScreenCelebration(emoteUrl, options = {}) {
   if (!emoteUrl) {
     throw new Error("onScreenCelebration: 'emoteUrl' é obrigatório.");
   }
+
+  // aplica o multiplicador de intensidade: mais emotes por tick e/ou
+  // ticks mais frequentes, mantendo um mínimo sensato em ambos
+  const effectiveSpawnCount = Math.max(1, Math.round(spawnCount * intensity));
+  const effectiveSpawnInterval = Math.max(15, spawnInterval / intensity);
 
   const rand = (min, max) => Math.random() * (max - min) + min;
 
@@ -221,8 +236,8 @@ function onScreenCelebration(emoteUrl, options = {}) {
         spawning = false;
         return;
       }
-      for (let i = 0; i < spawnCount; i++) spawnEmote();
-    }, spawnInterval);
+      for (let i = 0; i < effectiveSpawnCount; i++) spawnEmote();
+    }, effectiveSpawnInterval);
   }
 
   if (img.complete) {
