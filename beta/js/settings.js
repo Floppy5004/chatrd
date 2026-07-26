@@ -9,6 +9,11 @@ let youtubeRoleChoices = null;
 let kickRoleChoices = null;
 let tiktokRoleChoices = null;
 
+let twitchTTSRoles = null;
+let youtubeTTSRoles = null;
+let kickTTSRoles = null;
+let tiktokTTSRoles = null;
+
 /* -------------------------
    Salvar configurações no localStorage
 -------------------------- */
@@ -441,6 +446,7 @@ function setupPlatformToggles() {
             element.addEventListener('transitionend', function handler() {
                 element.style.maxHeight = null;
                 element.style.opacity = null;
+                element.style.overflow = 'unset';
                 element.removeEventListener('transitionend', handler);
             });
 
@@ -726,7 +732,7 @@ function streamerBotConnect() {
 
             if (!youtubeRoleChoices) {
 
-                twitchRoleChoices = multiChoiceField('#youtubeEmbedImageRoles', {
+                youtubeRoleChoices = multiChoiceField('#youtubeEmbedImageRoles', {
                     placeholder: '...',
                     choices: [
                         { value: 'streamer',            label: 'Streamer' },
@@ -785,6 +791,93 @@ function streamerBotConnect() {
                 });
 
             }*/
+
+
+
+
+                
+
+
+
+            if (!twitchTTSRoles) {
+
+                twitchTTSRoles = multiChoiceField('#twitchTTSRoles', {
+                    placeholder: '...',
+                    choices: [
+                        { value: 'streamer',            label: 'Streamer' },
+                        { value: 'moderator',           label: 'Mods' },
+                        { value: 'vip',                 label: 'VIPs' },
+                        { value: 'tier-one-sub',        label: 'Tier 1 Subs' },
+                        { value: 'tier-two-sub',        label: 'Tier 2 Subs' },
+                        { value: 'tier-three-sub',      label: 'Tier 3 Subs' },
+                        { value: 'user',                label: 'Regular User' },
+                    ],
+                    onAdd: () => saveSettingsToLocalStorage(),
+                    onRemove: () => saveSettingsToLocalStorage()
+                });
+                
+            }
+
+
+            if (!youtubeTTSRoles) {
+
+                youtubeTTSRoles = multiChoiceField('#youtubeTTSRoles', {
+                    placeholder: '...',
+                    choices: [
+                        { value: 'streamer',            label: 'Streamer' },
+                        { value: 'moderator',           label: 'Mods' },
+                        { value: 'sponsor',             label: 'Members' },
+                        { value: 'user',                label: 'Regular User' },
+                    ],
+                    onAdd: () => saveSettingsToLocalStorage(),
+                    onRemove: () => saveSettingsToLocalStorage()
+                });
+                
+            }
+
+
+            if (!kickTTSRoles) {
+
+                kickTTSRoles = multiChoiceField('#kickTTSRoles', {
+                    placeholder: '...',
+                    choices: [
+                        { value: 'broadcaster',         label: 'Streamer' },
+                        { value: 'moderator',           label: 'Mods' },
+                        { value: 'vip',                 label: 'VIPs' },
+                        { value: 'og',                  label: 'OGs' },
+                        { value: 'subscriber',          label: 'Subs' },
+                        { value: 'user',                label: 'Regular User' },
+                    ],
+                    onAdd: () => saveSettingsToLocalStorage(),
+                    onRemove: () => saveSettingsToLocalStorage()
+                });
+                
+            }
+
+            if (!tiktokTTSRoles) {
+
+                tiktokTTSRoles = multiChoiceField('#tiktokTTSRoles', {
+                    placeholder: '...',
+                    choices: [
+                        { value: 'streamer',                    label: 'Streamer' },
+                        { value: 'moderator',                   label: 'Mods' },
+                        { value: 'subscriber',                  label: 'Subs/Super Fans' },
+                        { value: 'top-gifter-1',                label: 'Top Gifter No.1',       group: 'top-gifter' },
+                        { value: 'top-gifter-2',                label: 'Top Gifter No.2 ',      group: 'top-gifter' },
+                        { value: 'top-gifter-3',                label: 'Top Gifter No.3',       group: 'top-gifter' },
+                        { value: 'fan-one',                     label: 'Fan Lv.1+',        group: 'fans' },
+                        { value: 'fan-ten',                     label: 'Fan Lv.10+',       group: 'fans' },
+                        { value: 'fan-twenty',                  label: 'Fan Lv.20+',       group: 'fans' },
+                        { value: 'fan-thirty',                  label: 'Fan Lv.30+',       group: 'fans' },
+                        { value: 'fan-forty',                   label: 'Fan Lv.40+',       group: 'fans' },
+                        { value: 'fan-fifty',                   label: 'Fan Lv.50+',       group: 'fans' },
+                        { value: 'user',                        label: 'Regular User' },
+                    ],
+                    onAdd: () => saveSettingsToLocalStorage(),
+                    onRemove: () => saveSettingsToLocalStorage()
+                });
+
+            }
 
 
         },

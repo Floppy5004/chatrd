@@ -57,6 +57,13 @@ const tiktokEmbedImageRoles         = getURLParam("tiktokEmbedImageRoles", "stre
 
 
 
+const twitchTTSRoles         = getURLParam("twitchTTSRoles", "user");
+const youtubeTTSRoles        = getURLParam("youtubeTTSRoles", "user");
+const kickTTSRoles           = getURLParam("kickTTSRoles", "user");
+const tiktokTTSRoles         = getURLParam("tiktokTTSRoles", "user");
+
+
+
 
 const userColors = new Map();
 
@@ -64,10 +71,10 @@ const loadedEmotes = new Set();
 
 /* ✅ Explicit whitelist */
 const SKINS = {
-    default: "skin-default.css?nocache=52",
-    nutting: "skin-nutting.css?nocache=52",
-    kimballs: "skin-kimballs.css?nocache=52",
-    bubbles: "skin-bubbles.css?nocache=52"
+    default: "skin-default.css?nocache=53",
+    nutting: "skin-nutting.css?nocache=53",
+    kimballs: "skin-kimballs.css?nocache=53",
+    bubbles: "skin-bubbles.css?nocache=53"
 };
 
 const skinFile = SKINS[chatrdSkin] || SKINS.default;
@@ -186,6 +193,9 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
 
     const root = clone.firstElementChild;
     root.classList.add(...classes);
+    
+    root.classList.add('user');
+    
     root.dataset.user = userid;
     root.id = messageid;
 
@@ -208,7 +218,7 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
                 <button onclick="executeModCommand(event, '/kick/ban ${userid}')" title="Ban User"><i class="fa-solid fa-gavel"></i></button>
             </div>`;
 
-    if (showSpeakerbot == true && speakerBotChatRead == true) { speakerBotTTSRead(clone, 'chat'); }
+    if (showSpeakerbot == true && speakerBotChatRead == true) { speakerBotTTSRead(clone, 'chat', platform); }
 
     const infoEl = clone.querySelector('.info');
     
@@ -284,7 +294,7 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
 function addEventItem(platform, clone, classes, userid, messageid) {
     removeExtraChatMessages();
 
-    if (showSpeakerbot == true && speakerBotEventRead == true) { speakerBotTTSRead(clone, 'event'); }
+    if (showSpeakerbot == true && speakerBotEventRead == true) { speakerBotTTSRead(clone, 'event', platform); }
     
     const root = clone.firstElementChild;
     root.classList.add(...classes);
@@ -848,9 +858,22 @@ document.addEventListener('click', function (e) {
 
 
 
-async function speakerBotTTSRead(clone,type) {
+async function speakerBotTTSRead(clone,type,platform) {
 
     var TTSMessage = "";
+
+    const root = clone.firstElementChild;
+
+	const embedTTSConfig = {
+		twitch: { roles: twitchTTSRoles },
+		youtube: { roles: youtubeTTSRoles },
+		kick: { roles: kickTTSRoles },
+		tiktok: { roles: tiktokTTSRoles }
+	};
+
+    const config = embedTTSConfig[platform];
+    const requiredRoles = config.roles.split(',').map(role => role.trim());
+	const isTTSAllowed = requiredRoles.some(role => root.classList.contains(role));
 
     const {
         header,
@@ -864,6 +887,9 @@ async function speakerBotTTSRead(clone,type) {
     );
 
     if (type == "chat") {
+        
+        if (!isTTSAllowed) return;
+
         var cleanmessage = "";
         
         if (message == null) { cleanmessage = "<br>"; }
@@ -871,12 +897,10 @@ async function speakerBotTTSRead(clone,type) {
 
         var strippedmessage = await cleanStringOfHTMLButEmotes(cleanmessage);
 
-
         const tts = {
             user: user.textContent,
             message: strippedmessage
         }
-
 
         TTSMessage = renderTemplate(speakerBotChatTemplate, tts);
     }
@@ -1319,8 +1343,8 @@ function adjustScreenMediaQuery() {
 
 function applyLanguageToItems() {
     document.querySelector('#chat-input-text-field').setAttribute('placeholder', tRD('general.chat_input_placeholder'));
-    document.querySelector('#chat-input-send').setAttribute('title', tRD('general.button_send_message'));
-    document.querySelector('#chat-input-send-all').setAttribute('title', tRD('general.button_send_message_all'));
+    document.querySelector('#chat-input-send').setAttribute('title', tRD('general.button_send_message', { shortcut: 'ENTER' }));
+    document.querySelector('#chat-input-send-all').setAttribute('title', tRD('general.button_send_message_all', { shortcut: 'SHIFT+ENTER' }));
 }
 
 async function pushChatInputButtonsToSettings() {
