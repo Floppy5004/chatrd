@@ -60,7 +60,7 @@
   },
 
   "twitch": {
-    "first_time_chatter": "✨ Pierwsza wiadomość na czacie",
+    "first_time_chatter": "✨ Pierwszy raz na czacie",
     "follow_action":           " zaobserwował(a) kanał",
     "watch_streak_action":     " ma <strong>serię {count} transmisji</strong>",
     "announcement_header":     "Ogłoszenie",

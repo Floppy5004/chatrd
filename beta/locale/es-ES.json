@@ -60,7 +60,7 @@
   },
 
   "twitch": {
-    "first_time_chatter": "✨ Chatter por primera vez",
+    "first_time_chatter": "✨ Primera vez en el chat.",
     "follow_action":           " siguió el canal",
     "watch_streak_action":     " lleva una <strong>racha de {count} streams</strong>",
     "announcement_header":     "Anuncio",

@@ -409,7 +409,7 @@ async function twitchFollowMessage(data) {
     const classes = ['twitch', 'follow'];
 
     header.remove();
-    message.remove();
+    //message.remove();
     value.remove();
 
     const userLinkElement = user.querySelector('a');
@@ -1281,14 +1281,14 @@ async function twitchRaidMessage(data) {
 
 
 async function twitchChatMessageDeleted(data) {
-    document.getElementById(data.messageId)?.remove();
+    document.getElementById(data.messageId)?.parentNode.remove();
 }
 
 
 
 async function twitchUserBanned(data) {
     chatContainer.querySelectorAll(`[data-user="${data.targetUser.login}"]`).forEach(element => {
-        element.remove();
+        element.parentNode.remove();
     });
 }
 
@@ -1296,7 +1296,7 @@ async function twitchUserBanned(data) {
 
 async function twitchChatClearMessages() {
     chatContainer.querySelectorAll(`.item.twitch`).forEach(element => {
-        element.remove();
+        element.parentNode.remove();
     });
 }
 

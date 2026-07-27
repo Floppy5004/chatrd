@@ -36,7 +36,6 @@ const ignoreUserList                = ignoreChatters.split(',').map(item => item
 const hideAfter                     = getURLParam("hideAfter", 0);
 
 const chatContainer                 = document.querySelector('#chat');
-const chatGhostContainer            = document.querySelector('#chat-ghost');
 const eventLittleContainer          = document.querySelector('#little-events');
 const chatTemplate                  = document.querySelector('#chat-message');
 const eventTemplate                 = document.querySelector('#event-message');
@@ -71,10 +70,10 @@ const loadedEmotes = new Set();
 
 /* ✅ Explicit whitelist */
 const SKINS = {
-    default: "skin-default.css?nocache=57",
-    nutting: "skin-nutting.css?nocache=57",
-    kimballs: "skin-kimballs.css?nocache=57",
-    bubbles: "skin-bubbles.css?nocache=57"
+    default: "skin-default.css?nocache=58",
+    nutting: "skin-nutting.css?nocache=58",
+    kimballs: "skin-kimballs.css?nocache=58",
+    bubbles: "skin-bubbles.css?nocache=58"
 };
 
 const skinFile = SKINS[chatrdSkin] || SKINS.default;
@@ -93,26 +92,21 @@ document.querySelector('#bars').style.zoom = chatFontSize;
 if (chatScrollBar == false) { chatContainer.classList.add('noscrollbar'); }
 if (chatOneLine == true && !chatHorizontal) {
     chatContainer.classList.add('oneline');
-    chatGhostContainer.classList.add('oneline');
 }
 
 if (chatHorizontal == true) {
     chatContainer.classList.remove('oneline');
     chatContainer.classList.add('horizontal');
-    chatGhostContainer.classList.remove('oneline');
-    chatGhostContainer.classList.add('horizontal');
 }
 
 if (!chatHorizontal && !chatOneLine) {
     chatContainer.classList.add('vertical');
-    chatGhostContainer.classList.add('vertical');
 }
 
 let backgroundColor = hexToRGBA(chatBackground,chatBackgroundOpacity);
 chatContainer.parentElement.style.backgroundColor = backgroundColor;
 
 chatContainer.style.zoom = chatFontSize;
-chatGhostContainer.style.zoom = chatFontSize;
 
 if (eventsDock == true) eventLittleContainer.classList.add('active');
 
@@ -123,13 +117,14 @@ if (chatField) {
 
 async function animateItemEntry(root, messageid) {
     const dimensionProp = chatHorizontal ? 'Width' : 'Height';
-    const marginProp = chatHorizontal ? 'margin-left' : 'margin-top';
 
-    const ghostClone = root.cloneNode(true);
-    chatGhostContainer.prepend(ghostClone);
+    const target = root.parentNode ?? root;
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('chat-element-wrapper');
+    wrapper.appendChild(target);
 
-    const ghostImages = [...ghostClone.querySelectorAll('img')];
-    await Promise.all(ghostImages.map(img => {
+    const chatImages = [...wrapper.querySelectorAll('img')];
+    await Promise.all(chatImages.map(img => {
         if (img.complete) return Promise.resolve();
         return Promise.race([
             new Promise(resolve => {
@@ -140,36 +135,26 @@ async function animateItemEntry(root, messageid) {
         ]);
     }));
 
+    wrapper.style[dimensionProp.toLowerCase()] = '0px';
+    wrapper.style.opacity = '0';
+    wrapper.style.transition = 'all ease-in-out 250ms, opacity ease-in-out 500ms';
+    
+    chatContainer.prepend(wrapper);
+
     const itemDimension = chatHorizontal
-    ? ghostClone.offsetWidth || 0
-    : ghostClone.offsetHeight || 0;
-    
-    ghostClone.remove();
-    
-    const marginPropValue = parseFloat(getComputedStyle(chatGhostContainer).gap);
+    ? root.offsetWidth || 0
+    : root.offsetHeight || 0;
 
-    //root.style = `${dimensionProp.toLowerCase()}: 0px; opacity: 0; ${marginProp}: -${marginPropValue}px;`;
-    root.style[dimensionProp.toLowerCase()] = '0px';
-    root.style[marginProp] = `-${marginPropValue}px`;
-    root.style.opacity = '0';
-    
-    chatContainer.prepend(root.parentNode ?? root);
+    void wrapper[`offset${dimensionProp}`];
 
-    void root[`offset${dimensionProp}`];
+    wrapper.style[dimensionProp.toLowerCase()] = `${itemDimension}px`;
+    wrapper.style.opacity = '1';
 
-    //root.style = `${dimensionProp.toLowerCase()}: ${itemDimension}px; opacity: 1; ${marginProp}: 0px;`;
-    root.style[dimensionProp.toLowerCase()] = `${itemDimension}px`;
-    root.style[marginProp] = '0px';
-    root.style.opacity = '1';
-    
     setTimeout(function () {
         const item = document.getElementById(messageid);
         if (item) {
-            //item.removeAttribute('style');
-            item.style.removeProperty('opacity');
-            item.style.removeProperty( marginProp );
-            item.style.removeProperty( dimensionProp.toLowerCase() );
-
+            item.parentNode.style.removeProperty('opacity');
+            item.parentNode.style.removeProperty( dimensionProp.toLowerCase() );
             item.dataset.rendered = 'true';
         }
     }, 800);
@@ -178,9 +163,9 @@ async function animateItemEntry(root, messageid) {
         const item = document.getElementById(messageid);
         if (item) {
             setTimeout(() => {
-                item.style.opacity = '0';
+                item.parentNode.style.opacity = '0';
                 setTimeout(() => {
-                    item.remove();
+                    item.parentNode.remove();
                 }, 800);
             }, Math.floor(hideAfter * 1000));
         }
@@ -1324,23 +1309,6 @@ function createConfettiCanvas() {
   return canvas;
 }
 
-
-function chatGhostResize() {
-    const chat = document.getElementById('chat');
-    const chatGhost = document.getElementById('chat-ghost');
-    const chatWidth = `${chat.offsetWidth}px`;
-    chatGhost.style.width = chat.offsetWidth + 'px';
-}
-
-
-function adjustScreenMediaQuery() {
-    const chat = document.getElementById('chat');
-    const zoom = parseFloat(getComputedStyle(chat).zoom) || 1;
-
-    const breakpoint = 480;
-    const adjustedBreakpoint = Math.ceil(breakpoint / zoom);
-}
-
 function applyLanguageToItems() {
     document.querySelector('#chat-input-text-field').setAttribute('placeholder', tRD('general.chat_input_placeholder'));
     document.querySelector('#chat-input-send').setAttribute('title', tRD('general.button_send_message', { shortcut: 'ENTER' }));
@@ -1513,11 +1481,6 @@ function applyKeyboardShortcuts() {
     });
 }
 
-window.addEventListener('resize', () => {
-    chatGhostResize();
-    adjustScreenMediaQuery();
-});
-
 document.addEventListener("DOMContentLoaded", async function () {
     console.debug(`[ChatRD] Initializing ...`);
     
@@ -1539,10 +1502,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             document.querySelector('.fake-thumb')
         );
     }
-
-    /* Making sure #chat-ghost has the same width than #chat */
-    chatGhostResize();
-    adjustScreenMediaQuery();
 
     console.debug(`[ChatRD] Applying keyboard shortcuts ...`);
 

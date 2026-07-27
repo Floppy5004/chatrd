@@ -60,7 +60,7 @@
   },
 
   "twitch": {
-    "first_time_chatter": "✨ Unang Beses na Chatter",
+    "first_time_chatter": "✨ Unang beses sa chat",
     "follow_action":           " nag-follow sa channel",
     "watch_streak_action":     " ay may <strong>{count} stream streak</strong>",
     "announcement_header":     "Anunsyo",

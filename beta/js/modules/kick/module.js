@@ -664,14 +664,14 @@ async function kickRaidMessage(data) {
 
 
 async function kickChatMessageDeleted(data) {
-    document.getElementById(data.message.id)?.remove();
+    document.getElementById(data.message.id)?.parentNode.remove();
 }
 
 
 
 async function kickUserBanned(data) {
     chatContainer.querySelectorAll(`[data-user="${data.user.slug}"]`).forEach(element => {
-        element.remove();
+        element.parentNode.remove();
     });
 }
 
@@ -679,7 +679,7 @@ async function kickUserBanned(data) {
 
 async function kickChatClearMessages() {
     chatContainer.querySelectorAll(`.item.kick`).forEach(element => {
-        element.remove();
+        element.parentNode.remove();
     });
 }
 

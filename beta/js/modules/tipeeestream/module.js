@@ -58,7 +58,7 @@ async function tipeeeStreamDonation(data) {
     
     value.innerHTML = `<strong>${money}</strong>`;
 
-    if (data.message) message.innerHTML = `: ${data.message}`;
+    if (data.message) message.innerHTML = `${data.message}`;
 
     addEventItem('tipeeestream', clone, classes, userId, messageId);
 }

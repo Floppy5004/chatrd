@@ -477,12 +477,12 @@ body {
 /* --------- CHAT - GHOST ---------- */
 /* --------------------------------- */
 
-#chat-ghost {
+/*#chat-ghost {
     position: fixed; 
     visibility: hidden;
     pointer-events: none;
     top: -9999px;
-}
+}*/
 
 /* ----------------------------------------- */
 /* --------- CHAT - NORMAL LAYOUT ---------- */
@@ -496,8 +496,15 @@ body {
     filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.25));
 }
 
-#chat .item .actual-message img.embedded,
+/*#chat .item .actual-message img.embedded,
 #chat-ghost .item .actual-message img.embedded {
+    border-radius: 5px;
+    display: block;
+    height: 108px;
+    margin-top: 5px;
+}*/
+
+#chat .item .actual-message img.embedded {
     border-radius: 5px;
     display: block;
     height: 108px;
@@ -636,6 +643,7 @@ body {
 
 .chat.vertical .item.first-chatter .first-message {
     font-size: 14px;
+    margin-bottom: 3px;
 }
 
 .chat.vertical .item .header {
@@ -1010,8 +1018,8 @@ body {
     /*line-height: 125%;*/
 }
 
+
 .chat .event .message .info span {
-    display: inline-block;
     padding: 2px 0;
 }
 
@@ -1058,6 +1066,7 @@ body {
     margin: 0 0 0 5px;
     border-radius: 5px;
     font-size: 14px;
+    height: 26px;
 }
 .chat .event .value .gift-info span.gift-value img {
     width: 16px;

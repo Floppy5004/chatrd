@@ -689,7 +689,7 @@ youTubeJewels({
 
 async function youTubeUserBanned(data) {
     chatContainer.querySelectorAll(`[data-user="${data.bannedUser.id}"]:not(.event)`).forEach(element => {
-        element.remove();
+        element.parentNode.remove();
     });
 }
 

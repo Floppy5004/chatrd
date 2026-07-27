@@ -400,21 +400,6 @@
                         </div>
 
 
-
-
-                        
-                        <hr>
-                        <div class="config">
-                            <label>Speaker.bot Roles<br><small>If Speaker.bot is enabled, only the roles selected below will have their messages spoken over TTS. <strong>Events will not be filtered by this.</strong></small></label>
-                        </div>
-                        <div class="config full">
-                            <input type="text" name="twitchTTSRoles" id="twitchTTSRoles" value="user" data-default="user" placeholder="Select Permissions">
-                        </div>
-
-
-
-
-                        <hr>
                         <div class="config">
                             <label>
                                 7TV Paints<br>
@@ -425,22 +410,6 @@
                         <div class="config">
                             <small class="warning" data-i18n-html="twitch.seventv_paint_info">
                                 <i class="fa-solid fa-circle-info"></i> The user needs to have a 7TV Sub and Nametag Paint Enabled.
-                            </small>
-                        </div>
-                        <hr>
-                        <div class="config">
-                            <label data-i18n-html="twitch.embed_images_label">Twitch Embedded Images<br><small>Turn image links into embedded images in ChatRD.</small></label>
-                            <label class="switch"><input type="checkbox" name="showTwitchEmbedImages" data-default="false"><span class="slider"></span></label>
-                        </div>
-                        <div class="config">
-                            <label data-i18n-html="general.embedding_roles"><i class="fa-solid fa-arrow-turn-up"></i> Embedding Permissions<br><small>Select which roles would be able to embed images.</small></label>
-                        </div>
-                        <div class="config full">
-                            <input type="text" name="twitchEmbedImageRoles" id="twitchEmbedImageRoles" value="streamer,moderator" data-default="streamer,moderator" placeholder="Select Permissions">
-                        </div>
-                        <div class="config">
-                            <small class="warning" data-i18n-html="general.embed_image_warning">
-                                <i class="fa-solid fa-triangle-exclamation"></i> <strong><u>Be careful when enabling this.</u></strong> Your viewers might post images that are against the platform's Terms of Service and you could face penalties. <strong>You have been warned!</strong>
                             </small>
                         </div>
                         <hr>
@@ -494,6 +463,39 @@
                             </label>
                             <label class="switch"><input type="checkbox" name="showTwitchViewers" checked data-default="true"><span class="slider"></span></label>
                         </div>
+
+
+                        <hr>
+                        <div class="config">
+                            <label data-i18n-html="twitch.embed_images_label">Twitch Embedded Images<br><small>Turn image links into embedded images in ChatRD.</small></label>
+                            <label class="switch"><input type="checkbox" name="showTwitchEmbedImages" data-default="false"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n-html="general.embedding_roles"><i class="fa-solid fa-arrow-turn-up"></i> Embedding Permissions<br><small>Select which roles would be able to embed images.</small></label>
+                        </div>
+                        <div class="config full">
+                            <input type="text" name="twitchEmbedImageRoles" id="twitchEmbedImageRoles" value="streamer,moderator" data-default="streamer,moderator" placeholder="Select Permissions">
+                        </div>
+                        <div class="config">
+                            <small class="warning" data-i18n-html="general.embed_image_warning">
+                                <i class="fa-solid fa-triangle-exclamation"></i> <strong><u>Be careful when enabling this.</u></strong> Your viewers might post images that are against the platform's Terms of Service and you could face penalties. <strong>You have been warned!</strong>
+                            </small>
+                        </div>
+
+
+
+
+                        
+                        <hr>
+                        <div class="config">
+                            <label>Speaker.bot Roles<br><small>If Speaker.bot is enabled, only the roles selected below will have their messages spoken over TTS. <strong>Events will not be filtered by this.</strong></small></label>
+                        </div>
+                        <div class="config full">
+                            <input type="text" name="twitchTTSRoles" id="twitchTTSRoles" value="user" data-default="user" placeholder="Select Permissions">
+                        </div>
+
+
+
                     </div>
                 </div>
 
@@ -563,37 +565,7 @@
                             <label class="switch"><input type="checkbox" name="showSmallYouTubeJewels" data-default="false"><span class="slider"></span></label>
                         </div>
 
-
-
                         
-                        <hr>
-                        <div class="config">
-                            <label>Speaker.bot Roles<br><small>If Speaker.bot is enabled, only the roles selected below will have their messages spoken over TTS. <strong>Events will not be filtered by this.</strong></small></label>
-                        </div>
-                        <div class="config full">
-                            <input type="text" name="youtubeTTSRoles" id="youtubeTTSRoles" value="user" data-default="user" placeholder="Select Permissions">
-                        </div>
-
-
-
-
-                        <hr>
-                        <div class="config">
-                            <label data-i18n-html="youtube.embed_images_label">YouTube Embedded Images<br><small>Turn image links into embedded images in ChatRD.</small></label>
-                            <label class="switch"><input type="checkbox" name="showYouTubeEmbedImages" data-default="false"><span class="slider"></span></label>
-                        </div>
-                        <div class="config">
-                            <label data-i18n-html="general.embedding_roles"><i class="fa-solid fa-arrow-turn-up"></i> Embedding Permissions<br><small>Select which roles would be able to embed images.</small></label>
-                        </div>
-                        <div class="config full">
-                            <input type="text" name="youtubeEmbedImageRoles" id="youtubeEmbedImageRoles" value="streamer,moderator" data-default="streamer,moderator" placeholder="Select Permissions">
-                        </div>
-                        <div class="config">
-                            <small class="warning" data-i18n-html="general.embed_image_warning">
-                                <i class="fa-solid fa-triangle-exclamation"></i> <strong><u>Be careful when enabling this.</u></strong> Your viewers might post images that are against the platform's Terms of Service and you could face penalties. <strong>You have been warned!</strong>
-                            </small>
-                        </div>
-                        <hr>
                         <div class="config">
                             <label>
                                 <span data-i18n="youtube.statistics">Statistics</span><br>
@@ -601,6 +573,11 @@
                             </label>
                             <label class="switch"><input type="checkbox" name="showYouTubeStatistics" checked data-default="true"><span class="slider"></span></label>
                         </div>
+
+
+
+
+                        <hr>
                         <div class="config">
                             <label>
                                 <span data-i18n="youtube.custom_emotes_label">Members Only Emotes</span><br>
@@ -622,6 +599,40 @@
                                 <i class="fa-solid fa-triangle-exclamation"></i> <strong>Don't</strong> use Discord, Imgur or any temporary image hosting platforms to host your emotes. You could right click on the emote image on YouTube and copy the image URL 😊
                             </small>
                         </div>
+
+
+
+
+                        <hr>
+                        <div class="config">
+                            <label data-i18n-html="youtube.embed_images_label">YouTube Embedded Images<br><small>Turn image links into embedded images in ChatRD.</small></label>
+                            <label class="switch"><input type="checkbox" name="showYouTubeEmbedImages" data-default="false"><span class="slider"></span></label>
+                        </div>
+                        <div class="config">
+                            <label data-i18n-html="general.embedding_roles"><i class="fa-solid fa-arrow-turn-up"></i> Embedding Permissions<br><small>Select which roles would be able to embed images.</small></label>
+                        </div>
+                        <div class="config full">
+                            <input type="text" name="youtubeEmbedImageRoles" id="youtubeEmbedImageRoles" value="streamer,moderator" data-default="streamer,moderator" placeholder="Select Permissions">
+                        </div>
+                        <div class="config">
+                            <small class="warning" data-i18n-html="general.embed_image_warning">
+                                <i class="fa-solid fa-triangle-exclamation"></i> <strong><u>Be careful when enabling this.</u></strong> Your viewers might post images that are against the platform's Terms of Service and you could face penalties. <strong>You have been warned!</strong>
+                            </small>
+                        </div>
+                        
+
+
+
+                        
+                        <hr>
+                        <div class="config">
+                            <label>Speaker.bot Roles<br><small>If Speaker.bot is enabled, only the roles selected below will have their messages spoken over TTS. <strong>Events will not be filtered by this.</strong></small></label>
+                        </div>
+                        <div class="config full">
+                            <input type="text" name="youtubeTTSRoles" id="youtubeTTSRoles" value="user" data-default="user" placeholder="Select Permissions">
+                        </div>
+
+                        
                     </div>
                 </div>
 
@@ -707,15 +718,12 @@
                             </label>
                             <label class="switch"><input type="checkbox" name="showKickRaids" checked data-default="true"><span class="slider"></span></label>
                         </div>
-
-
-                        
-                        <hr>
                         <div class="config">
-                            <label>Speaker.bot Roles<br><small>If Speaker.bot is enabled, only the roles selected below will have their messages spoken over TTS. <strong>Events will not be filtered by this.</strong></small></label>
-                        </div>
-                        <div class="config full">
-                            <input type="text" name="kickTTSRoles" id="kickTTSRoles" value="user" data-default="user" placeholder="Select Permissions">
+                            <label>
+                                <span data-i18n="kick.statistics">Statistics</span><br>
+                                <small data-i18n-html="kick.statistics_hint">Shows Kick Viewers.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showKickViewers" checked data-default="true"><span class="slider"></span></label>
                         </div>
 
 
@@ -737,13 +745,15 @@
                                 <i class="fa-solid fa-triangle-exclamation"></i> <strong><u>Be careful when enabling this.</u></strong> Your viewers might post images that are against the platform's Terms of Service and you could face penalties. <strong>You have been warned!</strong>
                             </small>
                         </div>
+
+
+                        
                         <hr>
                         <div class="config">
-                            <label>
-                                <span data-i18n="kick.statistics">Statistics</span><br>
-                                <small data-i18n-html="kick.statistics_hint">Shows Kick Viewers.</small>
-                            </label>
-                            <label class="switch"><input type="checkbox" name="showKickViewers" checked data-default="true"><span class="slider"></span></label>
+                            <label>Speaker.bot Roles<br><small>If Speaker.bot is enabled, only the roles selected below will have their messages spoken over TTS. <strong>Events will not be filtered by this.</strong></small></label>
+                        </div>
+                        <div class="config full">
+                            <input type="text" name="kickTTSRoles" id="kickTTSRoles" value="user" data-default="user" placeholder="Select Permissions">
                         </div>
                     </div>
                 </div>
@@ -759,6 +769,14 @@
                             </label>
                         </div>
                     </div>
+                    
+                    <div class="config">
+                        <small class="warning" data-i18n-html="tiktok.chat_field_warning">
+                            <i class="fa-solid fa-circle-info"></i> If you have <strong>Chat Field</strong> enabled, you need to <strong><a target="_blank" href="https://github.com/vortisrd/chatrd/?tab=readme-ov-file#-sending-messages-to-tiktok">follow the instructions</a></strong> to send messages to TikTok.
+                        </small>
+                    </div>
+                    <hr>
+                    
                     <div class="setup" style="overflow: hidden; transition: max-height 0.4s, opacity 0.4s; display: none; max-height: 0px; opacity: 0;">
                         <div class="config">
                             <label>
@@ -810,9 +828,14 @@
                             <label data-i18n="tiktok.superfans">SuperFans/Subscribers</label>
                             <label class="switch"><input type="checkbox" name="showTikTokSubs" checked data-default="true"><span class="slider"></span></label>
                         </div>
-
                         
-
+                        <div class="config">
+                            <label>
+                                <span data-i18n="tiktok.statistics">Statistics</span><br>
+                                <small data-i18n="tiktok.statistics_hint">Shows TikTok Viewers and Likes.</small>
+                            </label>
+                            <label class="switch"><input type="checkbox" name="showTikTokStatistics" checked data-default="true"><span class="slider"></span></label>
+                        </div> 
                         
                         <hr>
                         <div class="config">
@@ -821,10 +844,6 @@
                         <div class="config full">
                             <input type="text" name="tiktokTTSRoles" id="tiktokTTSRoles" value="user" data-default="user" placeholder="Select Permissions">
                         </div>
-                        <hr>
-
-
-
 
                         <!--<hr>
                         <div class="config">
@@ -843,18 +862,6 @@
                             </small>
                         </div>
                         <hr>-->
-                        <div class="config">
-                            <label>
-                                <span data-i18n="tiktok.statistics">Statistics</span><br>
-                                <small data-i18n="tiktok.statistics_hint">Shows TikTok Viewers and Likes.</small>
-                            </label>
-                            <label class="switch"><input type="checkbox" name="showTikTokStatistics" checked data-default="true"><span class="slider"></span></label>
-                        </div> 
-                        <div class="config">
-                            <small class="warning" data-i18n-html="tiktok.chat_field_warning">
-                                <i class="fa-solid fa-circle-info"></i> If you have <strong>Chat Field</strong> enabled, you need to <strong><a target="_blank" href="https://github.com/vortisrd/chatrd/?tab=readme-ov-file#-sending-messages-to-tiktok">follow the instructions</a></strong> to send messages to TikTok.
-                            </small>
-                        </div>
                     </div>
                 </div>
 
@@ -1162,8 +1169,8 @@
 <script src="js/libs/mchoice/multi-choice-field.js"></script>
 
 <!-- i18n deve ser carregado ANTES do settings.js -->
-<script src="js/i18n-settings.js?nocache=57"></script>
-<script src="js/speakerbot.js?nocache=57"></script>
-<script src="js/settings.js?nocache=57"></script>
+<script src="js/i18n-settings.js?nocache=58"></script>
+<script src="js/speakerbot.js?nocache=58"></script>
+<script src="js/settings.js?nocache=58"></script>
 </body>
 </html>
