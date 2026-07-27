@@ -166,7 +166,6 @@ async function youTubeChatMessage(data) {
     
 
     const userLinkElement = user.querySelector('a');
-    //const userLink = `https://youtube.com/channel/${userId}`;
     const userLink = `${data.user.url}`;
 
     userLinkElement.href = userLink;
@@ -194,74 +193,6 @@ async function youTubeChatMessage(data) {
 
     addMessageItem('youtube', clone, classes, userId, messageId);
 }
-
-
-setTimeout(() => {
-    youTubeChatMessage({
-        "message": "the youtube notification thing",
-        "emotes": [],
-        "parts": [
-            {
-                "text": "the youtube notification thing"
-            }
-        ],
-        "broadcast": {
-            "id": "IQhOS-1kXLw",
-            "channelId": "UCke8WMjtyqZ1wMNYr5wwLWA",
-            "liveChatId": "KicKGFVDa2U4V01qdHlxWjF3TU5ZcjV3d0xXQRILSVFoT1MtMWtYTHc",
-            "title": "🔴 [LIVE] TEST",
-            "description": "✅ Não esqueça de dar LIKE, SE INSCREVER e LIGAR AS NOTIFICAÇÕES!\n\n👇🏽😊\n🟣 - https://twitch.tv/vortisrd\n🔴 - https://youtube.com/@vortisrd\n🟢 - https://kick.com/vortisrd\n⚫ - https://tiktok.com/@vortisrd\n🔵 - https://twitter.com/vortisrd\n\n💰- https://livepix.gg/vortisrd\n💰- https://streamelements.com/vortisrd/tip\n\n#hollowknight #silksong #teamcherry",
-            "categoryId": "20",
-            "privacy": "public",
-            "publishedAt": "2026-07-25T12:02:01Z",
-            "scheduledStartTime": "2026-07-26T09:52:54.689597Z",
-            "scheduledEndTime": "2026-07-26T09:52:54.689597Z",
-            "actualStartTime": "2026-07-26T09:52:54.689597Z",
-            "actualEndTime": "2026-07-26T09:52:54.689597Z",
-            "tags": [
-                "vortis",
-                "vortisrd",
-                "vortisrd live",
-                "gaming",
-                "live",
-                "games",
-                "hollow knight silksong",
-                "live hollow knight silksong",
-                "stream hollow knight silksong",
-                "silksong ao vivo",
-                "gameplay ao vivo",
-                "metroidvania",
-                "jogo indie",
-                "gameplay silksong",
-                "dicas hollow knight silksong",
-                "exploração hollow knight silksong",
-                "boss fight hollow knight silksong",
-                "gaming br",
-                "live br",
-                "streamer brasileiro",
-                "hornet gameplay",
-                "hollow knight silksong pt br",
-                "pharloom",
-                "silksong 2025"
-            ],
-            "defaultLanguage": "pt-BR",
-            "defaultAudioLanguage": "pt-BR",
-            "status": "live"
-        },
-        "eventId": "LCC.EhwKGkNLQ3dyTEdZOHBVREZiakF3Z1FkUFZNcnFR",
-        "user": {
-            "id": "UCpHjJxWs4C_JFS7hqC_Lhvg",
-            "url": "http://www.youtube.com/channel/UCpHjJxWs4C_JFS7hqC_Lhvg",
-            "name": "RodrigoEmanuel",
-            "profileImageUrl": "https://yt3.ggpht.com/ytc/AIdro_mBpsXZL5pJ2_vbR2E_CO92fNILsFFO2WoXHg2LsMj7z7iN=s88-c-k-c0x00ffffff-no-rj",
-            "isOwner": false,
-            "isModerator": true,
-            "isSponsor": false,
-            "isVerified": false
-        },
-        "publishedAt": "2026-07-27T03:06:33.114709-03:00"
-    });
-}, 3000);
 
 
 
@@ -611,149 +542,6 @@ async function youTubeJewels(data) {
 
 
 
-/*
-let contador = 1;
-const limite = 4;
-
-const intervalId = setInterval(() => {
-    
-    youTubeJewels({
-        "jewelsAmount": 10,
-        "name": "Tamo junto",
-        "url": "https://www.gstatic.com/youtube/img/pdg/gift/assets/tamo_junto.png",
-        "duration": {
-            "seconds": 3,
-            "nanos": 0
-        },
-        "hasVisualEffect": false,
-        "isCombo": true,
-        "comboCount": contador,
-        "altText": "Tamo junto",
-        "language": "en_US",
-        "broadcast": {
-            "id": "38tP7e7SvKw",
-            "channelId": "UCke8WMjtyqZ1wMNYr5wwLWA",
-            "liveChatId": "KicKGFVDa2U4V01qdHlxWjF3TU5ZcjV3d0xXQRILMzh0UDdlN1N2S3c",
-            "title": "🔴 [LIVE] Testando uma coisa...",
-            "description": "✅ Não esqueça de dar LIKE, SE INSCREVER e LIGAR AS NOTIFICAÇÕES!\n\n👇🏽😊\n🟣 - https://twitch.tv/vortisrd\n🔴 - https://youtube.com/@vortisrd\n🟢 - https://kick.com/vortisrd\n⚫ - https://tiktok.com/@vortisrd\n🔵 - https://twitter.com/vortisrd\n\n💰- https://livepix.gg/vortisrd\n💰- https://streamelements.com/vortisrd/tip\n\n#hollowknight #silksong #teamcherry",
-            "categoryId": "20",
-            "privacy": "public",
-            "publishedAt": "2026-07-25T11:40:13Z",
-            "scheduledStartTime": "2026-07-25T11:40:15.0176811Z",
-            "scheduledEndTime": "2026-07-25T11:40:15.0176811Z",
-            "actualStartTime": "2026-07-25T11:40:15.0176811Z",
-            "actualEndTime": "2026-07-25T11:40:15.0176811Z",
-            "tags": [
-                "vortis",
-                "vortisrd",
-                "vortisrd live",
-                "gaming",
-                "live",
-                "games",
-                "gameplay ao vivo",
-                "jogo indie",
-                "gaming br",
-                "live br",
-                "streamer brasileiro"
-            ],
-            "defaultLanguage": "pt-BR",
-            "defaultAudioLanguage": "pt-BR",
-            "status": "live"
-        },
-        "eventId": "LCC.EhwKGkNKSFN2NHpoN1pVREZidkN3Z1FkdTJ3V1hR",
-        "user": {
-            "id": "UCpHjJxWs4C_JFS7hqC_Lhvg",
-            "url": "http://www.youtube.com/channel/UCpHjJxWs4C_JFS7hqC_Lhvg",
-            "name": "RodrigoEmanuel",
-            "profileImageUrl": "https://yt3.ggpht.com/ytc/AIdro_mBpsXZL5pJ2_vbR2E_CO92fNILsFFO2WoXHg2LsMj7z7iN=s88-c-k-c0x00ffffff-no-rj",
-            "isOwner": false,
-            "isModerator": true,
-            "isSponsor": false,
-            "isVerified": false
-        },
-        "publishedAt": "2026-07-25T08:48:32.928812-03:00"
-});
-
-
-    contador++;
-
-    if (contador >= limite) {
-        clearInterval(intervalId);
-    }
-}, 500);
-
-youTubeJewels({
-        "jewelsAmount": 2,
-        "name": "Oi!",
-        "url": "https://www.gstatic.com/youtube/img/pdg/gift/assets/oi.png",
-        "duration": {
-            "seconds": 3,
-            "nanos": 0
-        },
-        "hasVisualEffect": false,
-        "isCombo": true,
-        "comboCount": 1,
-        "altText": "Oi!",
-        "language": "en_US",
-        "broadcast": {
-            "id": "6xuhz81NhzI",
-            "channelId": "UCke8WMjtyqZ1wMNYr5wwLWA",
-            "liveChatId": "KicKGFVDa2U4V01qdHlxWjF3TU5ZcjV3d0xXQRILNnh1aHo4MU5oekk",
-            "title": "🔴 [LIVE] TEST",
-            "description": "✅ Não esqueça de dar LIKE, SE INSCREVER e LIGAR AS NOTIFICAÇÕES!\n\n👇🏽😊\n🟣 - https://twitch.tv/vortisrd\n🔴 - https://youtube.com/@vortisrd\n🟢 - https://kick.com/vortisrd\n⚫ - https://tiktok.com/@vortisrd\n🔵 - https://twitter.com/vortisrd\n\n💰- https://livepix.gg/vortisrd\n💰- https://streamelements.com/vortisrd/tip\n\n#hollowknight #silksong #teamcherry",
-            "categoryId": "20",
-            "privacy": "public",
-            "publishedAt": "2026-07-25T11:53:33Z",
-            "scheduledStartTime": "2026-07-25T11:53:34.2191175Z",
-            "scheduledEndTime": "2026-07-25T11:53:34.2191175Z",
-            "actualStartTime": "2026-07-25T11:53:34.2191175Z",
-            "actualEndTime": "2026-07-25T11:53:34.2191175Z",
-            "tags": [
-                "vortis",
-                "vortisrd",
-                "vortisrd live",
-                "gaming",
-                "live",
-                "games",
-                "hollow knight silksong",
-                "live hollow knight silksong",
-                "stream hollow knight silksong",
-                "silksong ao vivo",
-                "gameplay ao vivo",
-                "metroidvania",
-                "jogo indie",
-                "gameplay silksong",
-                "dicas hollow knight silksong",
-                "exploração hollow knight silksong",
-                "boss fight hollow knight silksong",
-                "gaming br",
-                "live br",
-                "streamer brasileiro",
-                "hornet gameplay",
-                "hollow knight silksong pt br",
-                "pharloom",
-                "silksong 2025"
-            ],
-            "defaultLanguage": "pt-BR",
-            "defaultAudioLanguage": "pt-BR",
-            "status": "live"
-        },
-        "eventId": "LCC.EhwKGkNJcmF3ZGpqN1pVREZUZkx3Z1FkQmM0ekFR",
-        "user": {
-            "id": "UCpHjJxWs4C_JFS7hqC_Lhvg",
-            "url": "http://www.youtube.com/channel/UCpHjJxWs4C_JFS7hqC_Lhvg",
-            "name": "RodrigoEmanuel",
-            "profileImageUrl": "https://yt3.ggpht.com/ytc/AIdro_mBpsXZL5pJ2_vbR2E_CO92fNILsFFO2WoXHg2LsMj7z7iN=s88-c-k-c0x00ffffff-no-rj",
-            "isOwner": false,
-            "isModerator": false,
-            "isSponsor": false,
-            "isVerified": false
-        },
-        "publishedAt": "2026-07-25T09:00:12.401147-03:00"
-    });
-
-*/
-
 async function youTubeUserBanned(data) {
     chatContainer.querySelectorAll(`[data-user="${data.bannedUser.id}"]:not(.event)`).forEach(element => {
         element.parentNode.remove();
@@ -863,7 +651,6 @@ async function getYouTubeEmotes(data, messageElement) {
     const channelId = data.broadcast?.channelId;
     if (!channelId) return;
 
-    // carrega os emotes customizados
     if (youTubeCustomEmotes.length == 0) {
         streamerBotClient.getGlobals().then((getglobals) => {
             youTubeCustomEmotes = JSON.parse(JSON.parse(getglobals.variables.chatrdytcustomemotes.value));
@@ -871,7 +658,6 @@ async function getYouTubeEmotes(data, messageElement) {
         });
     }
 
-    // carrega os BTTV emotes se não carregados ainda
     if (youTubeBTTVEmotes.length === 0) {
         try {
             const res = await fetch(`https://api.betterttv.net/3/cached/users/youtube/${channelId}`);
@@ -893,7 +679,6 @@ async function getYouTubeEmotes(data, messageElement) {
         }
     }
 
-    // Helper: Twemoji URL
     function getTwemojiUrl(emoji) {
         const codePoints = Array.from(emoji).map(c => c.codePointAt(0).toString(16));
         let fileName = codePoints.join('-');
@@ -901,21 +686,16 @@ async function getYouTubeEmotes(data, messageElement) {
         return `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/${fileName}.png`;
     }
 
-    // Limpa o elemento
     messageElement.innerHTML = '';
 
-    // monta um mapa de emotes (nome → URL)
     const emoteMap = new Map();
 
-    // O ":awesome:" nunca aparecia. Isso remedia isso.
     emoteMap.set(':awesome:', 'https://yt3.ggpht.com/xqqFxk7nC5nYnjy0oiSPpeWX4yu4I-ysb3QJMOuVml8dHWz82FvF8bhGVjlosZRIG_XxHA=w48-h48-c-k-nd');
 
-    // BTTV emotes
     for (const emote of youTubeBTTVEmotes) {
         emoteMap.set(emote.code, `https://cdn.betterttv.net/emote/${emote.id}/1x`);
     }
 
-    // YouTube emotes (Twemoji + normais)
     if (data.emotes) {
         for (const emote of data.emotes) {
             let emoteUrl = emote.imageUrl;
@@ -927,33 +707,27 @@ async function getYouTubeEmotes(data, messageElement) {
         }
     }
 
-    // Custom Member Emotes
     if (data.user.isSponsor === true || data.user.isOwner === true) {
         for (const [name, url] of Object.entries(youTubeCustomEmotes)) {
             emoteMap.set(`:${name}:`, url);
         }
     }
 
-    // Nova quebra: detecta tokens de emotes/emoji mesmo colados
     const tokenRegex = /(:[a-zA-Z0-9_\-]+:)|([\p{Emoji_Presentation}\p{Extended_Pictographic}])/gu;
     let parts = [];
     let lastIndex = 0;
 
     for (const match of message.matchAll(tokenRegex)) {
-        // texto antes do emote
         if (match.index > lastIndex) {
             parts.push(message.slice(lastIndex, match.index));
         }
-        // o próprio emote/emoji
         parts.push(match[0]);
         lastIndex = match.index + match[0].length;
     }
-    // resto do texto
     if (lastIndex < message.length) {
         parts.push(message.slice(lastIndex));
     }
 
-    // monta a mensagem final
     for (const part of parts) {
         if (emoteMap.has(part)) {
             const img = document.createElement('img');

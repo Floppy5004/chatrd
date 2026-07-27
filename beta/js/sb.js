@@ -35,11 +35,11 @@ function getSpeakerBotInstance() {
 let streamerBotClientActive = null;
 
 function streamerBotConnect() {
-    // 🔎 Se já existe um cliente, encerra a tentativa anterior
+    
     if (streamerBotClientActive) {
         try {
             console.debug("[ChatRD][Settings] Closing previous Streamer.bot connection...");
-            streamerBotClientActive.disconnect?.(); // usa se existir na lib
+            streamerBotClientActive.disconnect?.();
             streamerBotClientActive = null;
             streamerBotStatus.connected = false;
         } catch (err) {
@@ -51,7 +51,6 @@ function streamerBotConnect() {
         host: streamerBotServerAddress,
         port: streamerBotServerPort,
         scheme: 'ws',
-        //autoReconnect: false, // evita reconectar sozinho
         onConnect: () => {
             streamerBotStatus.connected = true;
             streamerBotStatus.disconnected = false;
@@ -96,7 +95,6 @@ function streamerBotConnect() {
     return streamerBotClientActive;
 }
 
-// mantém o const fixo apontando para a primeira conexão
 const streamerBotClient = streamerBotConnect();
 
 

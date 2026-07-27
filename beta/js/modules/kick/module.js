@@ -170,7 +170,7 @@ async function kickConnection() {
 
                 kickConnectionState = true;
                 retryCount = 0;
-                kickHasNotifiedDisconnect = false; // reconectou: reabilita o aviso pra próxima queda
+                kickHasNotifiedDisconnect = false; 
 
                 console.debug(`[ChatRD][Pusher][Kick] Connected to Kick!`);
                 notifySuccess({
@@ -256,7 +256,6 @@ async function kickConnection() {
 
             kickWebSocket.onerror = (error) => {
                 console.error('[ChatRD][Pusher][Kick] WebSocket error:', error);
-                // Fecha o socket; o onclose acima cuida da notificação única e do reconnect em background
                 kickWebSocket.close();
             };
 
@@ -841,10 +840,9 @@ async function getKickBadges(badges) {
             
             const targetMonths = badge.count;
 
-            // Sort badges by months 
             const eligibleBadges = kickSubBadges
                 .filter(badge => badge.months <= targetMonths)
-                .sort((a, b) => b.months - a.months); // sorts from highest to lowest
+                .sort((a, b) => b.months - a.months);
 
             badgesArray.push(`<img src="${eligibleBadges[0]?.badge_image?.src || 'js/modules/kick/images/badge-subscriber.svg'}" class="badge">`);
         }

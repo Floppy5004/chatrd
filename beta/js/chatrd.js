@@ -41,8 +41,6 @@ const eventLittleContainer          = document.querySelector('#little-events');
 const chatTemplate                  = document.querySelector('#chat-message');
 const eventTemplate                 = document.querySelector('#event-message');
 
-
-
 const showTwitchEmbedImages         = getURLParam("showTwitchEmbedImages", false);
 const twitchEmbedImageRoles         = getURLParam("twitchEmbedImageRoles", "streamer,moderator");
 
@@ -55,26 +53,38 @@ const kickEmbedImageRoles           = getURLParam("kickEmbedImageRoles", "broadc
 const showTikTokEmbedImages         = getURLParam("showTikTokEmbedImages", false);
 const tiktokEmbedImageRoles         = getURLParam("tiktokEmbedImageRoles", "streamer,moderator");
 
-
+/* Montado uma única vez aqui (antes era recriado a cada mensagem
+   dentro de getAndReplaceLinks) */
+const embedImageConfig = {
+    twitch: { enabled: showTwitchEmbedImages, roles: twitchEmbedImageRoles },
+    youtube: { enabled: showYouTubeEmbedImages, roles: youtubeEmbedImageRoles },
+    kick: { enabled: showKickEmbedImages, roles: kickEmbedImageRoles },
+};
 
 const twitchTTSRoles         = getURLParam("twitchTTSRoles", "user");
 const youtubeTTSRoles        = getURLParam("youtubeTTSRoles", "user");
 const kickTTSRoles           = getURLParam("kickTTSRoles", "user");
 const tiktokTTSRoles         = getURLParam("tiktokTTSRoles", "user");
 
-
-
+/* Idem — montado uma única vez (antes era recriado a cada chamada
+   de speakerBotTTSRead) */
+const embedTTSConfig = {
+    twitch: { roles: twitchTTSRoles },
+    youtube: { roles: youtubeTTSRoles },
+    kick: { roles: kickTTSRoles },
+    tiktok: { roles: tiktokTTSRoles }
+};
 
 const userColors = new Map();
 
 const loadedEmotes = new Set();
 
-/* ✅ Explicit whitelist */
+
 const SKINS = {
-    default: "skin-default.css?nocache=59",
-    nutting: "skin-nutting.css?nocache=59",
-    kimballs: "skin-kimballs.css?nocache=59",
-    bubbles: "skin-bubbles.css?nocache=59"
+    default: "skin-default.css?nocache=60",
+    nutting: "skin-nutting.css?nocache=60",
+    kimballs: "skin-kimballs.css?nocache=60",
+    bubbles: "skin-bubbles.css?nocache=60"
 };
 
 const skinFile = SKINS[chatrdSkin] || SKINS.default;
@@ -120,7 +130,6 @@ if (chatField) {
     const chatfieldelement = document.getElementById("chat-input");
     chatfieldelement.style.display = '';
 }
-
 
 async function animateItemEntry(root, messageid) {
     const dimensionProp = chatHorizontal ? 'Width' : 'Height';
@@ -180,82 +189,29 @@ async function animateItemEntry(root, messageid) {
     }
 }
 
-
-
-
-
-async function animateItemEntry(root, messageid) {
-    const dimensionProp = chatHorizontal ? 'Width' : 'Height';
-    const marginProp = chatHorizontal ? 'margin-left' : 'margin-top';
-
-    const ghostClone = root.cloneNode(true);
-    chatGhostContainer.prepend(ghostClone);
-
-    const ghostImages = [...ghostClone.querySelectorAll('img')];
-    await Promise.all(ghostImages.map(img => {
-        if (img.complete) return Promise.resolve();
-        return Promise.race([
-            new Promise(resolve => {
-                img.addEventListener('load', resolve);
-                img.addEventListener('error', resolve);
-            }),
-            new Promise(resolve => setTimeout(resolve, 500))
-        ]);
-    }));
-
-    /*const itemDimension = chatHorizontal
-    ? ghostClone.offsetWidth || 0
-    : ghostClone.offsetHeight || 0;*/
-    
-    ghostClone.remove();
-    
-    const marginPropValue = parseFloat(getComputedStyle(chatGhostContainer).gap);
-
-    /*root.style[dimensionProp.toLowerCase()] = '0px';
-    root.style[marginProp] = `-${marginPropValue}px`;
-    root.style.opacity = '0';*/
-    const target = root.parentNode ?? root;
-    const wrapper = document.createElement('div');
-    wrapper.classList.add('chat-element-wrapper');
-    wrapper.appendChild(target);
-    
-    chatContainer.prepend(wrapper);
-
-    const itemDimension = chatHorizontal
-    ? root.offsetWidth || 0
-    : root.offsetHeight || 0;
-
-    wrapper.style[dimensionProp.toLowerCase()] = '0px';
-    wrapper.style.opacity = '0';
-    wrapper.style.transition = 'all ease-in-out 250ms, opacity ease-in-out 500ms';
-
-    void wrapper[`offset${dimensionProp}`];
-
-    wrapper.style[dimensionProp.toLowerCase()] = `${itemDimension}px`;
-    wrapper.style.opacity = '1';
-
-    setTimeout(function () {
-        const item = document.getElementById(messageid);
-        if (item) {
-            item.parentNode.style.removeProperty('opacity');
-            item.parentNode.style.removeProperty( dimensionProp.toLowerCase() );
-            item.dataset.rendered = 'true';
-        }
-    }, 800);
-
-    if (hideAfter > 0) {
-        const item = document.getElementById(messageid);
-        if (item) {
-            setTimeout(() => {
-                item.style.opacity = '0';
-                setTimeout(() => {
-                    item.remove();
-                }, 800);
-            }, Math.floor(hideAfter * 1000));
-        }
+function buildChatModerationHTML(platform, userid, messageid, streamerOfOrigin) {
+    switch (platform) {
+        case "twitch":
+            return `<div class="chatmoderation">
+                <button onclick="window.open('https://twitch.tv/popout/${streamerOfOrigin}/viewercard/${userid}', '_blank', 'noopener')" title="Twitch User Card"><i class="fa-regular fa-address-card"></i></button>
+                <button onclick="executeModCommand(event, '/deletemessage ${messageid}')" title="Remove Message"><i class="fa-solid fa-trash-can"></i></button>
+                <button onclick="executeModCommand(event, '/timeout ${userid}')" title="Timeout User"><i class="fa-solid fa-stopwatch"></i></button>
+                <button onclick="executeModCommand(event, '/ban ${userid}')" title="Ban User"><i class="fa-solid fa-gavel"></i></button>
+            </div>`;
+        case "youtube":
+            return `<div class="chatmoderation">
+                <button onclick="executeModCommand(event, '/yt/timeout ${userid}')" title="Timeout User"><i class="fa-solid fa-stopwatch"></i></button>
+                <button onclick="executeModCommand(event, '/yt/ban ${userid}')" title="Ban User"><i class="fa-solid fa-gavel"></i></button>
+            </div>`;
+        case "kick":
+            return `<div class="chatmoderation">
+                <button onclick="executeModCommand(event, '/kick/timeout ${userid}')" title="Timeout User"><i class="fa-solid fa-stopwatch"></i></button>
+                <button onclick="executeModCommand(event, '/kick/ban ${userid}')" title="Ban User"><i class="fa-solid fa-gavel"></i></button>
+            </div>`;
+        default:
+            return null;
     }
 }
-
 
 function addMessageItem(platform, clone, classes, userid, messageid) {
     removeExtraChatMessages();
@@ -269,23 +225,6 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
     root.id = messageid;
 
     const streamerOfOrigin = root.dataset.streamer;
-
-    let chatmodtwitch = `<div class="chatmoderation">
-                <button onclick="window.open('https://twitch.tv/popout/${streamerOfOrigin}/viewercard/${userid}', '_blank', 'noopener')" title="Twitch User Card"><i class="fa-regular fa-address-card"></i></button>
-                <button onclick="executeModCommand(event, '/deletemessage ${messageid}')" title="Remove Message"><i class="fa-solid fa-trash-can"></i></button>
-                <button onclick="executeModCommand(event, '/timeout ${userid}')" title="Timeout User"><i class="fa-solid fa-stopwatch"></i></button>
-                <button onclick="executeModCommand(event, '/ban ${userid}')" title="Ban User"><i class="fa-solid fa-gavel"></i></button>
-            </div>`;
-
-    let chatmodyoutube = `<div class="chatmoderation">
-                <button onclick="executeModCommand(event, '/yt/timeout ${userid}')" title="Timeout User"><i class="fa-solid fa-stopwatch"></i></button>
-                <button onclick="executeModCommand(event, '/yt/ban ${userid}')" title="Ban User"><i class="fa-solid fa-gavel"></i></button>
-            </div>`;
-
-    let chatmodkick = `<div class="chatmoderation">
-                <button onclick="executeModCommand(event, '/kick/timeout ${userid}')" title="Timeout User"><i class="fa-solid fa-stopwatch"></i></button>
-                <button onclick="executeModCommand(event, '/kick/ban ${userid}')" title="Ban User"><i class="fa-solid fa-gavel"></i></button>
-            </div>`;
 
     if (showSpeakerbot == true && speakerBotChatRead == true) { speakerBotTTSRead(clone, 'chat', platform); }
 
@@ -325,18 +264,9 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
         }
     }
     
-    if ((chatModeration == true) && (!root.classList.contains('streamer'))) {    
-        switch (platform) {
-            case "twitch":
-                root.insertAdjacentHTML("beforeend", chatmodtwitch);
-                break;
-            case "youtube":
-                root.insertAdjacentHTML("beforeend", chatmodyoutube);
-                break;
-            case "kick":
-                root.insertAdjacentHTML("beforeend", chatmodkick);
-                break;
-        }
+    if ((chatModeration == true) && (!root.classList.contains('streamer'))) {
+        const moderationHTML = buildChatModerationHTML(platform, userid, messageid, streamerOfOrigin);
+        if (moderationHTML) root.insertAdjacentHTML("beforeend", moderationHTML);
     }
 
     if (chatMessageGroup == true && chatContainer.children.length > 0) {
@@ -359,51 +289,49 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
     animateItemEntry(root, messageid);
 }
 
+function applyEventPlatformIcon(platform, root, platformElement) {
+    if (showPlatform == false) {
+        root.classList.add('no-platform');
+        platformElement.remove();
+        return;
+    }
+
+    if (showPlatformDot == true) {
+        root.classList.add('no-platform');
+        platformElement.remove();
+        return;
+    }
+
+    const isTwitch = platform === "twitch";
+    let platformContent;
+
+    if (root.classList.contains("youtube-vertical")) {
+        platformContent = `<img src="js/modules/youtube/images/logo-youtube-vertical.svg">`;
+    }
+    else if (isTwitch && root.classList.contains("golden-kappa-train")) {
+        platformContent = `<img src="js/modules/twitch/images/golden-kappa-emote.png">`;
+    }
+    else if (isTwitch && root.classList.contains("treasure-train")) {
+        platformContent = `<img src="js/modules/twitch/images/icon-treasure-train.png">`;
+    }
+    else {
+        platformContent = `<img src="js/modules/${platform}/images/logo-${platform}.svg">`;
+    }
+
+    platformElement.innerHTML = platformContent;
+}
 
 function addEventItem(platform, clone, classes, userid, messageid) {
     removeExtraChatMessages();
 
     if (showSpeakerbot == true && speakerBotEventRead == true) { speakerBotTTSRead(clone, 'event', platform); }
-    
+
     const root = clone.firstElementChild;
     root.classList.add(...classes);
     root.dataset.user = userid;
     root.id = messageid;
 
-    const platformElement = clone.querySelector('.platform');
-
-    if (showPlatform == true) {
-        let platformContent;
-
-        if (showPlatformDot == true) {
-            root.classList.add('no-platform');
-            platformElement.remove();
-        }
-
-        else {
-            const isTwitch = platform === "twitch";
-
-            if (root.classList.contains("youtube-vertical")) {
-                platformContent = `<img src="js/modules/youtube/images/logo-youtube-vertical.svg">`;
-            }
-            else if (isTwitch && root.classList.contains("golden-kappa-train")) {
-                platformContent = `<img src="js/modules/twitch/images/golden-kappa-emote.png">`;
-            }
-            else if (isTwitch && root.classList.contains("treasure-train")) {
-                platformContent = `<img src="js/modules/twitch/images/icon-treasure-train.png">`;
-            }
-            else {
-                platformContent = `<img src="js/modules/${platform}/images/logo-${platform}.svg">`;
-            }
-        }        
-        
-        platformElement.innerHTML = platformContent;
-    }
-    
-    else {
-        root.classList.add('no-platform');
-        platformElement.remove();
-    }
+    applyEventPlatformIcon(platform, root, clone.querySelector('.platform'));
 
     const timestamp = clone.querySelector('.timestamp');    
     if (timestamp) {
@@ -417,61 +345,22 @@ function addEventItem(platform, clone, classes, userid, messageid) {
     animateItemEntry(root, messageid);
 }
 
-
-
-
 function addLittleEventItem(platform, clone, classes, userid, messageid) {
-
     eventLittleContainer.innerHTML = '';
 
     if (showSpeakerbot == true && speakerBotEventRead == true) { speakerBotTTSRead(clone, 'event'); }
-    
+
     const root = clone.firstElementChild;
     root.classList.add(...classes);
     root.dataset.user = userid;
     root.id = messageid;
 
-    const platformElement = clone.querySelector('.platform');
-
-    if (showPlatform == true) {
-        let platformContent;
-
-        if (showPlatformDot == true) {
-            root.classList.add('no-platform');
-            platformElement.remove();
-        }
-
-        else {
-            const isTwitch = platform === "twitch";
-
-            if (root.classList.contains("youtube-vertical")) {
-                platformContent = `<img src="js/modules/youtube/images/logo-youtube-vertical.svg">`;
-            }
-            else if (isTwitch && root.classList.contains("golden-kappa-train")) {
-                platformContent = `<img src="js/modules/twitch/images/golden-kappa-emote.png">`;
-            }
-            else if (isTwitch && root.classList.contains("treasure-train")) {
-                platformContent = `<img src="js/modules/twitch/images/icon-treasure-train.png">`;
-            }
-            else {
-                platformContent = `<img src="js/modules/${platform}/images/logo-${platform}.svg">`;
-            }
-        }        
-        
-        platformElement.innerHTML = platformContent;
-    }
-    
-    else {
-        root.classList.add('no-platform');
-        platformElement.remove();
-    }
+    applyEventPlatformIcon(platform, root, clone.querySelector('.platform'));
 
     root.classList.add('animate__animated', 'animate__fadeInUp', 'animate__faster');
 
     eventLittleContainer.prepend(root.parentNode ?? root);
 }
-
-
 
 async function preloadAndPrepend(container, fragment) {
     const tempDiv = document.createElement('div');
@@ -496,12 +385,9 @@ async function preloadAndPrepend(container, fragment) {
     container.prepend(fragment);
 }
 
-
-
 function removeItem(element) {
     element.remove();
 }
-
 
 function removeExtraChatMessages() {
     const chatMessages = chatContainer.querySelectorAll(':scope > div');
@@ -515,7 +401,6 @@ function removeExtraChatMessages() {
         }
     }
 }
-
 
 function whatTimeIsIt() {
     const now = new Date();
@@ -531,7 +416,6 @@ function whatTimeIsIt() {
     }
 }
 
-// Function to format large numbers (e.g., 1000 => '1K')
 function formatNumber(num) {
     if (num >= 1000000) {
         let numStr = (num / 1000000).toFixed(1);
@@ -549,7 +433,6 @@ function formatNumber(num) {
     }
     return num.toString();
 }
-
 
 function formatCurrency(amount, currencyCode) {
     if (!currencyCode) { currencyCode = 'USD'; }
@@ -584,7 +467,6 @@ function randomIntBetween(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-
 function createRandomColor(platform, username) {
     if (userColors.get(platform).has(username)) {
         return userColors.get(platform).get(username);
@@ -600,8 +482,6 @@ function createRandomColor(platform, username) {
     }
 }
 
-
-
 function hexToRGBA(hexadecimal,opacity) {
     const hex = hexadecimal;
     const alpha = parseFloat(opacity);
@@ -614,12 +494,10 @@ function hexToRGBA(hexadecimal,opacity) {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-
 function stripStringFromHtml(html) {
     let doc = new DOMParser().parseFromString(html, 'text/html');
     return doc.body.textContent || "";
 }
-
 
 async function cleanStringOfHTMLButEmotes(string) {
     const container = document.createElement('div');
@@ -635,14 +513,9 @@ async function cleanStringOfHTMLButEmotes(string) {
     return container.textContent || "";
 }
 
-
 function formatSubMonthDuration(months) {
     return `${months} ${months === 1 ? tRD('chatrd.month.singular') : tRD('chatrd.month.plural')}`;
 }
-
-
-
-
 
 function animateCounter(element, start, end, duration) {
     let startTime = null;
@@ -660,7 +533,6 @@ function animateCounter(element, start, end, duration) {
     requestAnimationFrame(step);
 }
 
-
 /* -------------------------- */
 /* ---- CHAT INPUT UTILS ---- */
 /* -------------------------- */
@@ -670,13 +542,10 @@ let chatcurrentFocus = -1;
 
 const chatInputSend = document.getElementById("chat-input-send");
 const chatInputSendAll = document.getElementById("chat-input-send-all");
-//const chatInputSettings = document.getElementById("chat-input-settings");
 const chatInputForm = document.querySelector("#chat-input form");
 const chatInput = chatInputForm.querySelector("input[type=text]")
 
 let chatcommands;
-
-
 
 function highlightItem(items) {
     if (!items) return;
@@ -689,9 +558,6 @@ function highlightItem(items) {
     items[chatcurrentFocus].classList.add('active');
     items[chatcurrentFocus].scrollIntoView({ block: "nearest" });
 }
-
-
-
 
 chatInput.addEventListener('input', function () {
     const value = this.value.trim();
@@ -741,7 +607,6 @@ chatInput.addEventListener('keydown', function (e) {
         }
     }
 });
-
 
 async function pushChatInputButtonsToSettings() {
     const buttons = document.querySelectorAll('#chat-input-platorms-buttons button');
@@ -819,8 +684,6 @@ async function pushChatInputSettings() {
     });
 }
 
-
-
 chatInputForm.addEventListener("submit", function(event) {
     event.preventDefault();
 
@@ -840,10 +703,9 @@ chatInputForm.addEventListener("submit", function(event) {
 
     chatSendPlatforms = chatSendPlatforms.join(',')
 
-    const chatInput = chatInputForm.querySelector("input[type=text]")
     const chatInputText = chatInput.value;
 
-    // Sends Message to Twitch and YouTube 
+    
     streamerBotClient.doAction(
     { name : "[Twitch][YouTube][Kick] Msgs/Cmds" },
     {
@@ -855,7 +717,7 @@ chatInputForm.addEventListener("submit", function(event) {
         console.debug('[ChatRD] Sending Chat to Streamer.Bot', sendchatstuff);
     });
     
-    // Sends Message to TikTok that are not commands
+    
     if (chatSendPlatforms.includes('tiktok')) {
         if (!chatInputText.startsWith('/')) {
             streamerBotClient.doAction(
@@ -896,49 +758,17 @@ chatInputSendAll.addEventListener("click", function () {
     });
 });
 
-/*chatInputSettings.addEventListener("click", function () {
-    const chatSettingsToggles = document.querySelector("#chat-settings");
-    const isOpen = chatSettingsToggles.classList.contains("active");
-
-    chatInputSettings.classList.toggle("active");
-
-    if (isOpen) {
-        chatSettingsToggles.classList.replace("animate__fadeInUp", "animate__fadeOutDown");
-
-        chatSettingsToggles.addEventListener("animationend", function handler() {
-            chatSettingsToggles.classList.remove("active");
-            chatSettingsToggles.removeEventListener("animationend", handler);
-        });
-    } 
-    else {
-        chatSettingsToggles.classList.remove("animate__fadeOutDown");
-        chatSettingsToggles.classList.add("active", "animate__fadeInUp");
-    }
-});*/
-
 document.addEventListener('click', function (e) {
     if (e.target !== chatcommandslist) {
         chatcommandslist.innerHTML = '';
     }
 });
 
-
-
-
-
-
 async function speakerBotTTSRead(clone,type,platform) {
 
     var TTSMessage = "";
 
     const root = clone.firstElementChild;
-
-	const embedTTSConfig = {
-		twitch: { roles: twitchTTSRoles },
-		youtube: { roles: youtubeTTSRoles },
-		kick: { roles: kickTTSRoles },
-		tiktok: { roles: tiktokTTSRoles }
-	};
 
     const config = embedTTSConfig[platform];
     const requiredRoles = config.roles.split(',').map(role => role.trim());
@@ -991,12 +821,10 @@ async function speakerBotTTSRead(clone,type,platform) {
         TTSMessage = user.textContent + strippedaction + strippedvalue + ". " + strippedmessage;
     }
 
-
     var speakerbotThisStuff = getSpeakerBotInstance();
     speakerbotThisStuff.speak(TTSMessage);
 
 }
-
 
 function renderTemplate(template, data) {
     return template.replace(/\{(\w+)\}/g, (match, key) => {
@@ -1004,14 +832,11 @@ function renderTemplate(template, data) {
     });
 }
 
-
 async function executeModCommand(event, command) {
     event.preventDefault();
     chatInput.value = command;
     chatInputForm.requestSubmit();
 }
-
-
 
 async function getAndReplaceLinks(platform, element) {
 	const el = element.querySelector('.actual-message');
@@ -1021,13 +846,6 @@ async function getAndReplaceLinks(platform, element) {
 	const imageExtRegex = /\.(jpe?g|png|gif|webp)(\?.*)?$/i;
 	const nodes = [];
 
-	const embedImageConfig = {
-		twitch: { enabled: showTwitchEmbedImages, roles: twitchEmbedImageRoles },
-		youtube: { enabled: showYouTubeEmbedImages, roles: youtubeEmbedImageRoles },
-		kick: { enabled: showKickEmbedImages, roles: kickEmbedImageRoles },
-	};
-
-	// coleta os nós de texto
 	while (walker.nextNode()) {
 		const node = walker.currentNode;
 		if (!node.parentElement.closest('a,script,style,textarea,code,pre')) {
@@ -1035,9 +853,6 @@ async function getAndReplaceLinks(platform, element) {
 		}
 	}
 
-	// percorre recursivamente e coleta todo "conteúdo significativo" da mensagem:
-	// texto não-vazio conta, e qualquer elemento "folha" (img de emote, br, etc.) também conta,
-	// já que ele representa conteúdo extra além do link
 	function collectMeaningfulNodes(node, out) {
 		if (node.nodeType === Node.TEXT_NODE) {
 			if (node.nodeValue.trim().length > 0) out.push(node);
@@ -1054,8 +869,6 @@ async function getAndReplaceLinks(platform, element) {
 		}
 	}
 
-	// se a mensagem inteira tiver exatamente UM nó significativo, e esse nó for
-	// o texto do link, então (e só então) a mensagem inteira é "apenas um link"
 	function getWholeMessageTextNode(root) {
 		const meaningful = [];
 		collectMeaningfulNodes(root, meaningful);
@@ -1067,7 +880,6 @@ async function getAndReplaceLinks(platform, element) {
 
 	const wholeMessageTextNode = getWholeMessageTextNode(el);
 
-	// cria o <a> normal (fallback e caso padrão)
 	function createLink(cleanUrl) {
 		const a = document.createElement('a');
 		a.href = cleanUrl.startsWith('http') ? cleanUrl : `https://${cleanUrl}`;
@@ -1077,7 +889,6 @@ async function getAndReplaceLinks(platform, element) {
 		return a;
 	}
 
-	// cria o <img> com proxy do DuckDuckGo
 	function createProxiedImage(rawUrl) {
 		const fullUrl = rawUrl.startsWith('http') ? rawUrl : `https://${rawUrl}`;
 
@@ -1106,8 +917,6 @@ async function getAndReplaceLinks(platform, element) {
 	nodes.forEach(node => {
 		const text = node.nodeValue;
 
-		// só é candidato a imagem se ESSE nó for o único conteúdo significativo
-		// da mensagem inteira E ele mesmo, sozinho, for exclusivamente o link
 		const isWholeMessageLink = node === wholeMessageTextNode && singleUrlRegex.test(text.trim());
 
 		let match, lastIndex = 0;
@@ -1157,14 +966,11 @@ async function getAndReplaceLinks(platform, element) {
 	});
 }
 
-
-
 const _escapeDiv = document.createElement('div');
 function escapeHTML(str) {
     _escapeDiv.textContent = str;
     return _escapeDiv.innerHTML;
 }
-
 
 async function generateSHA256Identifier(text) {
     const encoder = new TextEncoder();
@@ -1174,9 +980,6 @@ async function generateSHA256Identifier(text) {
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
 }
-
-
-
 
 /* ------------------------------ */
 /* ---- AUTO SCROLL, FINALLY ---- */
@@ -1261,9 +1064,6 @@ function useAutoScroll(container, options = {}) {
         isActive: () => autoScroll,
     };
 }
-
-
-
 
 function initFakeScrollbar(scrollEl, thumbEl) {
     const track = thumbEl.parentElement;
@@ -1373,10 +1173,6 @@ function initFakeScrollbar(scrollEl, thumbEl) {
     requestAnimationFrame(() => requestAnimationFrame(updateThumb));
 }
 
-
-
-
-
 function createConfettiCanvas() {
   const canvas = document.createElement('canvas');
   canvas.style.cssText = `
@@ -1393,18 +1189,12 @@ function createConfettiCanvas() {
   return canvas;
 }
 
-
 function chatGhostResize() {
-    const chat = document.getElementById('chat');
-    const chatGhost = document.getElementById('chat-ghost');
-    const chatWidth = `${chat.offsetWidth}px`;
-    chatGhost.style.width = chat.offsetWidth + 'px';
+    chatGhostContainer.style.width = `${chatContainer.offsetWidth}px`;
 }
 
-
 function adjustScreenMediaQuery() {
-    const chat = document.getElementById('chat');
-    const zoom = parseFloat(getComputedStyle(chat).zoom) || 1;
+    const zoom = parseFloat(getComputedStyle(chatContainer).zoom) || 1;
 
     const breakpoint = 480;
     const adjustedBreakpoint = Math.ceil(breakpoint / zoom);
@@ -1415,31 +1205,6 @@ function applyLanguageToItems() {
     document.querySelector('#chat-input-send').setAttribute('title', tRD('general.button_send_message', { shortcut: 'ENTER' }));
     document.querySelector('#chat-input-send-all').setAttribute('title', tRD('general.button_send_message_all', { shortcut: 'SHIFT+ENTER' }));
 }
-
-async function pushChatInputButtonsToSettings() {
-    const buttons = document.querySelectorAll('#chat-input-platorms-buttons button');
-
-    buttons.forEach(button => {
-        const platform = button.getAttribute('data-platform');
-        const checkbox = document.querySelector(`#chat-settings input[name="${platform}"]`);
-
-        button.addEventListener('click', (e) => {
-            e.preventDefault();
-            checkbox.checked = !checkbox.checked;
-            checkbox.dispatchEvent(new Event('change'));
-            syncButtonState(button, checkbox);
-        });
-    });
-
-    function syncButtonState(button, checkbox) {
-        button.classList.toggle('inactive', !checkbox.checked);
-    }
-}
-
-
-
-
-
 
 /* ------------------------------ */
 /* ----- KEYBOARD SHORTCUTS ----- */
@@ -1511,16 +1276,12 @@ function parseShortcut(shortcutString) {
 function keyNameToCode(key) {
     if (!key) return null;
 
-    // Letras (A-Z)
     if (/^[A-Z]$/.test(key)) return `Key${key}`;
 
-    // Números (0-9)
     if (/^[0-9]$/.test(key)) return `Digit${key}`;
 
-    // Teclas de função (F1-F12)
     if (/^F[1-9][0-2]?$/.test(key)) return key;
 
-    // Outras teclas comuns
     const specialKeys = {
         'ESC': 'Escape',
         'ESCAPE': 'Escape',
@@ -1545,7 +1306,6 @@ function observeShortcutButtons() {
         return;
     }
 
-    // Monta a lista inicial
     buildDynamicShortcuts();
 
     const observer = new MutationObserver(() => {
@@ -1598,18 +1358,14 @@ document.addEventListener("DOMContentLoaded", async function () {
     loadChatInputSettingFromLocalStorage();
     myConfetti = confetti.create(createConfettiCanvas(), { resize: true });
 
-    if (document.querySelector('#chat:not(.noscrollbar)')) {
-        const scroll = useAutoScroll(document.querySelector('#chat:not(.noscrollbar)'), {
+    if (!chatContainer.classList.contains('noscrollbar')) {
+        const scroll = useAutoScroll(chatContainer, {
             notice: document.querySelector('#chat-scroll-bottom'),
         });
-        
-        initFakeScrollbar(
-            document.getElementById('chat'),
-            document.querySelector('.fake-thumb')
-        );
+
+        initFakeScrollbar(chatContainer, document.querySelector('.fake-thumb'));
     }
 
-    /* Making sure #chat-ghost has the same width than #chat */
     chatGhostResize();
     adjustScreenMediaQuery();
 

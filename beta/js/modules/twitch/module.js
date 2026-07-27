@@ -864,52 +864,6 @@ async function twitchChatOnScreenCelebration(data) {
     });
 }
 
-/*setTimeout(() => {
-    
-
-twitchPowerUpRedemption({
-        "user": {
-            "id": "531089279",
-            "login": "chatrd",
-            "name": "ChatRD",
-            "type": "twitch"
-        },
-        "type": "celebration",
-        "bits": 10,
-        "counter": 1,
-        "tempCounter": 1,
-        "userCounter": 1,
-        "tempUserCounter": 1,
-        "text": "",
-        "parts": [
-            {
-                "type": "text",
-                "text": ""
-            }
-        ],
-        "emote": {
-            "source": "Twitch",
-            "imageUrl": "https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_053c0455e3f2490294967f2391697e40/default/dark/3.0",
-            "zeroWidth": false,
-            "type": "emote",
-            "text": "vortisHeart"
-        },
-        "redeemed_at": "2026-07-26T07:03:27.2499445-03:00",
-        "broadcaster": {
-            "id": "128910378",
-            "login": "vortisrd",
-            "name": "VortisRD",
-            "type": "twitch"
-        },
-        "isInSharedChat": false,
-        "isSharedChatHost": false,
-        "isFromSharedChatGuest": false,
-        "createdAt": "2026-07-26T10:03:28.6552829Z",
-        "isTest": false
-    });
-}, 5000)
-*/
-
 
 async function twitchCustomPowerUpRedemption(data) {
 
@@ -917,7 +871,6 @@ async function twitchCustomPowerUpRedemption(data) {
 
     const template = eventTemplate;
 	const clone = template.content.cloneNode(true);
-    //const messageId = createRandomString(40);
     const messageId = data.redemptionId;
     const userId = data.user.login.toLowerCase();
 
@@ -958,7 +911,6 @@ async function twitchCustomPowerUpRedemption(data) {
     
     var userInput = data.userInput ? `${data.userInput}` : ``;
     message.textContent = `${userInput}`;
-    //message.remove();
     
     addEventItem('twitch', clone, classes, userId, messageId);
 }
@@ -1064,7 +1016,6 @@ async function twitchSubMessage(data) {
     var months = formatSubMonthDuration(data.duration_months);
     var tier = data.is_prime ? 'Prime' : 'Tier '+Math.floor(data.sub_tier/1000);
 
-    //value.innerHTML = `<strong>${months} (${tier})</strong>`;
     value.innerHTML = `
         <div class="gift-info">
             <span class="gift-image"><strong>${months}</strong></span>
@@ -1112,20 +1063,15 @@ async function twitchReSubMessage(data) {
 
     action.innerHTML = tRD('twitch.resub_action');
 
-    //var months = data.cumulativeMonths > 1 ? 'months' : 'month';
     var months = formatSubMonthDuration(data.cumulativeMonths);
     var tier = data.isPrime ? 'Prime' : 'Tier '+Math.floor(data.subTier/1000);
     
-    //value.innerHTML = `<strong>${months} (${tier})</strong>`;
     value.innerHTML = `
         <div class="gift-info">
             <span class="gift-image"><strong>${months}</strong></span>
             <span class="gift-value">${tier}</span>
         </div>
     `;
-
-    /*message.textContent = data.text;
-    await getTwitchEmotesOnParts(data, message);*/
     
     let messageFromParts = await getTwitchMessageFromParts(data.parts);
     message.innerHTML = DOMPurify.sanitize(messageFromParts);
@@ -2295,100 +2241,3 @@ function twitchConfettiBurst(el) {
         },
     });
 }
-
-/*
-
-twitchPowerUpRedemption({
-    "user": {
-        "id": "531089279",
-        "login": "chatrd",
-        "name": "ChatRD",
-        "type": "twitch"
-    },
-    "type": "message_effect",
-    "bits": 10,
-    "counter": 5,
-    "tempCounter": 5,
-    "userCounter": 5,
-    "tempUserCounter": 5,
-    "text": "Teste",
-    "parts": [
-        {
-            "type": "text",
-            "text": "Teste"
-        }
-    ],
-    //"message_effect_id": "cosmic-abyss",
-    //"message_effect_id": "rainbow-eclipse",
-    "message_effect_id": "simmer",
-    "redeemed_at": "2026-07-25T04:51:08.136754-03:00",
-    "broadcaster": {
-        "id": "128910378",
-        "login": "vortisrd",
-        "name": "VortisRD",
-        "type": "twitch"
-    },
-    "isInSharedChat": false,
-    "isSharedChatHost": false,
-    "isFromSharedChatGuest": false,
-    "createdAt": "2026-07-25T07:51:08.719517Z",
-    "isTest": false
-});
-
-twitchChatMessage({
-    "user": {
-        "role": 1,
-        "badges": [
-            {
-                "name": "bits",
-                "version": "100",
-                "imageUrl": "https://static-cdn.jtvnw.net/badges/v1/09d93036-e7ce-431c-9a9e-7044297133f2/3",
-                "info": ""
-            }
-        ],
-        "color": "",
-        "subscribed": false,
-        "monthsSubscribed": 0,
-        "id": "531089279",
-        "login": "chatrd",
-        "name": "ChatRD",
-        "type": "twitch"
-    },
-    "messageId": "8d410a2f-1106-4c3c-9d79-619edea586ed",
-    "meta": {
-        "internal": false,
-        "firstMessage": false,
-        "firstMessageTimestamp": "2026-07-25T03:34:49.5441843-03:00",
-        "returningChatter": false,
-        "isHighlighted": false,
-        "isMe": false,
-        "isCustomReward": false,
-        "isInSharedChat": false,
-        "isSharedChatHost": false,
-        "isFromSharedChatGuest": false,
-        "createdAt": "2026-07-25T07:53:05.9508038Z",
-        "isTest": false
-    },
-    "anonymous": false,
-    "text": "Teste",
-    "emotes": [],
-    "parts": [
-        {
-            "type": "text",
-            "text": "Testing!"
-        }
-    ],
-    "isReply": false,
-    "broadcaster": {
-        "id": "128910378",
-        "login": "vortisrd",
-        "name": "VortisRD",
-        "type": "twitch"
-    },
-    "isInSharedChat": false,
-    "isSharedChatHost": false,
-    "isFromSharedChatGuest": false,
-    "createdAt": "2026-07-25T07:53:05.9508038Z",
-    "isTest": false
-})
-    */
