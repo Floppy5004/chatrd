@@ -37,8 +37,7 @@ const youtubeMessageHandlers = {
     'YouTube.Message': (response) => {
         youTubeChatMessage(response.data);
     },
-    'YouTube.UserBanned': (response) => {
-        setTimeout(() => { youTubeUserBanned(response.data); }, 3000);
+    'YouTube.NewSubscriber': (response) => {
     },
     'YouTube.SuperChat': (response) => {
         youTubeSuperChatMessage(response.data);
@@ -58,15 +57,28 @@ const youtubeMessageHandlers = {
     'YouTube.GiftMembershipReceived': (response) => {
         youTubeGiftBombReceivedMessage(response.data);
     },
+    'YouTube.JewelsGifted': (response) => {
+        youTubeJewels(response.data);
+    },
+
     'YouTube.StatisticsUpdated': (response) => {
         youTubeUpdateStatistics(response.data);
     },
     'YouTube.BroadcastUpdated': (response) => {
         youTubeAddStatistics(response.data);
     },
-    'YouTube.JewelsGifted': (response) => {
-        youTubeJewels(response.data);
+
+    
+    'YouTube.UserTimedout': (response) => {
+        setTimeout(() => { youTubeUserBanned(response.data); }, 3000);
     },
+
+    
+    'YouTube.UserBanned': (response) => {
+        setTimeout(() => { youTubeUserBanned(response.data); }, 3000);
+    },
+
+
     'YouTube.BroadcastEnded': (response) => {
         
         if ((showYouTubeStatistics == true) && (showPlatformStatistics == true)) {
@@ -543,7 +555,7 @@ async function youTubeJewels(data) {
 
 
 async function youTubeUserBanned(data) {
-    chatContainer.querySelectorAll(`[data-user="${data.bannedUser.id}"]:not(.event)`).forEach(element => {
+    chatContainer.querySelectorAll(`[data-user="${data.targetUser.id}"]:not(.event)`).forEach(element => {
         element.parentNode.remove();
     });
 }
