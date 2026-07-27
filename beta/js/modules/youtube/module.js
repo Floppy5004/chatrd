@@ -196,6 +196,73 @@ async function youTubeChatMessage(data) {
 }
 
 
+setTimeout(() => {
+    youTubeChatMessage({
+        "message": "the youtube notification thing",
+        "emotes": [],
+        "parts": [
+            {
+                "text": "the youtube notification thing"
+            }
+        ],
+        "broadcast": {
+            "id": "IQhOS-1kXLw",
+            "channelId": "UCke8WMjtyqZ1wMNYr5wwLWA",
+            "liveChatId": "KicKGFVDa2U4V01qdHlxWjF3TU5ZcjV3d0xXQRILSVFoT1MtMWtYTHc",
+            "title": "🔴 [LIVE] TEST",
+            "description": "✅ Não esqueça de dar LIKE, SE INSCREVER e LIGAR AS NOTIFICAÇÕES!\n\n👇🏽😊\n🟣 - https://twitch.tv/vortisrd\n🔴 - https://youtube.com/@vortisrd\n🟢 - https://kick.com/vortisrd\n⚫ - https://tiktok.com/@vortisrd\n🔵 - https://twitter.com/vortisrd\n\n💰- https://livepix.gg/vortisrd\n💰- https://streamelements.com/vortisrd/tip\n\n#hollowknight #silksong #teamcherry",
+            "categoryId": "20",
+            "privacy": "public",
+            "publishedAt": "2026-07-25T12:02:01Z",
+            "scheduledStartTime": "2026-07-26T09:52:54.689597Z",
+            "scheduledEndTime": "2026-07-26T09:52:54.689597Z",
+            "actualStartTime": "2026-07-26T09:52:54.689597Z",
+            "actualEndTime": "2026-07-26T09:52:54.689597Z",
+            "tags": [
+                "vortis",
+                "vortisrd",
+                "vortisrd live",
+                "gaming",
+                "live",
+                "games",
+                "hollow knight silksong",
+                "live hollow knight silksong",
+                "stream hollow knight silksong",
+                "silksong ao vivo",
+                "gameplay ao vivo",
+                "metroidvania",
+                "jogo indie",
+                "gameplay silksong",
+                "dicas hollow knight silksong",
+                "exploração hollow knight silksong",
+                "boss fight hollow knight silksong",
+                "gaming br",
+                "live br",
+                "streamer brasileiro",
+                "hornet gameplay",
+                "hollow knight silksong pt br",
+                "pharloom",
+                "silksong 2025"
+            ],
+            "defaultLanguage": "pt-BR",
+            "defaultAudioLanguage": "pt-BR",
+            "status": "live"
+        },
+        "eventId": "LCC.EhwKGkNLQ3dyTEdZOHBVREZiakF3Z1FkUFZNcnFR",
+        "user": {
+            "id": "UCpHjJxWs4C_JFS7hqC_Lhvg",
+            "url": "http://www.youtube.com/channel/UCpHjJxWs4C_JFS7hqC_Lhvg",
+            "name": "RodrigoEmanuel",
+            "profileImageUrl": "https://yt3.ggpht.com/ytc/AIdro_mBpsXZL5pJ2_vbR2E_CO92fNILsFFO2WoXHg2LsMj7z7iN=s88-c-k-c0x00ffffff-no-rj",
+            "isOwner": false,
+            "isModerator": true,
+            "isSponsor": false,
+            "isVerified": false
+        },
+        "publishedAt": "2026-07-27T03:06:33.114709-03:00"
+    });
+}, 3000);
+
 
 
 async function youTubeSuperChatMessage(data) {
