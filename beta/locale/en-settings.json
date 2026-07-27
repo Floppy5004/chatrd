@@ -22,7 +22,8 @@
     "chat_template": "Chat Message Template",
     "chat_template_hint": "Variables are <strong><em>{user}</em></strong> and <strong><em>{message}</em></strong>.",
     "warning_engine": "<i class=\"fa-solid fa-triangle-exclamation\"></i> You need to set a Speech Engine and a Voice Alias on Speaker.bot. <strong><a target=\"_blank\" href=\"https://speaker.bot/get-started/speech-engines\">Follow the tutorial</a>.</strong>",
-    "warning_websocket": "<i class=\"fa-solid fa-triangle-exclamation\"></i> Speaker.bot's WebSocket need to be activated and running. <strong><a target=\"_blank\" href=\"https://speaker.bot/api/websocket\">Follow the tutorial</a>.</strong>"
+    "warning_websocket": "<i class=\"fa-solid fa-triangle-exclamation\"></i> Speaker.bot's WebSocket need to be activated and running. <strong><a target=\"_blank\" href=\"https://speaker.bot/api/websocket\">Follow the tutorial</a>.</strong>",
+    "role_selection" : "Speaker.bot Roles<br><small>If Speaker.bot is enabled, only the roles selected below will have their messages spoken over TTS. <strong>Events will not be filtered by this.</strong></small>"
   },
 
   "general": {

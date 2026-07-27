@@ -22,7 +22,8 @@
     "chat_template": "Template de Mensagem do Chat",
     "chat_template_hint": "As variáveis são <strong><em>{user}</em></strong> e <strong><em>{message}</em></strong>.",
     "warning_engine": "<i class=\"fa-solid fa-triangle-exclamation\"></i> Você precisa configurar um Motor de Voz e um Alias de Voz no Speaker.bot. <strong><a target=\"_blank\" href=\"https://speaker.bot/get-started/speech-engines\">Siga o tutorial</a>.</strong>",
-    "warning_websocket": "<i class=\"fa-solid fa-triangle-exclamation\"></i> O WebSocket do Speaker.bot precisa estar ativado e em execução. <strong><a target=\"_blank\" href=\"https://speaker.bot/api/websocket\">Siga o tutorial</a>.</strong>"
+    "warning_websocket": "<i class=\"fa-solid fa-triangle-exclamation\"></i> O WebSocket do Speaker.bot precisa estar ativado e em execução. <strong><a target=\"_blank\" href=\"https://speaker.bot/api/websocket\">Siga o tutorial</a>.</strong>",
+    "role_selection" : "Cargos do Speaker.bot<br><small>Se o Speaker.bot estiver ativado, apenas as mensagens dos cargos selecionados abaixo serão lidas por TTS. <strong>Os eventos não serão filtrados por essa configuração.</strong></small>"
   },
 
   "general": {
