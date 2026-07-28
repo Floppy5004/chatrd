@@ -306,7 +306,7 @@ hr {
     background: none;
     border: 2px solid #252525;
     color: #FFF;
-    width: 100px;
+    min-width: 100px;
     transition: var(--transition);
 }
 
