@@ -997,43 +997,16 @@ body {
 /* ------------ CHAT - EVENTS ------------- */
 /* ---------------------------------------- */
 
+
 .chat .event {
     position: relative;
     color: #FFF;
     font-size: 18px;
-    line-height: 100%;
     transition: var(--transition);
     text-shadow: var(--dropShadow);
 }
 
 .chat .event .user { font-weight: bold; }
-
-.chat .event .message {
-    display: inline-block;
-    max-width: 100%;
-    overflow-wrap: break-word;
-    background: rgba(255,255,255,0.2);
-    padding: 10px 10px 10px 10px;
-    border-radius: 5px;
-    /*line-height: 125%;*/
-}
-
-
-.chat .event .message .info span {
-    padding: 2px 0;
-}
-
-.chat .event img {
-    vertical-align: middle;
-    height: 22px;
-    margin: 1px;
-    filter: drop-shadow(var(--dropShadow));
-}
-
-.chat .event .actual-message {
-    line-height: 150%;
-    font-weight: 300;
-}
 
 .chat .event .user a {
     color: #FFF;
@@ -1044,35 +1017,79 @@ body {
     text-shadow: 0 0 10px #FFF;
 }
 
-.chat .event .value .gift-info {
-    display: inline-block;
+.chat .event .message {
+    display: inline-flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 2px;
+    border-radius: 5px;
     max-width: 100%;
     overflow-wrap: break-word;
 }
-.chat .event .value .gift-info span.gift-image { display: inline-block; }
-.chat .event .value .gift-info span.gift-value { display: inline-block; }
 
-.chat .event .value .gift-info span.gift-image img {
-    width: 48px;
-    height: auto;
+.chat .event .info,
+.chat .event .info .platform,
+.chat .event .info .value .gift-info {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
+    overflow-wrap: break-word;
 }
 
-.chat .event.small-gift .value .gift-info span.gift-image img {
+.chat .event .info .platform img {
+    height: 22px;
+    filter: drop-shadow(var(--dropShadow));
+}
+
+.chat .event .value .gift-info .gift-image img {
     width: 32px;
+    height: 32px;
+    vertical-align: middle;
+    filter: drop-shadow(var(--dropShadow));
+    animation: eventGiftImage 1s ease-in-out;
 }
-.chat .event .value .gift-info span.gift-value {
-    background: rgba(0,0,0,0.2);
-    padding: 3px 9px;
-    margin: 0 0 0 5px;
-    border-radius: 5px;
+
+.chat .event .value .gift-info .gift-value {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
     font-size: 14px;
-    height: 26px;
+    background: rgba(0,0,0,0.2);
+    padding: 5px 10px;
+    border-radius: 5px;
+    gap: 5px;
 }
-.chat .event .value .gift-info span.gift-value img {
+
+.chat .event .value .gift-info .gift-value img {
     width: 16px;
-    height: auto;
-    margin-top: -1px;
+    height: 16px;
 }
+
+.chat .event .message .actual-message img.emote {
+    height: 22px;
+    filter: drop-shadow(var(--dropShadow));
+    margin: 0 1px;
+    vertical-align: middle;
+}
+
+@keyframes eventGiftImage {
+    0% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(2) rotate( var(--rotateGift) );}
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+
+
+.chat.horizontal .event .info,
+.chat.horizontal .event .info .platform,
+.chat.horizontal .event .info .value .gift-info {
+    flex-wrap: nowrap;
+}
+
+
 
 @keyframes bigStreamerBGAnimate {
     0%      { background-position: 50% 0%; }

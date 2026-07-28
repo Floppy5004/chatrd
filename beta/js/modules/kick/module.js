@@ -431,8 +431,9 @@ async function kickKicksGiftedMessage(data) {
 
     header.remove();
 
+    const rotateDeg = (Math.random() * 60 - 30).toFixed(1) + 'deg';
     var kicksGiftId = data.gift.gift_id.replace('_', '-');
-    var kicksGiftImage = `<img class="gift-image" src="https://files.kick.com/kicks/gifts/${kicksGiftId}.webp" alt="${data.gift.name}">`;
+    var kicksGiftImage = `<img style="--rotateGift: ${rotateDeg}" class="gift-image" src="https://files.kick.com/kicks/gifts/${kicksGiftId}.webp" alt="${data.gift.name}">`;
     
     user.textContent = data.sender.username;
     action.innerHTML = tRD('kick.kicksgift_action', { name: data.gift.name });
@@ -441,12 +442,13 @@ async function kickKicksGiftedMessage(data) {
     classes.push(kicksMatch.class);
 
     var kicksGift = data.gift.amount > 1 ? tRD('kick.kicks_plural') : tRD('kick.kicks_singular');
-    value.innerHTML = `
-        <div class="gift-info">
-            <span class="gift-image">${kicksGiftImage}</span>
-            <span class="gift-value"><img src="js/modules/kick/images/icon-kicksgift.svg" alt="${kicksGift}"> ${data.gift.amount}</span>
-        </div>
-    `;
+
+    const giftHtml = renderGiftEventSuffix({
+        image : `${kicksGiftImage}`, 
+        value : `<img src="js/modules/kick/images/icon-kicksgift.svg" alt="${kicksGift}"> ${data.gift.amount}`
+    });
+
+    value.innerHTML = giftHtml;
 
     if (!data.message) { message.remove(); }
     else {

@@ -81,10 +81,10 @@ const loadedEmotes = new Set();
 
 
 const SKINS = {
-    default: "skin-default.css?nocache=62",
-    nutting: "skin-nutting.css?nocache=62",
-    kimballs: "skin-kimballs.css?nocache=62",
-    bubbles: "skin-bubbles.css?nocache=62"
+    default: "skin-default.css?nocache=63",
+    nutting: "skin-nutting.css?nocache=63",
+    kimballs: "skin-kimballs.css?nocache=63",
+    bubbles: "skin-bubbles.css?nocache=63"
 };
 
 const skinFile = SKINS[chatrdSkin] || SKINS.default;
@@ -163,6 +163,7 @@ async function animateItemEntry(root, messageid) {
     : ghostClone.offsetHeight || 0;
 
     wrapper.style[dimensionProp.toLowerCase()] = `${itemDimension}px`;
+    wrapper.dataset.pastheight = `${itemDimension}px`;
     wrapper.style.opacity = '1';
 
     setTimeout(function () {
@@ -980,6 +981,21 @@ async function generateSHA256Identifier(text) {
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
 }
+
+
+
+function renderGiftEventSuffix(giftcode) {
+    const html = `
+        <span class="gift-info">
+            <span class="gift-image">${giftcode.image}</span>
+            <span class="gift-value">${giftcode.value}</span>
+        </span>
+    `;
+
+    return html;
+}
+
+
 
 /* ------------------------------ */
 /* ---- AUTO SCROLL, FINALLY ---- */

@@ -503,12 +503,15 @@ async function tiktokGiftMessage(data) {
 
     user.textContent = data.nickname;
     action.innerHTML = tRD('tiktok.gift_action', { count: data.repeatCount, name: data.giftName });
-    value.innerHTML = `
-        <div class="gift-info">
-            <span class="gift-image"><img src="${data.giftPictureUrl}" alt="${data.giftName}"></span>
-            <span class="gift-value"><img src="js/modules/tiktok/images/icon-tiktokcoin.svg" alt="Coins"> ${coins}</span>
-        </div>
-    `;
+
+    const rotateDeg = (Math.random() * 60 - 30).toFixed(1) + 'deg';
+
+    const giftHtml = renderGiftEventSuffix({
+        image : `<img style="--rotateGift: ${rotateDeg}" src="${data.giftPictureUrl}" alt="${data.giftName}">`, 
+        value : `<img src="js/modules/tiktok/images/icon-tiktokcoin.svg" alt="Coins"> ${coins}`
+    });
+
+    value.innerHTML = giftHtml;
 
     message.remove();
 

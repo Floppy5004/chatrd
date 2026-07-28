@@ -492,7 +492,6 @@ async function youTubeJewels(data) {
     const jewelsKey = `${data.user.id}::${data.name}`;
     const jewelsDurationMs = Math.round(data.duration.seconds * 1000);
     const jewelsCount = youtubeJewelsComboState.get(jewelsKey);
-    const jewelsTotal = (jewelsCount ? jewelsCount.jewelsTotal : 0) + data.jewelsAmount;
 
     if (jewelsCount) { clearTimeout(jewelsCount.timer); }
 
@@ -535,12 +534,15 @@ async function youTubeJewels(data) {
             userLinkElement.title = `${data.user.name} @ ${userLink}`;
 
             action.innerHTML = tRD('youtube.jewels_action', { count: data.comboCount, name: data.name });
-            value.innerHTML = `
-                <div class="gift-info">
-                    <span class="gift-image"><img src="${data.url}" alt="${data.name}"></span>
-                    <span class="gift-value"><i class="fa-regular fa-gem"></i> ${jewelsFinalState.jewelsTotal}</span>
-                </div>
-            `;
+
+            const rotateDeg = (Math.random() * 60 - 30).toFixed(1) + 'deg';
+            
+            const giftHtml = renderGiftEventSuffix({
+                image : `<img  style="--rotateGift: ${rotateDeg}" src="${data.url}" alt="${data.name}">`, 
+                value : `<i class="fa-regular fa-gem"></i> ${ Math.floor(data.comboCount * data.comboCount) }`
+            });
+
+            value.innerHTML = giftHtml;
 
             message.remove();
 
@@ -549,7 +551,7 @@ async function youTubeJewels(data) {
         }
     }, jewelsDurationMs);
 
-    youtubeJewelsComboState.set(jewelsKey, { timer: jewelsCountdown, jewelsTotal, lastData: data });
+    youtubeJewelsComboState.set(jewelsKey, { timer: jewelsCountdown, lastData: data });
 }
 
 

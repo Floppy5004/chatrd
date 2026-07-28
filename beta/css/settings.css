@@ -500,11 +500,16 @@ footer .nav-bar a img {
     font-size: 14px;
 }
 
-.modal-content .confirm {
+.modal-content button.confirm:hover {
     background: #00dd63;
 }
 
-.modal-content .cancel {
+.modal-content button.cancel {
+    background: none;
+    outline: 2px solid #252525;
+    outline-offset: -2px;
+}
+.modal-content button.cancel:hover {
     background: #ff0000;
 }
 

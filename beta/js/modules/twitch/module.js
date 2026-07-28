@@ -597,12 +597,12 @@ async function twitchRewardRedemption(data) {
 
     action.innerHTML = tRD('twitch.reward_action');
 
-    value.innerHTML = `
-        <div class="gift-info">
-            <span class="gift-image"><strong>${data.reward.title}</strong></span>
-            <span class="gift-value"><img src="js/modules/twitch/images/icon-channel-points.svg" alt="Channel Points"> ${data.reward.cost}</span>
-        </div>
-    `;
+    const giftHtml = renderGiftEventSuffix({
+        image : `<strong>${data.reward.title}</strong>`, 
+        value : `<img src="js/modules/twitch/images/icon-channel-points.svg" alt="Channel Points"> ${data.reward.cost}`
+    });
+
+    value.innerHTML = giftHtml;
     
     var userInput = data.user_input ? `${data.user_input}` : '';
     message.textContent = userInput;
@@ -667,12 +667,12 @@ async function twitchAutomaticRewardRedemption(data) {
 
     action.innerHTML = tRD('twitch.reward_action');
 
-    value.innerHTML = `
-        <div class="gift-info">
-            <span class="gift-image"><strong>${title}</strong></span>
-            <span class="gift-value"><img src="js/modules/twitch/images/icon-channel-points.svg" alt="Channel Points"> ${data.channelPoints}</span>
-        </div>
-    `;
+    const giftHtml = renderGiftEventSuffix({
+        image : `<strong>${title}</strong>`, 
+        value : `<img src="js/modules/twitch/images/icon-channel-points.svg" alt="Channel Points"> ${data.channelPoints}`
+    });
+    
+    value.innerHTML = giftHtml;
     
     var userInput = data.user_input ? `${data.user_input}` : `${data.message_text}`;
     message.textContent = `${userInput}`;
@@ -741,12 +741,12 @@ async function twitchPowerUpRedemption(data) {
 
     action.innerHTML = tRD('twitch.reward_action') + `<strong>${title}</strong>`;
 
-    value.innerHTML = `
-        <div class="gift-info">
-            <span class="gift-image">${image}</span>
-            <span class="gift-value"><img src="js/modules/twitch/images/icon-powerups-bits.svg" alt="${title}"> ${data.bits}</span>
-        </div>
-    `;
+    const giftHtml = renderGiftEventSuffix({
+        image : `<strong>${image}</strong>`, 
+        value : `<img src="js/modules/twitch/images/icon-powerups-bits.svg" alt="${title}"> ${data.bits}`
+    });
+
+    value.innerHTML = giftHtml;
 
     /*let messageFromParts = await getTwitchMessageFromParts(data.parts);
     message.innerHTML = DOMPurify.sanitize(messageFromParts);*/
@@ -901,13 +901,13 @@ async function twitchCustomPowerUpRedemption(data) {
     userLinkElement.title = `${data.user.name} @ ${userLink}`;
 
     action.innerHTML = tRD('twitch.reward_action');
+    
+    const giftHtml = renderGiftEventSuffix({
+        image : `<strong>${data.customPowerUp.title}</strong>`, 
+        value : `<img src="js/modules/twitch/images/icon-powerups-bits.svg" alt="${data.customPowerUp.title}"> ${data.customPowerUp.bits}`
+    });
 
-    value.innerHTML = `
-        <div class="gift-info">
-            <span class="gift-image"><strong>${data.customPowerUp.title}</strong></span>
-            <span class="gift-value"><img src="js/modules/twitch/images/icon-powerups-bits.svg" alt="${data.customPowerUp.title}"> ${data.customPowerUp.bits}</span>
-        </div>
-    `;
+    value.innerHTML = giftHtml;
     
     var userInput = data.userInput ? `${data.userInput}` : ``;
     message.textContent = `${userInput}`;
@@ -961,12 +961,12 @@ async function twitchBitsMessage(data) {
     const bitsMatch = bitsGiftsClasses.find(lv => data.bits >= lv.min && data.bits <= lv.max);
     classes.push(bitsMatch.class);
 
-    value.innerHTML = `
-        <div class="gift-info">
-            <span class="gift-image"><strong>${data.bits} ${bits}</strong></span>
-            <span class="gift-value"><img src="https://d3aqoihi2n8ty8.cloudfront.net/actions/cheer/dark/animated/${match.gifId}/4.gif" alt="${data.bits} ${bits}"></span>
-        </div>
-    `;
+    const giftHtml = renderGiftEventSuffix({
+        image : `<strong>${data.bits} ${bits}</strong>`, 
+        value : `<img src="https://d3aqoihi2n8ty8.cloudfront.net/actions/cheer/dark/animated/${match.gifId}/4.gif" alt="${data.bits} ${bits}">`
+    });
+
+    value.innerHTML = giftHtml;
 
     let messageFromParts = await getTwitchMessageFromParts(data.parts);
     message.innerHTML = DOMPurify.sanitize(messageFromParts);
@@ -1016,12 +1016,12 @@ async function twitchSubMessage(data) {
     var months = formatSubMonthDuration(data.duration_months);
     var tier = data.is_prime ? 'Prime' : 'Tier '+Math.floor(data.sub_tier/1000);
 
-    value.innerHTML = `
-        <div class="gift-info">
-            <span class="gift-image"><strong>${months}</strong></span>
-            <span class="gift-value">${tier}</span>
-        </div>
-    `;
+    const giftHtml = renderGiftEventSuffix({
+        image : `<strong>${months}</strong>`, 
+        value : `${tier}`
+    });
+
+    value.innerHTML = giftHtml;
 
     addEventItem('twitch', clone, classes, userId, messageId);
 }
@@ -1065,13 +1065,13 @@ async function twitchReSubMessage(data) {
 
     var months = formatSubMonthDuration(data.cumulativeMonths);
     var tier = data.isPrime ? 'Prime' : 'Tier '+Math.floor(data.subTier/1000);
+
+    const giftHtml = renderGiftEventSuffix({
+        image : `<strong>${months}</strong>`, 
+        value : `${tier}`
+    });
     
-    value.innerHTML = `
-        <div class="gift-info">
-            <span class="gift-image"><strong>${months}</strong></span>
-            <span class="gift-value">${tier}</span>
-        </div>
-    `;
+    value.innerHTML = giftHtml;
     
     let messageFromParts = await getTwitchMessageFromParts(data.parts);
     message.innerHTML = DOMPurify.sanitize(messageFromParts);
@@ -1381,11 +1381,13 @@ async function twitchHypeTrainStart(data) {
 
         user.textContent = hypetrainInfo;
         action.textContent = ``;
-        value.innerHTML = `
-            <div class="gift-info">
-                <span class="gift-value"><strong>LVL ${level}</strong> @ <strong>${htProgress}%</strong></span>
-            </div>
-        `;
+
+        const giftHtml = renderGiftEventSuffix({
+            image : ``, 
+            value : `<strong>LVL ${level}</strong> @ <strong>${htProgress}%</strong>`
+        });
+
+        value.innerHTML = giftHtml;
 
         message.remove();
 
@@ -1510,11 +1512,13 @@ async function twitchHypeTrainLevelUp(data) {
 
         user.textContent = hypetrainInfo;
         action.textContent = ``;
-        value.innerHTML = `
-            <div class="gift-info">
-                <span class="gift-value"><strong>LVL ${level}</strong> @ <strong>${htProgress}%</strong></span>
-            </div>
-        `;
+
+        const giftHtml = renderGiftEventSuffix({
+            image : ``, 
+            value : `<strong>LVL ${level}</strong> @ <strong>${htProgress}%</strong>`
+        });
+
+        value.innerHTML = giftHtml;
 
         message.remove();
 
@@ -1609,11 +1613,13 @@ async function twitchHypeTrainEnd(data) {
 
         user.textContent = hypetrainInfo;
         action.textContent = ` 👏👏👏 `;
-        value.innerHTML = `
-            <div class="gift-info">
-                <span class="gift-value"><strong>LVL ${level}</strong></span>
-            </div>
-        `;
+
+        const giftHtml = renderGiftEventSuffix({
+            image : ``, 
+            value : `<strong>LVL ${level}</strong>`
+        });
+
+        value.innerHTML = giftHtml;
 
         message.remove();
 
@@ -1851,11 +1857,13 @@ async function twitchGoalBegin(data) {
 
         user.textContent = tRD('twitch.goal.new', { type: goalType });
         action.textContent = description ? ` - ${description} ` : ``;
-        value.innerHTML = `
-            <div class="gift-info">
-                <span class="gift-value">${current_amount}/${target_amount} ${goalItem}</span>
-            </div>
-        `;
+
+        const giftHtml = renderGiftEventSuffix({
+            image : ``, 
+            value : `${current_amount}/${target_amount} ${goalItem}`
+        });
+
+        value.innerHTML = giftHtml;
 
         if (eventsDock == true) {
             addLittleEventItem('twitch', clone, classes, userId, messageId);
@@ -2003,11 +2011,13 @@ async function twitchGoalEnd(data) {
 
         user.textContent = `${goalType} ${goalStatus}`;
         action.textContent = description ? ` - ${description} ` : ``;
-        value.innerHTML = `
-            <div class="gift-info">
-                <span class="gift-value">${current_amount}/${target_amount} ${goalItem}</span>
-            </div>
-        `;
+        
+        const giftHtml = renderGiftEventSuffix({
+            image : ``, 
+            value : `${current_amount}/${target_amount} ${goalItem}`
+        });
+
+        value.innerHTML = giftHtml;
 
         if (eventsDock == true) {
             addLittleEventItem('twitch', clone, classes, userId, messageId);
