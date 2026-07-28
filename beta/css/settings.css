@@ -1,4 +1,8 @@
 /* Basic reset and styling */
+:root {
+    --transition: all ease-in-out 250ms, opacity ease-in-out 500ms;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -187,7 +191,7 @@ hr {
     right: 0;
     bottom: 0;
     background: #CCC;
-    transition: .4s;
+    transition: var(--transition);
     border-radius: 30px;
 }
 
@@ -201,7 +205,7 @@ hr {
     top: 3px;
     bottom: 0;
     background-color: white;
-    transition: .4s;
+    transition: var(--transition);
 }
 
 #settings .switch input[type=checkbox]:checked + .slider:before {
@@ -291,6 +295,34 @@ hr {
 }
 
 
+#settings .config.layout button {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "DM Sans", sans-serif;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    background: none;
+    border: 2px solid #252525;
+    color: #FFF;
+    width: 100px;
+    transition: var(--transition);
+}
+
+#settings .config.layout button:hover {
+    border-color: #333;
+}
+
+#settings .config.layout button.enabled {
+    border-color: #DBB048;
+}
+
+#settings .config.layout .layout-checkboxes {
+    display: none;
+}
+
+
 #settings small.warning {
     display: inline-block;
     padding: 10px 20px 10px 10px;
@@ -301,7 +333,7 @@ hr {
 }
 
 #settings small.warning i {
-    color: #ffcc00;
+    color: #DBB048;
 }
 
 
@@ -368,7 +400,7 @@ hr {
     cursor: pointer;
     background: #252525;
     color: #FFF;
-    transition: .4s;
+    transition: var(--transition);
     width: 100%;
     font-size: 14px;
 }
@@ -427,7 +459,7 @@ footer .nav-bar a {
     font-size: 16px;
     text-decoration: none;
     color: #FFF;
-    transition: all ease-in-out 300ms;
+    transition: var(--transition);
 }
 
 footer .nav-bar a:hover {
@@ -495,7 +527,7 @@ footer .nav-bar a img {
     cursor: pointer;
     background: #252525;
     color: #FFF;
-    transition: .4s;
+    transition: var(--transition);
     width: 100%;
     font-size: 14px;
 }
@@ -620,7 +652,7 @@ footer .nav-bar a img {
     width: 51px;
     height: 51px;
     margin-top: 0;
-    transition: all ease-in-out 300ms;
+    transition: var(--transition);
     border: 1px solid transparent;
     font-size: 16px;
 }

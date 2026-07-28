@@ -322,13 +322,10 @@ async function kickChatMessage(data) {
     firstMessage.remove();
 
     classes.push(...roles);
-        
-    if (!kickStreamer.broadcasterUserName) {
-        const streamerInfo = await getStreamerInfo();
-        kickStreamer.broadcasterUserName = streamerInfo.platforms.kick.broadcasterUserName;
-    }
     
-    if (data.content.toLowerCase().includes( kickStreamer.broadcasterUserName.toLowerCase() )) {
+    const kickStreamer = streamerInfo.get.platforms.kick.broadcasterUserName;
+    
+    if (data.content.toLowerCase().includes( kickStreamer.toLowerCase() )) {
         classes.push('streamer-mentioned');
     }
 

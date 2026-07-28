@@ -51,7 +51,7 @@
     },
     "one_line": "Pojedyncza Linia",
     "one_line_hint": "Jedna linia czatu zamiast dwóch w Czacie Pionowym.<br><strong><u>Jeśli włączone, wyłącza opcję poniżej.</u></strong>",
-    "horizontal": "Kierunek Poziomy",
+    "horizontal": "Poziomy",
     "horizontal_hint": "Czat/Wydarzenia będą wyświetlane poziomo.<br><strong><u>Jeśli włączone, wyłącza opcję powyżej.</u></strong>",
     "events_dock" : "Panel Wydarzeń",
     "events_dock_hint" : "Kolejne wydarzenia, takie jak Hype Train, Cele na Twitchu i Dołączenia na TikToku,<br>będą wyświetlane pojedynczo w panelu tuż pod czatem.",

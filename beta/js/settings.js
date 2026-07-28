@@ -85,6 +85,23 @@ async function loadSettingsFromLocalStorage() {
         }
     });
 
+    const oneLineCheckBox = document.querySelector('input[type=checkbox][name=chatOneLine]');
+    const horizontalCheckBox = document.querySelector('input[type=checkbox][name=chatHorizontal]');
+
+    const layoutVertical = document.querySelector('#layoutVertical');
+    const layoutOneLine = document.querySelector('#layoutOneLine');
+    const layoutHorizontal = document.querySelector('#layoutHorizontal');
+
+    const activeLayout = oneLineCheckBox.checked
+        ? layoutOneLine
+        : horizontalCheckBox.checked
+            ? layoutHorizontal
+            : layoutVertical;
+
+    for (const layout of [layoutVertical, layoutOneLine, layoutHorizontal]) {
+        layout.classList.toggle('enabled', layout === activeLayout);
+    }
+
     document.querySelector('#font-value').textContent = Math.floor(document.querySelector('#font-slider').value * 100) + '%';
     document.querySelector('#bg-opacity-value').textContent = Math.floor(document.querySelector('#bg-opacity-slider').value * 100) + '%';
 }
@@ -264,6 +281,31 @@ function pushChangeEvents() {
     horizontalCheckBox.addEventListener('change', (e) => {
         if (e.target.checked) { oneLineCheckBox.checked = false; }
     });
+
+    const allLayoutButtons = [layoutVertical, layoutOneLine, layoutHorizontal];
+
+    const layoutHandlers = {
+        layoutVertical: () => {
+            oneLineCheckBox.checked = true;
+            horizontalCheckBox.checked = false;
+            oneLineCheckBox.click();
+        },
+        layoutOneLine: () => oneLineCheckBox.click(),
+        layoutHorizontal: () => horizontalCheckBox.click()
+    };
+
+    for (const [id, handler] of Object.entries(layoutHandlers)) {
+        const button = document.querySelector(`#${id}`);
+
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            handler();
+
+            for (const btn of allLayoutButtons) {
+                btn.classList.toggle('enabled', btn === button);
+            }
+        });
+    }
 
     [...checkboxes, ...textfields, ...numberfields, ...colorfields, ...selects, ...ranges].forEach(el => {
         el.addEventListener('change', saveSettingsToLocalStorage);

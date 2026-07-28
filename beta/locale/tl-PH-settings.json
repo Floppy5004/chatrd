@@ -51,7 +51,7 @@
     },
     "one_line": "Isang Linya",
     "one_line_hint": "Isang linya ng chat sa halip na dalawa sa Vertical Chat.<br><strong><u>Kung na-enable, ma-disable ang option sa baba.</u></strong>",
-    "horizontal": "Horizontal na Direksyon",
+    "horizontal": "Horizontal",
     "horizontal_hint": "Gagawing horizontal ang Chat/Events.<br><strong><u>Kung na-enable, ma-disable ang option sa taas.</u></strong>",
     "events_dock" : "Events Dock",
     "events_dock_hint" : "Ang mga sunod-sunod na event, tulad ng Hype Trains, Twitch Goals, at TikTok Joins<br>ay ipapakita, isa-isa, sa dock na nasa ibaba ng chat.",

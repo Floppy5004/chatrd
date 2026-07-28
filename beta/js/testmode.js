@@ -203,7 +203,11 @@ const TestMode = (() => {
             parts: [{ type: 'text', text }],
             isReply: false,
             isInSharedChat: false,
-            meta: { isMe: false, firstMessage: Math.random() < 0.1, isHighlighted: Math.random() < 0.05 },
+            meta: {
+                isMe: false,
+                firstMessage: Math.random() < 0.1,
+                isHighlighted: Math.random() < 0.05
+            },
             user: {
                 login: name,
                 name,

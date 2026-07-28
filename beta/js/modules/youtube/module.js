@@ -14,7 +14,6 @@ const showYouTubeJewels                 = getURLParam("showYouTubeJewels", true)
 const showSmallYouTubeJewels            = getURLParam("showSmallYouTubeJewels", false);
 const showYouTubeStatistics             = getURLParam("showYouTubeStatistics", true);
 
-const youtubeStreamer = {};
 const youtubeJewelsComboState = new Map();
 
 let youTubeCustomEmotes = [];
@@ -161,13 +160,9 @@ async function youTubeChatMessage(data) {
 
     
 
-        
-    if (!youtubeStreamer.broadcastUserName) {
-        const streamerInfo = await getStreamerInfo();
-        youtubeStreamer.broadcastUserName = streamerInfo.platforms.youtube.broadcastUserName;
-    }
-    
-    if (data.message.toLowerCase().includes( youtubeStreamer.broadcastUserName.toLowerCase() )) {
+    const youtubeStreamer = streamerInfo.get.platforms.youtube.broadcastUserName;
+
+    if (data.message.toLowerCase().includes( youtubeStreamer.toLowerCase() )) {
         classes.push('streamer-mentioned');
     }
 

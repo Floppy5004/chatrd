@@ -81,10 +81,10 @@ const loadedEmotes = new Set();
 
 
 const SKINS = {
-    default: "skin-default.css?nocache=64",
-    nutting: "skin-nutting.css?nocache=64",
-    kimballs: "skin-kimballs.css?nocache=64",
-    bubbles: "skin-bubbles.css?nocache=64"
+    default: "skin-default.css?nocache=65",
+    nutting: "skin-nutting.css?nocache=65",
+    kimballs: "skin-kimballs.css?nocache=65",
+    bubbles: "skin-bubbles.css?nocache=65"
 };
 
 const skinFile = SKINS[chatrdSkin] || SKINS.default;
@@ -217,10 +217,10 @@ function buildChatModerationHTML(platform, userid, messageid, streamerOfOrigin) 
 function addMessageItem(platform, clone, classes, userid, messageid) {
     removeExtraChatMessages();
 
+    classes.push('user');
+
     const root = clone.firstElementChild;
     root.classList.add(...classes);
-    
-    root.classList.add('user');
     
     root.dataset.user = userid;
     root.id = messageid;
@@ -228,8 +228,6 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
     const streamerOfOrigin = root.dataset.streamer;
 
     if (showSpeakerbot == true && speakerBotChatRead == true) { speakerBotTTSRead(clone, 'chat', platform); }
-
-    const infoEl = clone.querySelector('.info');
     
     getAndReplaceLinks(platform, root);
 
@@ -271,9 +269,12 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
     }
 
     if (chatMessageGroup == true && chatContainer.children.length > 0) {
-        let lastUserId = chatContainer.firstElementChild.dataset.user;
 
-        let lastClasses = Array.from(chatContainer.firstElementChild.classList);
+        const info = root.querySelector('.info');
+        const messageElement = chatContainer.firstElementChild.firstElementChild;
+        let lastUserId = messageElement.dataset.user;
+
+        let lastClasses = Array.from(messageElement.classList);
         lastClasses = lastClasses.filter(c => c !== 'item');
         lastClasses = lastClasses.filter(c => c !== 'grouped');
         lastClasses = lastClasses.filter(c => c !== 'streamer-mentioned');
@@ -282,7 +283,16 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
         let currentClasses = Array.from(classes).join(' ');
 
         if (lastUserId == userid && lastClasses == currentClasses) {
-            infoEl.remove();
+            const avatar = info.querySelector('.avatar');
+            info.innerHTML = ''; 
+
+            if (avatar) {
+                const avatarClone = avatar.cloneNode();
+                avatarClone.style.overflow = 'hidden';
+                avatarClone.style.width = '0px';
+                info.appendChild(avatarClone);
+            }
+
             root.classList.add('grouped');
         }
     }

@@ -51,7 +51,7 @@
     },
     "one_line": "Riga Singola",
     "one_line_hint": "Una riga di chat invece di due nella Chat Verticale.<br><strong><u>Se attivato, disattiva l'opzione sottostante.</u></strong>",
-    "horizontal": "Direzione Orizzontale",
+    "horizontal": "Orizzontale",
     "horizontal_hint": "Chat/Eventi saranno orizzontali.<br><strong><u>Se attivato, disattiva l'opzione soprastante.</u></strong>",
     "events_dock" : "Pannello Eventi",
     "events_dock_hint" : "Eventi consecutivi, come Hype Train, Obiettivi di Twitch e Ingressi TikTok,<br>verranno mostrati uno alla volta nel pannello subito sotto la chat.",

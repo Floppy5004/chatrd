@@ -51,7 +51,7 @@
     },
     "one_line": "Einzeilig",
     "one_line_hint": "Eine Chat-Zeile statt zwei im vertikalen Chat.<br><strong><u>Wenn aktiviert, wird die Option unten deaktiviert.</u></strong>",
-    "horizontal": "Horizontale Ausrichtung",
+    "horizontal": "Horizontale",
     "horizontal_hint": "Der Chat/die Events werden horizontal angezeigt.<br><strong><u>Wenn aktiviert, wird die Option oben deaktiviert.</u></strong>",
     "events_dock" : "Event-Leiste",
     "events_dock_hint" : "Aufeinanderfolgende Events wie Hype Trains, Twitch-Goals und TikTok-Joins<br>werden nacheinander in der Leiste direkt unter dem Chat angezeigt.",

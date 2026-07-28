@@ -208,8 +208,38 @@
                                 <br><em id="bg-opacity-value" class="slider-value">1</em>
                             </label>
                         </div>
+                        
                         <hr>
-                        <div class="config">
+                            <div class="config layout">
+                                <label>
+                                    <span>Layout</span>
+                                </label>
+                                <label>
+
+                                    <button id="layoutVertical">
+                                        <img src="images/layout-vertical.png" alt="">
+                                        Vertical
+                                    </button>
+
+                                    <button id="layoutOneLine">
+                                        <img src="images/layout-one-line.png" alt="">
+                                        <span data-i18n="general.one_line">One Line</span>
+                                    </button>
+
+                                    <button id="layoutHorizontal">
+                                        <img src="images/layout-horizontal.png" alt="">
+                                        <span data-i18n="general.horizontal">Horizontal Direction</span>
+                                    </button>
+                                </label>
+                                
+                                <label class="layout-checkboxes">
+                                    <input type="checkbox" name="chatOneLine" data-default="false">
+                                    <input type="checkbox" name="chatHorizontal" data-default="false">
+                                </label>
+                            </div>
+                        <hr>
+
+                        <!--<div class="config">
                             <label>
                                 <span data-i18n="general.one_line">One Line</span><br>
                                 <small data-i18n-html="general.one_line_hint">One line chat instead of two in Vertical Chat.<br><strong><u>If enabled, it disables the option below.</u></strong></small>
@@ -222,7 +252,7 @@
                                 <small data-i18n-html="general.horizontal_hint">Chat/Events will be horizontal.<br><strong><u>If enabled, it disables the option above.</u></strong></small>
                             </label>
                             <label class="switch"><input type="checkbox" name="chatHorizontal" data-default="false"><span class="slider"></span></label>
-                        </div>
+                        </div>-->
                         <div class="config">
                             <label>
                                 <span data-i18n="general.group_messages">Group Chat Messages</span><br>
@@ -237,7 +267,6 @@
                             </label>
                             <label class="switch"><input type="checkbox" name="eventsDock" data-default="false"><span class="slider"></span></label>
                         </div>-->
-                        <hr>
                         <div class="config">
                             <label data-i18n="general.avatars">Avatars</label>
                             <label class="switch"><input type="checkbox" name="showAvatar" checked data-default="true"><span class="slider"></span></label>
@@ -1171,8 +1200,8 @@
 <script src="js/libs/mchoice/multi-choice-field.js"></script>
 
 <!-- i18n deve ser carregado ANTES do settings.js -->
-<script src="js/i18n-settings.js?nocache=64"></script>
-<script src="js/speakerbot.js?nocache=64"></script>
-<script src="js/settings.js?nocache=64"></script>
+<script src="js/i18n-settings.js?nocache=65"></script>
+<script src="js/speakerbot.js?nocache=65"></script>
+<script src="js/settings.js?nocache=65"></script>
 </body>
 </html>

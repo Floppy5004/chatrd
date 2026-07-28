@@ -51,7 +51,7 @@
     },
     "one_line": "Ligne Unique",
     "one_line_hint": "Une ligne de chat au lieu de deux dans le Chat Vertical.<br><strong><u>Si activé, désactive l'option ci-dessous.</u></strong>",
-    "horizontal": "Direction Horizontale",
+    "horizontal": "Horizontale",
     "horizontal_hint": "Le Chat/Événements sera horizontal.<br><strong><u>Si activé, désactive l'option ci-dessus.</u></strong>",
     "events_dock" : "Panneau d'Événements",
     "events_dock_hint" : "Les événements consécutifs, comme les Hype Trains, les Objectifs Twitch et les Arrivées TikTok,<br>seront affichés un par un dans le panneau juste sous le chat.",

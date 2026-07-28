@@ -15,6 +15,8 @@ const speakerBotEventRead           = getURLParam("speakerBotEventRead", false);
 const speakerBotVoiceAlias          = getURLParam("speakerBotVoiceAlias", "Maria");
 const speakerBotChatTemplate        = getURLParam("speakerBotChatTemplate", "{user} said {message}");
 
+const streamerInfo = {};
+
 function getSpeakerBotInstance() {
     if (!speakerBotClient && showSpeakerbot) {
         speakerBotClient = new SpeakerBotClient({
@@ -55,6 +57,12 @@ function streamerBotConnect() {
             streamerBotStatus.connected = true;
             streamerBotStatus.disconnected = false;
             streamerBotStatus.error = false;
+            
+            (async () => {
+                console.debug("[ChatRD][Settings] Getting streamer info from Streamer.bot...");
+                streamerInfo.get = await getStreamerInfo();
+                console.debug("[ChatRD][Settings] Streamer info saved.");
+            })();
 
             notifySuccess({
                 title: 'ChatRD 🤝 Streamer.bot',

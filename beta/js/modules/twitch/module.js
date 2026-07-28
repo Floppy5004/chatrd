@@ -29,8 +29,6 @@ const showTwitchViewers                 = getURLParam("showTwitchViewers", true)
 
 const showTwitchSevenTVPaint            = getURLParam("showTwitchSevenTVPaint", false);
 
-const twitchStreamer = {};
-
 const twitchAvatars = new Map();
 
 const twitchGoals = new Map();
@@ -254,25 +252,19 @@ async function twitchChatMessage(data) {
     const classes = ['twitch', 'msg'];
 
     const [avatarImage, badgeList] = await Promise.all([
-        //getTwitchAvatar(data.message.username),
         getTwitchAvatar(data.user.login),
         getTwitchBadges(data.user.badges)
     ]);
 
     header.remove();
 
-    //let streamData = data;
-
-    if (!twitchStreamer.broadcastUser) {
-        const streamerInfo = await getStreamerInfo();
-        twitchStreamer.broadcastUser = streamerInfo.platforms.twitch.broadcastUser;
-    }
+    const twitchStreamer = streamerInfo.get.platforms.twitch.broadcastUser;
     
-    if (data.text.toLowerCase().includes( twitchStreamer.broadcastUser.toLowerCase() )) {
+    if (data.text.toLowerCase().includes( twitchStreamer.toLowerCase() )) {
         classes.push('streamer-mentioned');
     }
 
-    root.dataset.streamer = twitchStreamer.broadcastUser.toLowerCase();
+    root.dataset.streamer = twitchStreamer.toLowerCase();
 
     const userLinkElement = user.querySelector('a');
     const userLink = `https://twitch.tv/${data.user.login}`;
@@ -2232,6 +2224,7 @@ async function getTwitchUserPronouns(username) {
     }
     catch (err) {
         console.error(`[ChatRD][Twitch] Couldn't retrieve pronouns for ${username}:`, err);
+        twitchPronouns.set(username, '');
         return '';
     }
 }
