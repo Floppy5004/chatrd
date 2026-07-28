@@ -539,7 +539,7 @@ async function youTubeJewels(data) {
             
             const giftHtml = renderGiftEventSuffix({
                 image : `<img  style="--rotateGift: ${rotateDeg}" src="${data.url}" alt="${data.name}">`, 
-                value : `<i class="fa-regular fa-gem"></i> ${ Math.floor(data.comboCount * data.comboCount) }`
+                value : `<i class="fa-regular fa-gem"></i> ${ Math.floor(data.comboCount * data.jewelsAmount) }`
             });
 
             value.innerHTML = giftHtml;
