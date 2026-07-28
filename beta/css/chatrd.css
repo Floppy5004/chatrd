@@ -538,7 +538,7 @@ body {
 .chat .item .badges img {
     height: var(--emoteSize);
     width: var(--emoteSize);
-    margin: 0 1px;
+    margin: 0 2px;
 }
 
 .chat .item .actual-message img.emote {
