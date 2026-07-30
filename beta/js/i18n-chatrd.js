@@ -1,6 +1,6 @@
 /**
  * ChatRD — i18n
- */
+ */ 
 
 const SUPPORTED_LOCALES = new Set([
     'de', 'en', 'es-ES', 'fr-FR', 'it-IT', 'pt-BR', 'pl', 'tl-PH'
