@@ -1,0 +1,229 @@
+{
+  "chatrd": {
+    "multistreamer": {
+      "twitch":  "Plataporma na Lila",
+      "youtube": "Plataporma na Pula",
+      "kick":    "Plataporma na Berde",
+      "tiktok":  "App ng Maikling Video"
+    },
+    "month": {
+      "singular": "Buwan",
+      "plural":   "Mga Buwan"
+    },
+    "commands": {
+      "Twitch": [
+        { "name": "/me",              "usage": "Gumagawa ng makulay na mensahe. <b>Gamit: /me [mensahe]</b>" },
+        { "name": "/clip",            "usage": "Gumagawa ng 30-segundong clip. <b>Gamit: /clip</b>" },
+        { "name": "/announce",        "usage": "Nagpapadala ng anunsyo. <b>Gamit: /announce [mensahe]</b>" },
+        { "name": "/announceblue",    "usage": "Nagpapadala ng anunsyo sa kulay asul. <b>Gamit: /announceblue [mensahe]</b>" },
+        { "name": "/announcegreen",   "usage": "Nagpapadala ng anunsyo sa kulay berde. <b>Gamit: /announcegreen [mensahe]</b>" },
+        { "name": "/announceorange",  "usage": "Nagpapadala ng anunsyo sa kulay orange. <b>Gamit: /announceorange [mensahe]</b>" },
+        { "name": "/announcepurple",  "usage": "Nagpapadala ng anunsyo sa kulay lila. <b>Gamit: /announcepurple [mensahe]</b>" },
+        { "name": "/clear",           "usage": "Nililinis ang mga mensahe sa chat. <b>Gamit: /clear</b>" },
+        { "name": "/slow",            "usage": "Ina-activate ang slow mode. <b>Gamit: /slow [tagal]</b>" },
+        { "name": "/slowoff",         "usage": "Idinideactivate ang slow mode. <b>Gamit: /slowoff</b>" },
+        { "name": "/subscribers",     "usage": "Ina-activate ang subscribers-only mode. <b>Gamit: /subscribers</b>" },
+        { "name": "/subscribersoff",  "usage": "Idinideactivate ang subscribers-only mode. <b>Gamit: /subscribersoff</b>" },
+        { "name": "/emoteonly",       "usage": "Ina-activate ang emote-only mode. <b>Gamit: /emoteonly</b>" },
+        { "name": "/emoteonlyoff",    "usage": "Idinideactivate ang emote-only mode. <b>Gamit: /emoteonlyoff</b>" },
+        { "name": "/commercial",      "usage": "Nagdadagdag ng commercial break. <b>Gamit: /commercial [tagal]</b>" },
+        { "name": "/timeout",         "usage": "Nagbibigay ng timeout sa isang user. <b>Gamit: /timeout [user] [tagal] [dahilan]</b>" },
+        { "name": "/untimeout",       "usage": "Nag-aalis ng timeout ng isang user. <b>Gamit: /untimeout [user]</b>" },
+        { "name": "/ban",             "usage": "Nagbabawal sa isang user. <b>Gamit: /ban [user] [dahilan]</b>" },
+        { "name": "/unban",           "usage": "Nag-aalis ng ban ng isang user. <b>Gamit: /unban [user]</b>" },
+        { "name": "/mod",             "usage": "Ginagawang moderator ang isang user. <b>Gamit: /mod [user]</b>" },
+        { "name": "/unmod",           "usage": "Nag-aalis ng moderator status ng isang user. <b>Gamit: /unmod [user]</b>" },
+        { "name": "/vip",             "usage": "Nagdaragdag ng user bilang VIP. <b>Gamit: /vip [user]</b>" },
+        { "name": "/unvip",           "usage": "Nag-aalis ng user mula sa mga VIP. <b>Gamit: /unvip [user]</b>" },
+        { "name": "/shoutout",        "usage": "Nagbibigay ng shoutout sa isang user. <b>Gamit: /shoutout [user]</b>" },
+        { "name": "/raid",            "usage": "Nagsasagawa ng raid sa isang user. <b>Gamit: /raid [user]</b>" },
+        { "name": "/unraid",          "usage": "Kinakansela ang paalis na raid. <b>Gamit: /unraid</b>" },
+        { "name": "/settitle",        "usage": "Itinatakda ang titulo ng stream. <b>Gamit: /settitle [titulo]</b>" },
+        { "name": "/setgame",         "usage": "Itinatakda ang laro ng stream. <b>Gamit: /setgame [laro]</b>" }
+      ],
+      "YouTube": [
+        { "name": "/yt/title",        "usage": "Itinatakda ang titulo ng stream. <b>Gamit: /yt/title [titulo]</b>" },
+        { "name": "/yt/timeout",      "usage": "Nagbibigay ng timeout sa user gamit ang ID. <b>Gamit: /yt/timeout [ID ng user] [tagal]</b>" },
+        { "name": "/yt/timeout/name", "usage": "Nagbibigay ng timeout sa user gamit ang pangalan. <b>Gamit: /yt/timeout/name [pangalan ng user] [tagal]</b>" },
+        { "name": "/yt/ban",          "usage": "Nagbabawal sa user gamit ang ID. <b>Gamit: /yt/ban [ID ng user]</b>" },
+        { "name": "/yt/ban/name",     "usage": "Nagbabawal sa user gamit ang pangalan. <b>Gamit: /yt/ban/name [pangalan ng user]</b>" }
+      ],
+      "Kick": [
+        { "name": "/kick/title",      "usage": "Itinatakda ang titulo ng stream. <b>Gamit: /kick/title [titulo]</b>" },
+        { "name": "/kick/category",   "usage": "Itinatakda ang kategorya ng stream. <b>Gamit: /kick/category [kategorya]</b>" },
+        { "name": "/kick/timeout",    "usage": "Nagbibigay ng timeout sa isang user. <b>Gamit: /kick/timeout [user] [tagal]</b>" },
+        { "name": "/kick/untimeout",  "usage": "Nag-aalis ng timeout ng isang user. <b>Gamit: /kick/untimeout [user]</b>" },
+        { "name": "/kick/ban",        "usage": "Nagbabawal sa isang user. <b>Gamit: /kick/ban [user]</b>" },
+        { "name": "/kick/unban",      "usage": "Nag-aalis ng ban ng isang user. <b>Gamit: /kick/unban [user]</b>" }
+      ]
+    }
+  },
+
+  "twitch": {
+    "first_time_chatter": "✨ Unang Beses sa Chat",
+    "follow_action":           " nag-follow sa channel",
+    "watch_streak_action":     " ay may <strong>{count} na sunod-sunod na live stream</strong>",
+    "announcement_header":     "Anunsyo",
+    "reward_action":           " nag-redeem ng ",
+    "reward_auto": {
+      "send_highlighted_message":         "I-highlight ang Aking Mensahe",
+      "chosen_sub_emote_unlock":          "I-unlock ang Isang Emote sa 24 Oras",
+      "random_sub_emote_unlock":          "I-unlock ang Random na Sub Emote",
+      "chosen_modified_sub_emote_unlock": "Baguhin ang Isang Emote",
+      "celebration":                      "Pagdiriwang sa Screen",
+      "message_effect":                   "Mga Epekto sa Mensahe",
+      "gigantify":                        "Palakihin ang Isang Emote"
+    },
+    "bits_action":             " nagpadala ng vibes gamit ang ",
+    "bits_singular":           "bit",
+    "bits_plural":             "bits",
+    "sub_action":              " nag-subscribe sa loob ng ",
+    "resub_action":            " nag-renew ng subscription sa loob ng ",
+    "giftsub_action":          " nag-gift ng {months} Tier {tier} {duration} kay ",
+    "giftsub_singular":        "subscription",
+    "giftsub_plural":          "mga subscription",
+    "giftbomb_action":         " nag-gift ng {total} {subs} Tier {tier} sa komunidad",
+    "giftbomb_subs_singular":  "subscription",
+    "giftbomb_subs_plural":    "mga subscription",
+    "giftbomb_message":        "Nag-gift ng kabuuang {total} subscription",
+    "raid_action":             " nag-raid sa channel gamit ang ",
+    "raid_singular":           "manonood",
+    "raid_plural":             "mga manonood",
+    "reply_label":             "Sagot kay {user}:",
+    "hypetrain": {
+      "started":               "Nagsimula ang Hype Train! 🔥",
+      "started_golden":        "Nagsimula ang Golden Kappa Train! 🪙",
+      "started_treasure":      "Nagsimula ang Treasure Train! ✨",
+      "levelup":               "Umakyat ng Level ang Hype Train! 🚀",
+      "levelup_golden":        "Umakyat ng Level ang Golden Kappa Train! 🚀",
+      "levelup_treasure":      "Umakyat ng Level ang Treasure Train! 🚀",
+      "ended":                 "Tapos na ang Hype Train",
+      "ended_golden":          "Tapos na ang Golden Kappa Train",
+      "ended_treasure":        "Tapos na ang Treasure Train",
+      "bar_golden_kappa":      "Golden Kappa Train",
+      "bar_treasure":          "✨ Treasure Train"
+    },
+    "goal": {
+      "new":                   "Bagong {type}",
+      "completed":             "Nakumpleto",
+      "ended":                 "Tapos na",
+      "types": {
+        "follower":               "Layunin sa Followers",
+        "follow":                 "Layunin sa Followers",
+        "subscription":           "Layunin sa Subscriptions",
+        "subscription_count":     "Layunin sa Subscriptions",
+        "new_subscription":       "Layunin sa Subscriptions",
+        "new_subscription_count": "Layunin sa Subscriptions",
+        "new_bit":                "Layunin sa Bits",
+        "new_cheerer":            "Layunin sa Bits",
+        "cheerer":                "Layunin sa mga Cheerer",
+        "unknown":                "Bagong Bits/Cheerer"
+      },
+      "items": {
+        "follower":               "Mga Follower",
+        "follow":                 "Mga Follower",
+        "subscription":           "Puntos ng Subscription",
+        "subscription_count":     "Mga Subscription",
+        "new_subscription":       "Mga Bagong Subscription",
+        "new_subscription_count": "Mga Bagong Puntos ng Subscription",
+        "new_bit":                "Mga Bagong Bits",
+        "new_cheerer":            "Bagong Cheerer",
+        "cheerer":                "Mga Bagong Cheerer",
+        "unknown":                ""
+      }
+    }
+  },
+
+  "youtube": {
+    "superchat_action":          " nagpadala ng Superchat ",
+    "supersticker_action":       " nagpadala ng Super Sticker ",
+    "sponsor_action":            " naging member sa loob ng ",
+    "giftbomb_action":           " nag-gift ng ",
+    "giftbomb_singular":         "membership",
+    "giftbomb_plural":           "mga membership",
+    "giftbomb_suffix":           " sa channel",
+    "giftbomb_received_action":  " nag-gift ng membership kay ",
+    "jewels_action":             " nagpadala sa iyo ng <strong>{count} {name}</strong>"
+  },
+
+  "tiktok": {
+    "follow_action":    " nag-follow sa channel",
+    "share_action":     " nag-share ng live ↪️",
+    "join_action":      " sumali sa chat",
+    "likes_action":     " nagpadala sa iyo ng ",
+    "likes_singular":   "like",
+    "likes_plural":     "mga like",
+    "gift_action":      " nag-gift sa iyo ng <strong>{count} {name}</strong>",
+    "sub_action":       " nag-subscribe lang sa channel."
+  },
+
+  "kick": {
+    "follow_action":          " nag-follow sa channel",
+    "kicksgift_action":       " nagpadala ng <strong>{name}</strong> ",
+    "kicks_singular":         "Kick",
+    "kicks_plural":           "Kicks",
+    "sub_action":             " nag-subscribe sa loob ng ",
+    "giftbomb_action":        " nag-gift ng {count} subscription sa komunidad",
+    "giftbomb_message":       "Nag-gift ng kabuuang {total} subscription",
+    "giftsub_single_action":  " nag-gift ng subscription kay ",
+    "raid_action":            " nag-host sa channel gamit ang ",
+    "raid_singular":          "manonood",
+    "raid_plural":            "mga manonood",
+    "reward_action":          " nag-redeem ng ",
+    "reply_label":            "Sagot kay {user}:"
+  },
+
+  "streamelements": {
+    "donated_action": " nagdonate ng "
+  },
+
+  "streamlabs": {
+    "donated_action": " nagdonate ng "
+  },
+
+  "patreon": {
+    "donated_action": " sumali sa Patreon "
+  },
+
+  "tipeeestream": {
+    "donated_action": " nagdonate ng "
+  },
+
+  "kofi": {
+    "donated_action":   " nagdonate ng ",
+    "sub_action":       " nag-subscribe lang ",
+    "resub_action":     " nag-renew lang ng subscription ",
+    "order_action":     " umorder lang ng ",
+    "order_singular":   "item",
+    "order_plural":     "mga item",
+    "free":             "Libre"
+  },
+
+  "fourthwall": {
+    "donated_action":      " nagdonate ng ",
+    "ordered_action":      " umorder ng ",
+    "order_other":         "isa pa",
+    "order_singular":      "item",
+    "order_plural":        "mga item",
+    "free":                "Libre",
+    "someone":             "Isang Tao",
+    "gifted_action":       " nag-gift ng ",
+    "giftdraw_user":       "Nagsimula ang Raffle!",
+    "giftdraw_action":     " I-type ang {command} para may tsansa manalo ng ",
+    "giftdraw_message":    "May {seconds} segundo ka! Good luck!",
+    "giftdrawend_user":    "🎉 Tapos na ang Raffle!",
+    "giftdrawend_action":  " Congrats sa: ",
+    "winners_and":         "at",
+    "winners_oxford":      ", at"
+  },
+
+  "general": {
+    "button_toggle_twitch": "I-toggle ang Twitch\n({shortcut})",
+    "button_toggle_youtube": "I-toggle ang YouTube\n({shortcut})",
+    "button_toggle_kick": "I-toggle ang Kick\n({shortcut})",
+    "button_toggle_tiktok": "I-toggle ang TikTok\n({shortcut})",
+    "button_send_message": "Ipadala sa mga Napili\n({shortcut})",
+    "button_send_message_all": "Ipadala sa Lahat\n({shortcut})",
+    "chat_input_placeholder" : "Mag-type ng mensahe..."
+  }
+}
