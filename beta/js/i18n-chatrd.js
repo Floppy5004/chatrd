@@ -1,5 +1,6 @@
 
-const lang = new URLSearchParams(window.location.search).get('lang') || 'en';
+const rawLang = new URLSearchParams(window.location.search).get('lang') || 'en';
+const lang = /^[a-zA-Z0-9_-]+$/.test(rawLang) ? rawLang : 'en';
 const LOCALES_PATH  = './locale';
 let jsonLang;
 
