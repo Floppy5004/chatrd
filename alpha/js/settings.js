@@ -885,32 +885,43 @@ async function checkIfVortisIsLiveBecauseIWantMoreFollowersLMAO() {
 
 
 
+async function loadWithProgress(onProgress) {
+    const tags = new Set(
+      [...document.querySelectorAll('*')]
+        .map(el => el.tagName.toLowerCase())
+        .filter(tag => tag.startsWith('wa-'))
+    );
 
+    const total = tags.size;
+    let loaded = 0;
 
+    await Promise.all(
+        [...tags].map(async (tag) => {
+            await customElements.whenDefined(tag);
+            loaded++;
+            onProgress(Math.round((loaded / total) * 100));
+        })
+    );
+}
 
+await loadWithProgress(async (pct) => {
 
+    document.querySelector('#loadingPercentage span').textContent = `${pct}%`;
 
+    if (pct == 100) {
+        registerRemixIcons();
+        await loadChatRDSettings();
+        await bindChatRDSettings();
 
-document.addEventListener("DOMContentLoaded", async function () {
-    
-    registerRemixIcons();
-
-    await allDefined();
-
-    await loadChatRDSettings();
-    await bindChatRDSettings();
-
-    await hideLoadingScreen(); 
-
-    await setUpDetails();
-    
-    await streamerBotConnect();
-
-    await checkIfVortisIsLiveBecauseIWantMoreFollowersLMAO();
-
-    setInterval(async () => {
+        await hideLoadingScreen(); 
+        document.querySelector('#loadingPercentage span').textContent = ``;
+        
+        await setUpDetails();
+        await streamerBotConnect();
         await checkIfVortisIsLiveBecauseIWantMoreFollowersLMAO();
-    }, 30000);
-
+        setInterval(async () => {
+            await checkIfVortisIsLiveBecauseIWantMoreFollowersLMAO();
+        }, 30000);
+    }
 });
 
