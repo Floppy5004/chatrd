@@ -89,7 +89,7 @@ async function loadChatRDSettings() {
     console.debug('[ChatRD][Settings] Widget Settings Loaded on Local Storage onto the Settings.', settings);
     
     const url = await getChatRDUrl();
-    document.querySelector('#chatRDPreview').src = url;
+    document.querySelector('#chatRDPreview').src = url + `&preview=true`;
 }
 
 async function collectChatRDSettings() {
@@ -155,7 +155,7 @@ async function bindChatRDSettings() {
             localStorage.setItem('chatrdWidgetSettings', JSON.stringify(settings));
             console.debug('[ChatRD][Settings] Widget Settings Saved on Local Storage.', settings);
             
-            document.querySelector('#chatRDPreview').src = url;
+            document.querySelector('#chatRDPreview').src = url + `&preview=true`;
 
             streamerBotConnect();
             speakerBotConnect();

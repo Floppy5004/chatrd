@@ -4,6 +4,7 @@
 
 let myConfetti;
 
+const preview                       = getURLParam("preview", false);
 const showPlatform                  = getURLParam("showPlatform", true);
 const showAvatar                    = getURLParam("showAvatar", true);
 const showTimestamps                = getURLParam("showTimestamps", true);
@@ -75,10 +76,10 @@ const loadedEmotes = new Set();
 
 
 const SKINS = {
-    default: "skin-default.css?nocache=04",
-    nutting: "skin-nutting.css?nocache=04",
-    kimballs: "skin-kimballs.css?nocache=04",
-    bubbles: "skin-bubbles.css?nocache=04"
+    default: "skin-default.css?nocache=05",
+    nutting: "skin-nutting.css?nocache=05",
+    kimballs: "skin-kimballs.css?nocache=05",
+    bubbles: "skin-bubbles.css?nocache=05"
 };
 
 const skinFile = SKINS[skin] || SKINS.default;
@@ -114,6 +115,7 @@ if (!chatHorizontal && !chatOneLine) {
 
 let backgroundColor = hexToRGBA(chatBackground,chatBackgroundOpacity);
 document.body.style.backgroundColor = backgroundColor;
+if (preview == true) document.documentElement.style.backgroundColor = "#121212";
 
 chatContainer.style.zoom = size;
 chatGhostContainer.style.zoom = size;
