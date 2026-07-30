@@ -11,7 +11,6 @@ const showYouTubeMemberships            = getURLParam("showYouTubeMemberships", 
 const showYouTubeGiftMemberships        = getURLParam("showYouTubeGiftMemberships", true);
 const showYouTubeMembershipsTrain       = getURLParam("showYouTubeMembershipsTrain", true);
 const showYouTubeJewels                 = getURLParam("showYouTubeJewels", true);
-const showSmallYouTubeJewels            = getURLParam("showSmallYouTubeJewels", false);
 const showYouTubeStatistics             = getURLParam("showYouTubeStatistics", true);
 
 const youtubeJewelsComboState = new Map();
@@ -515,8 +514,6 @@ async function youTubeJewels(data) {
             );
 
             const classes = ['youtube', 'jewel'];
-
-            if (showSmallYouTubeJewels == true) { classes.push('small-gift'); }
 
             header.remove();
 

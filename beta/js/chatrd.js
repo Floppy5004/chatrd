@@ -5,35 +5,32 @@
 let myConfetti;
 
 const showPlatform                  = getURLParam("showPlatform", true);
-const showPlatformDot               = getURLParam("showPlatformDot", false);
 const showAvatar                    = getURLParam("showAvatar", true);
 const showTimestamps                = getURLParam("showTimestamps", true);
-const ampmTimeStamps                = getURLParam("ampmTimeStamps", false);
+const ampm                          = getURLParamLegacy("ampmTimeStamps", () => getURLParam("ampm", false));
 const showBadges                    = getURLParam("showBadges", true);
 const showPlatformStatistics        = getURLParam("showPlatformStatistics", true);
 
 const chatThreshold                 = 100;
 const chatOneLine                   = getURLParam("chatOneLine", false);
 const chatHorizontal                = getURLParam("chatHorizontal", false); 
-const chatMessageGroup              = getURLParam("chatMessageGroup", false); 
+const chatMessageGroup              = getURLParam("chatMessageGroup", false);
 
-const eventsDock                    = getURLParam("eventsDock", false);
-
-const chatFontSize                  = getURLParam("chatFontSize", 1);
+const size                          = getURLParamLegacy("chatFontSize", () => getURLParam("size", 1));
 const chatFontFamily                = getURLParam("chatFontFamily", "DM Sans");
 const chatBackground                = getURLParam("chatBackground", "#121212"); 
 const chatBackgroundOpacity         = getURLParam("chatBackgroundOpacity", 1); 
-const chatScrollBar                 = getURLParam("chatScrollBar", false);
+const scrollbar                     = getURLParamLegacy("chatScrollBar", () => getURLParam("scrollbar", false));
 const chatField                     = getURLParam("chatField", false);
 const chatModeration                = getURLParam("chatModeration", false);
 
-const chatrdSkin                    = getURLParam("chatrdSkin", "default");
+const skin                          = getURLParamLegacy("chatrdSkin", () => getURLParam("skin", "default"));
 
 const excludeCommands               = getURLParam("excludeCommands", true);
 const ignoreChatters                = getURLParam("ignoreChatters", "");
 const ignoreUserList                = ignoreChatters.split(',').map(item => item.trim().toLowerCase()) || [];
 
-const hideAfter                     = getURLParam("hideAfter", 0);
+const hide                          = getURLParamLegacy("hideAfter", () => getURLParam("hide", 0));
 
 const chatContainer                 = document.querySelector('#chat');
 const chatGhostContainer            = document.querySelector('#chat-ghost');
@@ -50,11 +47,8 @@ const youtubeEmbedImageRoles        = getURLParam("youtubeEmbedImageRoles", "str
 const showKickEmbedImages           = getURLParam("showKickEmbedImages", false);
 const kickEmbedImageRoles           = getURLParam("kickEmbedImageRoles", "broadcaster,moderator");
 
-const showTikTokEmbedImages         = getURLParam("showTikTokEmbedImages", false);
 const tiktokEmbedImageRoles         = getURLParam("tiktokEmbedImageRoles", "streamer,moderator");
 
-/* Montado uma única vez aqui (antes era recriado a cada mensagem
-   dentro de getAndReplaceLinks) */
 const embedImageConfig = {
     twitch: { enabled: showTwitchEmbedImages, roles: twitchEmbedImageRoles },
     youtube: { enabled: showYouTubeEmbedImages, roles: youtubeEmbedImageRoles },
@@ -81,13 +75,13 @@ const loadedEmotes = new Set();
 
 
 const SKINS = {
-    default: "skin-default.css?nocache=66",
-    nutting: "skin-nutting.css?nocache=66",
-    kimballs: "skin-kimballs.css?nocache=66",
-    bubbles: "skin-bubbles.css?nocache=66"
+    default: "skin-default.css?nocache=01",
+    nutting: "skin-nutting.css?nocache=01",
+    kimballs: "skin-kimballs.css?nocache=01",
+    bubbles: "skin-bubbles.css?nocache=01"
 };
 
-const skinFile = SKINS[chatrdSkin] || SKINS.default;
+const skinFile = SKINS[skin] || SKINS.default;
 const skinLink = document.getElementById("chatrd-skins");
 skinLink.href = `css/${skinFile}`;
 
@@ -98,9 +92,9 @@ if (showPlatformStatistics == true) {
     statistics.style.display = '';
 }
 
-document.querySelector('#bars').style.zoom = chatFontSize;
+document.querySelector('#bars').style.zoom = size;
 
-if (chatScrollBar == false) { chatContainer.classList.add('noscrollbar'); }
+if (scrollbar == false) { chatContainer.classList.add('noscrollbar'); }
 if (chatOneLine == true && !chatHorizontal) {
     chatContainer.classList.add('oneline');
     chatGhostContainer.classList.add('oneline');
@@ -119,12 +113,10 @@ if (!chatHorizontal && !chatOneLine) {
 }
 
 let backgroundColor = hexToRGBA(chatBackground,chatBackgroundOpacity);
-chatContainer.parentElement.style.backgroundColor = backgroundColor;
+document.body.style.backgroundColor = backgroundColor;
 
-chatContainer.style.zoom = chatFontSize;
-chatGhostContainer.style.zoom = chatFontSize;
-
-if (eventsDock == true) eventLittleContainer.classList.add('active');
+chatContainer.style.zoom = size;
+chatGhostContainer.style.zoom = size;
 
 if (chatField) {
     const chatfieldelement = document.getElementById("chat-input");
@@ -177,7 +169,7 @@ async function animateItemEntry(root, messageid) {
         }
     }, 800);
 
-    if (hideAfter > 0) {
+    if (hide > 0) {
         const item = document.getElementById(messageid);
         if (item) {
             setTimeout(() => {
@@ -185,7 +177,7 @@ async function animateItemEntry(root, messageid) {
                 setTimeout(() => {
                     item.parentNode.remove();
                 }, 800);
-            }, Math.floor(hideAfter * 1000));
+            }, Math.floor(hide * 1000));
         }
     }
 }
@@ -246,11 +238,7 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
         platformElement.innerHTML = platformContent;
     }
 
-    if (showPlatformDot == true) {
-        platformElement.innerHTML = `<span class="hidden-platform ${platform}"></span>`;
-    }
-
-    if (showPlatform == false && showPlatformDot == false) {
+    if (showPlatform == false) {
         platformElement.remove();
     }
 
@@ -302,12 +290,6 @@ function addMessageItem(platform, clone, classes, userid, messageid) {
 
 function applyEventPlatformIcon(platform, root, platformElement) {
     if (showPlatform == false) {
-        root.classList.add('no-platform');
-        platformElement.remove();
-        return;
-    }
-
-    if (showPlatformDot == true) {
         root.classList.add('no-platform');
         platformElement.remove();
         return;
@@ -417,11 +399,11 @@ function whatTimeIsIt() {
     const now = new Date();
     const hours24 = now.getHours();
     const minutes = now.getMinutes().toString().padStart(2, '0');
-    const ampm = hours24 >= 12 ? 'PM' : 'AM';
+    const format = hours24 >= 12 ? 'PM' : 'AM';
     const hours12 = (hours24 % 12) || 12;
 
-    if (ampmTimeStamps === true) {
-        return `${hours12}:${minutes} ${ampm}`;
+    if (ampm === true) {
+        return `${hours12}:${minutes} ${format}`;
     } else {
         return `${hours24}:${minutes}`;
     }

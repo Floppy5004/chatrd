@@ -350,9 +350,11 @@
     width: 100%;
     height: 45px;
     vertical-align: bottom;
+    opacity: 1;
     transition: var(--transition);
 }
 
 .chat .item.twitch.message-effect.simmer canvas.message-effect-animation-done {
-    display: none;
+    height: 0px;
+    opacity: 0;
 }

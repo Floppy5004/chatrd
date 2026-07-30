@@ -13,7 +13,6 @@ const showTikTokFollows             = getURLParam("showTikTokFollows", true);
 const showTikTokLikes               = getURLParam("showTikTokLikes", false);
 const showTikTokShares              = getURLParam("showTikTokShares", false);
 const showTikTokGifts               = getURLParam("showTikTokGifts", true);
-const showSmallTikTokGifts          = getURLParam("showSmallTikTokGifts", false);
 const showTikTokSubs                = getURLParam("showTikTokSubs", true);
 const showTikTokStatistics          = getURLParam("showTikTokStatistics", true);
 
@@ -491,8 +490,6 @@ async function tiktokGiftMessage(data) {
     );
 
     const classes = ['tiktok', 'gift'];
-
-    if (showSmallTikTokGifts == true) { classes.push('small-gift'); }
 
     header.remove();
 

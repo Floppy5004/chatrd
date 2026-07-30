@@ -183,9 +183,6 @@ const twitchMessageHandlers = {
         if (response.data?.data?.eventName === 'Twitch.GoalFetch' && response.data.data.event) {
             twitchGoalsRenderer(response.data.data.event);
         }
-
-        console.debug(response);
-
     }
 };
 
@@ -731,10 +728,10 @@ async function twitchPowerUpRedemption(data) {
     userLinkElement.textContent = data.user.name;
     userLinkElement.title = `${data.user.name} @ ${userLink}`;
 
-    action.innerHTML = tRD('twitch.reward_action') + `<strong>${title}</strong>`;
+    action.innerHTML = tRD('twitch.reward_action');
 
     const giftHtml = renderGiftEventSuffix({
-        image : `<strong>${image}</strong>`, 
+        image : `<strong>${title}</strong>`, 
         value : `<img src="js/modules/twitch/images/icon-powerups-bits.svg" alt="${title}"> ${data.bits}`
     });
 
@@ -797,6 +794,7 @@ async function twitchChatMessageEffect(data) {
     const numberAttempts = 1000;
 
     const tryTheMessageEffect = async (attempts = 0) => {
+
         if (!showTwitchMessages) return;
 
         const userMessages = chatContainer.querySelectorAll(`.msg.twitch[data-user="${data.user.login}"][data-rendered="true"]`);

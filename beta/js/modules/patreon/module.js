@@ -3,7 +3,6 @@
 /* ------------------------- */
 
 const showPatreon                   = getURLParam("showPatreon", false);
-
 const showPatreonMemberships        = getURLParam("showPatreonMemberships", true);
 
 // PATREON EVENTS HANDLERS

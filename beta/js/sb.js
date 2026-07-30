@@ -114,13 +114,28 @@ async function getStreamerInfo() {
 function getURLParam(param, defaultValue) {
     const urlParams = new URLSearchParams(window.location.search);
     const value = urlParams.get(param);
-
+    
     if (value === 'true') return true;
     if (value === 'false') return false;
     if (value === null) return defaultValue;
 
     return value;
 }
+
+
+function getURLParamLegacy(param, newParam) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const value = urlParams.get(param);
+    
+    if (value === null) {
+        return newParam();
+    }
+    else {
+        return value;
+    }
+}
+
+
 
 function registerPlatformHandlersToStreamerBot(handlers, logPrefix = '') {
     for (const [event, handler] of Object.entries(handlers)) {
