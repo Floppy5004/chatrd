@@ -19,7 +19,7 @@ const chatMessageGroup              = getURLParam("chatMessageGroup", false);
 const size                          = getURLParamLegacy("chatFontSize", () => getURLParam("size", 1));
 const chatFontFamily                = getURLParam("chatFontFamily", "DM Sans");
 const chatBackground                = getURLParam("chatBackground", "#121212"); 
-const chatBackgroundOpacity         = getURLParam("chatBackgroundOpacity", 1); 
+const chatBackgroundOpacity         = getURLParam("chatBackgroundOpacity", 0); 
 const scrollbar                     = getURLParamLegacy("chatScrollBar", () => getURLParam("scrollbar", false));
 const chatField                     = getURLParam("chatField", false);
 const chatModeration                = getURLParam("chatModeration", false);
@@ -75,10 +75,10 @@ const loadedEmotes = new Set();
 
 
 const SKINS = {
-    default: "skin-default.css?nocache=01",
-    nutting: "skin-nutting.css?nocache=01",
-    kimballs: "skin-kimballs.css?nocache=01",
-    bubbles: "skin-bubbles.css?nocache=01"
+    default: "skin-default.css?nocache=02",
+    nutting: "skin-nutting.css?nocache=02",
+    kimballs: "skin-kimballs.css?nocache=02",
+    bubbles: "skin-bubbles.css?nocache=02"
 };
 
 const skinFile = SKINS[skin] || SKINS.default;
