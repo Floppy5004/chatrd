@@ -19,6 +19,9 @@ const chatMessageGroup              = getURLParam("chatMessageGroup", false);
 
 const size                          = getURLParamLegacy("chatFontSize", () => getURLParam("size", 1));
 const chatFontFamily                = getURLParam("chatFontFamily", "DM Sans");
+const animation                     = getURLParam("animation", "default");
+const orientation                   = getURLParam("orientation", "btt");
+const direction                     = getURLParam("direction", "ltr");
 const chatBackground                = getURLParam("chatBackground", "#121212"); 
 const chatBackgroundOpacity         = getURLParam("chatBackgroundOpacity", 0); 
 const scrollbar                     = getURLParamLegacy("chatScrollBar", () => getURLParam("scrollbar", false));
@@ -76,10 +79,11 @@ const loadedEmotes = new Set();
 
 
 const SKINS = {
-    default: "skin-default.css?nocache=05",
-    nutting: "skin-nutting.css?nocache=05",
-    kimballs: "skin-kimballs.css?nocache=05",
-    bubbles: "skin-bubbles.css?nocache=05"
+    default: "skin-default.css?nocache=08",
+    nutting: "skin-nutting.css?nocache=08",
+    kimballs: "skin-kimballs.css?nocache=08",
+    bubbles: "skin-bubbles.css?nocache=08",
+    'star-wars': "skin-star-wars.css?nocache=08"
 };
 
 const skinFile = SKINS[skin] || SKINS.default;
@@ -92,8 +96,6 @@ chatRDBody.style.fontFamily = chatFontFamily;
 if (showPlatformStatistics == true) {
     statistics.style.display = '';
 }
-
-document.querySelector('#bars').style.zoom = size;
 
 if (scrollbar == false) { chatContainer.classList.add('noscrollbar'); }
 if (chatOneLine == true && !chatHorizontal) {
@@ -117,72 +119,113 @@ let backgroundColor = hexToRGBA(chatBackground,chatBackgroundOpacity);
 document.body.style.backgroundColor = backgroundColor;
 if (preview == true) document.documentElement.style.backgroundColor = "#121212";
 
+document.querySelector('#bars').style.zoom = size;
+document.querySelector('#bars').classList.add( direction );
+
 chatContainer.style.zoom = size;
 chatGhostContainer.style.zoom = size;
+
+chatContainer.classList.add( direction, orientation );
+chatContainer.classList.add( direction, orientation );
 
 if (chatField) {
     const chatfieldelement = document.getElementById("chat-input");
     chatfieldelement.style.display = '';
 }
 
+
 async function animateItemEntry(root, messageid) {
-    const dimensionProp = chatHorizontal ? 'Width' : 'Height';
+	const dimensionProp = chatHorizontal ? 'Width' : 'Height';
 
-    const ghostClone = root.cloneNode(true);
-    const ghostImages = [...ghostClone.querySelectorAll('img')];
-    await Promise.all(ghostImages.map(img => {
-        if (img.complete) return Promise.resolve();
-        return Promise.race([
-            new Promise(resolve => {
-                img.addEventListener('load', resolve);
-                img.addEventListener('error', resolve);
-            }),
-            new Promise(resolve => setTimeout(resolve, 500))
-        ]);
-    }));
-    chatGhostContainer.prepend(ghostClone);
+	if (document.hidden) {
+		const target = root.parentNode ?? root;
+		const wrapper = document.createElement('div');
+		wrapper.classList.add('chat-element-wrapper');
+		wrapper.appendChild(target);
 
-    const target = root.parentNode ?? root;
-    const wrapper = document.createElement('div');
-    wrapper.classList.add('chat-element-wrapper');
-    wrapper.appendChild(target);
-    wrapper.style[dimensionProp.toLowerCase()] = '0px';
-    wrapper.style.opacity = '0';
-    chatContainer.prepend(wrapper);
+		chatContainer.prepend(wrapper);
+		root.dataset.rendered = 'true';
 
-    void wrapper[`offset${dimensionProp}`];
+		if (hide > 0) {
+			const item = document.getElementById(messageid);
+			if (item) {
+				setTimeout(() => {
+					item.parentNode.remove();
+				}, Math.floor(hide * 1000));
+			}
+		}
 
-    const itemDimension = chatHorizontal
-    ? ghostClone.offsetWidth || 0
-    : ghostClone.offsetHeight || 0;
+		return;
+	}
 
-    wrapper.style[dimensionProp.toLowerCase()] = `${itemDimension}px`;
-    wrapper.dataset.pastheight = `${itemDimension}px`;
-    wrapper.style.opacity = '1';
+	const ghostClone = root.cloneNode(true);
+	const ghostImages = [...ghostClone.querySelectorAll('img')];
+	await Promise.all(ghostImages.map(img => {
+		if (img.complete) return Promise.resolve();
+		return Promise.race([
+			new Promise(resolve => {
+				img.addEventListener('load', resolve);
+				img.addEventListener('error', resolve);
+			}),
+			new Promise(resolve => setTimeout(resolve, 500))
+		]);
+	}));
+	chatGhostContainer.prepend(ghostClone);
 
-    setTimeout(function () {
-        const item = document.getElementById(messageid);
-        if (item) {
-            item.parentNode.style.removeProperty('opacity');
-            item.parentNode.style.removeProperty( dimensionProp.toLowerCase() );
-            item.dataset.rendered = 'true';
+	const target = root.parentNode ?? root;
+	const wrapper = document.createElement('div');
+	wrapper.classList.add('chat-element-wrapper');
+	wrapper.appendChild(target);
 
-            ghostClone.remove();
-        }
-    }, 800);
+	if (animation === "default" || chatHorizontal) {
+		wrapper.style[dimensionProp.toLowerCase()] = '0px';
+		wrapper.style.opacity = '0';
 
-    if (hide > 0) {
-        const item = document.getElementById(messageid);
-        if (item) {
-            setTimeout(() => {
-                item.parentNode.style.opacity = '0';
-                setTimeout(() => {
-                    item.parentNode.remove();
-                }, 800);
-            }, Math.floor(hide * 1000));
-        }
-    }
+		chatContainer.prepend(wrapper);
+
+		void wrapper[`offset${dimensionProp}`];
+
+		const itemDimension = chatHorizontal
+		? ghostClone.offsetWidth || 0
+		: ghostClone.offsetHeight || 0;
+
+		wrapper.style[dimensionProp.toLowerCase()] = `${itemDimension}px`;
+		wrapper.dataset.pastheight = `${itemDimension}px`;
+		wrapper.style.opacity = '1';
+
+		setTimeout(function () {
+			const item = document.getElementById(messageid);
+			if (item) {
+				item.parentNode.style.removeProperty('opacity');
+				item.parentNode.style.removeProperty(dimensionProp.toLowerCase());
+				item.dataset.rendered = 'true';
+
+				ghostClone.remove();
+			}
+		}, 800);
+	}
+
+	else {
+		const message = wrapper.querySelector('.message');
+		message.classList.add('animate__animated', 'animate__faster', `animate__${animation}`);
+		chatContainer.prepend(wrapper);
+	}
+
+
+	if (hide > 0) {
+		const item = document.getElementById(messageid);
+		if (item) {
+			setTimeout(() => {
+				item.parentNode.style.opacity = '0';
+				setTimeout(() => {
+					item.parentNode.remove();
+				}, 800);
+			}, Math.floor(hide * 1000));
+		}
+	}
 }
+
+
 
 function buildChatModerationHTML(platform, userid, messageid, streamerOfOrigin) {
     switch (platform) {
@@ -352,7 +395,7 @@ function addLittleEventItem(platform, clone, classes, userid, messageid) {
 
     applyEventPlatformIcon(platform, root, clone.querySelector('.platform'));
 
-    root.classList.add('animate__animated', 'animate__fadeInUp', 'animate__faster');
+    root.classList.add('animate__animated', 'animate__fadeInUp');
 
     eventLittleContainer.prepend(root.parentNode ?? root);
 }
@@ -1398,3 +1441,5 @@ document.addEventListener("DOMContentLoaded", async function () {
     applyLanguageToItems();
 
 });
+
+

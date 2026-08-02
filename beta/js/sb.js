@@ -159,7 +159,7 @@ const pushNotify = (data) => {
         showIcon: true,
         showCloseButton: true,
         autoclose: true,
-        autotimeout: 4000,
+        autotimeout: 3000,
         notificationsGap: null,
         notificationsPadding: null,
         type: 'outline',
@@ -188,7 +188,6 @@ const notifyWarning = (warn) => {
     warn.status = 'warning';
     pushNotify(warn);
 }
-
 
 const notifySuccess = (success) => {
     success.status = 'success';

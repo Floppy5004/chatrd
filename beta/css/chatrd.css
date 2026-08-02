@@ -517,6 +517,7 @@ body {
 }
 
 .chat .item .message {
+    display: inline-block;
     border-radius: 5px;
     overflow-wrap: break-word;
 }
@@ -1111,50 +1112,38 @@ body {
     border-color: #333;
 }
 
-
-
-
-/* ---------------------------------------------- */
-/* --------- CHAT - EVENTS LITTLE DOCK ---------- */
-/* ---------- (inspired by RexBordz) ------------ */
-/* ---------------------------------------------- */
-
-#container:has(#little-events.active) #chat-scroll-bottom .chat { padding-bottom: 0px; }
-#container:has(#little-events.active) #chat-input input[type="text"] { border-radius: 0 0 5px 5px; }
-
-#little-events {
-    position: relative;
-    height: 47px;
-    width: calc(100% - 20px);
-    padding: 10px 10px 10px 40px;
-    margin: 10px 0 0 10px;
-    border-radius: 5px;
-    overflow: hidden;
-    flex: none;
-    display: none;
-    background: rgba(0,0,0,0.2);
+.chat:not(.horizontal).ttb {
+    flex-direction: column;
 }
 
-#container:has(#chat-input[style=""]) #little-events {
-    margin: 10px 0 -10px 10px;
-    border-radius: 5px 5px 0 0;
+.chat.vertical.rtl .item .message {
+    align-items: flex-end;
 }
 
-#little-events::after {
-    position: absolute;
-    top: 16px;
-    left: 14px;
-    content: "\f519";
-    color: rgba(255,255,255,0.3);
-    font-family: "Font Awesome 7 Free";
-    font-weight: 900;
+.chat.vertical.rtl,
+.chat.oneline.rtl {
+    text-align: right;
 }
 
-#little-events.active {
-    display: flex;
+.chat.vertical.cc,
+.chat.oneline.cc { 
+    text-align: center;
+}
+.chat.vertical.cc .item .message {
+    align-items: center;
 }
 
-#little-events .event .message {
-    padding: 0;
-    background: none;
+
+#bars.rtl #statistics,
+#bars.rtl #goals {
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+
+
+#bars.cc #statistics,
+#bars.cc #goals {
+    justify-content: center;
+    align-items: center;
 }

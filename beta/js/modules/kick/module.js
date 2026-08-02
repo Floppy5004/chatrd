@@ -94,6 +94,7 @@ async function kickConnectionNew() {
 
     const kickReconnectDelay = 5000;
     let kickHasNotifiedDisconnect = false;
+    let kickManualReconnectScheduled = false;
 
     const userLogin = kickUserName.platforms.kick.broadcasterLogin;
 
@@ -131,11 +132,39 @@ async function kickConnectionNew() {
         wsPort: 443,
         forceTLS: true,
         enabledTransports: ['ws'],
-        cluster: '' 
+        cluster: ''
     });
+
+    function scheduleManualReconnect(reason) {
+
+        if (kickManualReconnectScheduled) return;
+        kickManualReconnectScheduled = true;
+
+        notifyError({
+            title: 'ChatRD 🚨 Kick',
+            text: `Manual Reconnection Fired! Reason: ${reason}.`
+        });
+
+        console.error(`[ChatRD][Pusher][Kick] Manual Reconnection Fired! Reason: ${reason}.`);
+        
+        try {
+            pusher.disconnect();
+        }
+        catch (e) {
+        
+            notifyError({
+                title: 'ChatRD 🚨 Kick',
+                text: `Error while disconnecting. Reason: ${e}.`
+            });
+
+            console.warn(`[ChatRD][Pusher][Kick] Error while disconnecting an older Pusher instance: `, e);
+        }
+        setTimeout(kickConnectionNew, kickReconnectDelay);
+    }
 
     pusher.connection.bind('connected', () => {
         kickHasNotifiedDisconnect = false;
+        kickManualReconnectScheduled = false;
         console.debug(`[ChatRD][Pusher][Kick] Connected to Kick successfully!`);
 
         (async () => {
@@ -161,8 +190,30 @@ async function kickConnectionNew() {
         console.debug(`[ChatRD][Pusher][Kick] Disconnected from Kick.`);
     });
 
+    pusher.connection.bind('unavailable', () => {
+        console.warn(`[ChatRD][Pusher][Kick] Connection Unavailable. Possibly a Network Error.`);
+        notifyError({
+            title: 'ChatRD ❌ Kick',
+            text: `Connection Unavailable. Possibly a Network Error.`
+        });
+    });
+
+    pusher.connection.bind('failed', () => {
+        // WebSocket/fallback não suportado ou falha irrecuperável:
+        // a lib não vai se recuperar sozinha, então reconstruímos do zero.
+        scheduleManualReconnect('failed');
+    });
+
     pusher.connection.bind('error', (err) => {
         console.error('[ChatRD][Pusher][Kick] Connection error:', err);
+
+        // Alguns códigos de erro do Pusher indicam problemas que a lib
+        // não resolve sozinha (ex: app key inválida, over_capacity, etc).
+        // Ajuste os códigos abaixo conforme os erros que você já viu no seu app.
+        const unrecoverableCodes = [4004, 4001, 4009];
+        if (err && err.data && unrecoverableCodes.includes(err.data.code)) {
+            scheduleManualReconnect(`error code ${err.data.code}`);
+        }
     });
 
     const channels = [

@@ -197,7 +197,7 @@
                             <div class="description"><small data-i18n-html="speakerbot.chat_template_hint">Variables are <strong><em>{user}</em></strong> and <strong><em>{message}</em></strong></small></div>
                         </div>
                         <div class="element">
-                            <wa-input data-setting="speakerBotChatTemplate" value="{user} said {message}"></wa-input>
+                            <wa-input data-setting="speakerBotChatTemplate" data-default="{user} said {message}" value="{user} said {message}"></wa-input>
                         </div>
                     </div>
 
@@ -249,7 +249,7 @@
                             <div class="description"><small data-i18n="general.language_hint">Set ChatRD's language.</small></div>
                         </div>
                         <div class="element">
-                            <wa-select data-setting="lang" id="i18n-locale-selector"> 
+                            <wa-select data-setting="lang" data-default="en" id="i18n-locale-selector"> 
                                 <wa-option value="de">Deutsch</wa-option>
                                 <wa-option value="en" selected>English</wa-option>
                                 <wa-option value="es-ES">Español</wa-option>
@@ -268,11 +268,12 @@
                             <div class="description"><small data-i18n="general.skin_hint">Changes ChatRD visuals using "SKINS"</small></div>
                         </div>
                         <div class="element">
-                            <wa-select data-setting="skin">
+                            <wa-select data-setting="skin" data-default="default">
                                 <wa-option value="default" selected data-i18n="general.skin_options.default">Default</wa-option>
                                 <wa-option value="nutting" data-i18n="general.skin_options.nutting">Nutting</wa-option>
                                 <wa-option value="kimballs" data-i18n="general.skin_options.kimballs">Kimballs</wa-option>
                                 <wa-option value="bubbles" data-i18n="general.skin_options.bubbles">Bubbles</wa-option>
+                                <wa-option value="star-wars">Star Wars</wa-option>
                             </wa-select>
                         </div>
                     </div>
@@ -295,7 +296,7 @@
                             <div class="description"><small data-i18n="general.font_family_hint">Changes ChatRD's font</small></div>
                         </div>
                         <div class="element">
-                            <wa-input data-setting="chatFontFamily" value="DM Sans"></wa-input>
+                            <wa-input data-setting="chatFontFamily" data-default="DM Sans" value="DM Sans"></wa-input>
                         </div>
                     </div>
                     
@@ -315,13 +316,13 @@
                             <div class="description"><small data-i18n="general.background_color_hint">Changes ChatRD's background color</small></div>
                         </div>
                         <div class="element">
-                            <wa-color-picker data-setting="chatBackground" size="s" value="#121212"></wa-color-picker>
+                            <wa-color-picker data-setting="chatBackground" size="s" data-default="#121212" value="#121212"></wa-color-picker>
                         </div>
                     </div>
 
                     <div class="config slider">
                         <div class="info">
-                            <div class="title" data-i18n-html="general.background_opacity"><i class="fa-solid fa-arrow-turn-up"></i> Background Opacity</div>
+                            <div class="title" data-i18n-html="general.background_opacity"><i class="ri-corner-down-right-line"></i> Background Opacity</div>
                             <div class="description"><small data-i18n="general.background_opacity_hint">Changes ChatRD's background color opacity</small></div>
                         </div>
                         <div class="element">
@@ -363,6 +364,114 @@
                         </div>
                     </div>
 
+                    <div class="config">
+                        <div class="info">
+                            <div class="title">Animation</div>
+                        </div>
+                        <div class="element">
+                            <wa-select data-setting="animation" data-default="default">
+                                <wa-option value="default" selected>Default</wa-option>
+                                <!-- Back entrances -->
+                                <wa-option value="backInDown">backInDown</wa-option>
+                                <wa-option value="backInLeft">backInLeft</wa-option>
+                                <wa-option value="backInRight">backInRight</wa-option>
+                                <wa-option value="backInUp">backInUp</wa-option>
+
+                                <!-- Bouncing entrances -->
+                                <wa-option value="bounceIn">bounceIn</wa-option>
+                                <wa-option value="bounceInDown">bounceInDown</wa-option>
+                                <wa-option value="bounceInLeft">bounceInLeft</wa-option>
+                                <wa-option value="bounceInRight">bounceInRight</wa-option>
+                                <wa-option value="bounceInUp">bounceInUp</wa-option>
+
+                                <!-- Fading entrances -->
+                                <wa-option value="fadeIn">fadeIn</wa-option>
+                                <wa-option value="fadeInDown">fadeInDown</wa-option>
+                                <wa-option value="fadeInDownBig">fadeInDownBig</wa-option>
+                                <wa-option value="fadeInLeft">fadeInLeft</wa-option>
+                                <wa-option value="fadeInLeftBig">fadeInLeftBig</wa-option>
+                                <wa-option value="fadeInRight">fadeInRight</wa-option>
+                                <wa-option value="fadeInRightBig">fadeInRightBig</wa-option>
+                                <wa-option value="fadeInUp">fadeInUp</wa-option>
+                                <wa-option value="fadeInUpBig">fadeInUpBig</wa-option>
+                                <wa-option value="fadeInTopLeft">fadeInTopLeft</wa-option>
+                                <wa-option value="fadeInTopRight">fadeInTopRight</wa-option>
+                                <wa-option value="fadeInBottomLeft">fadeInBottomLeft</wa-option>
+                                <wa-option value="fadeInBottomRight">fadeInBottomRight</wa-option>
+
+                                <!-- Flippers -->
+                                <wa-option value="flipInX">flipInX</wa-option>
+                                <wa-option value="flipInY">flipInY</wa-option>
+
+                                <!-- Lightspeed -->
+                                <wa-option value="lightSpeedInRight">lightSpeedInRight</wa-option>
+                                <wa-option value="lightSpeedInLeft">lightSpeedInLeft</wa-option>
+
+                                <!-- Rotating entrances -->
+                                <wa-option value="rotateIn">rotateIn</wa-option>
+                                <wa-option value="rotateInDownLeft">rotateInDownLeft</wa-option>
+                                <wa-option value="rotateInDownRight">rotateInDownRight</wa-option>
+                                <wa-option value="rotateInUpLeft">rotateInUpLeft</wa-option>
+                                <wa-option value="rotateInUpRight">rotateInUpRight</wa-option>
+
+                                <!-- Specials -->
+                                <wa-option value="jackInTheBox">jackInTheBox</wa-option>
+                                <wa-option value="rollIn">rollIn</wa-option>
+
+                                <!-- Zooming entrances -->
+                                <wa-option value="zoomIn">zoomIn</wa-option>
+                                <wa-option value="zoomInDown">zoomInDown</wa-option>
+                                <wa-option value="zoomInLeft">zoomInLeft</wa-option>
+                                <wa-option value="zoomInRight">zoomInRight</wa-option>
+                                <wa-option value="zoomInUp">zoomInUp</wa-option>
+
+                                <!-- Sliding entrances -->
+                                <wa-option value="slideInDown">slideInDown</wa-option>
+                                <wa-option value="slideInLeft">slideInLeft</wa-option>
+                                <wa-option value="slideInRight">slideInRight</wa-option>
+                                <wa-option value="slideInUp">slideInUp</wa-option>
+                            </wa-select>
+                        </div>
+                    </div>
+
+                    <div class="config">
+                        <div class="info">
+                            <div class="title">Orientation</div>
+                        </div>
+                    </div>
+
+                    <div class="config">
+                        <div class="info">
+                            <div class="title"><i class="ri-corner-down-right-line"></i> Text Alignment</div>
+                        </div>
+                        <div class="element">
+                            <wa-select data-setting="direction" data-default="ltr">
+                                <wa-option value="ltr" selected>Left to Right</wa-option>
+                                <wa-option value="rtl">Right to Left</wa-option>
+                                <wa-option value="cc">Centered</wa-option>
+                            </wa-select>
+                        </div>
+                    </div>
+
+                    <div class="config">
+                        <div class="info">
+                            <div class="title"><i class="ri-corner-down-right-line"></i> New Messages From</div>
+                        </div>
+                        <div class="element">
+                            <wa-select data-setting="orientation" data-default="btt">
+                                <wa-option value="btt" selected>Bottom to Top</wa-option>
+                                <wa-option value="ttb">Top to Bottom</wa-option>
+                            </wa-select>
+                        </div>
+                    </div>
+
+                    <div class="config">
+                        <wa-callout size="s">
+                            <wa-icon slot="icon" name="circle-info"></wa-icon>
+                            <span>Chat Orientation <strong>will not work if Chat Layout is set to <u>Horizontal</u></strong>.</span>
+                        </wa-callout>
+                    </div>
+
                     <wa-divider></wa-divider>
 
                     <div class="config">
@@ -395,7 +504,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title" data-i18n-html="general.ampm"><i class="fa-solid fa-arrow-turn-up"></i> AM/PM</div>
+                            <div class="title" data-i18n-html="general.ampm"><i class="ri-corner-down-right-line"></i> AM/PM</div>
                         </div>
                         <div class="element">
                             <wa-switch data-setting="ampm" data-default="false" size="xl"></wa-switch>
@@ -427,7 +536,7 @@
                             <div class="description"><small data-i18n="general.ignore_chatters_hint">Separate the usernames by commas. eg.: Streamlabs,Streamelements</small></div>
                         </div>
                         <div class="element">
-                            <wa-input data-setting="ignoreChatters" value="Streamlabs,Streamelements"></wa-input>
+                            <wa-input data-setting="ignoreChatters" data-default="Streamlabs,Streamelements" value="Streamlabs,Streamelements"></wa-input>
                         </div>
                     </div>
                     
@@ -563,7 +672,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title" data-i18n-html="twitch.gifted_subs"><i class="fa-solid fa-arrow-turn-up"></i> Gifted Subs</div>
+                            <div class="title" data-i18n-html="twitch.gifted_subs"><i class="ri-corner-down-right-line"></i> Gifted Subs</div>
                         </div>
                         <div class="element">
                             <wa-switch data-setting="showTwitchGiftedSubs" data-default="true" size="xl"></wa-switch>
@@ -572,7 +681,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title" data-i18n-html="twitch.gifted_bomb"><i class="fa-solid fa-arrow-turn-up"></i> Gifted Bomb</div>
+                            <div class="title" data-i18n-html="twitch.gifted_bomb"><i class="ri-corner-down-right-line"></i> Gifted Bomb</div>
                             <div class="description"><small data-i18n="twitch.gifted_bomb_hint">Shows when a user gifted subs massively.</small></div>
                         </div>
                         <div class="element">
@@ -582,7 +691,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title" data-i18n-html="twitch.gifted_bomb_train"><i class="fa-solid fa-arrow-turn-up"></i> Gifted Bomb Train</div>
+                            <div class="title" data-i18n-html="twitch.gifted_bomb_train"><i class="ri-corner-down-right-line"></i> Gifted Bomb Train</div>
                             <div class="description"><small data-i18n="twitch.gifted_bomb_train_hint">Shows when a user gifted subs massively.</small></div>
                         </div>
                         <div class="element">
@@ -610,7 +719,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title" data-i18n-html="twitch.powerups_enable"><i class="fa-solid fa-arrow-turn-up"></i> Enable Power-up Effects</div>
+                            <div class="title" data-i18n-html="twitch.powerups_enable"><i class="ri-corner-down-right-line"></i> Enable Power-up Effects</div>
                         </div>
                         <div class="element">
                             <wa-switch data-setting="enableTwitchPowerUpEffects" data-default="false" size="xl"></wa-switch>
@@ -665,7 +774,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title" data-i18n-html="twitch.hype_train_event"><i class="fa-solid fa-arrow-turn-up"></i> Hype Train Event</div>
+                            <div class="title" data-i18n-html="twitch.hype_train_event"><i class="ri-corner-down-right-line"></i> Hype Train Event</div>
                             <div class="description"><small data-i18n="twitch.hype_train_event_hint">Shows when a Hype Train event starts, levels up and ends.</small></div>
                         </div>
                         <div class="element">
@@ -675,7 +784,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title" data-i18n-html="twitch.hype_train_bar"><i class="fa-solid fa-arrow-turn-up"></i> Hype Train Bar</div>
+                            <div class="title" data-i18n-html="twitch.hype_train_bar"><i class="ri-corner-down-right-line"></i> Hype Train Bar</div>
                             <div class="description"><small data-i18n="twitch.hype_train_bar_hint">Show the Hype Train Bar under the Statistics.</small></div>
                         </div>
                         <div class="element">
@@ -693,7 +802,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title" data-i18n-html="twitch.goal_event"><i class="fa-solid fa-arrow-turn-up"></i> Goal Event</div>
+                            <div class="title" data-i18n-html="twitch.goal_event"><i class="ri-corner-down-right-line"></i> Goal Event</div>
                             <div class="description"><small data-i18n="twitch.goal_event_hint">Shows when a Goal event starts, progress and completes.</small></div>
                         </div>
                         <div class="element">
@@ -703,7 +812,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title" data-i18n-html="twitch.goal_bars"><i class="fa-solid fa-arrow-turn-up"></i> Goal Bars</div>
+                            <div class="title" data-i18n-html="twitch.goal_bars"><i class="ri-corner-down-right-line"></i> Goal Bars</div>
                             <div class="description"><small data-i18n="twitch.goal_bars_hint">Show a Goal Bar for each goal under the Statistics.</small></div>
                         </div>
                         <div class="element">
@@ -744,7 +853,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title" data-i18n-html="twitch.embedding_roles"><i class="fa-solid fa-arrow-turn-up"></i> Embedding Permissions</div>
+                            <div class="title" data-i18n-html="twitch.embedding_roles"><i class="ri-corner-down-right-line"></i> Embedding Permissions</div>
                             <div class="description"><small data-i18n="twitch.embedding_roles_hint">Select which roles would be able to embed images.</small></div>
                         </div>
                     </div>
@@ -821,7 +930,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title" data-i18n-html="youtube.super_sticker_gif"><i class="fa-solid fa-arrow-turn-up"></i> Enable Super Sticker Image</div>
+                            <div class="title" data-i18n-html="youtube.super_sticker_gif"><i class="ri-corner-down-right-line"></i> Enable Super Sticker Image</div>
                         </div>
                         <div class="element">
                             <wa-switch data-setting="showYouTubeSuperStickerGif" data-default="true" size="xl"></wa-switch>
@@ -839,7 +948,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title" data-i18n-html="youtube.gifted_membership"><i class="fa-solid fa-arrow-turn-up"></i> Gifted Memberships</div>
+                            <div class="title" data-i18n-html="youtube.gifted_membership"><i class="ri-corner-down-right-line"></i> Gifted Memberships</div>
                         </div>
                         <div class="element">
                             <wa-switch data-setting="showYouTubeGiftMemberships" data-default="true" size="xl"></wa-switch>
@@ -848,7 +957,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title" data-i18n-html="youtube.gifted_membership_train"><i class="fa-solid fa-arrow-turn-up"></i> Gifted Membership Train</div>
+                            <div class="title" data-i18n-html="youtube.gifted_membership_train"><i class="ri-corner-down-right-line"></i> Gifted Membership Train</div>
                             <div class="description"><small data-i18n="youtube.gifted_membership_train_hint">Shows the a list of users gifted by the gifted bomb.</small></div>
                         </div>
                         <div class="element">
@@ -913,7 +1022,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title" data-i18n-html="youtube.embedding_roles"><i class="fa-solid fa-arrow-turn-up"></i> Embedding Permissions</div>
+                            <div class="title" data-i18n-html="youtube.embedding_roles"><i class="ri-corner-down-right-line"></i> Embedding Permissions</div>
                             <div class="description"><small data-i18n="youtube.embedding_roles_hint">Select which roles would be able to embed images.</small></div>
                         </div>
                     </div>
@@ -1002,7 +1111,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title" data-i18n-html="kick.gifted_subs"><i class="fa-solid fa-arrow-turn-up"></i> Gifted Subs</div>
+                            <div class="title" data-i18n-html="kick.gifted_subs"><i class="ri-corner-down-right-line"></i> Gifted Subs</div>
                         </div>
                         <div class="element">
                             <wa-switch data-setting="showKickGiftedSubs" data-default="true" size="xl"></wa-switch>
@@ -1011,7 +1120,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title" data-i18n-html="kick.gifted_bomb"><i class="fa-solid fa-arrow-turn-up"></i> Gifted Bomb</div>
+                            <div class="title" data-i18n-html="kick.gifted_bomb"><i class="ri-corner-down-right-line"></i> Gifted Bomb</div>
                             <div class="description"><small data-i18n="kick.gifted_bomb_hint">Shows when a user gifted subs massively.</small></div>
                         </div>
                         <div class="element">
@@ -1021,7 +1130,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title" data-i18n-html="kick.gifted_bomb_train"><i class="fa-solid fa-arrow-turn-up"></i> Gifted Bomb Users Train</div>
+                            <div class="title" data-i18n-html="kick.gifted_bomb_train"><i class="ri-corner-down-right-line"></i> Gifted Bomb Users Train</div>
                             <div class="description"><small data-i18n="kick.gifted_bomb_train_hint">Shows the a list of users gifted by the gifted bomb.</small></div>
                         </div>
                         <div class="element">
@@ -1072,7 +1181,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title" data-i18n-html="kick.embedding_roles"><i class="fa-solid fa-arrow-turn-up"></i> Embedding Permissions</div>
+                            <div class="title" data-i18n-html="kick.embedding_roles"><i class="ri-corner-down-right-line"></i> Embedding Permissions</div>
                             <div class="description"><small data-i18n="kick.embedding_roles_hint">Select which roles would be able to embed images.</small></div>
                         </div>
                     </div>
@@ -1216,7 +1325,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title"><i class="fa-solid fa-arrow-turn-up"></i> Embedding Permissions</div>
+                            <div class="title"><i class="ri-corner-down-right-line"></i> Embedding Permissions</div>
                             <div class="description"><small>Select which roles would be able to embed images.</small></div>
                         </div>
                     </div>
@@ -1485,7 +1594,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title" data-i18n-html="fourthwall.show_order_image"><i class="fa-solid fa-arrow-turn-up"></i> Shows Order Image</div>
+                            <div class="title" data-i18n-html="fourthwall.show_order_image"><i class="ri-corner-down-right-line"></i> Shows Order Image</div>
                         </div>
                         <div class="element">
                             <wa-switch data-setting="showFourthwallShowImage" data-default="true" size="xl"></wa-switch>
@@ -1503,7 +1612,7 @@
 
                     <div class="config">
                         <div class="info">    
-                            <div class="title" data-i18n-html="fourthwall.show_gift_image"><i class="fa-solid fa-arrow-turn-up"></i> Shows Gift Image</div>
+                            <div class="title" data-i18n-html="fourthwall.show_gift_image"><i class="ri-corner-down-right-line"></i> Shows Gift Image</div>
                         </div>
                         <div class="element">
                             <wa-switch data-setting="showFourthwallShowGiftImage" data-default="true" size="xl"></wa-switch>
@@ -1757,9 +1866,9 @@
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
     <script src="https://unpkg.com/@streamerbot/client/dist/streamerbot-client.js"></script>
 
-    <script src="js/i18n-settings.js?nocache=05"></script>
-    <script src="js/speakerbot.js?nocache=05"></script>
+    <script src="js/i18n-settings.js?nocache=08"></script>
+    <script src="js/speakerbot.js?nocache=08"></script>
     
-    <script type="module" src="js/settings.js?nocache=05"></script>
+    <script type="module" src="js/settings.js?nocache=08"></script>
 </body>
 </html>

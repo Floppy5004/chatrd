@@ -139,10 +139,6 @@ header h1 {
     margin-right: 10px;
 }
 
-#settings wa-select {
-    margin: 5px 0;
-}
-
 #settings wa-select::part(tag) {
     font-size: 14px;
     border-color: #252525;
