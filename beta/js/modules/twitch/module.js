@@ -1164,9 +1164,9 @@ async function twitchGiftBombMessage(data) {
 
 
     var subs = data.total > 1 ? tRD('twitch.giftbomb_subs_plural') : tRD('twitch.giftbomb_subs_singular');
-    action.innerHTML = tRD('twitch.giftbomb_action', { total: `<strong>${data.total}</strong>`, tier: Math.floor(data.sub_tier/1000), subs: `<strong>${subs}</strong>` });
+    action.innerHTML = tRD('twitch.giftbomb_action', { total: `${data.total}`, tier: Math.floor(data.sub_tier/1000), subs: `${subs}` });
 
-    message.innerHTML = tRD('twitch.giftbomb_message', { total: `<strong>${data.cumulative_total} subs</strong>` });
+    message.innerHTML = tRD('twitch.giftbomb_message', { total: `${data.cumulative_total} subs` });
 
     addEventItem('twitch', clone, classes, userId, messageId);
 }

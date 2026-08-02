@@ -24,88 +24,88 @@
         { "name": "/slowoff",         "usage": "Désactive le mode lent. <b>Utilisation : /slowoff</b>" },
         { "name": "/subscribers",     "usage": "Active le mode abonnés uniquement. <b>Utilisation : /subscribers</b>" },
         { "name": "/subscribersoff",  "usage": "Désactive le mode abonnés uniquement. <b>Utilisation : /subscribersoff</b>" },
-        { "name": "/emoteonly",       "usage": "Active le mode emotes uniquement. <b>Utilisation : /emoteonly</b>" },
-        { "name": "/emoteonlyoff",    "usage": "Désactive le mode emotes uniquement. <b>Utilisation : /emoteonlyoff</b>" },
+        { "name": "/emoteonly",       "usage": "Active le mode émotes uniquement. <b>Utilisation : /emoteonly</b>" },
+        { "name": "/emoteonlyoff",    "usage": "Désactive le mode émotes uniquement. <b>Utilisation : /emoteonlyoff</b>" },
         { "name": "/commercial",      "usage": "Ajoute une coupure publicitaire. <b>Utilisation : /commercial [durée]</b>" },
-        { "name": "/timeout",         "usage": "Applique un timeout à un utilisateur. <b>Utilisation : /timeout [utilisateur] [durée] [raison]</b>" },
+        { "name": "/timeout",         "usage": "Met un utilisateur en timeout. <b>Utilisation : /timeout [utilisateur] [durée] [raison]</b>" },
         { "name": "/untimeout",       "usage": "Retire le timeout d'un utilisateur. <b>Utilisation : /untimeout [utilisateur]</b>" },
         { "name": "/ban",             "usage": "Bannit un utilisateur. <b>Utilisation : /ban [utilisateur] [raison]</b>" },
-        { "name": "/unban",           "usage": "Retire le bannissement d'un utilisateur. <b>Utilisation : /unban [utilisateur]</b>" },
-        { "name": "/mod",             "usage": "Fait d'un utilisateur un modérateur. <b>Utilisation : /mod [utilisateur]</b>" },
-        { "name": "/unmod",           "usage": "Retire les droits de modération d'un utilisateur. <b>Utilisation : /unmod [utilisateur]</b>" },
-        { "name": "/vip",             "usage": "Ajoute un utilisateur en tant que VIP. <b>Utilisation : /vip [utilisateur]</b>" },
+        { "name": "/unban",           "usage": "Débannit un utilisateur. <b>Utilisation : /unban [utilisateur]</b>" },
+        { "name": "/mod",             "usage": "Nomme un utilisateur modérateur. <b>Utilisation : /mod [utilisateur]</b>" },
+        { "name": "/unmod",           "usage": "Retire le statut de modérateur d'un utilisateur. <b>Utilisation : /unmod [utilisateur]</b>" },
+        { "name": "/vip",             "usage": "Ajoute un utilisateur comme VIP. <b>Utilisation : /vip [utilisateur]</b>" },
         { "name": "/unvip",           "usage": "Retire un utilisateur des VIP. <b>Utilisation : /unvip [utilisateur]</b>" },
         { "name": "/shoutout",        "usage": "Fait un shoutout à un utilisateur. <b>Utilisation : /shoutout [utilisateur]</b>" },
-        { "name": "/raid",            "usage": "Lance un raid vers un utilisateur. <b>Utilisation : /raid [utilisateur]</b>" },
-        { "name": "/unraid",          "usage": "Annule le raid sortant. <b>Utilisation : /unraid</b>" },
-        { "name": "/settitle",        "usage": "Définit le titre du live. <b>Utilisation : /settitle [titre]</b>" },
-        { "name": "/setgame",         "usage": "Définit le jeu du live. <b>Utilisation : /setgame [jeu]</b>" }
+        { "name": "/raid",            "usage": "Fait un raid vers un utilisateur. <b>Utilisation : /raid [utilisateur]</b>" },
+        { "name": "/unraid",          "usage": "Retire le raid sortant. <b>Utilisation : /unraid</b>" },
+        { "name": "/settitle",        "usage": "Définit le titre du stream. <b>Utilisation : /settitle [titre]</b>" },
+        { "name": "/setgame",         "usage": "Définit le jeu du stream. <b>Utilisation : /setgame [jeu]</b>" }
       ],
       "YouTube": [
-        { "name": "/yt/title",        "usage": "Définit le titre du live. <b>Utilisation : /yt/title [titre]</b>" },
-        { "name": "/yt/timeout",      "usage": "Applique un timeout à un utilisateur via son ID. <b>Utilisation : /yt/timeout [ID utilisateur] [durée]</b>" },
-        { "name": "/yt/timeout/name", "usage": "Applique un timeout à un utilisateur via son nom. <b>Utilisation : /yt/timeout/name [nom d'utilisateur] [durée]</b>" },
-        { "name": "/yt/ban",          "usage": "Bannit un utilisateur via son ID. <b>Utilisation : /yt/ban [ID utilisateur]</b>" },
-        { "name": "/yt/ban/name",     "usage": "Bannit un utilisateur via son nom. <b>Utilisation : /yt/ban/name [nom d'utilisateur]</b>" }
+        { "name": "/yt/title",        "usage": "Définit le titre du stream. <b>Utilisation : /yt/title [titre]</b>" },
+        { "name": "/yt/timeout",      "usage": "Met un utilisateur en timeout par ID. <b>Utilisation : /yt/timeout [ID utilisateur] [durée]</b>" },
+        { "name": "/yt/timeout/name", "usage": "Met un utilisateur en timeout par nom. <b>Utilisation : /yt/timeout/name [nom d'utilisateur] [durée]</b>" },
+        { "name": "/yt/ban",          "usage": "Bannit un utilisateur par ID. <b>Utilisation : /yt/ban [ID utilisateur]</b>" },
+        { "name": "/yt/ban/name",     "usage": "Bannit un utilisateur par nom. <b>Utilisation : /yt/ban/name [nom d'utilisateur]</b>" }
       ],
       "Kick": [
-        { "name": "/kick/title",      "usage": "Définit le titre du live. <b>Utilisation : /kick/title [titre]</b>" },
-        { "name": "/kick/category",   "usage": "Définit la catégorie du live. <b>Utilisation : /kick/category [catégorie]</b>" },
-        { "name": "/kick/timeout",    "usage": "Applique un timeout à un utilisateur. <b>Utilisation : /kick/timeout [utilisateur] [durée]</b>" },
+        { "name": "/kick/title",      "usage": "Définit le titre du stream. <b>Utilisation : /kick/title [titre]</b>" },
+        { "name": "/kick/category",   "usage": "Définit la catégorie du stream. <b>Utilisation : /kick/category [catégorie]</b>" },
+        { "name": "/kick/timeout",    "usage": "Met un utilisateur en timeout. <b>Utilisation : /kick/timeout [utilisateur] [durée]</b>" },
         { "name": "/kick/untimeout",  "usage": "Retire le timeout d'un utilisateur. <b>Utilisation : /kick/untimeout [utilisateur]</b>" },
         { "name": "/kick/ban",        "usage": "Bannit un utilisateur. <b>Utilisation : /kick/ban [utilisateur]</b>" },
-        { "name": "/kick/unban",      "usage": "Retire le bannissement d'un utilisateur. <b>Utilisation : /kick/unban [utilisateur]</b>" }
+        { "name": "/kick/unban",      "usage": "Débannit un utilisateur. <b>Utilisation : /kick/unban [utilisateur]</b>" }
       ]
     }
   },
 
   "twitch": {
-    "first_time_chatter": "✨ Première Fois dans le Chat",
+    "first_time_chatter": "✨ Première fois dans le chat",
     "follow_action":           " a suivi la chaîne",
-    "watch_streak_action":     " a une <strong>série de {count} lives</strong>",
+    "watch_streak_action":     " a une <strong>série de {count} streams</strong>",
     "announcement_header":     "Annonce",
     "reward_action":           " a échangé ",
     "reward_auto": {
-      "send_highlighted_message":         "Mettre en Avant Mon Message",
-      "chosen_sub_emote_unlock":          "Débloquer un Emote pendant 24 heures",
-      "random_sub_emote_unlock":          "Débloquer un Emote d'Abonné Aléatoire",
-      "chosen_modified_sub_emote_unlock": "Modifier un Seul Emote",
-      "celebration":                      "Célébration à l'Écran",
-      "message_effect":                   "Effets de Message",
-      "gigantify":                        "Rendre un Emote Géant"
+      "send_highlighted_message":         "Mettre mon message en avant",
+      "chosen_sub_emote_unlock":          "Débloquer un émote pendant 24 heures",
+      "random_sub_emote_unlock":          "Débloquer un émote sub aléatoire",
+      "chosen_modified_sub_emote_unlock": "Modifier un seul émote",
+      "celebration":                      "Célébration à l'écran",
+      "message_effect":                   "Effets de message",
+      "gigantify":                        "Agrandir un émote"
     },
-    "bits_action":             " a envoyé des vibes avec ",
+    "bits_action":             " a encouragé avec ",
     "bits_singular":           "bit",
     "bits_plural":             "bits",
-    "sub_action":              " s'est abonné(e) pour ",
-    "resub_action":            " a renouvelé son abonnement pour ",
-    "giftsub_action":          " a offert {months} du Palier {tier} {duration} à ",
+    "sub_action":              " s'est abonné pour ",
+    "resub_action":            " s'est abonné pour ",
+    "giftsub_action":          " a offert <strong>{months}</strong> de palier <strong>{tier}</strong> <strong>{duration}</strong> à ",
     "giftsub_singular":        "abonnement",
     "giftsub_plural":          "abonnements",
-    "giftbomb_action":         " a offert {total} {subs} du Palier {tier} à la communauté",
-    "giftbomb_subs_singular":  "abonnement",
-    "giftbomb_subs_plural":    "abonnements",
-    "giftbomb_message":        "A offert un total de {total} abonnements",
-    "raid_action":             " a lancé un raid sur la chaîne avec ",
+    "giftbomb_action":         " a offert <strong>{total}</strong> palier <strong>{tier} {subs}</strong> à la communauté",
+    "giftbomb_subs_singular":  "sub",
+    "giftbomb_subs_plural":    "subs",
+    "giftbomb_message":        "A offert un total de <strong>{total}</strong> subs",
+    "raid_action":             " a raid la chaîne avec ",
     "raid_singular":           "spectateur",
     "raid_plural":             "spectateurs",
-    "reply_label":             "Réponse à <strong>{user}</strong>:",
+    "reply_label":             "Réponse à <strong>{user}</strong> :",
     "hypetrain": {
       "started":               "Hype Train Démarré ! 🔥",
       "started_golden":        "Golden Kappa Train Démarré ! 🪙",
       "started_treasure":      "Treasure Train Démarré ! ✨",
-      "levelup":               "Le Hype Train a Monté de Niveau ! 🚀",
-      "levelup_golden":        "Le Golden Kappa Train a Monté de Niveau ! 🚀",
-      "levelup_treasure":      "Le Treasure Train a Monté de Niveau ! 🚀",
+      "levelup":               "Hype Train a Monté de Niveau ! 🚀",
+      "levelup_golden":        "Golden Kappa Train a Monté de Niveau ! 🚀",
+      "levelup_treasure":      "Treasure Train a Monté de Niveau ! 🚀",
       "ended":                 "Hype Train Terminé",
-      "ended_golden":          "Golden Kappa Train Terminé",
+      "ended_golden":          "Golden Kappa Terminé",
       "ended_treasure":        "Treasure Train Terminé",
       "bar_golden_kappa":      "Golden Kappa Train",
       "bar_treasure":          "✨ Treasure Train"
     },
     "goal": {
-      "new":                   "Nouvel(le) {type}",
-      "completed":             "Atteint",
+      "new":                   "Nouveau {type}",
+      "completed":             "Complété",
       "ended":                 "Terminé",
       "types": {
         "follower":               "Objectif de Followers",
@@ -136,24 +136,24 @@
 
   "youtube": {
     "superchat_action":          " a envoyé un Superchat ",
-    "supersticker_action":       " a envoyé un Super Sticker ",
-    "sponsor_action":            " est devenu(e) membre pour ",
+    "supersticker_action":       " a envoyé un Supersticker ",
+    "sponsor_action":            " est devenu membre pour ",
     "giftbomb_action":           " a offert ",
-    "giftbomb_singular":         "abonnement",
-    "giftbomb_plural":           "abonnements",
+    "giftbomb_singular":         "adhésion",
+    "giftbomb_plural":           "adhésions",
     "giftbomb_suffix":           " à la chaîne",
-    "giftbomb_received_action":  " a offert un abonnement à ",
-    "jewels_action":             " t'a envoyé <strong>{count} {name}</strong>"
+    "giftbomb_received_action":  " a offert une adhésion à ",
+    "jewels_action":             " vous a envoyé <strong>{count} {name}</strong>"
   },
 
   "tiktok": {
     "follow_action":    " a suivi la chaîne",
-    "share_action":     " a partagé le live ↪️",
+    "share_action":     " a partagé le stream ↪️",
     "join_action":      " a rejoint le chat",
-    "likes_action":     " t'a envoyé ",
+    "likes_action":     " vous a envoyé ",
     "likes_singular":   "like",
     "likes_plural":     "likes",
-    "gift_action":      " t'a offert <strong>{count} {name}</strong>",
+    "gift_action":      " vous a offert <strong>{count} {name}</strong>",
     "sub_action":       " vient de s'abonner à la chaîne."
   },
 
@@ -162,23 +162,23 @@
     "kicksgift_action":       " a envoyé un <strong>{name}</strong> ",
     "kicks_singular":         "Kick",
     "kicks_plural":           "Kicks",
-    "sub_action":             " s'est abonné(e) pour ",
-    "giftbomb_action":        " a offert {count} abonnements à la communauté",
-    "giftbomb_message":       "A offert un total de {total} abonnements",
+    "sub_action":             " s'est abonné pour ",
+    "giftbomb_action":        " a offert <strong>{count}</strong> subs à la communauté",
+    "giftbomb_message":       "A offert un total de <strong>{total}</strong> subs",
     "giftsub_single_action":  " a offert un abonnement à ",
     "raid_action":            " a hébergé la chaîne avec ",
     "raid_singular":          "spectateur",
     "raid_plural":            "spectateurs",
     "reward_action":          " a échangé ",
-    "reply_label":            "Réponse à <strong>{user}</strong>:"
+    "reply_label":            "Réponse à <strong>{user}</strong> :"
   },
 
   "streamelements": {
-    "donated_action": " a fait un don de "
+    "donated_action": " a fait un don "
   },
 
   "streamlabs": {
-    "donated_action": " a fait un don de "
+    "donated_action": " a fait un don "
   },
 
   "patreon": {
@@ -186,11 +186,11 @@
   },
 
   "tipeeestream": {
-    "donated_action": " a fait un don de "
+    "donated_action": " a fait un don "
   },
 
   "kofi": {
-    "donated_action":   " a fait un don de ",
+    "donated_action":   " a fait un don ",
     "sub_action":       " vient de s'abonner ",
     "resub_action":     " vient de renouveler son abonnement ",
     "order_action":     " vient de commander ",
@@ -200,7 +200,7 @@
   },
 
   "fourthwall": {
-    "donated_action":      " a fait un don de ",
+    "donated_action":      " a fait un don ",
     "ordered_action":      " a commandé ",
     "order_other":         "autre",
     "order_singular":      "article",
@@ -209,8 +209,8 @@
     "someone":             "Quelqu'un",
     "gifted_action":       " a offert ",
     "giftdraw_user":       "Tirage au sort lancé !",
-    "giftdraw_action":     " Tape {command} pour avoir une chance de gagner ",
-    "giftdraw_message":    "Tu as {seconds} secondes ! Bonne chance !",
+    "giftdraw_action":     " Tapez <strong>{command}</strong> pour avoir une chance de gagner ",
+    "giftdraw_message":    "Vous avez <strong>{seconds} secondes !</strong> Bonne chance !",
     "giftdrawend_user":    "🎉 Tirage au sort terminé !",
     "giftdrawend_action":  " Félicitations à : ",
     "winners_and":         "et",
@@ -224,6 +224,6 @@
     "button_toggle_tiktok": "Activer/Désactiver TikTok\n({shortcut})",
     "button_send_message": "Envoyer aux Sélectionnés\n({shortcut})",
     "button_send_message_all": "Envoyer à Tous\n({shortcut})",
-    "chat_input_placeholder" : "Écris un message..."
+    "chat_input_placeholder" : "Tapez un message..."
   }
 }
