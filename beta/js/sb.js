@@ -159,7 +159,7 @@ const pushNotify = (data) => {
         showIcon: true,
         showCloseButton: true,
         autoclose: true,
-        autotimeout: 1500,
+        autotimeout: 4000,
         notificationsGap: null,
         notificationsPadding: null,
         type: 'outline',
