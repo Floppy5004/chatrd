@@ -1118,7 +1118,7 @@ async function twitchGiftMessage(data) {
     var months = formatSubMonthDuration(data.durationMonths);
     var subs = data.durationMonths > 1 ? tRD('twitch.giftsub_plural') : tRD('twitch.giftsub_singular');
 
-    action.innerHTML = tRD('twitch.giftsub_action', { months: `<strong>${months}</strong>`, tier: `<strong>${Math.floor(data.subTier/1000)}</strong>`, duration: subs });
+    action.innerHTML = tRD('twitch.giftsub_action', { months: `${months}`, tier: `${Math.floor(data.subTier/1000)}`, duration: subs });
     
     value.innerHTML = `<strong>${escapeHTML(data.recipient.name)}</strong>`;
 
