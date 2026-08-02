@@ -663,7 +663,7 @@ body {
 
 
 .chat.vertical .item .message {
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     gap: 2px;
     transition: var(--transition);

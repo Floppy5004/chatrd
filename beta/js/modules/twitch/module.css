@@ -103,11 +103,26 @@
 /* -------------------------------------------------------------- */
 
 .chat .event.twitch.bits[class*="bigger-than-"] .message {
+    background: none;
+    position: relative;
+}
+
+.chat .event.twitch.bits[class*="bigger-than-"] .message::before{
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+    z-index: -1;
     animation: bigStreamerBGAnimate 1s ease infinite;
     background-size: 100% 200%;
 }
 
-.chat .event.twitch.bits.bigger-than-1000 .message {
+.chat .event.twitch.bits.bigger-than-1000 .message::before {
+    background: none;
     background-image: linear-gradient(
       180deg,
       rgba(145, 70, 255, 0.75),
@@ -115,7 +130,8 @@
     );
 }
 
-.chat .event.twitch.bits.bigger-than-5000 .message {
+.chat .event.twitch.bits.bigger-than-5000 .message::before {
+    background: none;
     background-image: linear-gradient(
       180deg,
       rgba(145, 70, 255, 0.75),
@@ -123,7 +139,8 @@
     );
 }
 
-.chat .event.twitch.bits.bigger-than-10000 .message {
+.chat .event.twitch.bits.bigger-than-10000 .message::before {
+    background: none;
     background-image: linear-gradient(
       180deg,
       rgba(145, 70, 255, 0.75),
@@ -131,7 +148,8 @@
     );
 }
 
-.chat .event.twitch.bits.bigger-than-100000 .message {
+.chat .event.twitch.bits.bigger-than-100000 .message::before {
+    background: none;
     background-image: linear-gradient(
       180deg,
       rgba(145, 70, 255, 0.75),
