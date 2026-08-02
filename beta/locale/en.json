@@ -89,7 +89,7 @@
     "raid_action":             " raided the channel with ",
     "raid_singular":           "viewer",
     "raid_plural":             "viewers",
-    "reply_label":             "Replying to {user}:",
+    "reply_label":             "Replying to <strong>{user}</strong>:",
     "hypetrain": {
       "started":               "Hype Train Started! 🔥",
       "started_golden":        "Golden Kappa Train Started! 🪙",
@@ -170,7 +170,7 @@
     "raid_singular":          "viewer",
     "raid_plural":            "viewers",
     "reward_action":          " redeemed ",
-    "reply_label":            "Replying to {user}:"
+    "reply_label":            "Replying to <strong>{user}</strong>:"
   },
 
   "streamelements": {

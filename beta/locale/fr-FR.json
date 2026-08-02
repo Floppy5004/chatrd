@@ -89,7 +89,7 @@
     "raid_action":             " a lancé un raid sur la chaîne avec ",
     "raid_singular":           "spectateur",
     "raid_plural":             "spectateurs",
-    "reply_label":             "Réponse à {user} :",
+    "reply_label":             "Réponse à <strong>{user}</strong>:",
     "hypetrain": {
       "started":               "Hype Train Démarré ! 🔥",
       "started_golden":        "Golden Kappa Train Démarré ! 🪙",
@@ -170,7 +170,7 @@
     "raid_singular":          "spectateur",
     "raid_plural":            "spectateurs",
     "reward_action":          " a échangé ",
-    "reply_label":            "Réponse à {user} :"
+    "reply_label":            "Réponse à <strong>{user}</strong>:"
   },
 
   "streamelements": {

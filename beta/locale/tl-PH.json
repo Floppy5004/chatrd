@@ -89,7 +89,7 @@
     "raid_action":             " nag-raid sa channel gamit ang ",
     "raid_singular":           "manonood",
     "raid_plural":             "mga manonood",
-    "reply_label":             "Sagot kay {user}:",
+    "reply_label":             "Sagot kay <strong>{user}</strong>:",
     "hypetrain": {
       "started":               "Nagsimula ang Hype Train! 🔥",
       "started_golden":        "Nagsimula ang Golden Kappa Train! 🪙",
@@ -170,7 +170,7 @@
     "raid_singular":          "manonood",
     "raid_plural":            "mga manonood",
     "reward_action":          " nag-redeem ng ",
-    "reply_label":            "Sagot kay {user}:"
+    "reply_label":            "Sagot kay <strong>{user}</strong>:"
   },
 
   "streamelements": {

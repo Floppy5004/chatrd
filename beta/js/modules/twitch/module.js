@@ -309,7 +309,7 @@ async function twitchChatMessage(data) {
 
         let replyMessage = data.reply.msgBody.replace(/^@\S+\s*/, '') ?? '';
 
-        reply.insertAdjacentHTML('beforeend', ` <strong>${tRD('twitch.reply_label', { user: escapeHTML(data.reply.userName) })}</strong> ${escapeHTML(replyMessage)}`);
+        reply.insertAdjacentHTML('beforeend', ` ${tRD('twitch.reply_label', { user: escapeHTML(data.reply.userName) })} ${escapeHTML(replyMessage)}`);
     }
     
     else { reply.remove(); }

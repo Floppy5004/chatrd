@@ -89,7 +89,7 @@
     "raid_action":             " zrobił(a) raid na kanał z ",
     "raid_singular":           "widzem",
     "raid_plural":             "widzami",
-    "reply_label":             "Odpowiedź do {user}:",
+    "reply_label":             "Odpowiedź do <strong>{user}</strong>:",
     "hypetrain": {
       "started":               "Hype Train Wystartował! 🔥",
       "started_golden":        "Golden Kappa Train Wystartował! 🪙",
@@ -170,7 +170,7 @@
     "raid_singular":          "widzem",
     "raid_plural":            "widzami",
     "reward_action":          " wykorzystał(a) ",
-    "reply_label":            "Odpowiedź do {user}:"
+    "reply_label":            "Odpowiedź do <strong>{user}</strong>:"
   },
 
   "streamelements": {

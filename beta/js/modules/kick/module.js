@@ -46,6 +46,7 @@ const kickMessageHandlers = {
     },
 
     'Kick.ChatMessage': (response) => {
+        //kickChatMessageFromStreamerBot(response.data);
     },
 
     'Kick.ViewerCountUpdate': (response) => {
@@ -244,151 +245,6 @@ async function kickConnectionNew() {
 }
 
 
-/*
-const kickWebSocketURL = 'wss://ws-us2.pusher.com/app/32cbd69e4b950bf97679?protocol=7&client=js&version=8.5.0&flash=false';
-
-async function kickConnectionNew() {
-    if (!showKick) return;
-
-    const kickReconnectDelay = 5000;
-
-    let kickHasNotifiedDisconnect = false;
-    
-    const userLogin = kickUserName.platforms.kick.broadcasterLogin;
-
-    console.debug(`[ChatRD][Pusher][Kick] Connecting to Kick with username "${userLogin}" ...`);
-
-    const userInfo = await kickGetUserInfo(userLogin);
-
-    if (userInfo == null) {
-
-        notifyError({
-            title: 'ChatRD ❌ Kick',
-            text: ``
-        });
-        
-        setTimeout(kickConnectionNew, kickReconnectDelay);
-        return;
-    }
-
-    if (!userInfo.chatroom || !userInfo.chatroom.id) {
-        console.error(`[ChatRD][Pusher][Kick] Chatroom for "${userLogin}" not found!`);
-
-        notifyError({
-            title: 'ChatRD ❌ Kick',
-            text: ``
-        });
-        
-        setTimeout(kickConnectionNew, kickReconnectDelay);
-        return;
-    }
-
-    const kickUserId = userInfo.user_id;
-    const kickChatRoomId = userInfo.chatroom.id;
-    const kickChannelId = userInfo.chatroom.channel_id;
-
-    console.debug(`[ChatRD][Pusher][Kick] Chatroom for "${userLogin}" Found! (ID: ${kickChatRoomId})`);
-
-    if (kickSubBadges.length == 0) kickSubBadges.push(...userInfo.subscriber_badges);
-
-    const kickWebSocket = new WebSocket(kickWebSocketURL);
-
-    kickWebSocket.onopen = () => {
-        kickHasNotifiedDisconnect = false; 
-
-        console.debug(`[ChatRD][Pusher][Kick] Connected to Kick successfully!`);
-
-        (async () => {
-            const kick7TVEmotes = await getKick7TVEmotes(kickUserId);
-            if (kick7TVEmotes != null) {
-                kick7TVEmotes.forEach(emote => {
-                    kick7TVEmojis.set(emote.name, emote.url);
-                });
-            }
-        })();
-                
-        notifySuccess({
-            title: 'ChatRD 🤝 Kick'
-        });
-    };
-
-    kickWebSocket.onerror = (error) => {
-        console.error('[ChatRD][Pusher][Kick] WebSocket error:', error);
-        kickWebSocket.close();
-    };
-
-    kickWebSocket.onclose = () => {
-        if (!kickHasNotifiedDisconnect) {
-            kickHasNotifiedDisconnect = true;
-            notifyError({
-                title: 'ChatRD ⛓️‍💥 Kick',
-                text: ``
-            });
-        }
-
-        console.debug(`[ChatRD][Pusher][Kick] Disconnected from Kick. Retrying in background...`);
-        
-        setTimeout(kickConnectionNew, kickReconnectDelay);
-    }
-
-
-    kickWebSocket.onmessage = (response) => {
-        try {
-            const data = JSON.parse(response.data);
-            const kickData = JSON.parse(data.data);
-            const kickEvent = data.event.split('\\').pop();
-
-            console.debug(`[ChatRD][Pusher][Kick] ${kickEvent}`, kickData);
-
-            if (data.event === 'pusher:connection_established') {
-                
-                console.debug(`[ChatRD][Pusher][Kick] Connection established! (ID: ${kickData.socket_id})`);
-
-                const channels = [
-                    `chatroom_${kickChatRoomId}`,
-                    `chatrooms.${kickChatRoomId}`,
-                    `chatrooms.${kickChatRoomId}.v2`,
-                    `predictions-channel-${kickChatRoomId}`,
-                    `channel_${kickChannelId}`
-                ];
-
-                channels.forEach(channel => {
-                    kickWebSocket.send(JSON.stringify({
-                        event: 'pusher:subscribe',
-                        data: { channel }
-                    }));
-                });
-            }
-
-            if (data.event === "pusher:ping") {
-                kickWebSocket.send(JSON.stringify({ event: "pusher:pong", data: {} }));
-            }
-
-            switch (kickEvent) {
-                case 'ChatMessageEvent': kickChatMessage(kickData); break;
-                case 'SubscriptionEvent': kickSubMessage(kickData); break;
-                case 'GiftedSubscriptionsEvent': kickGiftMessage(kickData); break;
-                case 'RewardRedeemedEvent': kickRewardRedemption(kickData); break;
-                case 'StreamHostEvent': kickRaidMessage(kickData); break;
-                case 'MessageDeletedEvent': setTimeout(() => { kickChatMessageDeleted(kickData);  }, 3000); break;
-                case 'UserBannedEvent': setTimeout(() => { kickUserBanned(kickData); }, 3000); break;
-                case 'ChatroomClearEvent': kickChatClearMessages(); break;
-                case 'KicksGifted': kickKicksGiftedMessage(kickData); break;
-            }
-
-        }
-
-        catch (error) {
-            console.debug(`[ChatRD][Pusher][Kick] Error processing message: ${error}`);
-        }
-
-    };
-    
-}
-*/
-
-
-
 
 // ---------------------------
 // KICK UTILITY FUNCTIONS
@@ -426,7 +282,7 @@ async function kickChatMessage(data) {
 
     const classes = ['kick', 'msg'];
 
-    if (userSlug == kickUserName) classes.push('streamer');
+    if (userSlug == kickUserName.platforms.twitch.broadcastUser) classes.push('streamer');
 
     const [avatarImage, messageHTML, badgesHTML, badgesHTMLV2, roles] = await Promise.all([
         getKickAvatar(data.sender.slug),
@@ -478,6 +334,93 @@ async function kickChatMessage(data) {
 
     addMessageItem('kick', clone, classes, userSlug, messageId);
 }
+
+
+/*
+async function kickChatMessageFromStreamerBot(data) {
+    
+    if (showKickMessages == false) return;
+    if (ignoreUserList.includes(data.user.login.toLowerCase())) return;
+    if (data.text.startsWith("!") && excludeCommands == true)  return;
+
+	const template = chatTemplate;
+	const clone = template.content.cloneNode(true);
+    const messageId = data.messageId;
+    const userId = data.user.id;
+    const userSlug = data.user.slug;
+
+    const {
+        'first-message': firstMessage,
+        'shared-chat': sharedChat,
+        
+        header,
+        timestamp,
+        platform,
+        badges,
+        avatar,
+        pronouns: pronoun,
+        user,
+        
+        reply,
+        'actual-message': message
+    } = Object.fromEntries(
+        [...clone.querySelectorAll('[class]')]
+            .map(el => [el.className, el])
+    );
+
+    const classes = ['kick', 'msg'];
+
+    if (data.user.role == 4) classes.push('streamer');
+
+    const avatarImage = data.user.profilePicture;
+
+    const [messageHTML, badgesHTML] = await Promise.all([
+        getKickEmotes(data.text),
+        getKickBadgesFromStreamerBot(data.user.badges),
+    ]);
+
+    header.remove();
+    firstMessage.remove();
+
+    //classes.push(...roles);
+    
+    const kickStreamer = streamerInfo.get.platforms.kick.broadcasterUserName;
+    
+    if (data.text.toLowerCase().includes( kickStreamer.toLowerCase() )) {
+        classes.push('streamer-mentioned');
+    }
+
+
+    const userLinkElement = user.querySelector('a');
+    const userLink = `https://kick.com/${ userSlug }`;
+
+    userLinkElement.href = userLink;
+    userLinkElement.target = '_blank';
+    userLinkElement.style = `--user-color: ${data.user.color}`;
+    userLinkElement.textContent = data.user.name;
+    userLinkElement.title = `${data.user.name} @ ${userLink}`;
+
+    message.innerHTML = messageHTML;
+
+    if (showAvatar) avatar.innerHTML = `<img src="${avatarImage}">`; else avatar.remove();
+    if (showBadges) {
+        if (!badgesHTML) { badges.remove(); }
+        else { badges.innerHTML = badgesHTML; }
+    }
+    else { badges.remove(); }
+
+    if (data.isReply) {
+        classes.push('reply');
+        var replyHTML = await getKickEmotes(data.reply.content);
+        reply.insertAdjacentHTML('beforeend', `${tRD('kick.reply_label', { user: `${data.reply.sender.name}` })} ${replyHTML}`);
+    }
+    else { reply.remove(); }
+
+    sharedChat.remove();
+    pronoun.remove();
+
+    addMessageItem('kick', clone, classes, userSlug, messageId);
+}*/
 
 
 
@@ -997,6 +940,36 @@ async function getKickBadgesV2(badges) {
         if (badge.badge_type === 'global') {
             if (badge.selected == true) {
                 badgesArray.push(`<img src="${escapeHTML(badge.image_url)}" class="badge">`);
+            }
+
+        }
+    });
+
+    return badgesArray.join(' ');
+}
+
+
+
+async function getKickBadgesFromStreamerBot(badges) {
+    const badgesArray = [];
+    
+    badges.forEach(badge => {
+        if (badge.imageUrl) {
+            badgesArray.push(`<img src="js/modules/kick/images/badge-${badge.id}.svg" class="badge">`);
+        }
+        else {
+            if (badge.id === 'subscriber') {
+        
+                const targetMonths = badge.count;
+
+                const eligibleBadges = kickSubBadges
+                    .filter(badge => badge.months <= targetMonths)
+                    .sort((a, b) => b.months - a.months);
+
+                badgesArray.push(`<img src="${eligibleBadges[0]?.badge_image?.src || 'js/modules/kick/images/badge-subscriber.svg'}" class="badge">`);
+            }
+            else {
+                badgesArray.push(`<img src="js/modules/kick/images/badge-${badge.id}.svg" class="badge">`);
             }
 
         }
