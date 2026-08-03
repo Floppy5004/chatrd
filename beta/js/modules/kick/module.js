@@ -282,7 +282,7 @@ async function kickChatMessage(data) {
 
     const classes = ['kick', 'msg'];
 
-    if (userSlug == kickUserName.platforms.twitch.broadcastUser) classes.push('streamer');
+    if (userSlug == kickUserName.platforms.kick.broadcastUser) classes.push('streamer');
 
     const [avatarImage, messageHTML, badgesHTML, badgesHTMLV2, roles] = await Promise.all([
         getKickAvatar(data.sender.slug),

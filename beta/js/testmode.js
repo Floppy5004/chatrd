@@ -106,23 +106,6 @@ const TestMode = (() => {
         return shuffled.slice(0, count);
     }
 
-    function ensureStreamerContext() {
-        if (typeof streamerInfo === 'undefined') return;
-
-        if (!streamerInfo.get) streamerInfo.get = {};
-        if (!streamerInfo.get.platforms) streamerInfo.get.platforms = {};
-
-        const platforms = streamerInfo.get.platforms;
-
-        if (!platforms.twitch) platforms.twitch = {};
-        if (!platforms.twitch.broadcastUser) platforms.twitch.broadcastUser = 'meucanal';
-
-        if (!platforms.youtube) platforms.youtube = {};
-        if (!platforms.youtube.broadcastUserName) platforms.youtube.broadcastUserName = 'MeuCanal';
-
-        if (!platforms.kick) platforms.kick = {};
-        if (!platforms.kick.broadcasterUserName) platforms.kick.broadcasterUserName = 'meucanal';
-    }
 
     const generators = {};
 
@@ -730,7 +713,6 @@ const TestMode = (() => {
     }
 
     function fire(key) {
-        ensureStreamerContext();
         const generator = generators[key];
         if (!generator) {
             console.warn(`[ChatRD][TestMode] Event "${key}" doesn't exist.`);
