@@ -82,16 +82,14 @@ async function fetchPaint(twitchId) {
     return pr.finally(() => paintPending.delete(key));
 }
 
+
+
 async function applyUsernamePaint(element, twitchId) {
     const key = String(twitchId);
+    const css = paintCache.has(key)
+        ? paintCache.get(key)
+        : await fetchPaint(key);
 
-    if (paintCache.has(key)) {
-        console.debug(`[ChatRD][Twitch][7TV-Paint] Paint for user ${twitchId} found in cache!`);
-        applyPaint(element, paintCache.get(key));
-        return;
-    }
-
-    const css = await fetchPaint(key);
     if (css) {
         element.setAttribute('data-seventv-paint-id', key);
         applyPaint(element, css);

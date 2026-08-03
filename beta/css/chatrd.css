@@ -316,6 +316,8 @@ body {
     padding: 5px;
 }
 
+
+
 #chat-input button.active {
     color: #dbb048;
     transition: var(--transition);
