@@ -393,3 +393,17 @@
 .chat.oneline .item.twitch.message-effect.simmer .message {
     display: block;
 }
+
+
+
+
+.chat .item.msg:has(.info .user a[data-seventv-paint-id]) {
+    text-shadow: none;
+}
+
+.chat .item.msg:has(.info .user a[data-seventv-paint-id]) .info .timestamp,
+.chat .item.msg:has(.info .user a[data-seventv-paint-id]) .info .badges,
+.chat .item.msg:has(.info .user a[data-seventv-paint-id]) .info .avatar,
+.chat .item.msg:has(.info .user a[data-seventv-paint-id]) .actual-message {
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.75);
+}
