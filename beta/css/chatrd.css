@@ -496,11 +496,11 @@ body {
 /* ----------------------------------------- */
 
 .chat .item.msg {
-    text-shadow: 1px 1px 0px rgba(0,0,0,0.25);
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.75);
 }
 
 .chat .item.msg img {
-    filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.25));
+    filter: drop-shadow(1px 1px 0px rgba(0,0,0,0.75));
 }
 
 #chat .item .actual-message img.embedded,
