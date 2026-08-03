@@ -103,8 +103,16 @@
 /* -------------------------------------------------------------- */
 
 .chat .event.twitch.bits[class*="bigger-than-"] .message {
-    background: none;
     position: relative;
+    z-index: 0;
+}
+
+.chat .event.twitch.bits.bigger-than-1000 .message,
+.chat .event.twitch.bits.bigger-than-5000 .message,
+.chat .event.twitch.bits.bigger-than-10000 .message,
+.chat .event.twitch.bits.bigger-than-50000 .message,
+.chat .event.twitch.bits.bigger-than-100000 .message {
+    background-color: transparent;
 }
 
 .chat .event.twitch.bits[class*="bigger-than-"] .message::before{
@@ -122,7 +130,6 @@
 }
 
 .chat .event.twitch.bits.bigger-than-1000 .message::before {
-    background: none;
     background-image: linear-gradient(
       180deg,
       rgba(145, 70, 255, 0.75),
@@ -131,7 +138,6 @@
 }
 
 .chat .event.twitch.bits.bigger-than-5000 .message::before {
-    background: none;
     background-image: linear-gradient(
       180deg,
       rgba(145, 70, 255, 0.75),
@@ -140,7 +146,6 @@
 }
 
 .chat .event.twitch.bits.bigger-than-10000 .message::before {
-    background: none;
     background-image: linear-gradient(
       180deg,
       rgba(145, 70, 255, 0.75),
@@ -149,7 +154,6 @@
 }
 
 .chat .event.twitch.bits.bigger-than-100000 .message::before {
-    background: none;
     background-image: linear-gradient(
       180deg,
       rgba(145, 70, 255, 0.75),
@@ -280,7 +284,7 @@
 
 
 
-.chat .event.twitch .message { background: rgba(145,70,255,0.75); }
+.chat .event.twitch .message { background-color: rgba(145,70,255,0.75); }
 
 .chat .event.twitch.custom-power-up .message { background: linear-gradient(to left, var(--customPowerUpBackground), rgba(145,70,255,0.75)); }
 
@@ -364,10 +368,9 @@
 }
 
 .chat .item.twitch.message-effect.simmer canvas {
-    margin-top: -10px;
+    display: block;
     width: 100%;
     height: 45px;
-    vertical-align: bottom;
     opacity: 1;
     transition: var(--transition);
 }
@@ -375,4 +378,18 @@
 .chat .item.twitch.message-effect.simmer canvas.message-effect-animation-done {
     height: 0px;
     opacity: 0;
+}
+
+
+
+.chat.vertical .item.twitch.message-effect.rainbow-eclipse .message,
+.chat.vertical .item.twitch.message-effect.cosmic-abyss .message,
+.chat.vertical .item.twitch.message-effect.simmer .message {
+    display: flex;
+}
+
+.chat.oneline .item.twitch.message-effect.rainbow-eclipse .message,
+.chat.oneline .item.twitch.message-effect.cosmic-abyss .message,
+.chat.oneline .item.twitch.message-effect.simmer .message {
+    display: block;
 }

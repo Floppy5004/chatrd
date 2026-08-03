@@ -107,15 +107,21 @@ const TestMode = (() => {
     }
 
     function ensureStreamerContext() {
-        if (typeof twitchStreamer !== 'undefined' && !twitchStreamer.broadcastUser) {
-            twitchStreamer.broadcastUser = 'meucanal';
-        }
-        if (typeof youtubeStreamer !== 'undefined' && !youtubeStreamer.broadcastUserName) {
-            youtubeStreamer.broadcastUserName = 'MeuCanal';
-        }
-        if (typeof kickStreamer !== 'undefined' && !kickStreamer.broadcasterUserName) {
-            kickStreamer.broadcasterUserName = 'meucanal';
-        }
+        if (typeof streamerInfo === 'undefined') return;
+
+        if (!streamerInfo.get) streamerInfo.get = {};
+        if (!streamerInfo.get.platforms) streamerInfo.get.platforms = {};
+
+        const platforms = streamerInfo.get.platforms;
+
+        if (!platforms.twitch) platforms.twitch = {};
+        if (!platforms.twitch.broadcastUser) platforms.twitch.broadcastUser = 'meucanal';
+
+        if (!platforms.youtube) platforms.youtube = {};
+        if (!platforms.youtube.broadcastUserName) platforms.youtube.broadcastUserName = 'MeuCanal';
+
+        if (!platforms.kick) platforms.kick = {};
+        if (!platforms.kick.broadcasterUserName) platforms.kick.broadcasterUserName = 'meucanal';
     }
 
     const generators = {};
@@ -275,6 +281,92 @@ const TestMode = (() => {
             customPowerUp: powerUp,
             userInput: Math.random() < 0.5 ? randomFrom(fakeMessages) : ''
         });
+    };
+
+    generators['twitch:powerup'] = async () => {
+        if (typeof twitchPowerUpRedemption !== 'function') return;
+        if (typeof twitchChatMessage !== 'function') return;
+
+        const name = randomFrom(fakeNames);
+        const type = randomFrom(['message_effect', 'celebration', 'gigantify_an_emote']);
+        const bits = randomFrom([100, 250, 500, 1000, 5000]);
+        const text = randomFrom(fakeMessages);
+        const emotes = randomFrom([
+            'https://static-cdn.jtvnw.net/emoticons/v2/305954156/default/dark/2.0',
+            'https://static-cdn.jtvnw.net/emoticons/v2/64138/default/dark/2.0',
+            'https://static-cdn.jtvnw.net/emoticons/v2/emotesv2_587405136a8147148c77df74baaa1bf4/default/dark/2.0',
+            'https://static-cdn.jtvnw.net/emoticons/v2/81103/default/dark/2.0',
+            'https://static-cdn.jtvnw.net/emoticons/v2/58765/default/dark/2.0',
+            'https://static-cdn.jtvnw.net/emoticons/v2/41/default/dark/2.0',
+            'https://static-cdn.jtvnw.net/emoticons/v2/30259/default/dark/2.0',
+            'https://static-cdn.jtvnw.net/emoticons/v2/58127/default/dark/2.0',
+            'https://static-cdn.jtvnw.net/emoticons/v2/62835/default/dark/2.0'
+        ]);
+
+        // mesmo objeto de usuário é reutilizado na mensagem de chat e no power-up,
+        // pra "data-user" bater com data.user.login na hora da busca
+        const user = {
+            login: name,
+            name: name, 
+            id: randomId(),
+            color: randomFrom(fakeColors),
+            badges: [],
+            subscribed: false,
+            subscriptionTier: 1000,
+            role: 0
+        };
+
+        // emote usado quando o tipo for "gigantify_an_emote" (precisa existir na mensagem
+        // renderizada, com o mesmo "alt" que twitchChatMessageGiantEmote vai procurar)
+        const emote = {
+            text: 'PogChamp',
+            source: 'Twitch',
+            imageUrl: emotes
+        };
+
+        const parts = type === 'gigantify_an_emote'
+            ? [
+                { type: 'text', text: `${text} ` },
+                { type: 'emote', text: emote.text, source: emote.source, imageUrl: emote.imageUrl }
+            ]
+            : [{ type: 'text', text }];
+
+        // "celebration" não deve gerar mensagem no chat — só o card do evento.
+        // message_effect e gigantify_an_emote precisam de uma mensagem "alvo" já
+        // renderizada, então criamos ela antes com o mesmo texto/emote/usuário.
+        if (type !== 'celebration') {
+            await twitchChatMessage({
+                messageId: randomId(),
+                text,
+                parts,
+                isReply: false,
+                isInSharedChat: false,
+                meta: {
+                    isMe: false,
+                    firstMessage: false,
+                    isHighlighted: false
+                },
+                user
+            });
+        }
+
+        const data = { type, user, bits, text };
+
+        switch (type) {
+            case 'message_effect':
+                data.message_effect_id = randomFrom(['cosmic-abyss', 'rainbow-eclipse', 'simmer']);
+            break;
+
+            case 'gigantify_an_emote':
+                data.emote = { text: emote.text };
+            break;
+
+            case 'celebration':
+                data.emote = { imageUrl: emote.imageUrl.replace('/2.0', '/3.0') };
+            break;
+        }
+
+        twitchPowerUpRedemption(data);
     };
 
     // ---------- YOUTUBE ----------
@@ -591,6 +683,7 @@ const TestMode = (() => {
             'twitch:cheer': typeof showTwitchBits !== 'undefined' && showTwitchBits,
             'twitch:raid': typeof showTwitchRaids !== 'undefined' && showTwitchRaids,
             'twitch:custompowerup': typeof showTwitchPowerUpRedemption !== 'undefined' && showTwitchPowerUpRedemption,
+            'twitch:powerup': typeof showTwitchPowerUpRedemption !== 'undefined' && showTwitchPowerUpRedemption,
 
             'youtube:chat': typeof showYouTubeMessages !== 'undefined' && showYouTubeMessages,
             'youtube:superchat': typeof showYouTubeSuperChats !== 'undefined' && showYouTubeSuperChats,
