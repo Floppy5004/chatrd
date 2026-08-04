@@ -80,11 +80,11 @@ const loadedEmotes = new Set();
 
 
 const SKINS = {
-    default: "skin-default.css?nocache=27",
-    nutting: "skin-nutting.css?nocache=27",
-    kimballs: "skin-kimballs.css?nocache=27",
-    bubbles: "skin-bubbles.css?nocache=27",
-    'star-wars': "skin-star-wars.css?nocache=27"
+    default: "skin-default.css?nocache=28",
+    nutting: "skin-nutting.css?nocache=28",
+    kimballs: "skin-kimballs.css?nocache=28",
+    bubbles: "skin-bubbles.css?nocache=28",
+    'star-wars': "skin-star-wars.css?nocache=28"
 };
 
 const skinFile = SKINS[skin] || SKINS.default;
@@ -584,7 +584,9 @@ let chatcurrentFocus = -1;
 const chatInputSend = document.getElementById("chat-input-send");
 const chatInputSendAll = document.getElementById("chat-input-send-all");
 const chatInputForm = document.querySelector("#chat-input form");
-const chatInput = chatInputForm.querySelector("input[type=text]")
+const chatInput = chatInputForm.querySelector("input[type=text]");
+
+const chatCommandsButton = chatInputForm.querySelector("#commands-button button");
 
 let chatcommands;
 
@@ -604,8 +606,10 @@ chatInput.addEventListener('input', function () {
     const value = this.value.trim();
     chatcommandslist.innerHTML = '';
     chatcurrentFocus = -1;
+
     if (!value.startsWith('/')) return;
-        Object.entries(chatcommands).forEach(([groupName, commands]) => {
+    
+    Object.entries(chatcommands).forEach(([groupName, commands]) => {
         
         const filtered = commands.filter(cmd => cmd.name.startsWith(value));
 
@@ -624,6 +628,7 @@ chatInput.addEventListener('input', function () {
             });
             chatcommandslist.appendChild(item);
         });
+
     });
 });
 
@@ -648,6 +653,37 @@ chatInput.addEventListener('keydown', function (e) {
         }
     }
 });
+
+
+
+chatCommandsButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    chatcommandslist.innerHTML = '';
+
+    Object.entries(chatcommands).forEach(([groupName, commands]) => {
+
+        const groupTitle = document.createElement('div');
+        groupTitle.textContent = groupName;
+        chatcommandslist.appendChild(groupTitle);
+        
+        commands.forEach(cmd => {
+            const item = document.createElement('div');
+            item.classList.add('autocomplete-item');
+            item.innerHTML = `<strong>${cmd.name}</strong><small> ${cmd.usage}</small>`;
+            item.addEventListener('click', () => {
+                chatInput.value = cmd.name + ' ';
+                chatcommandslist.innerHTML = '';
+            });
+            chatcommandslist.appendChild(item);
+        });
+        
+    });
+    
+});
+
+
 
 async function pushChatInputButtonsToSettings() {
     const buttons = document.querySelectorAll('#chat-input-platorms-buttons button');
