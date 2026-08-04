@@ -1138,6 +1138,15 @@ body {
 }
 
 
+.chat.outline .item.msg .actual-message,
+.chat.outline .item.msg .user a:not([data-seventv-paint-id]) {
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.75),
+                 1px -1px 0 rgba(0,0,0,0.75),
+                 -1px  1px 0 rgba(0,0,0,0.75),
+                 1px  1px 0 rgba(0,0,0,0.75);
+}
+
+
 #bars.rtl #statistics,
 #bars.rtl #goals {
     justify-content: flex-start;

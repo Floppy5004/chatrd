@@ -6,8 +6,6 @@ const kickStatus = {};
 
 const showKick                      = getURLParam("showKick", false);
 
-let kickUserName = null;
-
 const showKickMessages              = getURLParam("showKickMessages", true);
 const showKickFollows               = getURLParam("showKickFollows", true);
 const showKickKicks                 = getURLParam("showKickKicks", true);
@@ -74,7 +72,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         registerPlatformHandlersToStreamerBot(kickMessageHandlers, '[ChatRD][Streamer.bot][Kick]');
 
         //kickConnection();
-        kickUserName = await getStreamerInfo();
         kickConnectionNew();
         
     }
@@ -97,7 +94,8 @@ async function kickConnectionNew() {
     let kickHasNotifiedDisconnect = false;
     let kickManualReconnectScheduled = false;
 
-    const userLogin = kickUserName.platforms.kick.broadcasterLogin;
+    const kickStreamerLogin = await getStreamerInfo();
+    const userLogin = kickStreamerLogin.platforms.kick.broadcasterLogin;
 
     console.debug(`[ChatRD][Pusher][Kick] Connecting to Kick with username "${userLogin}" ...`);
 
@@ -228,19 +226,42 @@ async function kickConnectionNew() {
     const subscribedChannels = channels.map(name => pusher.subscribe(name));
 
     subscribedChannels.forEach(channel => {
-        channel.bind('App\\Events\\ChatMessageEvent', kickChatMessage);
-        channel.bind('App\\Events\\SubscriptionEvent', kickSubMessage);
-        channel.bind('App\\Events\\GiftedSubscriptionsEvent', kickGiftMessage);
-        channel.bind('App\\Events\\RewardRedeemedEvent', kickRewardRedemption);
-        channel.bind('App\\Events\\StreamHostEvent', kickRaidMessage);
+        channel.bind('App\\Events\\ChatMessageEvent', (data) => {
+            console.debug('[ChatRD][Pusher][Kick] ChatMessageEvent', data);
+            kickChatMessage(data)
+        });
+        channel.bind('App\\Events\\SubscriptionEvent', (data) => {
+            console.debug('[ChatRD][Pusher][Kick] SubscriptionEvent:', data);
+            kickSubMessage(data)
+        });
+        channel.bind('App\\Events\\GiftedSubscriptionsEvent', (data) => {
+            console.debug('[ChatRD][Pusher][Kick] GiftedSubscriptionsEvent', data);
+            kickGiftMessage(data)
+        });
+        channel.bind('App\\Events\\RewardRedeemedEvent', (data) => {
+            console.debug('[ChatRD][Pusher][Kick] RewardRedeemedEvent', data);
+            kickRewardRedemption(data)
+        });
+        channel.bind('App\\Events\\StreamHostEvent', (data) => {
+            console.debug('[ChatRD][Pusher][Kick] StreamHostEvent', data);
+            kickRaidMessage(data)
+        });
         channel.bind('App\\Events\\MessageDeletedEvent', (data) => {
+            console.debug('[ChatRD][Pusher][Kick] MessageDeletedEvent', data);
             setTimeout(() => kickChatMessageDeleted(data), 3000);
         });
         channel.bind('App\\Events\\UserBannedEvent', (data) => {
+            console.debug('[ChatRD][Pusher][Kick] UserBannedEvent', data);
             setTimeout(() => kickUserBanned(data), 3000);
         });
-        channel.bind('App\\Events\\ChatroomClearEvent', kickChatClearMessages);
-        channel.bind('App\\Events\\KicksGifted', kickKicksGiftedMessage);
+        channel.bind('App\\Events\\ChatroomClearEvent', (data) => {
+            console.debug('[ChatRD][Pusher][Kick] ChatroomClearEvent', data);
+            kickChatClearMessages(data)
+        });
+        channel.bind('App\\Events\\KicksGifted', (data) => {
+            console.debug('[ChatRD][Pusher][Kick] KicksGifted', data);
+            kickKicksGiftedMessage(data)
+        });
     });
 }
 
@@ -282,8 +303,6 @@ async function kickChatMessage(data) {
 
     const classes = ['kick', 'msg'];
 
-    if (userSlug == kickUserName.platforms.kick.broadcastUser) classes.push('streamer');
-
     const [avatarImage, messageHTML, badgesHTML, badgesHTMLV2, roles] = await Promise.all([
         getKickAvatar(data.sender.slug),
         getKickEmotes(data.content),
@@ -297,12 +316,10 @@ async function kickChatMessage(data) {
 
     classes.push(...roles);
     
-    const kickStreamer = streamerInfo.get.platforms.kick.broadcasterUserName;
+    const kickStreamer = streamerInfo.get.platforms.kick;
     
-    if (data.content.toLowerCase().includes( kickStreamer.toLowerCase() )) {
-        classes.push('streamer-mentioned');
-    }
-
+    if (userSlug.toLowerCase() == kickStreamer.broadcasterLogin.toLowerCase()) classes.push('streamer');
+    if (data.content.toLowerCase().includes( kickStreamer.broadcasterUserName.toLowerCase() )) classes.push('streamer-mentioned');
 
     const userLinkElement = user.querySelector('a');
     const userLink = `https://kick.com/${data.sender.slug}`;

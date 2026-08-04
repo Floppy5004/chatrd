@@ -61,7 +61,7 @@ function streamerBotConnect() {
             (async () => {
                 console.debug("[ChatRD][Settings] Getting streamer info from Streamer.bot...");
                 streamerInfo.get = await getStreamerInfo();
-                console.debug("[ChatRD][Settings] Streamer info saved.");
+                console.debug("[ChatRD][Settings] Streamer info saved.", streamerInfo.get);
             })();
 
             notifySuccess({

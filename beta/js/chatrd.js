@@ -19,6 +19,7 @@ const chatMessageGroup              = getURLParam("chatMessageGroup", false);
 
 const size                          = getURLParamLegacy("chatFontSize", () => getURLParam("size", 1));
 const chatFontFamily                = getURLParam("chatFontFamily", "DM Sans");
+const outline                       = getURLParam("outline", false);
 const animation                     = getURLParam("animation", "default");
 const orientation                   = getURLParam("orientation", "btt");
 const direction                     = getURLParam("direction", "ltr");
@@ -79,11 +80,11 @@ const loadedEmotes = new Set();
 
 
 const SKINS = {
-    default: "skin-default.css?nocache=24¬",
-    nutting: "skin-nutting.css?nocache=24¬",
-    kimballs: "skin-kimballs.css?nocache=24¬",
-    bubbles: "skin-bubbles.css?nocache=24¬",
-    'star-wars': "skin-star-wars.css?nocache=24¬"
+    default: "skin-default.css?nocache=25",
+    nutting: "skin-nutting.css?nocache=25",
+    kimballs: "skin-kimballs.css?nocache=25",
+    bubbles: "skin-bubbles.css?nocache=25",
+    'star-wars': "skin-star-wars.css?nocache=25"
 };
 
 const skinFile = SKINS[skin] || SKINS.default;
@@ -92,6 +93,8 @@ skinLink.href = `css/${skinFile}`;
 
 const chatRDBody = document.body;
 chatRDBody.style.fontFamily = chatFontFamily;
+
+if (outline) chatContainer.classList.add('outline');
 
 if (showPlatformStatistics == true) {
     statistics.style.display = '';

@@ -394,9 +394,6 @@
     display: block;
 }
 
-
-
-
 .chat .item.msg:has(.info .user a[data-seventv-paint-id]) {
     text-shadow: none;
 }
@@ -406,4 +403,11 @@
 .chat .item.msg:has(.info .user a[data-seventv-paint-id]) .info .avatar,
 .chat .item.msg:has(.info .user a[data-seventv-paint-id]) .actual-message {
     text-shadow: 1px 1px 0px rgba(0,0,0,0.75);
+}
+
+.chat.outline .item.msg:has(.info .user a[data-seventv-paint-id]) .actual-message {
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.75),
+                 1px -1px 0 rgba(0,0,0,0.75),
+                 -1px  1px 0 rgba(0,0,0,0.75),
+                 1px  1px 0 rgba(0,0,0,0.75);
 }
