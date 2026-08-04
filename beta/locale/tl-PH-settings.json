@@ -42,6 +42,8 @@
 		"font_family_hint": "Binabago ang font ng ChatRD",
 		"size": "Sukat",
 		"size_hint": "Binabago ang sukat ng ChatRD",
+		"text_outline": "Balangkas ng Teksto",
+		"text_outline_hint": "Nagdaragdag ng balangkas sa teksto ng mga mensahe para sa mas mahusay na visibility",
 		"background_color": "Kulay ng Background",
 		"background_color_hint": "Binabago ang kulay ng background ng ChatRD",
 		"background_opacity": "<i class=\"ri-corner-down-right-line\"></i> Opacity ng Background",

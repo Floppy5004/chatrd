@@ -42,6 +42,8 @@
 		"font_family_hint": "Zmienia czcionkę ChatRD",
 		"size": "Rozmiar",
 		"size_hint": "Zmienia rozmiar ChatRD",
+		"text_outline": "Kontur tekstu",
+		"text_outline_hint": "Dodaje kontur tekstu do wiadomości dla lepszej widoczności",
 		"background_color": "Kolor Tła",
 		"background_color_hint": "Zmienia kolor tła ChatRD",
 		"background_opacity": "<i class=\"ri-corner-down-right-line\"></i> Przezroczystość Tła",

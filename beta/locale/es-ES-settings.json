@@ -42,6 +42,8 @@
 		"font_family_hint": "Cambia la fuente de ChatRD",
 		"size": "Tamaño",
 		"size_hint": "Cambia el tamaño de ChatRD",
+		"text_outline": "Contorno de texto",
+		"text_outline_hint": "Agrega un contorno al texto de los mensajes para una mejor visibilidad",
 		"background_color": "Color de Fondo",
 		"background_color_hint": "Cambia el color de fondo de ChatRD",
 		"background_opacity": "<i class=\"ri-corner-down-right-line\"></i> Opacidad del Fondo",

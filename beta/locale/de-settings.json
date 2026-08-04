@@ -42,6 +42,8 @@
 		"font_family_hint": "Ändert die Schriftart von ChatRD",
 		"size": "Größe",
 		"size_hint": "Ändert die Größe von ChatRD",
+		"text_outline": "Textumriss",
+		"text_outline_hint": "Fügt Nachrichten einen Textumriss für bessere Sichtbarkeit hinzu",
 		"background_color": "Hintergrundfarbe",
 		"background_color_hint": "Ändert die Hintergrundfarbe von ChatRD",
 		"background_opacity": "<i class=\"ri-corner-down-right-line\"></i> Hintergrundtransparenz",

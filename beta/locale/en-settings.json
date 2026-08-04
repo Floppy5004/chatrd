@@ -42,6 +42,8 @@
     "font_family_hint": "Changes ChatRD's font",
     "size": "Size",
     "size_hint": "Changes ChatRD's size",
+    "text_outline": "Text Outline",
+    "text_outline_hint": "Adds a text outline to messages for better visibility",
     "background_color": "Background Color",
     "background_color_hint": "Changes ChatRD's background color",
     "background_opacity": "<i class=\"ri-corner-down-right-line\"></i> Background Opacity",
