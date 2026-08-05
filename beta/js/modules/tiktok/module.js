@@ -342,11 +342,6 @@ async function tiktokJoinMessage(data) {
 
     user.textContent = data.nickname;
     action.innerHTML = tRD('tiktok.join_action');
-
-    if (eventsDock == true) {
-        addLittleEventItem('tiktok', clone, classes, userId, messageId);
-        return;
-    }
     
     const joinElement = [...chatContainer.querySelectorAll(".event.tiktok.join")].at(-1);
     
