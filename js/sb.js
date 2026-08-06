@@ -15,6 +15,8 @@ const speakerBotEventRead           = getURLParam("speakerBotEventRead", false);
 const speakerBotVoiceAlias          = getURLParam("speakerBotVoiceAlias", "Maria");
 const speakerBotChatTemplate        = getURLParam("speakerBotChatTemplate", "{user} said {message}");
 
+const streamerInfo = {};
+
 function getSpeakerBotInstance() {
     if (!speakerBotClient && showSpeakerbot) {
         speakerBotClient = new SpeakerBotClient({
@@ -35,11 +37,11 @@ function getSpeakerBotInstance() {
 let streamerBotClientActive = null;
 
 function streamerBotConnect() {
-    // 🔎 Se já existe um cliente, encerra a tentativa anterior
+    
     if (streamerBotClientActive) {
         try {
             console.debug("[ChatRD][Settings] Closing previous Streamer.bot connection...");
-            streamerBotClientActive.disconnect?.(); // usa se existir na lib
+            streamerBotClientActive.disconnect?.();
             streamerBotClientActive = null;
             streamerBotStatus.connected = false;
         } catch (err) {
@@ -51,11 +53,16 @@ function streamerBotConnect() {
         host: streamerBotServerAddress,
         port: streamerBotServerPort,
         scheme: 'ws',
-        //autoReconnect: false, // evita reconectar sozinho
         onConnect: () => {
             streamerBotStatus.connected = true;
             streamerBotStatus.disconnected = false;
             streamerBotStatus.error = false;
+            
+            (async () => {
+                console.debug("[ChatRD][Settings] Getting streamer info from Streamer.bot...");
+                streamerInfo.get = await getStreamerInfo();
+                console.debug("[ChatRD][Settings] Streamer info saved.", streamerInfo.get);
+            })();
 
             notifySuccess({
                 title: 'ChatRD 🤝 Streamer.bot',
@@ -96,7 +103,6 @@ function streamerBotConnect() {
     return streamerBotClientActive;
 }
 
-// mantém o const fixo apontando para a primeira conexão
 const streamerBotClient = streamerBotConnect();
 
 
@@ -108,13 +114,28 @@ async function getStreamerInfo() {
 function getURLParam(param, defaultValue) {
     const urlParams = new URLSearchParams(window.location.search);
     const value = urlParams.get(param);
-
+    
     if (value === 'true') return true;
     if (value === 'false') return false;
     if (value === null) return defaultValue;
 
     return value;
 }
+
+
+function getURLParamLegacy(param, newParam) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const value = urlParams.get(param);
+    
+    if (value === null) {
+        return newParam();
+    }
+    else {
+        return value;
+    }
+}
+
+
 
 function registerPlatformHandlersToStreamerBot(handlers, logPrefix = '') {
     for (const [event, handler] of Object.entries(handlers)) {
@@ -138,7 +159,7 @@ const pushNotify = (data) => {
         showIcon: true,
         showCloseButton: true,
         autoclose: true,
-        autotimeout: 2500,
+        autotimeout: 3000,
         notificationsGap: null,
         notificationsPadding: null,
         type: 'outline',
@@ -167,7 +188,6 @@ const notifyWarning = (warn) => {
     warn.status = 'warning';
     pushNotify(warn);
 }
-
 
 const notifySuccess = (success) => {
     success.status = 'success';

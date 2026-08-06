@@ -10,14 +10,24 @@ const showYouTubeSuperStickerGif        = getURLParam("showYouTubeSuperStickerGi
 const showYouTubeMemberships            = getURLParam("showYouTubeMemberships", true);
 const showYouTubeGiftMemberships        = getURLParam("showYouTubeGiftMemberships", true);
 const showYouTubeMembershipsTrain       = getURLParam("showYouTubeMembershipsTrain", true);
+const showYouTubeJewels                 = getURLParam("showYouTubeJewels", true);
 const showYouTubeStatistics             = getURLParam("showYouTubeStatistics", true);
 
-const youtubeStreamer = {};
+const youtubeJewelsComboState = new Map();
 
 let youTubeCustomEmotes = [];
 let youTubeBTTVEmotes = [];
 
 userColors.set('youtube', new Map());
+
+const youtubeStatistics = `
+    <div class="platform youtube" id="youtube" style="display: none;">
+        <img src="js/modules/youtube/images/logo-youtube.svg" alt="">
+        <span class="viewers"><i class="fa-solid fa-user"></i> <span>0</span></span>
+        <span class="likes"><i class="fa-solid fa-thumbs-up"></i> <span>0</span></span>
+        <span class="title"></span>
+    </div>
+`;
 
 // YOUTUBE EVENTS HANDLERS
 
@@ -25,8 +35,7 @@ const youtubeMessageHandlers = {
     'YouTube.Message': (response) => {
         youTubeChatMessage(response.data);
     },
-    'YouTube.UserBanned': (response) => {
-        setTimeout(() => { youTubeUserBanned(response.data); }, 3000);
+    'YouTube.NewSubscriber': (response) => {
     },
     'YouTube.SuperChat': (response) => {
         youTubeSuperChatMessage(response.data);
@@ -46,22 +55,37 @@ const youtubeMessageHandlers = {
     'YouTube.GiftMembershipReceived': (response) => {
         youTubeGiftBombReceivedMessage(response.data);
     },
+    'YouTube.JewelsGifted': (response) => {
+        youTubeJewels(response.data);
+    },
+
     'YouTube.StatisticsUpdated': (response) => {
         youTubeUpdateStatistics(response.data);
     },
     'YouTube.BroadcastUpdated': (response) => {
         youTubeAddStatistics(response.data);
+    },
+
+    
+    'YouTube.UserTimedout': (response) => {
+        setTimeout(() => { youTubeUserBanned(response.data); }, 3000);
+    },
+
+    
+    'YouTube.UserBanned': (response) => {
+        setTimeout(() => { youTubeUserBanned(response.data); }, 3000);
+    },
+
+
+    'YouTube.BroadcastEnded': (response) => {
+        
+        if ((showYouTubeStatistics == true) && (showPlatformStatistics == true)) {
+            document.querySelector('#statistics').insertAdjacentHTML('beforeend', youtubeStatistics);
+            document.querySelector('#youtube').style.display = '';
+        }
+        
     }
 };
-
-const youtubeStatistics = `
-    <div class="platform youtube" id="youtube" style="display: none;">
-        <img src="js/modules/youtube/images/logo-youtube.svg" alt="">
-        <span class="viewers"><i class="fa-solid fa-user"></i> <span>0</span></span>
-        <span class="likes"><i class="fa-solid fa-thumbs-up"></i> <span>0</span></span>
-        <span class="title"></span>
-    </div>
-`;
 
 
 if (showYoutube) {
@@ -135,13 +159,9 @@ async function youTubeChatMessage(data) {
 
     
 
-        
-    if (!youtubeStreamer.broadcastUserName) {
-        const streamerInfo = await getStreamerInfo();
-        youtubeStreamer.broadcastUserName = streamerInfo.platforms.youtube.broadcastUserName;
-    }
-    
-    if (data.message.toLowerCase().includes( youtubeStreamer.broadcastUserName.toLowerCase() )) {
+    const youtubeStreamer = streamerInfo.get.platforms.youtube.broadcastUserName;
+
+    if (data.message.toLowerCase().includes( youtubeStreamer.toLowerCase() )) {
         classes.push('streamer-mentioned');
     }
 
@@ -152,7 +172,6 @@ async function youTubeChatMessage(data) {
     
 
     const userLinkElement = user.querySelector('a');
-    //const userLink = `https://youtube.com/channel/${userId}`;
     const userLink = `${data.user.url}`;
 
     userLinkElement.href = userLink;
@@ -180,7 +199,6 @@ async function youTubeChatMessage(data) {
 
     addMessageItem('youtube', clone, classes, userId, messageId);
 }
-
 
 
 
@@ -461,9 +479,78 @@ async function youTubeGiftBombReceivedMessage(data) {
 
 
 
+async function youTubeJewels(data) {
+
+    if (showYouTubeJewels == false) return;
+
+    const jewelsKey = `${data.user.id}::${data.name}`;
+    const jewelsDurationMs = Math.round(data.duration.seconds * 1000);
+    const jewelsCount = youtubeJewelsComboState.get(jewelsKey);
+
+    if (jewelsCount) { clearTimeout(jewelsCount.timer); }
+
+    const jewelsCountdown = setTimeout(() => {
+
+        const jewelsFinalState = youtubeJewelsComboState.get(jewelsKey);
+        youtubeJewelsComboState.delete(jewelsKey);
+
+        if (jewelsFinalState) {
+
+            const template = eventTemplate;
+            const clone = template.content.cloneNode(true);
+            const messageId = data.eventId;
+            const userId = data.user.id;
+
+            const {
+                header,
+                platform,
+                user,
+                action,
+                value,
+                'actual-message': message
+            } = Object.fromEntries(
+                [...clone.querySelectorAll('[class]')]
+                    .map(el => [el.className, el])
+            );
+
+            const classes = ['youtube', 'jewel'];
+
+            header.remove();
+
+            const userLinkElement = user.querySelector('a');
+            const userLink = `${data.user.url}`;
+
+            userLinkElement.href = userLink;
+            userLinkElement.target = '_blank';
+            userLinkElement.textContent = data.user.name;
+            userLinkElement.title = `${data.user.name} @ ${userLink}`;
+
+            action.innerHTML = tRD('youtube.jewels_action', { count: data.comboCount, name: data.name });
+
+            const rotateDeg = (Math.random() * 60 - 30).toFixed(1) + 'deg';
+            
+            const giftHtml = renderGiftEventSuffix({
+                image : `<img  style="--rotateGift: ${rotateDeg}" src="${data.url}" alt="${data.name}">`, 
+                value : `<i class="fa-regular fa-gem"></i> ${ Math.floor(data.comboCount * data.jewelsAmount) }`
+            });
+
+            value.innerHTML = giftHtml;
+
+            message.remove();
+
+            addEventItem('youtube', clone, classes, userId, messageId);
+
+        }
+    }, jewelsDurationMs);
+
+    youtubeJewelsComboState.set(jewelsKey, { timer: jewelsCountdown, lastData: data });
+}
+
+
+
 async function youTubeUserBanned(data) {
-    chatContainer.querySelectorAll(`[data-user="${data.bannedUser.id}"]:not(.event)`).forEach(element => {
-        element.remove();
+    chatContainer.querySelectorAll(`[data-user="${data.targetUser.id}"]:not(.event)`).forEach(element => {
+        element.parentNode.remove();
     });
 }
 
@@ -570,7 +657,6 @@ async function getYouTubeEmotes(data, messageElement) {
     const channelId = data.broadcast?.channelId;
     if (!channelId) return;
 
-    // carrega os emotes customizados
     if (youTubeCustomEmotes.length == 0) {
         streamerBotClient.getGlobals().then((getglobals) => {
             youTubeCustomEmotes = JSON.parse(JSON.parse(getglobals.variables.chatrdytcustomemotes.value));
@@ -578,7 +664,6 @@ async function getYouTubeEmotes(data, messageElement) {
         });
     }
 
-    // carrega os BTTV emotes se não carregados ainda
     if (youTubeBTTVEmotes.length === 0) {
         try {
             const res = await fetch(`https://api.betterttv.net/3/cached/users/youtube/${channelId}`);
@@ -600,7 +685,6 @@ async function getYouTubeEmotes(data, messageElement) {
         }
     }
 
-    // Helper: Twemoji URL
     function getTwemojiUrl(emoji) {
         const codePoints = Array.from(emoji).map(c => c.codePointAt(0).toString(16));
         let fileName = codePoints.join('-');
@@ -608,21 +692,16 @@ async function getYouTubeEmotes(data, messageElement) {
         return `https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/${fileName}.png`;
     }
 
-    // Limpa o elemento
     messageElement.innerHTML = '';
 
-    // monta um mapa de emotes (nome → URL)
     const emoteMap = new Map();
 
-    // O ":awesome:" nunca aparecia. Isso remedia isso.
     emoteMap.set(':awesome:', 'https://yt3.ggpht.com/xqqFxk7nC5nYnjy0oiSPpeWX4yu4I-ysb3QJMOuVml8dHWz82FvF8bhGVjlosZRIG_XxHA=w48-h48-c-k-nd');
 
-    // BTTV emotes
     for (const emote of youTubeBTTVEmotes) {
         emoteMap.set(emote.code, `https://cdn.betterttv.net/emote/${emote.id}/1x`);
     }
 
-    // YouTube emotes (Twemoji + normais)
     if (data.emotes) {
         for (const emote of data.emotes) {
             let emoteUrl = emote.imageUrl;
@@ -634,33 +713,27 @@ async function getYouTubeEmotes(data, messageElement) {
         }
     }
 
-    // Custom Member Emotes
     if (data.user.isSponsor === true || data.user.isOwner === true) {
         for (const [name, url] of Object.entries(youTubeCustomEmotes)) {
             emoteMap.set(`:${name}:`, url);
         }
     }
 
-    // Nova quebra: detecta tokens de emotes/emoji mesmo colados
     const tokenRegex = /(:[a-zA-Z0-9_\-]+:)|([\p{Emoji_Presentation}\p{Extended_Pictographic}])/gu;
     let parts = [];
     let lastIndex = 0;
 
     for (const match of message.matchAll(tokenRegex)) {
-        // texto antes do emote
         if (match.index > lastIndex) {
             parts.push(message.slice(lastIndex, match.index));
         }
-        // o próprio emote/emoji
         parts.push(match[0]);
         lastIndex = match.index + match[0].length;
     }
-    // resto do texto
     if (lastIndex < message.length) {
         parts.push(message.slice(lastIndex));
     }
 
-    // monta a mensagem final
     for (const part of parts) {
         if (emoteMap.has(part)) {
             const img = document.createElement('img');

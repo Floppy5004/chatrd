@@ -1,16 +1,5 @@
 /**
  * ChatRD — Settings i18n
- *
- * Atributos suportados no HTML:
- *   data-i18n="section.key"           → substitui textContent
- *   data-i18n-html="section.key"      → substitui innerHTML (strings com HTML/ícones)
- *   data-i18n-placeholder="section.key" → substitui o atributo placeholder
- *   data-i18n-title="section.key"     → substitui o atributo title
- *
- * Uso:
- *   const i18n = new SettingsI18n();
- *   await i18n.init();           // detecta idioma e aplica traduções
- *   await i18n.setLocale('pt-BR'); // troca idioma manualmente
  */
 
 class SettingsI18n {
@@ -28,6 +17,15 @@ class SettingsI18n {
     this._strings  = {};   // strings do idioma ativo
     this._fallback = {};   // strings do idioma de fallback (sempre carregadas)
     this.locale    = null; // idioma ativo
+
+    // Lista branca de idiomas suportados. Qualquer valor fora deste conjunto
+    // é rejeitado antes de tocar no filesystem/rede (previne path traversal).
+    this._supportedLocales = new Set([
+      'de', 'en', 'es-ES', 'fr-FR', 'it-IT', 'pt-BR', 'pl', 'tl-PH'
+    ]);
+
+    // Formato aceito antes mesmo de checar a whitelist (defesa em profundidade).
+    this._localeFormat = /^[a-zA-Z0-9_-]+$/;
   }
 
   // ─── Inicialização ───────────────────────────────────────────────────────────
@@ -49,6 +47,10 @@ class SettingsI18n {
    * @param {string} locale - ex.: 'pt-BR', 'en', 'es'
    */
   async setLocale(locale) {
+    if (!this._isValidLocale(locale)) {
+      console.warn(`[i18n] Locale inválido ignorado: ${locale}`);
+      locale = this.fallbackLocale;
+    }
     localStorage.setItem(this.storageKey, locale);
     await this._applyLocale(locale);
   }
@@ -79,7 +81,7 @@ class SettingsI18n {
   /** Detecta o idioma preferido do usuário. */
   _detect() {
     const saved = localStorage.getItem(this.storageKey);
-    if (saved) return saved;
+    if (saved && this._isValidLocale(saved)) return saved;
 
     // Tenta o idioma completo (ex.: 'pt-BR'), depois só a língua (ex.: 'pt')
     const nav    = navigator.language ?? navigator.userLanguage ?? '';
@@ -90,10 +92,28 @@ class SettingsI18n {
     return this._normalizeLocale(lang) ?? this._normalizeLocale(short) ?? this.fallbackLocale;
   }
 
-  /** Carrega o JSON de um locale específico. Retorna {} em caso de erro. */
+  /**
+   * Valida se um locale tem o formato esperado E está na lista branca de
+   * idiomas suportados. Usado como barreira antes de montar qualquer URL
+   * de fetch.
+   */
+  _isValidLocale(locale) {
+    return (
+      typeof locale === 'string' &&
+      this._localeFormat.test(locale) &&
+      this._supportedLocales.has(locale)
+    );
+  }
+
+  /** Carrega o JSON de um locale específico. Retorna {} em caso de erro ou locale inválido. */
   async _load(locale) {
+    if (!this._isValidLocale(locale)) {
+      console.warn(`[i18n] Tentativa de carregar locale não suportado: ${locale}`);
+      return {};
+    }
     try {
-      const url = `${this.localesPath}/${locale}-settings.json`;
+      // encodeURIComponent como defesa extra, mesmo já validado pela whitelist.
+      const url = `${this.localesPath}/${encodeURIComponent(locale)}-settings.json`;
       const res = await fetch(url);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return await res.json();
@@ -116,18 +136,18 @@ class SettingsI18n {
 
   /** Percorre o DOM e substitui os textos de acordo com os atributos data-i18n-*. */
   _applyToDom() {
-    // data-i18n → textContent
+    // data-i18n → textContent (seguro por natureza, não interpreta HTML)
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key   = el.getAttribute('data-i18n');
       const value = this.t(key);
       if (value !== key) el.textContent = value;
     });
 
-    // data-i18n-html → innerHTML  (para labels com ícones FA ou links)
+    // data-i18n-html → innerHTML (para labels com ícones FA ou links) — sanitizado
     document.querySelectorAll('[data-i18n-html]').forEach(el => {
       const key   = el.getAttribute('data-i18n-html');
       const value = this.t(key);
-      if (value !== key) el.innerHTML = value;
+      if (value !== key) el.innerHTML = this._sanitizeHtml(value);
     });
 
     // data-i18n-placeholder → atributo placeholder
@@ -162,11 +182,45 @@ class SettingsI18n {
   }
 
   /**
-   * Interpola variáveis em uma string.
+   * Interpola variáveis em uma string. Os valores são HTML-escapados por
+   * padrão, pois o resultado pode acabar em um elemento data-i18n-html.
    * 'Hello, {user}!' + { user: 'Alice' } → 'Hello, Alice!'
    */
   _interpolate(str, vars) {
-    return str.replace(/\{(\w+)\}/g, (_, key) => vars[key] ?? `{${key}}`);
+    return str.replace(/\{(\w+)\}/g, (_, key) => {
+      if (!(key in vars) || vars[key] == null) return `{${key}}`;
+      return this._escapeHtml(String(vars[key]));
+    });
+  }
+
+  /** Escapa caracteres especiais de HTML para evitar injeção via interpolação. */
+  _escapeHtml(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  /**
+   * Sanitizador básico para strings de tradução usadas com innerHTML.
+   * Remove <script>/<style>, atributos de evento ("on*") e URLs "javascript:".
+   *
+   * Isto é uma rede de segurança mínima para strings de locale (que devem
+   * ser conteúdo confiável, versionado com o código). NÃO é um substituto
+   * para uma biblioteca de sanitização completa como DOMPurify caso, no
+   * futuro, o conteúdo passe a vir de fontes não confiáveis (ex.: tradução
+   * gerada por usuários).
+   */
+  _sanitizeHtml(html) {
+    return String(html)
+      // remove blocos <script>...</script> e <style>...</style>
+      .replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/gi, '')
+      // remove atributos de evento inline: onclick=, onerror=, etc.
+      .replace(/\son\w+\s*=\s*(".*?"|'.*?'|[^\s>]+)/gi, '')
+      // neutraliza esquemas perigosos em atributos de URL (href, src)
+      .replace(/(href|src)\s*=\s*(["'])\s*javascript:/gi, '$1=$2#blocked:');
   }
 
   /**
@@ -179,6 +233,8 @@ class SettingsI18n {
       'de'          : 'de',
       'en'          : 'en',
       'es-es'       : 'es-ES',
+      'fr-fr'       : 'fr-FR',
+      'it-it'       : 'it-IT',
       'pt-br'       : 'pt-BR',
       'pl'          : 'pl',
       'tl-ph'       : 'tl-PH'

@@ -29,7 +29,6 @@
     font-size: 12px;
     border-radius: 3px;
     margin: 0 1px;
-    transform: translateY(3px);
 }
 
 .chat .item.tiktok span.badge.top-gifter,
@@ -74,22 +73,8 @@
 
 
 .chat .event.tiktok .message {
-    background: rgba(36,36,36,0.75);
+    background-color: rgba(36,36,36,0.75);
 }
-
-/*.chat .event.tiktok.join .message {
-    background: none;
-}
-
-.chat .event.tiktok.join .message i {
-    font-size: 14px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 100px;
-    margin: 0 3px 0 1px;
-    text-shadow: none;
-}*/
 
 .chat .event.tiktok.join .message {
     background: none;
@@ -106,12 +91,34 @@
 /* GIFT CUSTOMIZATION FOR BIG STREAMERS LOL */
 
 .chat .event.tiktok.gift[class*="bigger-than-"] .message {
+    position: relative;
+    z-index: 0;
+}
+
+.chat .event.tiktok.gift.bigger-than-1000 .message,
+.chat .event.tiktok.gift.bigger-than-5000 .message,
+.chat .event.tiktok.gift.bigger-than-10000 .message,
+.chat .event.tiktok.gift.bigger-than-50000 .message,
+.chat .event.tiktok.gift.bigger-than-100000 .message {
+    background-color: transparent;
+}
+
+.chat .event.tiktok.gift[class*="bigger-than-"] .message::before{
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+    z-index: -1;
     animation: bigStreamerBGAnimate 1s ease infinite;
     background-size: 100% 200%;
 }
 
-.chat .event.tiktok.gift.bigger-than-1000 .message,
-.chat .event.tiktok.gift.bigger-than-5000 .message {
+.chat .event.tiktok.gift.bigger-than-1000 .message::before,
+.chat .event.tiktok.gift.bigger-than-5000 .message::before {
     background-image: linear-gradient(
       180deg,
       rgba(36,36,36, 0.75),
@@ -119,9 +126,9 @@
     );
 }
 
-.chat .event.tiktok.gift.bigger-than-10000 .message,
-.chat .event.tiktok.gift.bigger-than-50000 .message,
-.chat .event.tiktok.gift.bigger-than-10000 .message {
+.chat .event.tiktok.gift.bigger-than-10000 .message::before,
+.chat .event.tiktok.gift.bigger-than-50000 .message::before,
+.chat .event.tiktok.gift.bigger-than-100000 .message::before {
     background-image: linear-gradient(
       180deg,
       rgba(36,36,36, 0.75),

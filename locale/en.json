@@ -60,6 +60,7 @@
   },
 
   "twitch": {
+    "first_time_chatter": "✨ First-time Chatter",
     "follow_action":           " followed the channel",
     "watch_streak_action":     " is on a <strong>{count} stream streak</strong>",
     "announcement_header":     "Announcement",
@@ -70,24 +71,25 @@
       "random_sub_emote_unlock":          "Unlock a Random Sub Emote",
       "chosen_modified_sub_emote_unlock": "Modify a Single Emote",
       "celebration":                      "On-Screen Celebration",
-      "message_effect":                   "Message Effects"
+      "message_effect":                   "Message Effects",
+      "gigantify":                        "Gigantify an Emote"
     },
     "bits_action":             " cheered with ",
     "bits_singular":           "bit",
     "bits_plural":             "bits",
     "sub_action":              " subscribed for ",
     "resub_action":            " subscribed for ",
-    "giftsub_action":          " gifted {months} of Tier {tier} {duration} to ",
+    "giftsub_action":          " gifted <strong>{months}</strong> of Tier <strong>{tier}</strong> <strong>{duration}</strong> to ",
     "giftsub_singular":        "subscription",
     "giftsub_plural":          "subscriptions",
-    "giftbomb_action":         " gifted {total} Tier {tier} {subs} to the Community",
+    "giftbomb_action":         " gifted <strong>{total}</strong> Tier <strong>{tier} {subs}</strong> to the Community",
     "giftbomb_subs_singular":  "sub",
     "giftbomb_subs_plural":    "subs",
-    "giftbomb_message":        "They've gifted a total of {total} subs",
+    "giftbomb_message":        "They've gifted a total of <strong>{total}</strong> subs",
     "raid_action":             " raided the channel with ",
     "raid_singular":           "viewer",
     "raid_plural":             "viewers",
-    "reply_label":             "Replying to {user}:",
+    "reply_label":             "Replying to <strong>{user}</strong>:",
     "hypetrain": {
       "started":               "Hype Train Started! 🔥",
       "started_golden":        "Golden Kappa Train Started! 🪙",
@@ -140,7 +142,8 @@
     "giftbomb_singular":         "membership",
     "giftbomb_plural":           "memberships",
     "giftbomb_suffix":           " to the channel",
-    "giftbomb_received_action":  " gifted a membership to "
+    "giftbomb_received_action":  " gifted a membership to ",
+    "jewels_action":             " sent you <strong>{count} {name}</strong>"
   },
 
   "tiktok": {
@@ -160,14 +163,14 @@
     "kicks_singular":         "Kick",
     "kicks_plural":           "Kicks",
     "sub_action":             " subscribed for ",
-    "giftbomb_action":        " gifted {count} subs to the Community",
-    "giftbomb_message":       "They've gifted a total of {total} subs",
+    "giftbomb_action":        " gifted <strong>{count}</strong> subs to the Community",
+    "giftbomb_message":       "They've gifted a total of <strong>{total}</strong> subs",
     "giftsub_single_action":  " gifted a subscription to ",
     "raid_action":            " hosted the channel with ",
     "raid_singular":          "viewer",
     "raid_plural":            "viewers",
     "reward_action":          " redeemed ",
-    "reply_label":            "Replying to {user}:"
+    "reply_label":            "Replying to <strong>{user}</strong>:"
   },
 
   "streamelements": {
@@ -206,11 +209,21 @@
     "someone":             "Someone",
     "gifted_action":       " gifted ",
     "giftdraw_user":       "Giveaway started!",
-    "giftdraw_action":     " Type {command} to have a chance to win ",
-    "giftdraw_message":    "You have {seconds} seconds! Good Luck!",
+    "giftdraw_action":     " Type <strong>{command}</strong> to have a chance to win ",
+    "giftdraw_message":    "You have <strong>{seconds} seconds!</strong> Good Luck!",
     "giftdrawend_user":    "🎉 Giveaway Ended!",
     "giftdrawend_action":  " Congratulations to: ",
     "winners_and":         "and",
     "winners_oxford":      ", and"
+  },
+
+  "general": {
+    "button_toggle_twitch": "Toggle Twitch\n({shortcut})",
+    "button_toggle_youtube": "Toggle YouTube\n({shortcut})",
+    "button_toggle_kick": "Toggle Kick\n({shortcut})",
+    "button_toggle_tiktok": "Toggle TikTok\n({shortcut})",
+    "button_send_message": "Send to Selected\n({shortcut})",
+    "button_send_message_all": "Send to All\n({shortcut})",
+    "chat_input_placeholder" : "Type a message..."
   }
 }

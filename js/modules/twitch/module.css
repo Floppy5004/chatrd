@@ -103,11 +103,33 @@
 /* -------------------------------------------------------------- */
 
 .chat .event.twitch.bits[class*="bigger-than-"] .message {
+    position: relative;
+    z-index: 0;
+}
+
+.chat .event.twitch.bits.bigger-than-1000 .message,
+.chat .event.twitch.bits.bigger-than-5000 .message,
+.chat .event.twitch.bits.bigger-than-10000 .message,
+.chat .event.twitch.bits.bigger-than-50000 .message,
+.chat .event.twitch.bits.bigger-than-100000 .message {
+    background-color: transparent;
+}
+
+.chat .event.twitch.bits[class*="bigger-than-"] .message::before{
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 5px;
+    z-index: -1;
     animation: bigStreamerBGAnimate 1s ease infinite;
     background-size: 100% 200%;
 }
 
-.chat .event.twitch.bits.bigger-than-1000 .message {
+.chat .event.twitch.bits.bigger-than-1000 .message::before {
     background-image: linear-gradient(
       180deg,
       rgba(145, 70, 255, 0.75),
@@ -115,7 +137,7 @@
     );
 }
 
-.chat .event.twitch.bits.bigger-than-5000 .message {
+.chat .event.twitch.bits.bigger-than-5000 .message::before {
     background-image: linear-gradient(
       180deg,
       rgba(145, 70, 255, 0.75),
@@ -123,7 +145,7 @@
     );
 }
 
-.chat .event.twitch.bits.bigger-than-10000 .message {
+.chat .event.twitch.bits.bigger-than-10000 .message::before {
     background-image: linear-gradient(
       180deg,
       rgba(145, 70, 255, 0.75),
@@ -131,7 +153,7 @@
     );
 }
 
-.chat .event.twitch.bits.bigger-than-100000 .message {
+.chat .event.twitch.bits.bigger-than-100000 .message::before {
     background-image: linear-gradient(
       180deg,
       rgba(145, 70, 255, 0.75),
@@ -260,7 +282,132 @@
     margin-top: 5px;
 }
 
-.chat .event.twitch .message { background: rgba(145,70,255,0.75); }
+
+
+.chat .event.twitch .message { background-color: rgba(145,70,255,0.75); }
+
+.chat .event.twitch.custom-power-up .message { background: linear-gradient(to left, var(--customPowerUpBackground), rgba(145,70,255,0.75)); }
 
 .chat .event.twitch.hypetrain.golden-kappa-train .message { background: #ffb521; }
 .chat .event.twitch.hypetrain.treasure-train .message { background: linear-gradient(to right, #2346b5, #a970ff); }
+
+
+/* ------------------------------------------- */
+/* ----- CHAT - POWER UP MESSAGE EFFECTS ----- */
+/* ------------------------------------------- */
+
+.chat .item.twitch.message-effect {
+    padding: 10px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.chat .item.twitch.message-effect .message {
+    padding: 10px;
+    position: relative;
+    z-index: 1;
+    background: rgba(18,18,18,0.95);
+}
+
+
+.chat .item.twitch.message-effect.cosmic-abyss .cosmic-abyss-element {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.chat .item.twitch.message-effect.cosmic-abyss .cosmic-abyss-element video {
+    object-fit: cover;
+    min-width: 100%;
+    min-height: 100%;
+    opacity: 0.75;
+}
+
+
+
+
+
+.chat .item.twitch.message-effect.rainbow-eclipse {
+    overflow: unset;
+}
+
+.chat .item.twitch.message-effect.rainbow-eclipse .rainbow-eclipse-element {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    filter: blur(5px);
+    overflow: hidden;
+    transform: translate(-50%,-50%);
+}
+
+.chat .item.twitch.message-effect.rainbow-eclipse .rainbow-eclipse-element::before {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    content: '';
+    width: 99999px;
+    height: 99999px;
+    background-image: conic-gradient(#b23ff8, #3cc890, #38a7ca, #b23ff8);
+    transform: translate(-50%,-50%) rotate(0deg);
+    animation: rotateRainbowEclipse 4s linear infinite;
+}
+
+@keyframes rotateRainbowEclipse {
+    100% { transform: translate(-50%,-50%) rotate(1turn); }
+}
+
+
+
+.chat .item.twitch.message-effect.simmer {
+    background: linear-gradient(90deg,#3866dd,#ff4c5b);
+}
+
+.chat .item.twitch.message-effect.simmer canvas {
+    display: block;
+    width: 100%;
+    height: 45px;
+    opacity: 1;
+    transition: var(--transition);
+}
+
+.chat .item.twitch.message-effect.simmer canvas.message-effect-animation-done {
+    height: 0px;
+    opacity: 0;
+}
+
+
+
+.chat.vertical .item.twitch.message-effect.rainbow-eclipse .message,
+.chat.vertical .item.twitch.message-effect.cosmic-abyss .message,
+.chat.vertical .item.twitch.message-effect.simmer .message {
+    display: flex;
+}
+
+.chat.oneline .item.twitch.message-effect.rainbow-eclipse .message,
+.chat.oneline .item.twitch.message-effect.cosmic-abyss .message,
+.chat.oneline .item.twitch.message-effect.simmer .message {
+    display: block;
+}
+
+.chat .item.msg:has(.info .user a[data-seventv-paint-id]) {
+    text-shadow: none;
+}
+
+.chat .item.msg:has(.info .user a[data-seventv-paint-id]) .info .timestamp,
+.chat .item.msg:has(.info .user a[data-seventv-paint-id]) .info .badges,
+.chat .item.msg:has(.info .user a[data-seventv-paint-id]) .info .avatar,
+.chat .item.msg:has(.info .user a[data-seventv-paint-id]) .actual-message {
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.75);
+}
+
+.chat.outline .item.msg:has(.info .user a[data-seventv-paint-id]) .actual-message {
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.75),
+                 1px -1px 0 rgba(0,0,0,0.75),
+                 -1px  1px 0 rgba(0,0,0,0.75),
+                 1px  1px 0 rgba(0,0,0,0.75);
+}

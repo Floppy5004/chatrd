@@ -13,7 +13,6 @@ const showTikTokFollows             = getURLParam("showTikTokFollows", true);
 const showTikTokLikes               = getURLParam("showTikTokLikes", false);
 const showTikTokShares              = getURLParam("showTikTokShares", false);
 const showTikTokGifts               = getURLParam("showTikTokGifts", true);
-const showSmallTikTokGifts          = getURLParam("showSmallTikTokGifts", false);
 const showTikTokSubs                = getURLParam("showTikTokSubs", true);
 const showTikTokStatistics          = getURLParam("showTikTokStatistics", true);
 
@@ -57,19 +56,19 @@ document.addEventListener('DOMContentLoaded', () => {
 // TIKTOK CONNECT HANDLER
 
 async function tiktokConnection() {
-    const tikfinityWebSocketURL = 'ws://localhost:21213/'; // Replace with real URL
-    const reconnectDelay = 10000; // 10 seconds
+    const tikfinityWebSocketURL = 'ws://localhost:21213/';
+    const reconnectDelay = 10000; 
     const maxTries = 20;
     let retryCount = 0;
-    let errorLogged = false; // controls whether the error was already logged/notified for this outage
+    let errorLogged = false; 
 
     function connect() {
         const tikfinityWebSocket = new WebSocket(tikfinityWebSocketURL);
 
         tikfinityWebSocket.onopen = () => {
             console.debug(`[ChatRD][TikFinity] Connected to TikFinity successfully!`);
-            retryCount = 0; // Reset retry count on success
-            errorLogged = false; // Reset error flag so the next outage can log again
+            retryCount = 0;
+            errorLogged = false; 
 
             notifySuccess({
                 title: 'ChatRD 🤝 TikFinity',
@@ -134,7 +133,6 @@ async function tiktokConnection() {
                 errorLogged = true;
             }
 
-            // Force close to trigger onclose and centralize retry logic
             if (tikfinityWebSocket.readyState !== WebSocket.CLOSED) {
                 tikfinityWebSocket.close();
             }
@@ -147,7 +145,7 @@ async function tiktokConnection() {
         return tikfinityWebSocket;
     }
 
-    return connect(); // Returns the initial WebSocket instance
+    return connect();
 }
 
 
@@ -344,13 +342,7 @@ async function tiktokJoinMessage(data) {
 
     user.textContent = data.nickname;
     action.innerHTML = tRD('tiktok.join_action');
-
-    if (eventsDock == true) {
-        addLittleEventItem('tiktok', clone, classes, userId, messageId);
-        return;
-    }
     
-    //const joinElement = chatContainer.querySelector(".event.tiktok.join");
     const joinElement = [...chatContainer.querySelectorAll(".event.tiktok.join")].at(-1);
     
     if (!joinElement) {
@@ -399,19 +391,14 @@ async function tiktokLikesMessage(data) {
 
     var likeCountTotal = parseInt(data.likeCount);
     
-    // Search for Previous Likes from the Same User
     const previousLikeContainer = chatContainer.querySelector(`div.event.tiktok.likes[data-user="${data.userId}"]`);
 
-    // If found, fetches the previous likes, deletes the element
-    // and then creates a new count with a sum of the like count
     if (previousLikeContainer) {
         const likeCountElem = previousLikeContainer.querySelector('.value strong');
         if (likeCountElem) {
             var likeCountPrev = parseInt(likeCountElem.textContent);
             likeCountTotal = Math.floor(likeCountPrev + likeCountTotal);
-            //removeItem(previousLikeContainer);
             likeCountElem.textContent = likeCountTotal;
-            //animateCounter(likeCountElem, likeCountPrev, likeCountTotal, 250);
             chatContainer.prepend(previousLikeContainer);
         }
     }
@@ -499,8 +486,6 @@ async function tiktokGiftMessage(data) {
 
     const classes = ['tiktok', 'gift'];
 
-    if (showSmallTikTokGifts == true) { classes.push('small-gift'); }
-
     header.remove();
 
     let coins = Math.floor(data.repeatCount*data.diamondCount);
@@ -510,12 +495,15 @@ async function tiktokGiftMessage(data) {
 
     user.textContent = data.nickname;
     action.innerHTML = tRD('tiktok.gift_action', { count: data.repeatCount, name: data.giftName });
-    value.innerHTML = `
-        <div class="gift-info">
-            <span class="gift-image"><img src="${data.giftPictureUrl}" alt="${data.giftName}"></span>
-            <span class="gift-value"><img src="js/modules/tiktok/images/icon-tiktokcoin.svg" alt="Coins"> ${coins}</span>
-        </div>
-    `;
+
+    const rotateDeg = (Math.random() * 60 - 30).toFixed(1) + 'deg';
+
+    const giftHtml = renderGiftEventSuffix({
+        image : `<img style="--rotateGift: ${rotateDeg}" src="${data.giftPictureUrl}" alt="${data.giftName}">`, 
+        value : `<img src="js/modules/tiktok/images/icon-tiktokcoin.svg" alt="Coins"> ${coins}`
+    });
+
+    value.innerHTML = giftHtml;
 
     message.remove();
 
@@ -530,16 +518,13 @@ async function getTikTokEmotes(data, messageElement) {
         emotes,
     } = data;
 
-    // Limpa o elemento de destino
     messageElement.innerHTML = '';
 
     if (!emotes || emotes.length === 0) {
-        // Sem emotes → só texto normal
         messageElement.appendChild(document.createTextNode(message));
         return;
     }
 
-    // Ordena os emotes pelo índice para garantir ordem correta
     const sorted = [...emotes].sort((a, b) => a.placeInComment - b.placeInComment);
 
     let lastIndex = 0;
@@ -547,24 +532,21 @@ async function getTikTokEmotes(data, messageElement) {
     for (const emote of sorted) {
         const position = emote.placeInComment;
 
-        // adiciona texto antes do emote, se houver
         if (lastIndex < position) {
             const text = message.slice(lastIndex, position);
             messageElement.appendChild(document.createTextNode(text));
         }
 
-        // adiciona o emote
         const img = document.createElement('img');
         img.src = emote.emoteImageUrl;
         img.className = 'emote';
         img.dataset.emoteId = emote.emoteId;
-        img.onerror = () => (img.outerHTML = emote.emoteId); // fallback
+        img.onerror = () => (img.outerHTML = emote.emoteId);
         messageElement.appendChild(img);
 
-        lastIndex = position + 1; // avança
+        lastIndex = position + 1; 
     }
 
-    // texto final depois do último emote
     if (lastIndex < message.length) {
         const text = message.slice(lastIndex);
         messageElement.appendChild(document.createTextNode(text));
@@ -643,7 +625,6 @@ async function getTikTokBadges(data) {
             if (badge.badgeSceneType === 10) {
 
                 let badgeClasses = ['badge', 'sceneTen'];
-                //if (badge.privilegeId == "7196929090442513157") { badgeClasses.push('inactive-fan'); }
                 badgeClasses = badgeClasses.join(" ");
 
                 const match = badgesLevelTen.find(lv => badge.level >= lv.min && badge.level <= lv.max);

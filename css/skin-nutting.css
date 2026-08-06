@@ -3,88 +3,100 @@
 /* ----------------------------------------- */
 
 .chat.vertical:has(.avatar) .item .message {
-    padding-left: 70px;
+    padding-left: 60px;
 }
 
-.chat.vertical .item .info {
+.chat.vertical:has(.avatar) .item .info {
     position: relative;
 }
 
-.chat.vertical .item .info .avatar {
+.chat.vertical:has(.avatar) .item .info .avatar {
     position: absolute !important;
     top: 0;
-    left: -70px;
-    width: 62px;
-    height: 62px;
+    left: -60px;
+    width: 50px;
+    height: 50px;
     border-radius: 100px;
-    box-shadow: var(--dropShadow);
 }
 
-.chat.vertical .item .info .avatar img {
-    width: 62px !important;
-    height: 62px !important;
+.chat.vertical:has(.avatar) .item .info .avatar img {
+    width: 50px !important;
+    height: 50px !important;
 }
 
+.chat.vertical:has(.avatar) .item.streamer-mentioned .message,
+.chat.vertical:has(.avatar) .item.first-chatter .message {
+    padding-left: 70px;
+}
+
+.chat.vertical:has(.avatar) .item.first-chatter .message .first-message {
+    position: relative;
+    left: -60px;
+}
 
 
 /* ------------------------------------------- */
 /* --------- CHAT - ONE LINE LAYOUT ---------- */
 /* ------------------------------------------- */
 
-.chat.oneline:has(.avatar) .item .message {
-    padding-left: 34px;
+.chat.oneline:has(.avatar) .item .message{
+    padding-left: 42px;
+    min-height: 32px;
 }
 
-.chat.oneline .item .info {
+.chat.oneline:has(.avatar) .item.streamer-mentioned .message,
+.chat.oneline:has(.avatar) .item.first-chatter .message {
+    padding-left: 52px;
+    min-height: 48px;
+}
+
+.chat.oneline:has(.avatar) .item .info {
     position: relative;
 }
 
-.chat.oneline .item .info .avatar {
+.chat.oneline:has(.avatar) .item .info .avatar {
     position: absolute;
-    top: -10px;
-    left: -34px;
-    width: 28px;
-    height: 28px;
+    top: -2px;
+    left: -42px;
     border-radius: 100px;
-    box-shadow: var(--dropShadow);
 }
 
-.chat.oneline .item .info .avatar img {
-    width: 28px;
-    height: 28px;
+.chat.oneline:has(.avatar) .item.first-chatter .message .first-message {
+    position: relative;
+    left: -42px;
 }
 
 /* ------------------------------------------- */
 /* --------- CHAT - HORIZONTAL LAYOUT -------- */
 /* ------------------------------------------- */
 
-.chat.horizontal:has(.avatar) .item .message {
-    padding-left: 34px;
+.chat.horizontal:has(.avatar) .item .message{
+    padding-left: 42px;
+    min-height: 32px;
 }
 
-.chat.horizontal .item .info {
+.chat.horizontal:has(.avatar) .item.grouped .message {
+    padding-left: 0;
+}
+
+.chat.horizontal:has(.avatar) .item.streamer-mentioned .message,
+.chat.horizontal:has(.avatar) .item.first-chatter .message {
+    padding-left: 52px;
+    min-height: 48px;
+}
+
+.chat.horizontal:has(.avatar) .item .info {
     position: relative;
 }
 
-.chat.horizontal .item .info .avatar {
+.chat.horizontal:has(.avatar) .item .info .avatar {
     position: absolute;
-    top: -10px;
-    left: -34px;
-    width: 28px;
-    height: 28px;
+    top: -2px;
+    left: -42px;
     border-radius: 100px;
-    box-shadow: var(--dropShadow);
 }
 
-.chat.horizontal .item .info .avatar img {
-    width: 28px;
-    height: 28px;
-}
-
-/* --------------------------------------------- */
-/* --------- CHAT - CASO HAJA SCROLLBAR -------- */
-/* --------------------------------------------- */
-
-.chat:not(.noscrollbar):not(.horizontal) {
-  padding: 0 25px 0 10px;
+.chat.horizontal:has(.avatar) .item.first-chatter .message .first-message {
+    position: relative;
+    left: -42px;
 }

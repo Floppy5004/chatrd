@@ -4,30 +4,30 @@
 
 const twitchModule = true;
 
-const showTwitch                    = getURLParam("showTwitch", false);
+const showTwitch                        = getURLParam("showTwitch", false);
 
-const showTwitchMessages            = getURLParam("showTwitchMessages", true);
-const showTwitchFollows             = getURLParam("showTwitchFollows", true);
-const showTwitchWatchStreak         = getURLParam("showTwitchWatchStreak", false);
-const showTwitchBits                = getURLParam("showTwitchBits", true);
-const showTwitchAnnouncements       = getURLParam("showTwitchAnnouncements", true);
-const showTwitchSubs                = getURLParam("showTwitchSubs", true);
-const showTwitchGiftedSubs          = getURLParam("showTwitchGiftedSubs", true);
-const showTwitchGiftedSubsUserTrain = getURLParam("showTwitchGiftedSubsUserTrain", true);
-const showTwitchMassGiftedSubs      = getURLParam("showTwitchMassGiftedSubs", true);
-const showTwitchRewardRedemptions   = getURLParam("showTwitchRewardRedemptions", true);
-const showTwitchRaids               = getURLParam("showTwitchRaids", true);
-const showTwitchHypeTrain           = getURLParam("showTwitchHypeTrain", false);
-const showTwitchHypeTrainBar        = getURLParam("showTwitchHypeTrainBar", false);
-const showTwitchGoals               = getURLParam("showTwitchGoals", false);
-const showTwitchGoalsBars           = getURLParam("showTwitchGoalsBars", false);
-const showTwitchSharedChat          = getURLParam("showTwitchSharedChat", true);
-const showTwitchPronouns            = getURLParam("showTwitchPronouns", false);
-const showTwitchViewers             = getURLParam("showTwitchViewers", true);
+const showTwitchMessages                = getURLParam("showTwitchMessages", true);
+const showTwitchFollows                 = getURLParam("showTwitchFollows", true);
+const showTwitchWatchStreak             = getURLParam("showTwitchWatchStreak", false);
+const showTwitchBits                    = getURLParam("showTwitchBits", true);
+const showTwitchAnnouncements           = getURLParam("showTwitchAnnouncements", true);
+const showTwitchSubs                    = getURLParam("showTwitchSubs", true);
+const showTwitchGiftedSubs              = getURLParam("showTwitchGiftedSubs", true);
+const showTwitchGiftedSubsUserTrain     = getURLParam("showTwitchGiftedSubsUserTrain", true);
+const showTwitchMassGiftedSubs          = getURLParam("showTwitchMassGiftedSubs", true);
+const showTwitchRewardRedemptions       = getURLParam("showTwitchRewardRedemptions", true);
+const showTwitchPowerUpRedemption       = getURLParam("showTwitchPowerUpRedemptions", true);
+const enableTwitchPowerUpEffects        = getURLParam("enableTwitchPowerUpEffects", false);
+const showTwitchRaids                   = getURLParam("showTwitchRaids", true);
+const showTwitchHypeTrain               = getURLParam("showTwitchHypeTrain", false);
+const showTwitchHypeTrainBar            = getURLParam("showTwitchHypeTrainBar", false);
+const showTwitchGoals                   = getURLParam("showTwitchGoals", false);
+const showTwitchGoalsBars               = getURLParam("showTwitchGoalsBars", false);
+const showTwitchSharedChat              = getURLParam("showTwitchSharedChat", true);
+const showTwitchPronouns                = getURLParam("showTwitchPronouns", false);
+const showTwitchViewers                 = getURLParam("showTwitchViewers", true);
 
-const showTwitchSevenTVPaint       = getURLParam("showTwitchSevenTVPaint", false);
-
-const twitchStreamer = {};
+const showTwitchSevenTVPaint            = getURLParam("showTwitchSevenTVPaint", false);
 
 const twitchAvatars = new Map();
 
@@ -56,6 +56,15 @@ const bitsGiftsClasses = [
     { min: 100000,  max: 99999999999, class: 'bigger-than-100000' },
 ];
 
+const messageEffectCanvasEmotes = [
+    "https://static-cdn.jtvnw.net/emoticons/v2/304486301/default/dark/1.0",
+    "https://static-cdn.jtvnw.net/emoticons/v2/305954156/default/dark/1.0",
+    "https://static-cdn.jtvnw.net/emoticons/v2/301396428/default/dark/1.0",
+    "https://d3aqoihi2n8ty8.cloudfront.net/actions/cheer/dark/static/10000/2.png",
+    "https://d3aqoihi2n8ty8.cloudfront.net/actions/cheer/dark/static/1000/2.png",
+    "https://d3aqoihi2n8ty8.cloudfront.net/actions/cheer/dark/static/5000/2.png"
+];
+
 // TWITCH EVENTS HANDLERS
 
 const twitchMessageHandlers = {
@@ -74,25 +83,28 @@ const twitchMessageHandlers = {
     'Twitch.Cheer': (response) => {
         twitchBitsMessage(response.data);
     },
+
+
+
+    
+    
     'Twitch.AutomaticRewardRedemption': (response) => {
-        if (response.data.reward_type === "gigantify_an_emote") {
-            twitchChatMessageGiantEmote(response.data);
-        }
-        else if (response.data.reward_type === "celebration") {
-            twitchPowerUpRedemption(response.data);
-        }
-        else if (response.data.reward_type === "message_effect") {
-            twitchPowerUpRedemption(response.data);
-        }
-        else {
-            twitchAutomaticRewardRedemption(response.data);
-        }
+        twitchAutomaticRewardRedemption(response.data);
     },
     'Twitch.RewardRedemption': (response) => {
         twitchRewardRedemption(response.data);
     },
 
-    
+    'Twitch.PowerUpRedemption': (response) => {
+        twitchPowerUpRedemption(response.data);
+    },
+
+    'Twitch.CustomPowerUpRedemption': (response) => {
+        twitchCustomPowerUpRedemption(response.data);
+    },
+
+
+
 
 
     'Twitch.Sub': (response) => {
@@ -171,7 +183,6 @@ const twitchMessageHandlers = {
         if (response.data?.data?.eventName === 'Twitch.GoalFetch' && response.data.data.event) {
             twitchGoalsRenderer(response.data.data.event);
         }
-
     }
 };
 
@@ -193,6 +204,8 @@ if (showTwitch) {
     registerPlatformHandlersToStreamerBot(twitchMessageHandlers, '[ChatRD][Twitch]');
     twitchGoalsFetch();
 }
+
+
 
 
 
@@ -236,25 +249,19 @@ async function twitchChatMessage(data) {
     const classes = ['twitch', 'msg'];
 
     const [avatarImage, badgeList] = await Promise.all([
-        //getTwitchAvatar(data.message.username),
         getTwitchAvatar(data.user.login),
         getTwitchBadges(data.user.badges)
     ]);
 
     header.remove();
 
-    //let streamData = data;
-
-    if (!twitchStreamer.broadcastUser) {
-        const streamerInfo = await getStreamerInfo();
-        twitchStreamer.broadcastUser = streamerInfo.platforms.twitch.broadcastUser;
-    }
+    const twitchStreamer = streamerInfo.get.platforms.twitch.broadcastUser;
     
-    if (data.text.toLowerCase().includes( twitchStreamer.broadcastUser.toLowerCase() )) {
+    if (data.text.toLowerCase().includes( twitchStreamer.toLowerCase() )) {
         classes.push('streamer-mentioned');
     }
 
-    root.dataset.streamer = twitchStreamer.broadcastUser.toLowerCase();
+    root.dataset.streamer = twitchStreamer.toLowerCase();
 
     const userLinkElement = user.querySelector('a');
     const userLink = `https://twitch.tv/${data.user.login}`;
@@ -288,6 +295,7 @@ async function twitchChatMessage(data) {
 
     if (data.meta.firstMessage) {
         classes.push('first-chatter');
+        firstMessage.textContent = tRD('twitch.first_time_chatter');
     }
     else { firstMessage.remove(); }
 
@@ -301,7 +309,7 @@ async function twitchChatMessage(data) {
 
         let replyMessage = data.reply.msgBody.replace(/^@\S+\s*/, '') ?? '';
 
-        reply.insertAdjacentHTML('beforeend', ` <strong>${tRD('twitch.reply_label', { user: escapeHTML(data.reply.userName) })}</strong> ${escapeHTML(replyMessage)}`);
+        reply.insertAdjacentHTML('beforeend', ` ${tRD('twitch.reply_label', { user: escapeHTML(data.reply.userName) })} ${escapeHTML(replyMessage)}`);
     }
     
     else { reply.remove(); }
@@ -366,110 +374,6 @@ async function twitchChatMessage(data) {
 
 
 
-async function twitchChatMessageGiantEmote(data) {
-
-    if (showTwitchMessages == false) return;
-
-    const numberAttempts = 1000;
-
-    const tryGigantify = async (attempts = 0) => {
-        if (!showTwitchMessages) return;
-
-        const userMessages = chatContainer.querySelectorAll(`.msg.twitch[data-user="${data.user_login}"]:not([style])`);
-
-        if (userMessages.length === 0) {
-            if (attempts < numberAttempts) setTimeout(() => tryGigantify(attempts + 1), 100);
-            return;
-        }
-
-        const firstMessage = userMessages[0];
-        const textIdentifier = await generateSHA256Identifier(data.message_text);
-        const actualMessage = [...firstMessage.querySelectorAll('.actual-message')]
-            .find(el => el.dataset.text === textIdentifier);
-
-        if (!actualMessage) {
-            if (attempts < numberAttempts) setTimeout(() => tryGigantify(attempts + 1), 100);
-            return;
-        }
-
-        const emoteMatches = firstMessage.querySelectorAll(`img.emote[alt="${data.gigantified_emote.name}"]`);
-        const emoteImages = emoteMatches[emoteMatches.length - 1];
-
-        if (!emoteImages) {
-            if (attempts < numberAttempts) setTimeout(() => tryGigantify(attempts + 1), 100);
-            return;
-        }
-
-        emoteImages.classList.add('gigantified');
-        if (emoteImages.src.endsWith("2.0")) {
-            emoteImages.src = emoteImages.src.replace("2.0", "3.0");
-        }
-    };
-
-    tryGigantify();
-}
-
-
-async function twitchWatchStreakMessage(data) {
-
-    if (showTwitchWatchStreak == false) return;
-
-    const template = eventTemplate;
-	const clone = template.content.cloneNode(true);
-    const messageId = data.msgId;
-    const userId = data.userName.toLowerCase();
-
-    const {
-        header,
-        platform,
-        user,
-        action,
-        value,
-        'actual-message': message
-    } = Object.fromEntries(
-        [...clone.querySelectorAll('[class]')]
-            .map(el => [el.className, el])
-    );
-
-    const classes = ['twitch', 'watch-streak'];
-
-    header.remove();
-
-    const displayName = data.displayName ?? data.user.name;
-	const watchStreak = data.watchStreak ?? data.streak_count;
-    
-    const userLinkElement = user.querySelector('a');
-    const userLink = `https://twitch.tv/${displayName.toLowerCase()}`;
-
-    userLinkElement.href = userLink;
-    userLinkElement.target = '_blank';
-    userLinkElement.textContent = displayName;
-    userLinkElement.title = `${displayName} @ ${userLink}`;
-
-
-    action.innerHTML = tRD('twitch.watch_streak_action', { count: watchStreak });
-    value.remove();
-
-    /* 
-    --- Maybe it's because Watch Streak doesn't have emotes ---
-    let messageFromParts = await getTwitchMessageFromParts(data.parts);
-    message.innerHTML = DOMPurify.sanitize(messageFromParts);
-    */
-
-    const hasParts = Array.isArray(data.parts) && data.parts.some(p => p.text || p.emote);
-    const messageContent = hasParts
-    ? await getTwitchMessageFromParts(data.parts)
-    : data.message
-        ? escapeHTML(data.message)
-        : escapeHTML(data.text);
-
-    message.textContent = messageContent;
-
-    addEventItem('twitch', clone, classes, userId, messageId);
-}
-
-
-
 async function twitchFollowMessage(data) {
 
     if (showTwitchFollows == false) return;
@@ -477,7 +381,7 @@ async function twitchFollowMessage(data) {
     const template = eventTemplate;
 	const clone = template.content.cloneNode(true);
     const messageId = createRandomString(40);
-    const userId = data.user_login.toLowerCase();
+    const userId = data.targetUser.login;
 
     const {
         header,
@@ -494,16 +398,16 @@ async function twitchFollowMessage(data) {
     const classes = ['twitch', 'follow'];
 
     header.remove();
-    message.remove();
+    //message.remove();
     value.remove();
 
     const userLinkElement = user.querySelector('a');
-    const userLink = `https://twitch.tv/${data.user_login}`;
+    const userLink = `https://twitch.tv/${data.targetUser.login}`;
 
     userLinkElement.href = userLink;
     userLinkElement.target = '_blank';
-    userLinkElement.textContent = data.user_name;
-    userLinkElement.title = `${data.user_name} @ ${userLink}`;
+    userLinkElement.textContent = data.targetUser.name;
+    userLinkElement.title = `${data.targetUser.name} @ ${userLink}`;
 
     action.innerHTML = tRD('twitch.follow_action');
 
@@ -583,6 +487,66 @@ async function twitchAnnouncementMessage(data) {
 
 
 
+async function twitchWatchStreakMessage(data) {
+
+    if (showTwitchWatchStreak == false) return;
+
+    const template = eventTemplate;
+	const clone = template.content.cloneNode(true);
+    const messageId = data.msgId;
+    const userId = data.userName.toLowerCase();
+
+    const {
+        header,
+        platform,
+        user,
+        action,
+        value,
+        'actual-message': message
+    } = Object.fromEntries(
+        [...clone.querySelectorAll('[class]')]
+            .map(el => [el.className, el])
+    );
+
+    const classes = ['twitch', 'watch-streak'];
+
+    header.remove();
+
+    const displayName = data.displayName ?? data.user.name;
+	const watchStreak = data.watchStreak ?? data.streak_count;
+    
+    const userLinkElement = user.querySelector('a');
+    const userLink = `https://twitch.tv/${displayName.toLowerCase()}`;
+
+    userLinkElement.href = userLink;
+    userLinkElement.target = '_blank';
+    userLinkElement.textContent = displayName;
+    userLinkElement.title = `${displayName} @ ${userLink}`;
+
+
+    action.innerHTML = tRD('twitch.watch_streak_action', { count: watchStreak });
+    value.remove();
+
+    /* 
+    --- Maybe it's because Watch Streak doesn't have emotes ---
+    let messageFromParts = await getTwitchMessageFromParts(data.parts);
+    message.innerHTML = DOMPurify.sanitize(messageFromParts);
+    */
+
+    const hasParts = Array.isArray(data.parts) && data.parts.some(p => p.text || p.emote);
+    const messageContent = hasParts
+    ? await getTwitchMessageFromParts(data.parts)
+    : data.message
+        ? escapeHTML(data.message)
+        : escapeHTML(data.text);
+
+    message.textContent = messageContent;
+
+    addEventItem('twitch', clone, classes, userId, messageId);
+}
+
+
+
 async function twitchRewardRedemption(data) {
 
     if (showTwitchRewardRedemptions == false) return;
@@ -622,12 +586,12 @@ async function twitchRewardRedemption(data) {
 
     action.innerHTML = tRD('twitch.reward_action');
 
-    value.innerHTML = `
-        <div class="gift-info">
-            <span class="gift-image"><strong>${data.reward.title}</strong></span>
-            <span class="gift-value"><img src="js/modules/twitch/images/icon-channel-points.svg" alt="Channel Points"> ${data.reward.cost}</span>
-        </div>
-    `;
+    const giftHtml = renderGiftEventSuffix({
+        image : `<strong>${data.reward.title}</strong>`, 
+        value : `<img src="js/modules/twitch/images/icon-channel-points.svg" alt="Channel Points"> ${data.reward.cost}`
+    });
+
+    value.innerHTML = giftHtml;
     
     var userInput = data.user_input ? `${data.user_input}` : '';
     message.textContent = userInput;
@@ -644,7 +608,7 @@ async function twitchAutomaticRewardRedemption(data) {
     const template = eventTemplate;
 	const clone = template.content.cloneNode(true);
     const messageId = createRandomString(40);
-    const userId = data.user_login.toLowerCase();
+    const userId = data.user.login.toLowerCase();
 
     const {
         header,
@@ -664,7 +628,7 @@ async function twitchAutomaticRewardRedemption(data) {
 
     let title;
 
-    switch (data.reward_type) {
+    switch (data.rewardType) {
         case "send_highlighted_message" :
             title = tRD('twitch.reward_auto.send_highlighted_message');
         break;
@@ -680,33 +644,27 @@ async function twitchAutomaticRewardRedemption(data) {
         case "chosen_modified_sub_emote_unlock" :
             title = tRD('twitch.reward_auto.chosen_modified_sub_emote_unlock');
         break;
-
     }
-    
-    
-    
 
     const userLinkElement = user.querySelector('a');
-    const userLink = `https://twitch.tv/${data.user_login}`;
+    const userLink = `https://twitch.tv/${data.user.login}`;
 
     userLinkElement.href = userLink;
     userLinkElement.target = '_blank';
-    userLinkElement.textContent = data.user_name;
-    userLinkElement.title = `${data.user_name} @ ${userLink}`;
-
-
+    userLinkElement.textContent = data.user.name;
+    userLinkElement.title = `${data.user.name} @ ${userLink}`;
 
     action.innerHTML = tRD('twitch.reward_action');
 
-    value.innerHTML = `
-        <div class="gift-info">
-            <span class="gift-image"><strong>${title}</strong></span>
-            <span class="gift-value"><img src="js/modules/twitch/images/icon-channel-points.svg" alt="Channel Points"> ${data.cost}</span>
-        </div>
-    `;
+    const giftHtml = renderGiftEventSuffix({
+        image : `<strong>${title}</strong>`, 
+        value : `<img src="js/modules/twitch/images/icon-channel-points.svg" alt="Channel Points"> ${data.channelPoints}`
+    });
     
-    /*var userInput = data.user_input ? `${data.user_input}` : `${data.message_text}`;
-    message.textContent = `${userInput}`;*/
+    value.innerHTML = giftHtml;
+    
+    var userInput = data.user_input ? `${data.user_input}` : `${data.message_text}`;
+    message.textContent = `${userInput}`;
     message.remove();
     
     addEventItem('twitch', clone, classes, userId, messageId);
@@ -716,12 +674,12 @@ async function twitchAutomaticRewardRedemption(data) {
 
 async function twitchPowerUpRedemption(data) {
 
-    if (showTwitchRewardRedemptions == false) return;
+    if (showTwitchPowerUpRedemption == false) return;
 
     const template = eventTemplate;
 	const clone = template.content.cloneNode(true);
     const messageId = createRandomString(40);
-    const userId = data.user_login.toLowerCase();
+    const userId = data.user.login.toLowerCase();
 
     const {
         header,
@@ -735,48 +693,214 @@ async function twitchPowerUpRedemption(data) {
             .map(el => [el.className, el])
     );
 
-    const classes = ['twitch', 'reward'];
+    const classes = ['twitch', 'power-up'];
 
     header.remove();
+    
 
     let title;
+    let image;
 
-    switch (data.reward_type) {
-        case "celebration" :
-            title = tRD('twitch.reward_auto.celebration');
-        break;
-
+    switch (data.type) {
         case "message_effect" :
             title = tRD('twitch.reward_auto.message_effect');
+            if (enableTwitchPowerUpEffects) twitchChatMessageEffect(data);
         break;
 
+        case "gigantify_an_emote" :
+            title = tRD('twitch.reward_auto.gigantify');
+            twitchChatMessageGiantEmote(data);
+        break;
+
+        case "celebration" :
+            title = tRD('twitch.reward_auto.celebration');
+            image = ` <img src="${data.emote.imageUrl}">`;
+            classes.push('small-gift')
+            if (enableTwitchPowerUpEffects) twitchChatOnScreenCelebration(data);
+        break;
     }
     
-    
-    
-
     const userLinkElement = user.querySelector('a');
-    const userLink = `https://twitch.tv/${data.user_login}`;
+    const userLink = `https://twitch.tv/${data.user.login}`;
 
     userLinkElement.href = userLink;
     userLinkElement.target = '_blank';
-    userLinkElement.textContent = data.user_name;
-    userLinkElement.title = `${data.user_name} @ ${userLink}`;
-
-
+    userLinkElement.textContent = data.user.name;
+    userLinkElement.title = `${data.user.name} @ ${userLink}`;
 
     action.innerHTML = tRD('twitch.reward_action');
 
-    value.innerHTML = `
-        <div class="gift-info">
-            <span class="gift-image"><strong>${title}</strong></span>
-            <span class="gift-value"><img src="js/modules/twitch/images/icon-powerups-bits.svg" alt="Power Up"> ${data.cost}</span>
-        </div>
-    `;
+    const giftHtml = renderGiftEventSuffix({
+        image : `<strong>${title}</strong>`, 
+        value : `<img src="js/modules/twitch/images/icon-powerups-bits.svg" alt="${title}"> ${data.bits}`
+    });
+
+    value.innerHTML = giftHtml;
+
+    /*let messageFromParts = await getTwitchMessageFromParts(data.parts);
+    message.innerHTML = DOMPurify.sanitize(messageFromParts);*/
+    message.remove();
     
-    var userInput = data.user_input ? `${data.user_input}` : `${data.message_text}`;
+    addEventItem('twitch', clone, classes, userId, messageId);
+}
+
+
+
+async function twitchChatMessageGiantEmote(data) {
+
+    const numberAttempts = 1000;
+
+    const tryGigantify = async (attempts = 0) => {
+        if (!showTwitchMessages) return;
+
+        const userMessages = chatContainer.querySelectorAll(`.msg.twitch[data-user="${data.user.login}"][data-rendered="true"]`);
+
+        if (userMessages.length === 0) {
+            if (attempts < numberAttempts) setTimeout(() => tryGigantify(attempts + 1), 100);
+            return;
+        }
+
+        const firstMessage = userMessages[0];
+        const textIdentifier = await generateSHA256Identifier(data.text);
+        const actualMessage = [...firstMessage.querySelectorAll('.actual-message')]
+            .find(el => el.dataset.text === textIdentifier);
+
+        if (!actualMessage) {
+            if (attempts < numberAttempts) setTimeout(() => tryGigantify(attempts + 1), 100);
+            return;
+        }
+
+        const emoteMatches = firstMessage.querySelectorAll(`img.emote[alt="${data.emote.text}"]`);
+        const emoteImages = emoteMatches[emoteMatches.length - 1];
+
+        if (!emoteImages) {
+            if (attempts < numberAttempts) setTimeout(() => tryGigantify(attempts + 1), 100);
+            return;
+        }
+
+        emoteImages.classList.add('gigantified');
+        if (emoteImages.src.endsWith("2.0")) {
+            emoteImages.src = emoteImages.src.replace("2.0", "3.0");
+        }
+    };
+
+    tryGigantify();
+}
+
+
+
+async function twitchChatMessageEffect(data) {
+
+    const numberAttempts = 1000;
+
+    const tryTheMessageEffect = async (attempts = 0) => {
+
+        if (!showTwitchMessages) return;
+
+        const userMessages = chatContainer.querySelectorAll(`.msg.twitch[data-user="${data.user.login}"][data-rendered="true"]`);
+
+        if (userMessages.length === 0) {
+            if (attempts < numberAttempts) setTimeout(() => tryTheMessageEffect(attempts + 1), 100);
+            return;
+        }
+
+        const firstMessage = userMessages[0];
+        const textIdentifier = await generateSHA256Identifier(data.text);
+        const actualMessage = [...firstMessage.querySelectorAll('.actual-message')]
+            .find(el => el.dataset.text === textIdentifier);
+
+        if (!actualMessage) {
+            if (attempts < numberAttempts) setTimeout(() => tryTheMessageEffect(attempts + 1), 100);
+            return;
+        }
+
+        const messageEffects = {
+            'cosmic-abyss' : `
+                <div class="cosmic-abyss-element">
+                    <div class="container">
+                        <video aria-label="Cosmic Abyss Animation" autoplay loop playsinline muted>
+                            <source src="https://d3aqoihi2n8ty8.cloudfront.net/power-ups/cosmic-abyss-tall.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            `,
+            'rainbow-eclipse': `
+                <div class="rainbow-eclipse-element"></div>
+            `,
+            'simmer' : `<canvas class="simmer"></canvas>`
+        };
+
+        const effectHtml = messageEffects[data.message_effect_id];
+        firstMessage.classList.add( 'message-effect', data.message_effect_id );
+        firstMessage.insertAdjacentHTML('afterbegin', effectHtml);
+
+        if (data.message_effect_id === 'simmer') {
+            setTimeout(() => { 
+                initEmoteTrampoline(firstMessage.querySelector('.simmer'), messageEffectCanvasEmotes, {
+                    duration: 15000
+                });
+            }, 500);
+        }
+    };
+
+    tryTheMessageEffect();
+}
+
+
+async function twitchChatOnScreenCelebration(data) {
+    const emote = data.emote.imageUrl;
+    onScreenCelebration(emote, {
+        intensity: 0.5
+    });
+}
+
+
+async function twitchCustomPowerUpRedemption(data) {
+
+    if (showTwitchPowerUpRedemption == false) return;
+
+    const template = eventTemplate;
+	const clone = template.content.cloneNode(true);
+    const messageId = data.redemptionId;
+    const userId = data.user.login.toLowerCase();
+
+    const {
+        header,
+        platform,
+        user,
+        action,
+        value,
+        'actual-message': message
+    } = Object.fromEntries(
+        [...clone.querySelectorAll('[class]')]
+            .map(el => [el.className, el])
+    );
+
+    const classes = ['twitch', 'custom-power-up'];
+
+    clone.firstElementChild.style = `--customPowerUpBackground: ${ hexToRGBA(data.customPowerUp.backgroundColor, 0.75) }`;
+
+    header.remove();
+    
+    const userLinkElement = user.querySelector('a');
+    const userLink = `https://twitch.tv/${data.user.login}`;
+
+    userLinkElement.href = userLink;
+    userLinkElement.target = '_blank';
+    userLinkElement.textContent = data.user.name;
+    userLinkElement.title = `${data.user.name} @ ${userLink}`;
+
+    action.innerHTML = tRD('twitch.reward_action');
+    
+    const giftHtml = renderGiftEventSuffix({
+        image : `<strong>${data.customPowerUp.title}</strong>`, 
+        value : `<img src="js/modules/twitch/images/icon-powerups-bits.svg" alt="${data.customPowerUp.title}"> ${data.customPowerUp.bits}`
+    });
+
+    value.innerHTML = giftHtml;
+    
+    var userInput = data.userInput ? `${data.userInput}` : ``;
     message.textContent = `${userInput}`;
-    //message.remove();
     
     addEventItem('twitch', clone, classes, userId, messageId);
 }
@@ -790,7 +914,7 @@ async function twitchBitsMessage(data) {
     const template = eventTemplate;
 	const clone = template.content.cloneNode(true);
     const messageId = data.messageId;
-    const userId = data.user.name.toLowerCase();
+    const userId = data.user.login;
 
     const {
         header,
@@ -827,12 +951,12 @@ async function twitchBitsMessage(data) {
     const bitsMatch = bitsGiftsClasses.find(lv => data.bits >= lv.min && data.bits <= lv.max);
     classes.push(bitsMatch.class);
 
-    value.innerHTML = `
-        <div class="gift-info">
-            <span class="gift-image"><strong>${data.bits} ${bits}</strong></span>
-            <span class="gift-value"><img src="https://d3aqoihi2n8ty8.cloudfront.net/actions/cheer/dark/animated/${match.gifId}/4.gif" alt="${data.bits} ${bits}"></span>
-        </div>
-    `;
+    const giftHtml = renderGiftEventSuffix({
+        image : `<strong>${data.bits} ${bits}</strong>`, 
+        value : `<img src="https://d3aqoihi2n8ty8.cloudfront.net/actions/cheer/dark/animated/${match.gifId}/4.gif" alt="${data.bits} ${bits}">`
+    });
+
+    value.innerHTML = giftHtml;
 
     let messageFromParts = await getTwitchMessageFromParts(data.parts);
     message.innerHTML = DOMPurify.sanitize(messageFromParts);
@@ -882,13 +1006,12 @@ async function twitchSubMessage(data) {
     var months = formatSubMonthDuration(data.duration_months);
     var tier = data.is_prime ? 'Prime' : 'Tier '+Math.floor(data.sub_tier/1000);
 
-    //value.innerHTML = `<strong>${months} (${tier})</strong>`;
-    value.innerHTML = `
-        <div class="gift-info">
-            <span class="gift-image"><strong>${months}</strong></span>
-            <span class="gift-value">${tier}</span>
-        </div>
-    `;
+    const giftHtml = renderGiftEventSuffix({
+        image : `<strong>${months}</strong>`, 
+        value : `${tier}`
+    });
+
+    value.innerHTML = giftHtml;
 
     addEventItem('twitch', clone, classes, userId, messageId);
 }
@@ -930,20 +1053,15 @@ async function twitchReSubMessage(data) {
 
     action.innerHTML = tRD('twitch.resub_action');
 
-    //var months = data.cumulativeMonths > 1 ? 'months' : 'month';
     var months = formatSubMonthDuration(data.cumulativeMonths);
     var tier = data.isPrime ? 'Prime' : 'Tier '+Math.floor(data.subTier/1000);
-    
-    //value.innerHTML = `<strong>${months} (${tier})</strong>`;
-    value.innerHTML = `
-        <div class="gift-info">
-            <span class="gift-image"><strong>${months}</strong></span>
-            <span class="gift-value">${tier}</span>
-        </div>
-    `;
 
-    /*message.textContent = data.text;
-    await getTwitchEmotesOnParts(data, message);*/
+    const giftHtml = renderGiftEventSuffix({
+        image : `<strong>${months}</strong>`, 
+        value : `${tier}`
+    });
+    
+    value.innerHTML = giftHtml;
     
     let messageFromParts = await getTwitchMessageFromParts(data.parts);
     message.innerHTML = DOMPurify.sanitize(messageFromParts);
@@ -1000,7 +1118,7 @@ async function twitchGiftMessage(data) {
     var months = formatSubMonthDuration(data.durationMonths);
     var subs = data.durationMonths > 1 ? tRD('twitch.giftsub_plural') : tRD('twitch.giftsub_singular');
 
-    action.innerHTML = tRD('twitch.giftsub_action', { months: `<strong>${months}</strong>`, tier: `<strong>${Math.floor(data.subTier/1000)}</strong>`, duration: subs });
+    action.innerHTML = tRD('twitch.giftsub_action', { months: `${months}`, tier: `${Math.floor(data.subTier/1000)}`, duration: subs });
     
     value.innerHTML = `<strong>${escapeHTML(data.recipient.name)}</strong>`;
 
@@ -1046,9 +1164,9 @@ async function twitchGiftBombMessage(data) {
 
 
     var subs = data.total > 1 ? tRD('twitch.giftbomb_subs_plural') : tRD('twitch.giftbomb_subs_singular');
-    action.innerHTML = tRD('twitch.giftbomb_action', { total: `<strong>${data.total}</strong>`, tier: Math.floor(data.sub_tier/1000), subs: `<strong>${subs}</strong>` });
+    action.innerHTML = tRD('twitch.giftbomb_action', { total: `${data.total}`, tier: Math.floor(data.sub_tier/1000), subs: `${subs}` });
 
-    message.innerHTML = tRD('twitch.giftbomb_message', { total: `<strong>${data.cumulative_total} subs</strong>` });
+    message.innerHTML = tRD('twitch.giftbomb_message', { total: `${data.cumulative_total} subs` });
 
     addEventItem('twitch', clone, classes, userId, messageId);
 }
@@ -1099,14 +1217,14 @@ async function twitchRaidMessage(data) {
 
 
 async function twitchChatMessageDeleted(data) {
-    document.getElementById(data.messageId)?.remove();
+    document.getElementById(data.messageId)?.parentNode.remove();
 }
 
 
 
 async function twitchUserBanned(data) {
     chatContainer.querySelectorAll(`[data-user="${data.targetUser.login}"]`).forEach(element => {
-        element.remove();
+        element.parentNode.remove();
     });
 }
 
@@ -1114,7 +1232,7 @@ async function twitchUserBanned(data) {
 
 async function twitchChatClearMessages() {
     chatContainer.querySelectorAll(`.item.twitch`).forEach(element => {
-        element.remove();
+        element.parentNode.remove();
     });
 }
 
@@ -1253,11 +1371,13 @@ async function twitchHypeTrainStart(data) {
 
         user.textContent = hypetrainInfo;
         action.textContent = ``;
-        value.innerHTML = `
-            <div class="gift-info">
-                <span class="gift-value"><strong>LVL ${level}</strong> @ <strong>${htProgress}%</strong></span>
-            </div>
-        `;
+
+        const giftHtml = renderGiftEventSuffix({
+            image : ``, 
+            value : `<strong>LVL ${level}</strong> @ <strong>${htProgress}%</strong>`
+        });
+
+        value.innerHTML = giftHtml;
 
         message.remove();
 
@@ -1382,11 +1502,13 @@ async function twitchHypeTrainLevelUp(data) {
 
         user.textContent = hypetrainInfo;
         action.textContent = ``;
-        value.innerHTML = `
-            <div class="gift-info">
-                <span class="gift-value"><strong>LVL ${level}</strong> @ <strong>${htProgress}%</strong></span>
-            </div>
-        `;
+
+        const giftHtml = renderGiftEventSuffix({
+            image : ``, 
+            value : `<strong>LVL ${level}</strong> @ <strong>${htProgress}%</strong>`
+        });
+
+        value.innerHTML = giftHtml;
 
         message.remove();
 
@@ -1481,11 +1603,13 @@ async function twitchHypeTrainEnd(data) {
 
         user.textContent = hypetrainInfo;
         action.textContent = ` 👏👏👏 `;
-        value.innerHTML = `
-            <div class="gift-info">
-                <span class="gift-value"><strong>LVL ${level}</strong></span>
-            </div>
-        `;
+
+        const giftHtml = renderGiftEventSuffix({
+            image : ``, 
+            value : `<strong>LVL ${level}</strong>`
+        });
+
+        value.innerHTML = giftHtml;
 
         message.remove();
 
@@ -1723,11 +1847,13 @@ async function twitchGoalBegin(data) {
 
         user.textContent = tRD('twitch.goal.new', { type: goalType });
         action.textContent = description ? ` - ${description} ` : ``;
-        value.innerHTML = `
-            <div class="gift-info">
-                <span class="gift-value">${current_amount}/${target_amount} ${goalItem}</span>
-            </div>
-        `;
+
+        const giftHtml = renderGiftEventSuffix({
+            image : ``, 
+            value : `${current_amount}/${target_amount} ${goalItem}`
+        });
+
+        value.innerHTML = giftHtml;
 
         if (eventsDock == true) {
             addLittleEventItem('twitch', clone, classes, userId, messageId);
@@ -1875,11 +2001,13 @@ async function twitchGoalEnd(data) {
 
         user.textContent = `${goalType} ${goalStatus}`;
         action.textContent = description ? ` - ${description} ` : ``;
-        value.innerHTML = `
-            <div class="gift-info">
-                <span class="gift-value">${current_amount}/${target_amount} ${goalItem}</span>
-            </div>
-        `;
+        
+        const giftHtml = renderGiftEventSuffix({
+            image : ``, 
+            value : `${current_amount}/${target_amount} ${goalItem}`
+        });
+
+        value.innerHTML = giftHtml;
 
         if (eventsDock == true) {
             addLittleEventItem('twitch', clone, classes, userId, messageId);
@@ -2094,6 +2222,7 @@ async function getTwitchUserPronouns(username) {
     }
     catch (err) {
         console.error(`[ChatRD][Twitch] Couldn't retrieve pronouns for ${username}:`, err);
+        twitchPronouns.set(username, '');
         return '';
     }
 }
